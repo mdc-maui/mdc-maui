@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.Colors"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="PrimaryColor" />
+    <Color x:Key="PrimaryContainerColor" />
+    <Color x:Key="SecondaryColor" />
+    <Color x:Key="SecondaryContainerColor" />
+    <Color x:Key="TertiaryColor" />
+    <Color x:Key="ErtiaryContainerColor" />
+    <Color x:Key="SurfaceColor" />
+    <Color x:Key="SurfaceVariantColor" />
+    <Color x:Key="BackgroundColor" />
+    <Color x:Key="ErrorColorColor" />
+    <Color x:Key="ErrorContainerColor" />
+    <Color x:Key="OnPrimaryColor" />
+    <Color x:Key="OnPrimaryContainerColor" />
+    <Color x:Key="OnSecondaryColor" />
+    <Color x:Key="OnSecondaryContainerColor" />
+    <Color x:Key="OnTertiaryColor" />
+    <Color x:Key="OnTertiaryContainerColor" />
+    <Color x:Key="OnSurfaceColor" />
+    <Color x:Key="OnSurfaceVariantColor" />
+    <Color x:Key="OnErrorColor" />
+    <Color x:Key="OnErrorContainerColor" />
+    <Color x:Key="OnBackgroundColor" />
+    <Color x:Key="OutlineColor" />
+    <Color x:Key="OutlineVariantColor" />
+    <Color x:Key="ShadowColor" />
+    <Color x:Key="SurfaceTintColor" />
+    <Color x:Key="InverseSurfaceColor" />
+    <Color x:Key="InverseOnSurfaceColor" />
+    <Color x:Key="InversePrimaryColor" />
+</ResourceDictionary>

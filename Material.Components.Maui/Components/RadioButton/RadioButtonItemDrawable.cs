@@ -1,0 +1,88 @@
+﻿namespace Material.Components.Maui.Core.RadioButton;
+internal class RadioButtonItemDrawable
+{
+    private readonly RadioButtonItem view;
+    public RadioButtonItemDrawable(RadioButtonItem view)
+    {
+        this.view = view;
+    }
+
+    public void Draw(SKCanvas canvas, SKRect bounds)
+    {
+        canvas.Clear();
+        this.DrawRing(canvas, bounds);
+        this.DrawCircle(canvas, bounds);
+        this.DrawStateLayer(canvas, bounds);
+        this.DrawText(canvas, bounds);
+        this.DrawRippleEffect(canvas, bounds);
+    }
+
+    private void DrawRing(SKCanvas canvas, SKRect bounds)
+    {
+        canvas.Save();
+
+        var color = this.view.IsSelected ? this.view.OnColor : this.view.ForegroundColor;
+        var paint = new SKPaint
+        {
+            Color = color.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            IsStroke = true,
+            StrokeWidth = 2 + (8 * (1 - this.view.ChangingPercent)),
+            IsAntialias = true,
+        };
+        var path = new SKPath();
+        path.AddCircle(bounds.Left + 20, bounds.MidY, 10 * this.view.ChangingPercent);
+        canvas.DrawPath(path, paint);
+
+        canvas.Restore();
+    }
+
+    private void DrawCircle(SKCanvas canvas, SKRect bounds)
+    {
+        if (!this.view.IsSelected) return;
+        canvas.Save();
+
+        var paint = new SKPaint
+        {
+            Color = this.view.OnColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            IsAntialias = true,
+        };
+        var path = new SKPath();
+        path.AddCircle(bounds.Left + 20, bounds.MidY, 6 + (4 * (1 - this.view.ChangingPercent)));
+        canvas.DrawPath(path, paint);
+
+        canvas.Restore();
+    }
+
+    private void DrawStateLayer(SKCanvas canvas, SKRect bounds)
+    {
+#if WINDOWS || MACCATALYST
+        if (this.view.StateLayerOpacity != 0f)
+        {
+            var _bounds = new SKRect(bounds.Left, bounds.Top, bounds.Left + 40, bounds.Bottom);
+            var color = this.view.StateLayerColor.MultiplyAlpha(this.view.StateLayerOpacity);
+            var radii = new CornerRadius(20).GetRadii();
+            canvas.DrawStateLayer(_bounds, color, radii);
+        }
+#endif
+    }
+
+    private void DrawText(SKCanvas canvas, SKRect bounds)
+    {
+        canvas.Save();
+
+        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
+        var x = bounds.Left + 46;
+        var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
+        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+
+        canvas.Restore();
+    }
+
+    private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
+    {
+        if (this.view.RipplePercent < 0) return;
+        var color = this.view.RippleColor;
+        var point = new SKPoint(bounds.Left + 20, bounds.Top + 20);
+        canvas.DrawRippleEffect(bounds, 0, 20, point, color, this.view.RipplePercent, false);
+    }
+}

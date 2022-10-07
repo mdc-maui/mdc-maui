@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.LabelStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style x:Key="DefaultLabelStyle" TargetType="views:Label">
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+        <Setter Property="VerticalTextAlignment" Value="Start" />
+        <Setter Property="IgnorePixelScaling" Value="True" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="ForegroundOpacity" Value="1" />
+        <Setter Property="ForegroundColor" Value="{DynamicResource OnBackgroundColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters>
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnBackgroundColor}" />
+                            <Setter Property="ForegroundOpacity" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="ForegroundOpacity" Value="0.38" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnBackgroundColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style BaseResourceKey="DefaultLabelStyle" TargetType="views:Label" />
+
+</ResourceDictionary>
