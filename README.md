@@ -55,6 +55,8 @@ public static class MauiProgram
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <mds:MaterialStyles />
+                <!--or use seendColor
+                <mds:MaterialStyles Dark="DarkBlue" Light="Green" />-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
