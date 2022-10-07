@@ -309,7 +309,7 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
         var style = this.TextStyle.Modify(fontSize: this.TextStyle.FontSize - 4);
         this.LabelTextBlock.Clear();
         this.LabelTextBlock.AddText(this.LabelText, style);
-        this.PART_Content.InvalidateSurface();
+        this.PART_Content?.InvalidateSurface();
     }
 
 
