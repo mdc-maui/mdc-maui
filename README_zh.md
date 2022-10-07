@@ -26,7 +26,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMaterialComponents(new List<string>
             {
-                //一般情况下, 我们需要5种类型的字体
+                //一般情况下, 我们需要6种类型的字体
                 "xxx-Regular.ttf",
                 "xxx-Italic.ttf",
                 "xxx-Medium.ttf",
@@ -67,7 +67,7 @@ public static class MauiProgram
 
 ## 可用的控件
 
-> 😄: 准备好了    🤔: 未经验证     😭: 需要帮助
+> 😄: 准备就绪   🤔: 未经验证     😭: 需要帮助
 
 | control   | android    | windows   |  ios&mac   |
 | ---- | ---- | ---- |----|
@@ -83,7 +83,7 @@ public static class MauiProgram
 | RadioButton | 😄 | 😄 |🤔|
 | Switch | 😄 | 😄 |🤔|
 
-# 贡献
+## 贡献
 
 计划为这个库做贡献？我们很高兴有你的加入
 

@@ -11,7 +11,7 @@ Material3 Components for .NET MAUI, powered by SkiaSharp
 ## Getting Started
 
 - Clone this repo and ref it to your maui project
-- UseMaterialComponents in your "MauiProgram.cs"
+- Add UseMaterialComponents in your "MauiProgram.cs"
 
 ```C#
 using Material.Components.Maui.Extensions;
@@ -26,7 +26,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMaterialComponents(new List<string>
             {
-                //generally, we needs add 5 types of font families
+                //generally, we needs add 6 types of font families
                 "xxx-Regular.ttf",
                 "xxx-Italic.ttf",
                 "xxx-Medium.ttf",
@@ -39,7 +39,7 @@ public static class MauiProgram
 }
 ```
 
-- Use Material colors&styles in  your "App.xaml"
+- Add Material colors&styles in  your "App.xaml"
 
 ```xaml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -83,7 +83,7 @@ public static class MauiProgram
 | RadioButton | 😄 | 😄 |🤔|
 | Switch | 😄 | 😄 |🤔|
 
-# Contributing
+## Contributing
 
 Plan on contributing to the repository? We're glad to have you
 
