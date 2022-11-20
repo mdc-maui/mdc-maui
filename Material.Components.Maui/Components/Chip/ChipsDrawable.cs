@@ -1,8 +1,8 @@
-﻿namespace Material.Components.Maui.Core.Chip;
+﻿namespace Material.Components.Maui.Core;
 internal class ChipDrawable
 {
-    private readonly MChip view;
-    public ChipDrawable(MChip view)
+    private readonly Chip view;
+    public ChipDrawable(Chip view)
     {
         this.view = view;
     }
@@ -31,7 +31,7 @@ internal class ChipDrawable
 
     internal void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
-#if WINDOWS || MACCATALYST
+#if !__MOBILE__
         if (this.view.StateLayerOpacity != 0f)
         {
             var color = this.view.StateLayerColor.MultiplyAlpha(this.view.StateLayerOpacity);
@@ -62,17 +62,10 @@ internal class ChipDrawable
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
         if (!this.view.HasIcon ||
-            this.view.Image is not null ||
+            this.view.Image != null ||
             this.view.Icon == IconKind.None)
             return;
-
         canvas.Save();
-
-        canvas.ClipRect(new SKRect(bounds.Left,
-          bounds.Top,
-          bounds.Left + 8 + (18 * this.view.ChangingPercent),
-         bounds.Bottom));
-
         var paint = new SKPaint
         {
             Color = this.view.IconColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
@@ -92,19 +85,13 @@ internal class ChipDrawable
         };
         path.Transform(matrix);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image is null) return;
+        if (!this.view.HasIcon || this.view.Image == null) return;
         canvas.Save();
-
-        canvas.ClipRect(new SKRect(bounds.Left,
-           bounds.Top,
-           bounds.Left + 8 + (18 * this.view.ChangingPercent),
-          bounds.Bottom));
         var paint = new SKPaint
         {
             IsAntialias = true,
@@ -125,7 +112,6 @@ internal class ChipDrawable
             Persp2 = 1f
         };
         canvas.DrawPicture(this.view.Image, ref matrix, paint);
-
         canvas.Restore();
     }
 
@@ -133,7 +119,6 @@ internal class ChipDrawable
     {
         if (!this.view.HasCloseIcon) return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.IconColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
@@ -153,19 +138,18 @@ internal class ChipDrawable
         };
         path.Transform(matrix);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
-        var x = bounds.Right - 16 - (this.view.HasCloseIcon ? 18 : 0) - this.view.TextBlock.MeasuredWidth;
+        var leftPadding = this.view.HasIcon ? 34f : 16f;
+        var rightPadding = this.view.HasCloseIcon ? 34f : 16f;
+        var x = leftPadding + ((bounds.Right - leftPadding - rightPadding) / 2) - (this.view.TextBlock.MeasuredWidth / 2);
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
-
         canvas.Restore();
     }
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)

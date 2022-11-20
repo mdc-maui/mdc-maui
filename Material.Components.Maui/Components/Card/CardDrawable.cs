@@ -1,8 +1,8 @@
-﻿namespace Material.Components.Maui.Core.Card;
+﻿namespace Material.Components.Maui.Core;
 internal class CardDrawable
 {
-    private readonly MCard view;
-    public CardDrawable(MCard card)
+    private readonly Card view;
+    public CardDrawable(Card card)
     {
         this.view = card;
     }
@@ -25,7 +25,7 @@ internal class CardDrawable
 
     internal void DrawOverlayLayer(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.ControlState == ControlState.Disabled) return;
+        if (this.view.ControlState is ControlState.Disabled) return;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
         canvas.DrawOverlayLayer(bounds, this.view.Elevation, radii);
     }

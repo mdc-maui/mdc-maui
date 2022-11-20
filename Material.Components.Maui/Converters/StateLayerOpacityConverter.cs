@@ -9,10 +9,10 @@ public class StateLayerOpacityConverter : TypeConverter
     {
         if (value is string text)
         {
-            if (text == "Normal") return StateLayerOpacity.Normal;
-            else if (text == "Hovered") return StateLayerOpacity.Hovered;
-            else if (text == "Focused") return StateLayerOpacity.Focused;
-            else if (text == "Pressed") return StateLayerOpacity.Pressed;
+            if (text is "Normal") return StateLayerOpacity.Normal;
+            else if (text is "Hovered") return StateLayerOpacity.Hovered;
+            else if (text is "Focused") return StateLayerOpacity.Focused;
+            else if (text is "Pressed") return StateLayerOpacity.Pressed;
             else if (float.TryParse(text, out var f))
             {
                 return new StateLayerOpacity(f);

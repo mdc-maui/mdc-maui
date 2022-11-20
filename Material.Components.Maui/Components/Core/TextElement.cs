@@ -66,7 +66,7 @@ internal static class TextElement
     private static void OnFontWeightChanged(BindableObject bo, object oldValue, object newValue)
     {
         var element = (ITextElement)bo;
-         element.TextStyle.FontWeight = (int)newValue;
+        element.TextStyle.FontWeight = (int)newValue;
         element.TextBlock.Clear();
         element.TextBlock.AddText(element.Text, element.TextStyle);
         element.OnTextBlockChanged();

@@ -1,8 +1,8 @@
-﻿namespace Material.Components.Maui.Core.CheckBox;
+﻿namespace Material.Components.Maui.Core;
 internal class CheckBoxDrawable
 {
-    private readonly MCheckBox view;
-    public CheckBoxDrawable(MCheckBox checkBox)
+    private readonly CheckBox view;
+    public CheckBoxDrawable(CheckBox checkBox)
     {
         this.view = checkBox;
     }
@@ -28,7 +28,6 @@ internal class CheckBoxDrawable
     private void DrawBox(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
@@ -42,7 +41,6 @@ internal class CheckBoxDrawable
         rect.SetRectRadii(new SKRect(bounds.Left, bounds.Top, bounds.Left + 18, bounds.Bottom), radii);
         path.AddRoundRect(rect);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
@@ -51,7 +49,6 @@ internal class CheckBoxDrawable
         if (this.view.ChangingPercent is not 1f and not 0f)
         {
             canvas.Save();
-
             var paint = new SKPaint
             {
                 Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
@@ -65,9 +62,7 @@ internal class CheckBoxDrawable
             path.AddRoundRect(rect);
             canvas.DrawPath(path, paint);
             canvas.Restore();
-
         }
-
         {
             canvas.Save();
 
@@ -93,7 +88,6 @@ internal class CheckBoxDrawable
             };
             path.Transform(matrix);
             canvas.DrawPath(path, paint);
-
             canvas.Restore();
         }
 
@@ -102,7 +96,6 @@ internal class CheckBoxDrawable
     private void DrawBackgound(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.OnColor.MultiplyAlpha(this.view.OnOpacity).ToSKColor(),
@@ -114,14 +107,12 @@ internal class CheckBoxDrawable
         rect.SetRectRadii(new SKRect(bounds.Left, bounds.Top, 34, bounds.Bottom), radii);
         path.AddRoundRect(rect);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     private void DrawMarkIcon(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         canvas.ClipRect(new SKRect(bounds.Left,
             bounds.Top,
             bounds.Left + (18 * this.view.ChangingPercent),
@@ -135,13 +126,12 @@ internal class CheckBoxDrawable
             IsAntialias = true,
         };
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     internal void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
-#if WINDOWS || MACCATALYST
+#if !__MOBILE__
         if (this.view.StateLayerOpacity != 0f)
         {
             var color = this.view.StateLayerColor.MultiplyAlpha(this.view.StateLayerOpacity);

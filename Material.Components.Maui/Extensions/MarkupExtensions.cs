@@ -12,5 +12,4 @@ public static class MarkupExtensions
         view.Bind(Button.TextProperty, path);
         return view;
     }
-
 }

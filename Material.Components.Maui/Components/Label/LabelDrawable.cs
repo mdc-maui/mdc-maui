@@ -1,11 +1,8 @@
-﻿using Material.Components.Maui.Extensions;
-using System.Diagnostics;
-
-namespace Material.Components.Maui.Core.Label;
+﻿namespace Material.Components.Maui.Core;
 internal class LabelDrawable
 {
-    private readonly MLabel view;
-    public LabelDrawable(MLabel view)
+    private readonly Label view;
+    public LabelDrawable(Label view)
     {
         this.view = view;
     }
@@ -13,13 +10,24 @@ internal class LabelDrawable
     public void Draw(SKCanvas canvas, SKRect bounds)
     {
         canvas.Clear();
-        this.DrawText(canvas, bounds);
+        this.DrawBackground(canvas, bounds);
+        var textBounds = new SKRect(
+            (float)(bounds.Left + this.view.Padding.Left),
+            (float)(bounds.Top + this.view.Padding.Top),
+            (float)(bounds.Right - this.view.Padding.Right),
+            (float)(bounds.Bottom - this.view.Padding.Bottom));
+        this.DrawText(canvas, textBounds);
+    }
+
+    internal void DrawBackground(SKCanvas canvas, SKRect bounds)
+    {
+        var color = this.view.BackgroundColour.MultiplyAlpha(this.view.BackgroundOpacity);
+        canvas.DrawBackground(bounds, color, 0);
     }
 
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
         var x = this.view.HorizontalTextAlignment switch
         {
@@ -34,7 +42,6 @@ internal class LabelDrawable
             _ => bounds.Top,
         };
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
-
         canvas.Restore();
     }
 }

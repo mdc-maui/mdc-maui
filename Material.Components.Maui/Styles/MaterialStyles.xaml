@@ -13,11 +13,14 @@
         <local:SwitchStyles />
         <local:CardStyles />
         <local:ComboBoxStyles />
-        <local:NavigationItemStyles />
+        <local:NavigationBarStyles />
         <local:FABStyles />
-        <local:RadioButtonItemStyles />
+        <local:RadioButtonStyles />
         <local:ChipStyles />
         <local:LabelStyles />
+        <local:ProgressIndicatorStyles />
+        <local:TabsStyles />
+        <local:ContextMenuStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

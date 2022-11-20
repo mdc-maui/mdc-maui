@@ -1,23 +1,21 @@
-﻿using Material.Components.Maui.Core;
-using Material.Components.Maui.Core.FAB;
-using Material.Components.Maui.Converters;
+﻿using Material.Components.Maui.Converters;
+using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
-public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITouchElement, IBackgroundElement, IForegroundElement, IElevationElement, IShapeElement, IRippleElement
+public partial class FAB : SKTouchCanvasView, IView, IImageElement, ITextElement, ITouchElement, IBackgroundElement, IForegroundElement, IElevationElement, IShapeElement, IRippleElement
 {
     #region interface
-
     #region IView
-
     private ControlState controlState = ControlState.Normal;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
-        private set
+        set
         {
             VisualStateManager.GoToState(this, value switch
             {
@@ -34,16 +32,15 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
     {
         this.InvalidateSurface();
     }
-
     #endregion
 
     #region ITextElement
-
     public static readonly BindableProperty TextProperty = TextElement.TextProperty;
     public static readonly BindableProperty FontFamilyProperty = TextElement.FontFamilyProperty;
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
@@ -73,27 +70,11 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
     }
     void ITextElement.OnTextBlockChanged()
     {
-        if (this.IsExtended)
-        {
-            var width = this.Margin.HorizontalThickness + this.TextBlock.MeasuredWidth + (
-                this.FABType == FABType.Default ? 80d :
-                this.FABType == FABType.Small ? 52d :
-                141d);
-            var height = this.Margin.VerticalThickness + (
-                this.FABType == FABType.Default ? 56d :
-                this.FABType == FABType.Small ? 40d :
-                96d);
-            this.WidthRequest = width;
-            this.HeightRequest = height;
-            this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-            this.InvalidateSurface();
-        }
+        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
     }
-
     #endregion
 
     #region IImageElement
-
     public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
     public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
     public IconKind Icon
@@ -101,18 +82,15 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
-
-    [System.ComponentModel.TypeConverter(typeof(ImageConverter))]
+    [TypeConverter(typeof(ImageConverter))]
     public SKPicture Image
     {
         get => (SKPicture)this.GetValue(ImageProperty);
         set => this.SetValue(ImageProperty, value);
     }
-
     #endregion
 
     #region IForegroundElement
-
     public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
     public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
@@ -125,11 +103,9 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
         get => (float)this.GetValue(ForegroundOpacityProperty);
         set => this.SetValue(ForegroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IBackgroundElement
-
     public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
     public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
@@ -142,11 +118,9 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
         get => (float)this.GetValue(BackgroundOpacityProperty);
         set => this.SetValue(BackgroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IOutlineElement
-
     public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
     public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
@@ -165,33 +139,27 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
         get => (float)this.GetValue(OutlineOpacityProperty);
         set => this.SetValue(OutlineOpacityProperty, value);
     }
-
     #endregion
 
     #region IElevationElement
-
     public static readonly BindableProperty ElevationProperty = ElevationElement.ElevationProperty;
     public Elevation Elevation
     {
         get => (Elevation)this.GetValue(ElevationProperty);
         set => this.SetValue(ElevationProperty, value);
     }
-
     #endregion
 
     #region IShapeElement
-
     public static readonly BindableProperty ShapeProperty = ShapeElement.ShapeProperty;
     public Shape Shape
     {
         get => (Shape)this.GetValue(ShapeProperty);
         set => this.SetValue(ShapeProperty, value);
     }
-
     #endregion
 
     #region IStateLayerElement
-
     public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
     public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
@@ -204,48 +172,23 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
         get => (float)this.GetValue(StateLayerOpacityProperty);
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
-
     #endregion
 
     #region IRippleElement
-
     public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
-    public float RipplePercent { get; private set; } = 0f;
-    public SKPoint TouchPoint { get; private set; } = new SKPoint(-1, -1);
-
-    #endregion
-
-    #region ITouchElement
-
-    public static readonly BindableProperty CommandProperty = TouchElement.CommandProperty;
-    public static readonly BindableProperty CommandParameterProperty = TouchElement.CommandParameterProperty;
-    public ICommand Command
-    {
-        get => (ICommand)this.GetValue(CommandProperty);
-        set => this.SetValue(CommandProperty, value);
-    }
-    public object CommandParameter
-    {
-        get => this.GetValue(CommandParameterProperty);
-        set => this.SetValue(CommandParameterProperty, value);
-    }
-    public Timer PressedTimer { get; set; }
-    public event EventHandler<SKTouchEventArgs> Pressed;
-    public event EventHandler<SKTouchEventArgs> LongPressed;
-    public event EventHandler<SKTouchEventArgs> Clicked;
-    public void OnPressed(SKTouchEventArgs e) => Pressed?.Invoke(this, e);
-    public void OnLongPressed(SKTouchEventArgs e) => LongPressed?.Invoke(this, e);
-    public void OnClicked(SKTouchEventArgs e) => Clicked?.Invoke(this, e);
-
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float RipplePercent { get; set; } = 0f;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
     #endregion
-
 
     [AutoBindable]
     private readonly FABType fABType;
@@ -253,122 +196,27 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
     [AutoBindable(DefaultValue = "false", OnChanged = nameof(OnIsExtendedChanged))]
     private readonly bool isExtended;
 
+    public event EventHandler ExtendedChanged;
 
     private void OnIsExtendedChanged()
     {
-        var maxWidth = this.Margin.HorizontalThickness + this.TextBlock.MeasuredWidth + (
-                this.FABType == FABType.Default ? 80d :
-                this.FABType == FABType.Small ? 52d :
-                141d);
-        var minWidth = this.Margin.HorizontalThickness + (
-            this.FABType == FABType.Default ? 56d :
-            this.FABType == FABType.Small ? 40d :
-            96d);
-        var height = minWidth;
-
-        if (this.Handler is null)
-        {
-            var width = this.IsExtended ? maxWidth : minWidth;
-            this.WidthRequest = width;
-            this.HeightRequest = height;
-            this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-            this.InvalidateSurface();
-            return;
-        }
-
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
-
-        this.ChangingPercent = 0f;
-        var start = 0f;
-        var end = 1f;
-        var currWidth = 0d;
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            this.ChangingPercent = start.Lerp(end, progress);
-            if (this.IsExtended)
-                currWidth = minWidth + ((maxWidth - minWidth) * this.ChangingPercent);
-            else
-                currWidth = minWidth + ((maxWidth - minWidth) * (1 - this.ChangingPercent));
-
-            this.WidthRequest = currWidth;
-            this.HeightRequest = height;
-            this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-            this.InvalidateSurface();
-        },
-        duration: 0.25f,
-        easing: Easing.SinInOut));
+        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
+        this.ExtendedChanged?.Invoke(this, EventArgs.Empty);
     }
-
-    private void OnTextChanged()
-    {
-        if (this.IsExtended)
-        {
-            var width = this.Margin.HorizontalThickness + this.TextBlock.MeasuredWidth + (
-               this.FABType == FABType.Default ? 80d :
-               this.FABType == FABType.Small ? 52d :
-               141d);
-            var height = this.Margin.VerticalThickness + (
-                this.FABType == FABType.Default ? 56d :
-                this.FABType == FABType.Small ? 40d :
-                96d);
-            this.WidthRequest = width;
-            this.HeightRequest = height;
-            this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-        }
-        this.InvalidateSurface();
-    }
-
-    public float ChangingPercent { get; private set; } = 1f;
 
     private readonly FABDrawable drawable;
     private IAnimationManager animationManager;
+
+    private double widthConstraint = double.PositiveInfinity;
+    private double heightConstraint = double.PositiveInfinity;
 
     public FAB()
     {
         this.drawable = new FABDrawable(this);
     }
 
-    protected override void OnTouch(SKTouchEventArgs e)
-    {
-        if (this.ControlState == ControlState.Disabled) return;
-        this.OnTouchEvents(e);
-
-        if (e.ActionType == SKTouchAction.Pressed)
-        {
-            this.ControlState = ControlState.Pressed;
-            this.TouchPoint = e.Location;
-            this.StartRippleEffect();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Released)
-        {
-#if WINDOWS || MACCATALYST
-            this.ControlState = ControlState.Hovered;
-#else
-            this.ControlState = ControlState.Normal;
-#endif
-            if (this.RipplePercent == 1f)
-            {
-                this.RipplePercent = 0f;
-            }
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Entered)
-        {
-            this.ControlState = ControlState.Hovered;
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Cancelled || e.ActionType == SKTouchAction.Exited)
-        {
-            this.ControlState = ControlState.Normal;
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
-    }
-
-    private void StartRippleEffect()
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void StartRippleEffect()
     {
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
@@ -385,7 +233,7 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
         {
             if (this.ControlState != ControlState.Pressed)
             {
-                this.RipplePercent = 0;
+                this.RipplePercent = 0f;
                 this.InvalidateSurface();
             }
         }));
@@ -397,13 +245,40 @@ public partial class FAB : SKCanvasView, IView, IImageElement, ITextElement, ITo
         this.drawable.Draw(e.Surface.Canvas, e.Info.Rect);
     }
 
+    protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
+    {
+        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity);
+        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity);
+        var defaultSize = this.FABType is FABType.Default ? 56d : this.FABType is FABType.Small ? 40d : 96d;
+        var blankWidth = this.FABType is FABType.Default ? 16d : this.FABType is FABType.Small ? 8d : 30d;
+        this.TextBlock.MaxWidth = (float)(maxWidth - blankWidth - defaultSize);
+        this.TextBlock.MaxHeight = (float)defaultSize;
+        var width = this.Margin.HorizontalThickness
+            + Math.Max(this.MinimumWidthRequest, this.WidthRequest is -1
+                ? Math.Min(maxWidth, defaultSize + (this.IsExtended ? this.TextBlock.MeasuredWidth + blankWidth : 0d))
+                : this.WidthRequest);
+        var height = this.Margin.VerticalThickness
+            + Math.Max(this.MinimumHeightRequest, this.HeightRequest is -1
+                ? Math.Min(maxHeight, defaultSize)
+                : this.HeightRequest);
+        var result = new Size(width, height);
+        this.DesiredSize = result;
+        return result;
+    }
+
+    protected override Size ArrangeOverride(Rect bounds)
+    {
+        this.widthConstraint = bounds.Width;
+        this.heightConstraint = bounds.Height;
+        return base.ArrangeOverride(bounds);
+    }
+
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == "IsEnabled")
+        if (propertyName is "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.InvalidateSurface();
         }
     }
 }

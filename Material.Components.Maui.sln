@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Material.Components.Maui", "Material.Components.Maui\Material.Components.Maui.csproj", "{5EA3BA84-87FC-414D-B61F-837966DA7412}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Material.Components.Maui", "Material.Components.Maui\Material.Components.Maui.csproj", "{5EA3BA84-87FC-414D-B61F-837966DA7412}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{3C632E89-C0F8-4BA1-9988-8EC9CD326D45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp", "SampleApp\SampleApp.csproj", "{6C242B00-6C8B-4C3A-9524-F015911B1AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +17,12 @@ Global
 		{5EA3BA84-87FC-414D-B61F-837966DA7412}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EA3BA84-87FC-414D-B61F-837966DA7412}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EA3BA84-87FC-414D-B61F-837966DA7412}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C632E89-C0F8-4BA1-9988-8EC9CD326D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C632E89-C0F8-4BA1-9988-8EC9CD326D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C632E89-C0F8-4BA1-9988-8EC9CD326D45}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{3C632E89-C0F8-4BA1-9988-8EC9CD326D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C632E89-C0F8-4BA1-9988-8EC9CD326D45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C632E89-C0F8-4BA1-9988-8EC9CD326D45}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6C242B00-6C8B-4C3A-9524-F015911B1AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C242B00-6C8B-4C3A-9524-F015911B1AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C242B00-6C8B-4C3A-9524-F015911B1AFC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6C242B00-6C8B-4C3A-9524-F015911B1AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C242B00-6C8B-4C3A-9524-F015911B1AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C242B00-6C8B-4C3A-9524-F015911B1AFC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

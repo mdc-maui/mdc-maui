@@ -1,31 +1,31 @@
-﻿namespace Material.Components.Maui.Extensions;
+﻿using Microsoft.Maui.Platform;
+
+namespace Material.Components.Maui.Extensions;
 
 public static class SkCanvasViewExtensions
 {
-    public static void OnTouchEvents(this ITouchElement view, SKTouchEventArgs e)
+
+    public static void AllocateSize(this SKCanvasView view, double width, double height)
     {
-        if (e.ActionType == SKTouchAction.Pressed)
+        if (view.Handler != null)
         {
-            view.OnPressed(e);
-            view.PressedTimer = new Timer(new TimerCallback((e) =>
-            {
-                view.PressedTimer?.Dispose();
-                var v = view as View;
-                v.Dispatcher.Dispatch(() =>
-                {
-                    view.OnLongPressed((SKTouchEventArgs)e);
-                });
-            }), e, 500, Timeout.Infinite);
-            e.Handled = true;
+            width -= view.Margin.HorizontalThickness;
+            height -= view.Margin.VerticalThickness;
+
+#if ANDROID
+            var platformView = (Android.Views.View)view.Handler.PlatformView;
+            var lp = platformView.LayoutParameters;
+            lp.Width = (int)platformView.Context.ToPixels(width);
+            lp.Height = (int)platformView.Context.ToPixels(height);
+            platformView.LayoutParameters = lp;
+#elif WINDOWS     
+            ((Microsoft.UI.Xaml.FrameworkElement)view.Handler.PlatformView).Width = width;
+            ((Microsoft.UI.Xaml.FrameworkElement)view.Handler.PlatformView).Height = height;
+#endif
         }
-        else if (e.ActionType == SKTouchAction.Released)
-        {
-            if (view.PressedTimer is not null)
-            {
-                view.OnClicked(e);
-            }
-            view.PressedTimer?.Dispose();
-            e.Handled = true;
-        }
+    }
+    public static void AllocateSize(this SKCanvasView view, Size size)
+    {
+        view.AllocateSize(size.Width, size.Height);
     }
 }

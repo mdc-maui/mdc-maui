@@ -8,7 +8,7 @@ public static class SchemeExtensions
     public static Scheme<Color> GetDefaultScheme(AppTheme theme = AppTheme.Light)
     {
         var result = new Scheme<Color>();
-        if (theme == AppTheme.Light)
+        if (theme is AppTheme.Light)
         {
             result.Primary = Color.Parse("#6750A4");
             result.PrimaryContainer = Color.Parse("#EADDFF");
@@ -74,7 +74,7 @@ public static class SchemeExtensions
     public static Scheme<Color> GetScheme(this Color seedColor, AppTheme theme = AppTheme.Light)
     {
         var corePalette = CorePalette.Of(seedColor.ToInt());
-        dynamic schemeMapper = theme == AppTheme.Dark ? new DarkSchemeMapper() : new LightSchemeMapper();
+        dynamic schemeMapper = theme is AppTheme.Dark ? new DarkSchemeMapper() : new LightSchemeMapper();
         Scheme<int> scheme = schemeMapper.Map(corePalette);
         var result = scheme.ConvertTo(Color.FromInt);
         return result;

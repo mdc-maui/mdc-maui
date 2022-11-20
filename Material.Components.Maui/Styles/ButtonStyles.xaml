@@ -5,12 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style x:Key="FilledButtonStyle" TargetType="views:Button">
+    <Style TargetType="views:Button">
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="VerticalOptions" Value="Start" />
-        <Setter Property="EnableTouchEvents" Value="True" />
-        <Setter Property="IgnorePixelScaling" Value="True" />
-        <Setter Property="MinimumWidthRequest" Value="48" />
+        <Setter Property="MinimumWidthRequest" Value="80" />
         <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Shape" Value="Full" />
@@ -22,29 +20,16 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnPrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnPrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnPrimaryColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnPrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnPrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnPrimaryColor}" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnPrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnPrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnPrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
@@ -61,6 +46,8 @@
         </Setter>
     </Style>
 
+    <Style x:Key="FilledButtonStyle" TargetType="views:Button" />
+
     <Style x:Key="ElevatedButtonStyle" TargetType="views:Button">
         <Setter Property="Elevation" Value="Level1" />
         <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
@@ -71,29 +58,16 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="Elevation" Value="Level2" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
@@ -120,29 +94,16 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="Elevation" Value="level1" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
@@ -171,28 +132,15 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="Transparent" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="Transparent" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="Transparent" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
@@ -241,6 +189,5 @@
         </Setter>
     </Style>
 
-    <Style BaseResourceKey="FilledButtonStyle" TargetType="views:Button" />
 
 </ResourceDictionary>

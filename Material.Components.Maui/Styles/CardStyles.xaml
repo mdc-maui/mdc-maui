@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style x:Key="FilledCardStyle" TargetType="views:Card">
+    <Style TargetType="views:Card">
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="VerticalOptions" Value="Start" />
         <Setter Property="EnableTouchEvents" Value="True" />
@@ -17,26 +17,16 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
@@ -51,6 +41,8 @@
         </Setter>
     </Style>
 
+    <Style x:Key="FilledCardStyle" TargetType="views:Card" />
+
     <Style x:Key="ElevatedCardStyle" TargetType="views:Card">
         <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
@@ -60,26 +52,16 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="Elevation" Value="Level2" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
@@ -106,28 +88,15 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
@@ -140,15 +109,5 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-
-    <Style x:Key="MenuCardStyle" TargetType="views:Card">
-        <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-        <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-        <Setter Property="Elevation" Value="Level2" />
-        <Setter Property="Shape" Value="ExtraSmall" />
-        <Setter Property="EnableTouchEvents" Value="False" />
-    </Style>
-
-    <Style BaseResourceKey="FilledCardStyle" TargetType="views:Card" />
 
 </ResourceDictionary>

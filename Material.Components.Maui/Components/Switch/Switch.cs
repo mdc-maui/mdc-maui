@@ -1,28 +1,26 @@
 ﻿using Material.Components.Maui.Core;
-using Material.Components.Maui.Core.Switch;
 using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
-public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElement, IStateLayerElement, IRippleElement
+public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeElement, IStateLayerElement, IRippleElement
 {
     #region interface
-
     #region IView
-
     private ControlState controlState = ControlState.Normal;
     public ControlState ControlState
     {
         get => this.controlState;
-        private set
+        set
         {
             var state = value switch
             {
-                ControlState.Normal => this.IsSelected ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsSelected ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsSelected ? "pressed:actived" : "pressed",
-                ControlState.Disabled => this.IsSelected ? "disabled:actived" : "disabled",
+                ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
+                ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
+                ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
+                ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
                 _ => "normal",
             };
             VisualStateManager.GoToState(this, state);
@@ -33,11 +31,9 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
     {
         this.InvalidateSurface();
     }
-
     #endregion
 
     #region IOutlineElement
-
     public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
     public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
@@ -56,22 +52,18 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
         get => (float)this.GetValue(OutlineOpacityProperty);
         set => this.SetValue(OutlineOpacityProperty, value);
     }
-
     #endregion
 
     #region IShapeElement
-
     public static readonly BindableProperty ShapeProperty = ShapeElement.ShapeProperty;
     public Shape Shape
     {
         get => (Shape)this.GetValue(ShapeProperty);
         set => this.SetValue(ShapeProperty, value);
     }
-
     #endregion
 
     #region IStateLayerElement
-
     public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
     public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
@@ -84,28 +76,26 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
         get => (float)this.GetValue(StateLayerOpacityProperty);
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
-
     #endregion
 
     #region IRippleElement
-
     public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
-    public float RipplePercent { get; private set; } = 0f;
-    public SKPoint TouchPoint { get; private set; } = new SKPoint(-1, -1);
-
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float RipplePercent { get; set; } = 0f;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
+    #endregion
     #endregion
 
-    #endregion
-
-
-    [AutoBindable(OnChanged = nameof(OnSelectChanged))]
-    private readonly bool isSelected;
+    [AutoBindable(OnChanged = nameof(OnCheckedChanged))]
+    private readonly bool isChecked;
 
     [AutoBindable]
     private readonly Color trackColor;
@@ -125,17 +115,20 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
     [AutoBindable(DefaultValue = "1f")]
     private readonly float iconOpacity;
 
-    private void OnSelectChanged()
+    private void OnCheckedChanged()
     {
         var state = this.ControlState switch
         {
-            ControlState.Normal => this.IsSelected ? "normal:actived" : "normal",
-            ControlState.Hovered => this.IsSelected ? "hovered:actived" : "hovered",
-            ControlState.Pressed => this.IsSelected ? "pressed:actived" : "pressed",
-            ControlState.Disabled => this.IsSelected ? "disabled:actived" : "disabled",
+            ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
+            ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
+            ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
+            ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.StartChangingEffect();
+        CheckedChanged?.Invoke(this, new CheckedChangedEventArgs(this.IsChecked));
+        this.Command?.Execute(this.CommandParameter ?? this.IsChecked);
     }
 
     [AutoBindable]
@@ -144,9 +137,7 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
     [AutoBindable]
     private readonly object commandParameter;
 
-    public event EventHandler<bool> SelectedChanged;
-
-
+    public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
 
     internal float ChangingPercent { get; private set; } = 1f;
 
@@ -155,49 +146,13 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
 
     public Switch()
     {
-        this.WidthRequest = 68;
-        this.HeightRequest = 48;
+        this.Clicked += (sender, e) => this.IsChecked = !this.IsChecked;
         this.drawable = new SwitchDrawable(this);
-    }
-
-    protected override void OnTouch(SKTouchEventArgs e)
-    {
-        if (this.ControlState != ControlState.Disabled)
-        {
-            if (e.ActionType == SKTouchAction.Pressed)
-            {
-                this.ControlState = ControlState.Pressed;
-                this.StartRippleEffect();
-            }
-            else if (e.ActionType == SKTouchAction.Released)
-            {
-                this.IsSelected = !this.IsSelected;
-#if WINDOWS || MACCATALYST
-                this.ControlState = ControlState.Hovered;
-#else
-                this.ControlState = ControlState.Normal;
-#endif
-                this.RipplePercent = 0f;
-                this.StartChangingEffect();
-                SelectedChanged?.Invoke(this, this.IsSelected);
-                this.Command?.Execute(this.CommandParameter);
-            }
-            else if (e.ActionType == SKTouchAction.Entered)
-            {
-                this.ControlState = ControlState.Hovered;
-                this.InvalidateSurface();
-            }
-            else if (e.ActionType == SKTouchAction.Cancelled || e.ActionType == SKTouchAction.Exited)
-            {
-                this.ControlState = ControlState.Normal;
-                this.InvalidateSurface();
-            }
-            e.Handled = true;
-        }
     }
 
     private void StartChangingEffect()
     {
+        if (this.Handler is null) return;
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
         var start = 0f;
@@ -212,7 +167,9 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
         easing: Easing.SinInOut));
     }
 
-    private void StartRippleEffect()
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void StartRippleEffect()
     {
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
@@ -245,10 +202,9 @@ public partial class Switch : SKCanvasView, IView, IOutlineElement, IShapeElemen
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == "IsEnabled")
+        if (propertyName is "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.InvalidateSurface();
         }
     }
 }

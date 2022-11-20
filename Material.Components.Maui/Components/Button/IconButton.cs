@@ -1,23 +1,21 @@
-﻿using Material.Components.Maui.Core.Button;
+﻿using Material.Components.Maui.Converters;
 using Material.Components.Maui.Core;
-using Material.Components.Maui.Converters;
 using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using IButton = Material.Components.Maui.Core.Button.IButton;
+using IButton = Material.Components.Maui.Core.IButton;
 
 namespace Material.Components.Maui;
-public partial class IconButton : SKCanvasView, IButton
+public partial class IconButton : SKTouchCanvasView, IButton
 {
     #region interface
-
     #region IView
-
     private ControlState controlState = ControlState.Normal;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
-        private set
+        set
         {
             VisualStateManager.GoToState(this, value switch
             {
@@ -34,11 +32,9 @@ public partial class IconButton : SKCanvasView, IButton
     {
         this.InvalidateSurface();
     }
-
     #endregion
 
     #region IImageElement
-
     public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
     public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
     public IconKind Icon
@@ -46,18 +42,15 @@ public partial class IconButton : SKCanvasView, IButton
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
-
-    [System.ComponentModel.TypeConverter(typeof(ImageConverter))]
+    [TypeConverter(typeof(ImageConverter))]
     public SKPicture Image
     {
         get => (SKPicture)this.GetValue(ImageProperty);
         set => this.SetValue(ImageProperty, value);
     }
-
     #endregion
 
     #region IForegroundElement
-
     public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
     public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
@@ -70,11 +63,9 @@ public partial class IconButton : SKCanvasView, IButton
         get => (float)this.GetValue(ForegroundOpacityProperty);
         set => this.SetValue(ForegroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IBackgroundElement
-
     public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
     public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
@@ -87,11 +78,9 @@ public partial class IconButton : SKCanvasView, IButton
         get => (float)this.GetValue(BackgroundOpacityProperty);
         set => this.SetValue(BackgroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IOutlineElement
-
     public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
     public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
@@ -110,33 +99,27 @@ public partial class IconButton : SKCanvasView, IButton
         get => (float)this.GetValue(OutlineOpacityProperty);
         set => this.SetValue(OutlineOpacityProperty, value);
     }
-
     #endregion
 
     #region IElevationElement
-
     public static readonly BindableProperty ElevationProperty = ElevationElement.ElevationProperty;
     public Elevation Elevation
     {
         get => (Elevation)this.GetValue(ElevationProperty);
         set => this.SetValue(ElevationProperty, value);
     }
-
     #endregion
 
     #region IShapeElement
-
     public static readonly BindableProperty ShapeProperty = ShapeElement.ShapeProperty;
     public Shape Shape
     {
         get => (Shape)this.GetValue(ShapeProperty);
         set => this.SetValue(ShapeProperty, value);
     }
-
     #endregion
 
     #region IStateLayerElement
-
     public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
     public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
@@ -149,45 +132,21 @@ public partial class IconButton : SKCanvasView, IButton
         get => (float)this.GetValue(StateLayerOpacityProperty);
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
-
     #endregion
 
     #region IRippleElement
-
     public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
-    public float RipplePercent { get; private set; } = 0f;
-    public SKPoint TouchPoint { get; private set; } = new SKPoint(-1, -1);
-
-    #endregion
-
-    #region ITouchElement
-
-    public static readonly BindableProperty CommandProperty = TouchElement.CommandProperty;
-    public static readonly BindableProperty CommandParameterProperty = TouchElement.CommandParameterProperty;
-    public ICommand Command
-    {
-        get => (ICommand)this.GetValue(CommandProperty);
-        set => this.SetValue(CommandProperty, value);
-    }
-    public object CommandParameter
-    {
-        get => this.GetValue(CommandParameterProperty);
-        set => this.SetValue(CommandParameterProperty, value);
-    }
-    public Timer PressedTimer { get; set; }
-    public event EventHandler<SKTouchEventArgs> Pressed;
-    public event EventHandler<SKTouchEventArgs> LongPressed;
-    public event EventHandler<SKTouchEventArgs> Clicked;
-    public void OnPressed(SKTouchEventArgs e) => Pressed?.Invoke(this, e);
-    public void OnLongPressed(SKTouchEventArgs e) => LongPressed?.Invoke(this, e);
-    public void OnClicked(SKTouchEventArgs e) => Clicked?.Invoke(this, e);
-
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float RipplePercent { get; set; } = 0f;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
     #endregion
 
@@ -196,52 +155,12 @@ public partial class IconButton : SKCanvasView, IButton
 
     public IconButton()
     {
-        this.WidthRequest = 40d;
-        this.HeightRequest = 40d;
+        this.Clicked += (sender, e) => this.Command?.Execute(this.CommandParameter ?? e);
         this.drawable = new IconButtonDrawable(this);
     }
 
-    protected override void OnTouch(SKTouchEventArgs e)
-    {
-        if (e.ActionType == SKTouchAction.Pressed)
-        {
-            this.ControlState = ControlState.Pressed;
-            this.TouchPoint = e.Location;
-            this.StartRippleEffect();
-
-            this.Pressed?.Invoke(this, e);
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Released)
-        {
-#if WINDOWS || MACCATALYST
-            this.ControlState = ControlState.Hovered;
-#else
-            this.ControlState = ControlState.Normal;
-#endif
-            if (this.RipplePercent == 1f)
-            {
-                this.RipplePercent = 0f;
-            }
-            this.InvalidateSurface();
-
-            this.Clicked?.Invoke(this, e);
-            this.Command?.Execute(this.CommandParameter);
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Entered)
-        {
-            this.ControlState = ControlState.Hovered;
-            this.InvalidateSurface();
-        }
-        else if (e.ActionType == SKTouchAction.Cancelled || e.ActionType == SKTouchAction.Exited)
-        {
-            this.ControlState = ControlState.Normal;
-            this.InvalidateSurface();
-        }
-    }
-
-    private void StartRippleEffect()
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void StartRippleEffect()
     {
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
@@ -258,7 +177,7 @@ public partial class IconButton : SKCanvasView, IButton
         {
             if (this.ControlState != ControlState.Pressed)
             {
-                this.RipplePercent = 0;
+                this.RipplePercent = 0f;
                 this.InvalidateSurface();
             }
         }));
@@ -273,10 +192,9 @@ public partial class IconButton : SKCanvasView, IButton
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == "IsEnabled")
+        if (propertyName is "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.InvalidateSurface();
         }
     }
 }

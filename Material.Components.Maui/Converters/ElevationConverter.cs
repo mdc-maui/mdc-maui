@@ -9,12 +9,12 @@ public class ElevationConverter : TypeConverter
     {
         if (value is string text)
         {
-            if (text == "Level0") return Elevation.Level0;
-            else if (text == "Level1") return Elevation.Level1;
-            else if (text == "Level2") return Elevation.Level2;
-            else if (text == "Level3") return Elevation.Level3;
-            else if (text == "Level4") return Elevation.Level4;
-            else if (text == "Level5") return Elevation.Level5;
+            if (text is "Level0") return Elevation.Level0;
+            else if (text is "Level1") return Elevation.Level1;
+            else if (text is "Level2") return Elevation.Level2;
+            else if (text is "Level3") return Elevation.Level3;
+            else if (text is "Level4") return Elevation.Level4;
+            else if (text is "Level5") return Elevation.Level5;
             else if (int.TryParse(text, out var i32))
             {
                 return new Elevation(i32);

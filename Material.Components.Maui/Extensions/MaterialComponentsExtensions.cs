@@ -1,4 +1,5 @@
-﻿using MaterialColorUtilities.Schemes;
+﻿using Material.Components.Maui.Core;
+using MaterialColorUtilities.Schemes;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace Material.Components.Maui.Extensions;
@@ -14,7 +15,7 @@ public static class MaterialComponentsExtensions
         set
         {
             lightScheme = value;
-            if (Application.Current.RequestedTheme == AppTheme.Light)
+            if (Application.Current.RequestedTheme is AppTheme.Light)
             {
                 UpdateMaterialColors();
             }
@@ -28,7 +29,7 @@ public static class MaterialComponentsExtensions
         set
         {
             darkScheme = value;
-            if (Application.Current.RequestedTheme == AppTheme.Dark)
+            if (Application.Current.RequestedTheme is AppTheme.Dark)
             {
                 UpdateMaterialColors();
             }
@@ -41,12 +42,17 @@ public static class MaterialComponentsExtensions
         {
             FontMapper.AddFont(filename, "default");
         }
-        return builder.UseSkiaSharp();
+
+        return builder.ConfigureMauiHandlers((handlers) =>
+        {
+            handlers.AddHandler(typeof(ViewPager), typeof(ViewPagerHandler));
+        })
+        .UseSkiaSharp();
     }
 
     internal static void UpdateMaterialColors()
     {
-        var scheme = Application.Current.RequestedTheme == AppTheme.Light ? LightScheme : DarkScheme;
+        var scheme = Application.Current.RequestedTheme is AppTheme.Light ? LightScheme : DarkScheme;
         ColorRes["PrimaryColor"] = scheme.Primary;
         ColorRes["PrimaryContainerColor"] = scheme.PrimaryContainer;
         ColorRes["SecondaryColor"] = scheme.Secondary;
@@ -72,7 +78,8 @@ public static class MaterialComponentsExtensions
         ColorRes["OutlineColor"] = scheme.Outline;
         ColorRes["ShadowColor"] = scheme.Shadow;
         ColorRes["SurfaceTintColor"] = scheme.Primary;
-        ColorRes["InverseSurface"] = scheme.InverseSurface;
+        ColorRes["InversePrimaryColor"] = scheme.InversePrimary;
+        ColorRes["InverseSurfaceColor"] = scheme.InverseSurface;
         ColorRes["InverseOnSurfaceColor"] = scheme.InverseOnSurface;
     }
 
@@ -87,7 +94,7 @@ public static class MaterialComponentsExtensions
             foreach (var r in resources.MergedDictionaries)
             {
                 var result = r.FindStyle(key);
-                if (result is not null)
+                if (result != null)
                 {
                     return result;
                 }

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
-    x:Class="Material.Components.Maui.Styles.NavigationItemStyles"
+    x:Class="Material.Components.Maui.Styles.NavigationBarStyles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style x:Key="DefaultNavigationItemStyle" TargetType="views:NavigationItem">
+    <Style TargetType="views:NavigationBarItem">
         <Setter Property="EnableTouchEvents" Value="True" />
         <Setter Property="IgnorePixelScaling" Value="True" />
         <Setter Property="FontSize" Value="14" />
@@ -20,30 +20,15 @@
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
@@ -58,29 +43,23 @@
                     </VisualState>
                     <VisualState x:Name="normal:actived">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="hovered:actived">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed:actived">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
                             <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
@@ -98,7 +77,5 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-
-    <Style BaseResourceKey="DefaultNavigationItemStyle" TargetType="views:NavigationItem" />
 
 </ResourceDictionary>

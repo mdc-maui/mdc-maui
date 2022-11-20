@@ -7,20 +7,7 @@ public partial class MainPage : ContentPage
 {
     public MainPage()
     {
-        try
-        {
-            this.InitializeComponent();
-        }
-        catch (Exception)
-        {
-
-        }
-    }
-
-    private void Chip_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
-    {
-        var chip = sender as Chip;
-        chip.IsSelected = !chip.IsSelected;
+        this.InitializeComponent();
     }
 
     private void FAB_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
@@ -32,9 +19,15 @@ public partial class MainPage : ContentPage
     private void Button_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
     {
         Application.Current.UserAppTheme =
-            Application.Current.RequestedTheme == AppTheme.Light ?
-            AppTheme.Dark :
-            AppTheme.Light;
+           Application.Current.RequestedTheme is AppTheme.Light ?
+           AppTheme.Dark :
+           AppTheme.Light;
+    }
+
+    private void Chip_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
+    {
+        var chip = sender as Chip;
+        chip.IsChecked = !chip.IsChecked;
     }
 }
 

@@ -9,7 +9,7 @@
     <Color x:Key="SecondaryColor" />
     <Color x:Key="SecondaryContainerColor" />
     <Color x:Key="TertiaryColor" />
-    <Color x:Key="ErtiaryContainerColor" />
+    <Color x:Key="TertiaryContainerColor" />
     <Color x:Key="SurfaceColor" />
     <Color x:Key="SurfaceVariantColor" />
     <Color x:Key="BackgroundColor" />
@@ -27,7 +27,6 @@
     <Color x:Key="OnErrorContainerColor" />
     <Color x:Key="OnBackgroundColor" />
     <Color x:Key="OutlineColor" />
-    <Color x:Key="OutlineVariantColor" />
     <Color x:Key="ShadowColor" />
     <Color x:Key="SurfaceTintColor" />
     <Color x:Key="InverseSurfaceColor" />

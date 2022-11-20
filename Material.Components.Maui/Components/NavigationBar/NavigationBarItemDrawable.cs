@@ -1,16 +1,17 @@
-﻿namespace Material.Components.Maui.Core.NavigationBar;
+﻿using Svg.Skia;
 
-internal class NavigationItemDrawable
+namespace Material.Components.Maui.Core;
+
+internal class NavigationBarItemDrawable
 {
-    private readonly NavigationItem view;
-    internal NavigationItemDrawable(NavigationItem view)
+    private readonly NavigationBarItem view;
+    internal NavigationBarItemDrawable(NavigationBarItem view)
     {
         this.view = view;
     }
 
     internal void Draw(SKCanvas canvas, SKRect bounds)
     {
-        // this.view.ForegroundColor = MaterialColors.OnSurfaceVariant;
         canvas.Clear(this.view.BackgroundColour.ToSKColor());
         this.DrawOverlayLayer(canvas, bounds);
         this.DrawStateLayer(canvas, bounds);
@@ -32,8 +33,7 @@ internal class NavigationItemDrawable
     {
         if (!this.view.IsActived) return;
         canvas.Save();
-
-        var percent = this.view.RipplePercent == 0f ? 1f : this.view.RipplePercent;
+        var percent = this.view.RipplePercent is 0f ? 1f : this.view.RipplePercent;
         var _bounds = new SKRect
         {
             Left = (bounds.Width / 2) - 16 - (16 * percent),
@@ -42,7 +42,6 @@ internal class NavigationItemDrawable
             Bottom = this.view.HasLabel ? 44 : bounds.MidY + 16,
         };
         canvas.DrawBackground(_bounds, this.view.ActiveIndicatorColor, 16);
-
         canvas.Restore();
     }
 
@@ -56,7 +55,6 @@ internal class NavigationItemDrawable
     private void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         var _bounds = new SKRect
         {
             Left = (bounds.Width / 2) - 32,
@@ -66,39 +64,34 @@ internal class NavigationItemDrawable
         };
         var color = this.view.StateLayerColor.MultiplyAlpha(this.view.StateLayerOpacity);
         canvas.DrawBackground(_bounds, color, 16);
-
         canvas.Restore();
     }
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is not null || this.view.Icon == IconKind.None) return;
+        if (this.view.Image != null || this.view.Icon is IconKind.None) return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
             IsAntialias = true,
         };
-        if (!this.view.IsActived)
-        {
-            paint.IsStroke = true;
-            paint.StrokeWidth = 2f;
-        }
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
+        if (this.view.IsActived && this.view.ActivedIcon != IconKind.None)
+        {
+            path = SKPath.ParseSvgPathData(this.view.ActivedIcon.GetData());
+        }
         var x = (bounds.Width / 2) - 12;
         var y = this.view.HasLabel ? 16 : bounds.MidY - 12;
         path.Offset(x, y);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is null || this.view.Image is null) return;
+        if (this.view.Image is null) return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             IsAntialias = true,
@@ -106,11 +99,6 @@ internal class NavigationItemDrawable
                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
                 SKBlendMode.SrcIn)
         };
-        if (!this.view.IsActived)
-        {
-            paint.IsStroke = true;
-            paint.StrokeWidth = 2f;
-        }
         var scale = 24 / this.view.Image.CullRect.Width;
         var x = (bounds.Width / 2) - 12;
         var y = this.view.HasLabel ? 16 : bounds.MidY - 12;
@@ -122,8 +110,14 @@ internal class NavigationItemDrawable
             TransY = y,
             Persp2 = 1f
         };
-        canvas.DrawPicture(this.view.Image, ref matrix, paint);
-
+        if (this.view.IsActived && this.view.ActivedImage != null)
+        {
+            canvas.DrawPicture(this.view.ActivedImage, ref matrix, paint);
+        }
+        else
+        {
+            canvas.DrawPicture(this.view.Image, ref matrix, paint);
+        }
         canvas.Restore();
     }
 
@@ -131,12 +125,10 @@ internal class NavigationItemDrawable
     {
         if (!this.view.HasLabel) return;
         canvas.Save();
-
         this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
         var x = bounds.MidX - (this.view.TextBlock.MeasuredWidth / 2);
         var y = 48 + ((16 - this.view.TextBlock.MeasuredHeight) / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
-
         canvas.Restore();
     }
 

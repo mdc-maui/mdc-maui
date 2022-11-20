@@ -1,10 +1,10 @@
 ﻿using Svg.Skia;
 
-namespace Material.Components.Maui.Core.Button;
+namespace Material.Components.Maui.Core;
 internal class IconButtonDrawable : ButtonDrawable
 {
-    private readonly MIconButton view;
-    public IconButtonDrawable(MIconButton button) : base(button)
+    private readonly IconButton view;
+    public IconButtonDrawable(IconButton button) : base(button)
     {
         this.view = button;
     }
@@ -23,9 +23,8 @@ internal class IconButtonDrawable : ButtonDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is not null || this.view.Icon == IconKind.None) return;
+        if (this.view.Image != null || this.view.Icon == IconKind.None) return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
@@ -36,15 +35,13 @@ internal class IconButtonDrawable : ButtonDrawable
         var y = bounds.MidY - 12;
         path.Offset(x, y);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is not null || this.view.Image is null) return;
+        if (this.view.Image != null || this.view.Image == null) return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             IsAntialias = true,
@@ -64,7 +61,6 @@ internal class IconButtonDrawable : ButtonDrawable
             Persp2 = 1f
         };
         canvas.DrawPicture(this.view.Image, ref matrix, paint);
-
         canvas.Restore();
     }
 }

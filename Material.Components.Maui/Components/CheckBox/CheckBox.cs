@@ -1,22 +1,21 @@
-﻿using Material.Components.Maui.Core.CheckBox;
-using Material.Components.Maui.Core;
+﻿using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
-public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundElement, IRippleElement
+public partial class CheckBox : SKTouchCanvasView, IView, ITextElement, IForegroundElement, IRippleElement
 {
     #region interface
-
     #region IView
-
     private ControlState controlState = ControlState.Normal;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
-        private set
+        set
         {
             VisualStateManager.GoToState(this, value switch
             {
@@ -33,16 +32,16 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
     {
         this.InvalidateSurface();
     }
-
     #endregion
 
     #region ITextElement
-
     public static readonly BindableProperty TextProperty = TextElement.TextProperty;
     public static readonly BindableProperty FontFamilyProperty = TextElement.FontFamilyProperty;
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
@@ -72,20 +71,11 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
     }
     void ITextElement.OnTextBlockChanged()
     {
-        var width = 52d + this.Margin.HorizontalThickness;
-        var height = 48d + this.Margin.VerticalThickness;
-        if (!string.IsNullOrEmpty(this.Text))
-            width = this.TextBlock.MeasuredWidth + 66d;
-        this.WidthRequest = Math.Max(this.WidthRequest, width);
-        this.HeightRequest = Math.Max(this.HeightRequest, height);
-        this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-        this.InvalidateSurface();
+        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
     }
-
     #endregion
 
     #region IForegroundElement
-
     public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
     public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
@@ -98,11 +88,9 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
         get => (float)this.GetValue(ForegroundOpacityProperty);
         set => this.SetValue(ForegroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IStateLayerElement
-
     public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
     public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
@@ -115,26 +103,25 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
         get => (float)this.GetValue(StateLayerOpacityProperty);
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
-
     #endregion
 
     #region IRippleElement
-
     public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
-    public float RipplePercent { get; private set; } = 0f;
-    public SKPoint TouchPoint { get; private set; } = new SKPoint(-1, -1);
-
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float RipplePercent { get; set; } = 0f;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
+    #endregion
     #endregion
 
-    #endregion
-
-    [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
+    [AutoBindable(OnChanged = nameof(OnIsCheckedChanged))]
     private readonly bool isChecked;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
@@ -149,71 +136,38 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
     [AutoBindable(DefaultValue = "1f", OnChanged = nameof(OnPropertyChanged))]
     private readonly float markOpacity;
 
+    private void OnIsCheckedChanged()
+    {
+        this.StartChangingEffect();
+        this.CheckedChanged?.Invoke(this, new CheckedChangedEventArgs(this.IsChecked));
+        this.Command?.Execute(this.CommandParameter ?? this.IsChecked);
+    }
+
+    public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
+
     [AutoBindable]
     private readonly ICommand command;
 
     [AutoBindable]
     private readonly object commandParameter;
 
-    public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
-
-    public float ChangingPercent { get; private set; } = 1f;
+    internal float ChangingPercent { get; private set; } = 1f;
 
     private readonly CheckBoxDrawable drawable;
     private IAnimationManager animationManager;
 
+    private double widthConstraint = double.PositiveInfinity;
+    private double heightConstraint = double.PositiveInfinity;
+
     public CheckBox()
     {
-        this.MinimumWidthRequest = 52;
-        this.MinimumHeightRequest = 48;
+        this.Clicked += (sender, e) => this.IsChecked = !this.IsChecked;
         this.drawable = new CheckBoxDrawable(this);
-    }
-
-    protected override void OnTouch(SKTouchEventArgs e)
-    {
-        if (this.ControlState == ControlState.Disabled) return;
-
-        if (e.ActionType == SKTouchAction.Pressed)
-        {
-            this.ControlState = ControlState.Pressed;
-            this.StartRippleEffect();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Released)
-        {
-#if WINDOWS || MACCATALYST
-            this.ControlState = ControlState.Hovered;
-#else
-            this.ControlState = ControlState.Normal;
-#endif
-
-            this.IsChecked = !this.IsChecked;
-            this.StartChangingEffect();
-            if (this.RipplePercent == 1f)
-            {
-                this.RipplePercent = 0f;
-            }
-
-            this.InvalidateSurface();
-
-            this.Command?.Execute(this.CommandParameter);
-            this.CheckedChanged?.Invoke(this, new CheckedChangedEventArgs(this.IsChecked));
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Entered)
-        {
-            this.ControlState = ControlState.Hovered;
-            this.InvalidateSurface();
-        }
-        else if (e.ActionType == SKTouchAction.Cancelled || e.ActionType == SKTouchAction.Exited)
-        {
-            this.ControlState = ControlState.Normal;
-            this.InvalidateSurface();
-        }
     }
 
     private void StartChangingEffect()
     {
+        if (this.Handler is null) return;
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
         var end = this.IsChecked ? 1f : 0.9f;
@@ -234,7 +188,8 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
         }));
     }
 
-    private void StartRippleEffect()
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void StartRippleEffect()
     {
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = -1f;
@@ -251,7 +206,7 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
         {
             if (this.ControlState != ControlState.Pressed)
             {
-                this.RipplePercent = 0;
+                this.RipplePercent = 0f;
                 this.InvalidateSurface();
             }
         }));
@@ -263,13 +218,40 @@ public partial class CheckBox : SKCanvasView, IView, ITextElement, IForegroundEl
         this.drawable.Draw(e.Surface.Canvas, bounds);
     }
 
+    protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
+    {
+        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity);
+        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity);
+        this.TextBlock.MaxWidth = (float)(maxWidth - 66d);
+        this.TextBlock.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
+        var width = this.HorizontalOptions.Alignment is LayoutAlignment.Fill
+            ? maxWidth
+            : this.Margin.HorizontalThickness + Math.Max(this.MinimumWidthRequest, this.WidthRequest is -1
+                ? Math.Min(maxWidth, string.IsNullOrEmpty(this.Text) ? 52d : this.TextBlock.MeasuredWidth + 66d)
+                : this.WidthRequest);
+        var height = this.VerticalOptions.Alignment is LayoutAlignment.Fill
+            ? maxHeight
+            : this.Margin.VerticalThickness + Math.Max(this.MinimumHeightRequest, this.HeightRequest is -1
+                ? Math.Min(maxHeight, 48d)
+                : this.HeightRequest);
+        var result = new Size(width, height);
+        this.DesiredSize = result;
+        return result;
+    }
+
+    protected override Size ArrangeOverride(Rect bounds)
+    {
+        this.widthConstraint = bounds.Width;
+        this.heightConstraint = bounds.Height;
+        return base.ArrangeOverride(bounds);
+    }
+
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == "IsEnabled")
+        if (propertyName is "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.InvalidateSurface();
         }
     }
 }

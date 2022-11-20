@@ -2,7 +2,6 @@
 using Material.Components.Maui.Extensions;
 using Material.Components.Maui.Tokens;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.LifecycleEvents;
 
 #if WINDOWS
 using Microsoft.UI;
@@ -32,22 +31,22 @@ public static class MauiProgram
         FontMapper.AddFont("OpenSans-Regular.ttf", "OpenSans");
 
 #if WINDOWS
-        builder.ConfigureLifecycleEvents(events =>
-        {
-            events.AddWindows(wndLifeCycleBuilder =>
-            {
-                wndLifeCycleBuilder.OnWindowCreated(window =>
-                {
-                    var nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                    var win32WindowsId = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
-                    var winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);
+        //builder.ConfigureLifecycleEvents(events =>
+        //{
+        //    events.AddWindows(wndLifeCycleBuilder =>
+        //    {
+        //        wndLifeCycleBuilder.OnWindowCreated(window =>
+        //        {
+        //            var nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+        //            var win32WindowsId = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
+        //            var winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);
 
-                    var width = 450;
-                    var height = 800;
-                    winuiAppWindow.MoveAndResize(new RectInt32((1920 / 2) - (width / 2), (1080 / 2) - (height / 2), width, height));
-                });
-            });
-        });
+        //            var width = 450;
+        //            var height = 800;
+        //            winuiAppWindow.MoveAndResize(new RectInt32((1920 / 2) - (width / 2), (1080 / 2) - (height / 2), width, height));
+        //        });
+        //    });
+        //});
 #endif
 
 

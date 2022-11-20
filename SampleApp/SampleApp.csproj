@@ -69,11 +69,20 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="1.1.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0-rc.1.22426.10" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0-rc.2.22472.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Material.Components.Maui\Material.Components.Maui.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="FlyoutMenuPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="TodoListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

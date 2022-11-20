@@ -1,4 +1,4 @@
-﻿namespace Material.Components.Maui.Core.Button;
+﻿namespace Material.Components.Maui.Core;
 internal abstract class ButtonDrawable
 {
     private readonly IButton view;
@@ -19,7 +19,7 @@ internal abstract class ButtonDrawable
 
     internal void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
-#if WINDOWS || MACCATALYST
+#if !__MOBILE__
         if (this.view.StateLayerOpacity != 0f)
         {
             var color = this.view.StateLayerColor.MultiplyAlpha(this.view.StateLayerOpacity);

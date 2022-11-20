@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.ProgressIndicatorStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style TargetType="views:ProgressIndicator">
+        <Setter Property="IgnorePixelScaling" Value="True" />
+        <Setter Property="IndicatorType" Value="Circular" />
+        <Setter Property="IsIndeterminate" Value="True" />
+        <Setter Property="WidthRequest" Value="48" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="BackgroundColour" Value="Transparent" />
+    </Style>
+
+    <Style x:Key="CircularProgressIndicatorStyle" TargetType="views:ProgressIndicator" />
+
+    <Style x:Key="LinearProgressIndicatorStyle" TargetType="views:ProgressIndicator">
+        <Setter Property="IndicatorType" Value="Linear" />
+        <Setter Property="WidthRequest" Value="200" />
+        <Setter Property="HeightRequest" Value="4" />
+        <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />
+    </Style>
+
+</ResourceDictionary>

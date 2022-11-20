@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace Material.Components.Maui.Tokens;
 
 [TypeConverter(typeof(ElevationConverter))]
-public struct Elevation
+public readonly struct Elevation
 {
     public static readonly Elevation Level0 = 0;
     public static readonly Elevation Level1 = 1;

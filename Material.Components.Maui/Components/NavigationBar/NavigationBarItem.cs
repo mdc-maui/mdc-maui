@@ -1,24 +1,23 @@
-﻿using Material.Components.Maui.Core;
-using Material.Components.Maui.Core.NavigationBar;
-using Material.Components.Maui.Converters;
+﻿using Material.Components.Maui.Converters;
+using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageElement, IForegroundElement, IBackgroundElement, IStateLayerElement, IRippleElement
+public partial class NavigationBarItem : SKTouchCanvasView, IView, ITextElement, IImageElement, IForegroundElement, IBackgroundElement, IStateLayerElement, IRippleElement, IVisualTreeElement
 {
     #region interface
-
     #region IView
-
     private ControlState controlState = ControlState.Normal;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
-        private set
+        set
         {
             VisualStateManager.GoToState(this, value switch
             {
@@ -35,16 +34,15 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
     {
         this.InvalidateSurface();
     }
-
     #endregion
 
     #region ITextElement
-
     public static readonly BindableProperty TextProperty = TextElement.TextProperty;
     public static readonly BindableProperty FontFamilyProperty = TextElement.FontFamilyProperty;
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
@@ -76,11 +74,9 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
     {
         this.InvalidateSurface();
     }
-
     #endregion
 
     #region IImageElement
-
     public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
     public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
     public IconKind Icon
@@ -88,18 +84,15 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
-
-    [System.ComponentModel.TypeConverter(typeof(ImageConverter))]
+    [TypeConverter(typeof(ImageConverter))]
     public SKPicture Image
     {
         get => (SKPicture)this.GetValue(ImageProperty);
         set => this.SetValue(ImageProperty, value);
     }
-
     #endregion
 
     #region IForegroundElement
-
     public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
     public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
@@ -112,11 +105,9 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
         get => (float)this.GetValue(ForegroundOpacityProperty);
         set => this.SetValue(ForegroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IBackgroundElement
-
     public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
     public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
@@ -129,11 +120,9 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
         get => (float)this.GetValue(BackgroundOpacityProperty);
         set => this.SetValue(BackgroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IStateLayerElement
-
     public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
     public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
@@ -146,27 +135,26 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
         get => (float)this.GetValue(StateLayerOpacityProperty);
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
-
     #endregion
 
     #region IRippleElement
-
     public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
-    public float RipplePercent { get; private set; } = 0f;
-    public SKPoint TouchPoint { get; private set; } = new SKPoint(-1, -1);
-
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float RipplePercent { get; set; } = 0f;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
-
     #endregion
 
     [AutoBindable]
-    private readonly View content;
+    private readonly Page content;
 
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnPropertyChanged))]
     private readonly bool hasLabel;
@@ -174,65 +162,44 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
     [AutoBindable(OnChanged = nameof(OnIsActivedChanged))]
     public bool isActived;
 
+    [AutoBindable(DefaultValue = "Material.Components.Maui.Tokens.IconKind.None", OnChanged = nameof(OnPropertyChanged))]
+    private readonly IconKind activedIcon;
+
+    [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
+    private readonly SKPicture activedImage;
+
     [AutoBindable]
     private readonly Color activeIndicatorColor;
 
     private void OnIsActivedChanged()
     {
-        this.Content.IsVisible = this.IsActived;
+        VisualStateManager.GoToState(this, this.ControlState switch
+        {
+            ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
+            ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
+            ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        });
         this.InvalidateSurface();
+        IsActivedChanged?.Invoke(this, new ValueChangedEventArgs(this.IsActived));
     }
 
-    public event EventHandler<SKTouchEventArgs> Clicked;
-    public float ChangingPercent { get; private set; } = 1f;
+    public event EventHandler<ValueChangedEventArgs> IsActivedChanged;
 
-    private readonly NavigationItemDrawable drawable;
+
+    internal float ChangingPercent { get; private set; } = 1f;
+
+    private readonly NavigationBarItemDrawable drawable;
     private IAnimationManager animationManager;
 
-    public NavigationItem()
+    public NavigationBarItem()
     {
-        this.drawable = new NavigationItemDrawable(this);
+        this.drawable = new NavigationBarItemDrawable(this);
     }
 
-    protected override void OnTouch(SKTouchEventArgs e)
-    {
-        if (e.ActionType == SKTouchAction.Pressed)
-        {
-            this.ControlState = ControlState.Pressed;
-            this.StartRippleEffect();
-            e.Handled = true;
-        }
-        if (e.ActionType == SKTouchAction.Released)
-        {
-#if WINDOWS || MACCATALYST
-            this.ControlState = ControlState.Hovered;
-#else
-            this.ControlState = ControlState.Normal;
-#endif
-            if (this.RipplePercent == 1f)
-            {
-                this.RipplePercent = 0f;
-            }
-            this.InvalidateSurface();
-
-            this.Clicked?.Invoke(this, e);
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Entered)
-        {
-            this.ControlState = ControlState.Hovered;
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Exited)
-        {
-            this.ControlState = ControlState.Normal;
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
-    }
-
-    private void StartRippleEffect()
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void StartRippleEffect()
     {
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
@@ -264,10 +231,14 @@ public partial class NavigationItem : SKCanvasView, IView, ITextElement, IImageE
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == "IsEnabled")
+        if (propertyName is "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.InvalidateSurface();
         }
     }
+
+
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<Page> { this.Content };
+
+    public IVisualTreeElement GetVisualParent() => this.Window;
 }

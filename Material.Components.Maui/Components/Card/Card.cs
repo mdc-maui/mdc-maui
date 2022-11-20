@@ -1,22 +1,21 @@
-﻿using Material.Components.Maui.Core.Card;
-using Material.Components.Maui.Core;
+﻿using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class Card : TemplatedView, IView, IShapeElement, IElevationElement, IRippleElement, IBackgroundElement, IStateLayerElement, IOutlineElement
+public partial class Card : TemplatedView, IView, IShapeElement, IElevationElement, IRippleElement, IBackgroundElement, IStateLayerElement, IOutlineElement, IVisualTreeElement
 {
     #region interface
-
     #region IView
-
     private ControlState controlState = ControlState.Normal;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
-        private set
+        set
         {
             VisualStateManager.GoToState(this, value switch
             {
@@ -31,13 +30,11 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
     }
     public void OnPropertyChanged()
     {
-        this.PART_Card?.InvalidateSurface();
+        this.PART_Container?.InvalidateSurface();
     }
-
     #endregion
 
     #region IBackgroundElement
-
     public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
     public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
@@ -50,11 +47,9 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
         get => (float)this.GetValue(BackgroundOpacityProperty);
         set => this.SetValue(BackgroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IOutlineElement
-
     public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
     public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
@@ -73,33 +68,27 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
         get => (float)this.GetValue(OutlineOpacityProperty);
         set => this.SetValue(OutlineOpacityProperty, value);
     }
-
     #endregion
 
     #region IElevationElement
-
     public static readonly BindableProperty ElevationProperty = ElevationElement.ElevationProperty;
     public Elevation Elevation
     {
         get => (Elevation)this.GetValue(ElevationProperty);
         set => this.SetValue(ElevationProperty, value);
     }
-
     #endregion
 
     #region IShapeElement
-
     public static readonly BindableProperty ShapeProperty = ShapeElement.ShapeProperty;
     public Shape Shape
     {
         get => (Shape)this.GetValue(ShapeProperty);
         set => this.SetValue(ShapeProperty, value);
     }
-
     #endregion
 
     #region IStateLayerElement
-
     public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
     public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
@@ -112,25 +101,23 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
         get => (float)this.GetValue(StateLayerOpacityProperty);
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
-
     #endregion
 
     #region IRippleElement
-
     public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
-    public float RipplePercent { get; private set; } = 0f;
-    public SKPoint TouchPoint { get; private set; } = new SKPoint(-1, -1);
-
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float RipplePercent { get; set; } = 0f;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
-
     #endregion
-
 
     [AutoBindable(OnChanged = nameof(OnContentChanged))]
     private readonly View content;
@@ -138,10 +125,10 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
     [AutoBindable(DefaultValue = "true")]
     private readonly bool enableTouchEvents;
 
-    [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "LayoutOptions.Center", OnChanged = nameof(OnHorizontalOptionsChanged))]
+    [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnHorizontalOptionsChanged))]
     private readonly LayoutOptions horizontalOptions;
 
-    [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "LayoutOptions.Center", OnChanged = nameof(OnVerticalOptionsChanged))]
+    [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnVerticalOptionsChanged))]
     private readonly LayoutOptions verticalOptions;
 
     [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnWidthRequestChanged))]
@@ -158,17 +145,17 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
     private void OnHorizontalOptionsChanged()
     {
         base.HorizontalOptions = this.HorizontalOptions;
-        if (this.PART_Root is not null)
+        if (this.PART_Root != null)
         {
             this.PART_Root.HorizontalOptions = this.HorizontalOptions;
-            this.PART_Card?.InvalidateSurface();
+            this.PART_Container?.InvalidateSurface();
         }
     }
 
     private void OnVerticalOptionsChanged()
     {
         base.VerticalOptions = this.VerticalOptions;
-        if (this.PART_Root is not null)
+        if (this.PART_Root != null)
         {
             this.PART_Root.VerticalOptions = this.VerticalOptions;
         }
@@ -177,17 +164,17 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
     private void OnWidthRequestChanged()
     {
         base.WidthRequest = this.WidthRequest;
-        if (this.PART_Root is not null)
+        if (this.PART_Root != null)
         {
             this.PART_Root.WidthRequest = this.WidthRequest;
-            this.PART_Card?.InvalidateSurface();
+            this.PART_Container?.InvalidateSurface();
         }
     }
 
     private void OnHeightRequestChanged()
     {
         base.WidthRequest = this.WidthRequest;
-        if (this.PART_Root is not null)
+        if (this.PART_Root != null)
         {
             this.PART_Root.HeightRequest = this.HeightRequest;
         }
@@ -195,83 +182,43 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
 
     private void OnPaddingChanged()
     {
-        if (this.PART_Root is not null)
+        if (this.PART_Root != null)
         {
             this.PART_Content.Padding = this.Padding;
         }
     }
 
     private readonly Grid PART_Root;
-    private readonly SKCanvasView PART_Card;
-    private readonly ContentPresenter PART_Content;
+    private readonly SKTouchCanvasView PART_Container;
+    private readonly ContentPresenter PART_Content = new();
     private readonly CardDrawable drawable;
     private IAnimationManager animationManager;
 
     public Card()
     {
-        this.PART_Card = new SKCanvasView
+        this.PART_Container = new SKTouchCanvasView
         {
             EnableTouchEvents = true,
             IgnorePixelScaling = true,
         };
 
-        this.PART_Card.Touch += this.OnTouch;
-        this.PART_Card.PaintSurface += this.OnPaintSurface;
-        this.PART_Content = new ContentPresenter();
+        this.PART_Container.PaintSurface += this.OnPaintSurface;
         this.PART_Root = new Grid
         {
             HorizontalOptions = this.HorizontalOptions,
             VerticalOptions = this.VerticalOptions,
             Children =
             {
-                this.PART_Card,
+                this.PART_Container,
                 this.PART_Content
             }
         };
-
         this.ControlTemplate = new ControlTemplate(() => this.PART_Root);
         this.drawable = new CardDrawable(this);
     }
 
-    private void OnTouch(object sender, SKTouchEventArgs e)
-    {
-        if (this.ControlState != ControlState.Disabled)
-        {
-            if (e.ActionType == SKTouchAction.Pressed)
-            {
-                this.ControlState = ControlState.Pressed;
-                this.TouchPoint = e.Location;
-                this.StartRippleEffect();
-            }
-            else if (e.ActionType == SKTouchAction.Released)
-            {
-#if WINDOWS || MACCATALYST
-                this.ControlState = ControlState.Hovered;
-#else
-                this.ControlState = ControlState.Normal;
-#endif
-
-                if (this.RipplePercent == 1f)
-                {
-                    this.RipplePercent = 0f;
-                }
-                this.PART_Card.InvalidateSurface();
-            }
-            else if (e.ActionType == SKTouchAction.Entered)
-            {
-                this.ControlState = ControlState.Hovered;
-                this.PART_Card.InvalidateSurface();
-            }
-            else if (e.ActionType == SKTouchAction.Cancelled || e.ActionType == SKTouchAction.Exited)
-            {
-                this.ControlState = ControlState.Normal;
-                this.PART_Card.InvalidateSurface();
-            }
-            e.Handled = true;
-        }
-    }
-
-    private void StartRippleEffect()
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void StartRippleEffect()
     {
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
@@ -281,7 +228,7 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
         this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
         {
             this.RipplePercent = start.Lerp(end, progress);
-            this.PART_Card.InvalidateSurface();
+            this.PART_Container.InvalidateSurface();
         },
         duration: 0.35f,
         easing: Easing.SinInOut,
@@ -289,8 +236,8 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
         {
             if (this.ControlState != ControlState.Pressed)
             {
-                this.RipplePercent = 0;
-                this.PART_Card.InvalidateSurface();
+                this.RipplePercent = 0f;
+                this.PART_Container.InvalidateSurface();
             }
         }));
     }
@@ -304,10 +251,17 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == "IsEnabled")
+        if (propertyName is "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.PART_Card.InvalidateSurface();
+        }
+        else if (propertyName is "Padding")
+        {
+            this.PART_Content.Padding = this.Padding;
         }
     }
+
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<View> { this.Content };
+
+    public IVisualTreeElement GetVisualParent() => this.Window;
 }

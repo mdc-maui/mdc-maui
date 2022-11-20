@@ -1,4 +1,4 @@
-﻿namespace Material.Components.Maui.Core.RadioButton;
+﻿namespace Material.Components.Maui.Core;
 internal class RadioButtonItemDrawable
 {
     private readonly RadioButtonItem view;
@@ -20,7 +20,6 @@ internal class RadioButtonItemDrawable
     private void DrawRing(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         var color = this.view.IsSelected ? this.view.OnColor : this.view.ForegroundColor;
         var paint = new SKPaint
         {
@@ -32,7 +31,6 @@ internal class RadioButtonItemDrawable
         var path = new SKPath();
         path.AddCircle(bounds.Left + 20, bounds.MidY, 10 * this.view.ChangingPercent);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
@@ -40,7 +38,6 @@ internal class RadioButtonItemDrawable
     {
         if (!this.view.IsSelected) return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.OnColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
@@ -49,13 +46,12 @@ internal class RadioButtonItemDrawable
         var path = new SKPath();
         path.AddCircle(bounds.Left + 20, bounds.MidY, 6 + (4 * (1 - this.view.ChangingPercent)));
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     private void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
-#if WINDOWS || MACCATALYST
+#if !__MOBILE__
         if (this.view.StateLayerOpacity != 0f)
         {
             var _bounds = new SKRect(bounds.Left, bounds.Top, bounds.Left + 40, bounds.Bottom);
@@ -69,12 +65,10 @@ internal class RadioButtonItemDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
         var x = bounds.Left + 46;
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
-
         canvas.Restore();
     }
 

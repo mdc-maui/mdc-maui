@@ -1,33 +1,73 @@
 ﻿using CommunityToolkit.Maui.Markup;
-using Material.Components.Maui.Core.NavigationBar;
+using Material.Components.Maui.Core;
+using System.Runtime.Versioning;
+using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class NavigationBar : ContentView
+public partial class NavigationBar : ContentView, IVisualTreeElement
 {
     private static readonly BindablePropertyKey ItemsPropertyKey =
         BindableProperty.CreateReadOnly(
             nameof(Items),
-            typeof(NavigationItemCollection),
+            typeof(ItemCollection<NavigationBarItem>),
             typeof(NavigationBar),
             null,
-            defaultValueCreator: bo =>
-                new NavigationItemCollection { Inner = ((NavigationBar)bo).PART_Bar });
+            defaultValueCreator: bo => new ItemCollection<NavigationBarItem>());
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
 
-    public NavigationItemCollection Items
+    public ItemCollection<NavigationBarItem> Items
     {
-        get => (NavigationItemCollection)this.GetValue(ItemsProperty);
+        get => (ItemCollection<NavigationBarItem>)this.GetValue(ItemsProperty);
         set => this.SetValue(ItemsProperty, value);
     }
 
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnHasLabelChanged))]
     private readonly bool hasLabel;
 
-    [AutoBindable(OnChanged = nameof(OnPositionChanged))]
-    private readonly int position;
+    [AutoBindable(OnChanged = nameof(OnSelectedIndexChanged))]
+    private readonly int selectedIndex;
+
+    [SupportedOSPlatform("android")]
+    public static readonly BindableProperty UserInputEnabledProperty = BindableProperty.Create(
+        nameof(UserInputEnabled),
+        typeof(bool),
+        typeof(NavigationBar),
+        false,
+         propertyChanged: OnUserInputEnabledChanged);
+
+    [SupportedOSPlatform("android")]
+    public bool UserInputEnabled
+    {
+        get => (bool)this.GetValue(UserInputEnabledProperty);
+        set => this.SetValue(UserInputEnabledProperty, value);
+    }
+
+    [SupportedOSPlatform("android")]
+    private static void OnUserInputEnabledChanged(BindableObject bo, object oldValue, object NewValue)
+    {
+        ((NavigationBar)bo).PART_Content.UserInputEnabled = (bool)NewValue;
+    }
+
+    [AutoBindable]
+    private readonly ICommand command;
+    [AutoBindable]
+    private readonly object commandParameter;
+
+    public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
+
+    private void OnSelectedIndexChanged()
+    {
+        for (int i = 0; i < this.Items.Count; i++)
+        {
+            this.Items[i].IsActived = i == this.SelectedIndex;
+        }
+        this.PART_Content.SelectedIndex = this.SelectedIndex;
+        SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(this.SelectedIndex));
+        this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
+    }
 
     private void OnHasLabelChanged()
     {
@@ -38,20 +78,25 @@ public partial class NavigationBar : ContentView
         }
     }
 
-    private void OnPositionChanged()
-    {
-        this.Items.ChangePosition(this.Position);
-    }
-
-    private readonly Grid PART_Content;
+    private readonly ViewPager PART_Content;
     private readonly Grid PART_Bar;
 
     public NavigationBar()
     {
-        this.PART_Content = new Grid();
+        this.Items.OnAdded += this.OnItemsAdded;
+        this.Items.OnRemoved += this.OnItemsRemoved;
+        this.Items.OnCleared += this.OnItemsCleared;
+
+        this.PART_Content = new ViewPager();
+        this.PART_Content.SelectedIndexChanged += (sender, e) =>
+        {
+            this.SetValue(SelectedIndexProperty, e.SelectedIndex);
+            for (int i = 0; i < this.Items.Count; i++)
+            {
+                this.Items[i].IsActived = i == e.SelectedIndex;
+            }
+        };
         this.PART_Bar = new Grid { HeightRequest = 80 };
-        this.PART_Bar.ChildAdded += this.OnItemsAdded;
-        this.PART_Bar.ChildRemoved += this.OnItemsRemoved;
 
         this.Content = new Grid
         {
@@ -66,34 +111,51 @@ public partial class NavigationBar : ContentView
                 this.PART_Bar.Row(1)
             }
         };
-
-
     }
 
-    private void OnItemsAdded(object sender, ElementEventArgs e)
+    private void OnItemsAdded(object sender, ItemsChangedEventArgs<NavigationBarItem> e)
     {
-        if (e.Element is NavigationItem item)
+        var index = e.Index;
+        var item = this.Items[index];
+        item.IsActived = index == this.SelectedIndex;
+        this.PART_Bar.ColumnDefinitions.Insert(index, new ColumnDefinition(GridLength.Star));
+        item.Column(index);
+        this.PART_Bar.Insert(index, item);
+        this.PART_Content.Items.Insert(index, item.Content);
+        item.HasLabel = this.HasLabel;
+        item.Clicked += (sender, e) =>
         {
-            this.PART_Content.Add(item.Content);
-            item.HasLabel = this.HasLabel;
-            item.Clicked += (sender, e) =>
-            {
-                this.Position = this.Items.IndexOf((NavigationItem)sender);
-            };
-        }
-    }
+            this.SelectedIndex = this.Items.IndexOf((NavigationBarItem)sender);
+        };
 
-    private void OnItemsRemoved(object sender, ElementEventArgs e)
-    {
-        if (e.Element is NavigationItem item)
+        if (e.EventType is "Insert")
         {
-            this.PART_Content.Remove(item.Content);
-            this.PART_Bar.ColumnDefinitions.Clear();
-            for (int i = 0; i < this.Items.Count; i++)
+            for (int i = index + 1; i < this.PART_Bar.ColumnDefinitions.Count; i++)
             {
-                this.PART_Bar.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
-                this.Items[i].SetValue(Grid.ColumnProperty, i);
+                this.Items[i].Column(i);
             }
         }
     }
+
+    private void OnItemsRemoved(object sender, ItemsChangedEventArgs<NavigationBarItem> e)
+    {
+        var item = this.Items[e.Index];
+        this.PART_Bar.Remove(item);
+        this.PART_Content.Items.Remove(item.Content);
+        this.PART_Bar.ColumnDefinitions.Clear();
+        for (int i = 0; i < this.Items.Count; i++)
+        {
+            this.PART_Bar.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+            this.Items[i].Column(i);
+        }
+    }
+
+    private void OnItemsCleared(object sender, EventArgs e)
+    {
+        this.PART_Bar.Clear();
+        this.PART_Content.Items.Clear();
+    }
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
+
+    public IVisualTreeElement GetVisualParent() => this.Window;
 }

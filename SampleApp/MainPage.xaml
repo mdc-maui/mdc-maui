@@ -6,312 +6,352 @@
     xmlns:local="clr-namespace:SampleApp"
     xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
 
-    <ContentPage.Resources>
-        <Style BasedOn="{StaticResource DefaultLabelStyle}" TargetType="md:Label">
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="MinimumWidthRequest" Value="90" />
-        </Style>
-    </ContentPage.Resources>
-
     <md:NavigationBar>
-        <md:NavigationItem Icon="Star" Text="Contorls">
-            <ScrollView>
-                <VerticalStackLayout
-                    Padding="20"
-                    BackgroundColor="{DynamicResource BackgroundColor}"
-                    Spacing="20">
-                    <md:Label
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="Button" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Filled" />
-                        <md:Button Text="button" />
-                        <md:Button Icon="Edit" Text="button1" />
-                    </HorizontalStackLayout>
+        <md:NavigationBarItem Icon="Star" Text="Contorls">
+            <ContentPage>
+                <ScrollView>
+                    <VerticalStackLayout
+                        Padding="20"
+                        BackgroundColor="{DynamicResource BackgroundColor}"
+                        Spacing="20">
+                        <md:Label
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="Button" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Filled" />
+                            <md:Button Text="button" />
+                            <md:Button Icon="Edit" Text="button1" />
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Elevated" />
-                        <md:Button Style="{DynamicResource ElevatedButtonStyle}" Text="button" />
-                        <md:Button
-                            Icon="Edit"
-                            Style="{DynamicResource ElevatedButtonStyle}"
-                            Text="button" />
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Elevated" />
+                            <md:Button Style="{DynamicResource ElevatedButtonStyle}" Text="button" />
+                            <md:Button
+                                Icon="Edit"
+                                Style="{DynamicResource ElevatedButtonStyle}"
+                                Text="button" />
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="FilledTonal" />
-                        <md:Button Style="{DynamicResource FilledTonalButtonStyle}" Text="button" />
-                        <md:Button
-                            Icon="Edit"
-                            Style="{DynamicResource FilledTonalButtonStyle}"
-                            Text="button" />
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="FilledTonal" />
+                            <md:Button Style="{DynamicResource FilledTonalButtonStyle}" Text="button" />
+                            <md:Button
+                                Icon="Edit"
+                                Style="{DynamicResource FilledTonalButtonStyle}"
+                                Text="button" />
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Outlined" />
-                        <md:Button Style="{DynamicResource OutlinedButtonStyle}" Text="button" />
-                        <md:Button
-                            Icon="Edit"
-                            Style="{DynamicResource OutlinedButtonStyle}"
-                            Text="button" />
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Outlined" />
+                            <md:Button Style="{DynamicResource OutlinedButtonStyle}" Text="button" />
+                            <md:Button
+                                Icon="Edit"
+                                Style="{DynamicResource OutlinedButtonStyle}"
+                                Text="button" />
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Text" />
-                        <md:Button Style="{DynamicResource TextButtonStyle}" Text="button" />
-                    </HorizontalStackLayout>
-
-
-                    <md:Label
-                        Margin="0,20,0,0"
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="IconButton" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Filled" />
-                        <md:IconButton Icon="Undo" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="FilledTonal" />
-                        <md:IconButton Icon="Undo" Style="{DynamicResource FilledTonalIconButtonStyle}" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Outlined" />
-                        <md:IconButton Icon="Redo" Style="{DynamicResource OutlinedIconButtonStyle}" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Standard" />
-                        <md:IconButton Icon="Redo" Style="{DynamicResource StandardIconButtonStyle}" />
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Text" />
+                            <md:Button Style="{DynamicResource TextButtonStyle}" Text="button" />
+                        </HorizontalStackLayout>
 
 
-                    <md:Label
-                        Margin="0,20,0,0"
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="Chip" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Assist" />
-                        <md:Chip Icon="Car" Text="chip" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="AssistElevated" />
-                        <md:Chip
-                            Icon="Car"
-                            Style="{DynamicResource AssistElevatedChipStyle}"
-                            Text="chip" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Filter" />
-                        <md:Chip
-                            Clicked="Chip_Clicked"
-                            Style="{DynamicResource FilterChipStyle}"
-                            Text="chip" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="FilterElevated" />
-                        <md:Chip
-                            Clicked="Chip_Clicked"
-                            Style="{DynamicResource FilterElevatedChipStyle}"
-                            Text="chip" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Input" />
-                        <md:Chip
-                            Icon="Car"
-                            Style="{DynamicResource InputChipStyle}"
-                            Text="chip" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Suggestion" />
-                        <md:Chip Style="{DynamicResource SuggestionChipStyle}" Text="chip" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="SuggestionElevated" />
-                        <md:Chip
-                            HasIcon="True"
-                            Icon="Car"
-                            Style="{DynamicResource SuggestionElevatedChipStyle}"
-                            Text="chip" />
-                    </HorizontalStackLayout>
+                        <md:Label
+                            Margin="0,20,0,0"
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="IconButton" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Filled" />
+                            <md:IconButton Icon="Undo" />
+                        </HorizontalStackLayout>
 
-                    <md:Label
-                        Margin="0,20,0,0"
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="CheckBox" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Default" />
-                        <md:CheckBox IsChecked="True" Text="CheckBox" />
-                    </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="FilledTonal" />
+                            <md:IconButton Icon="Undo" Style="{DynamicResource FilledTonalIconButtonStyle}" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Outlined" />
+                            <md:IconButton Icon="Redo" Style="{DynamicResource OutlinedIconButtonStyle}" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Standard" />
+                            <md:IconButton Icon="Redo" Style="{DynamicResource StandardIconButtonStyle}" />
+                        </HorizontalStackLayout>
 
 
-                    <md:Label
-                        Margin="0,20,0,0"
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="ComboBox" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Filled" />
-                        <md:ComboBox LabelText="label text">
-                            <md:ComboBoxItem Text="item 1" />
-                            <md:ComboBoxItem Text="item 2" />
-                            <md:ComboBoxItem Text="item 3" />
-                        </md:ComboBox>
-                    </HorizontalStackLayout>
+                        <md:Label
+                            Margin="0,20,0,0"
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="Chip" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Assist" />
+                            <md:Chip Icon="Car" Text="chip" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="AssistElevated" />
+                            <md:Chip
+                                Icon="Car"
+                                Style="{DynamicResource AssistElevatedChipStyle}"
+                                Text="chip" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Filter" />
+                            <md:Chip
+                                Clicked="Chip_Clicked"
+                                Style="{DynamicResource FilterChipStyle}"
+                                Text="chip" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="FilterElevated" />
+                            <md:Chip
+                                Clicked="Chip_Clicked"
+                                Style="{DynamicResource FilterElevatedChipStyle}"
+                                Text="chip" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Input" />
+                            <md:Chip
+                                Icon="Car"
+                                Style="{DynamicResource InputChipStyle}"
+                                Text="chip" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Suggestion" />
+                            <md:Chip Style="{DynamicResource SuggestionChipStyle}" Text="chip" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="SuggestionElevated" />
+                            <md:Chip
+                                HasIcon="True"
+                                Icon="Car"
+                                Style="{DynamicResource SuggestionElevatedChipStyle}"
+                                Text="chip" />
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Outlined" />
-                        <md:ComboBox LabelText="label text" Style="{DynamicResource OutlinedComboBoxStyle}">
-                            <md:ComboBoxItem Text="item 1" />
-                            <md:ComboBoxItem Text="item 2" />
-                            <md:ComboBoxItem Text="item 3" />
-                        </md:ComboBox>
-                    </HorizontalStackLayout>
+                        <md:Label
+                            Margin="0,20,0,0"
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="CheckBox" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Default" />
+                            <md:CheckBox IsChecked="True" Text="CheckBox" />
+                        </HorizontalStackLayout>
 
-                    <md:Label
-                        Margin="0,20,0,0"
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="RadioButton" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Vertical" />
-                        <md:RadioButton>
-                            <md:RadioButtonItem Text="item 1" />
-                            <md:RadioButtonItem Text="item 2" />
-                            <md:RadioButtonItem Text="item 3" />
-                        </md:RadioButton>
-                    </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Horizontal" />
-                        <md:RadioButton Orientation="Horizontal">
-                            <md:RadioButtonItem Text="item 1" />
-                            <md:RadioButtonItem Text="item 2" />
-                        </md:RadioButton>
-                    </HorizontalStackLayout>
+                        <md:Label
+                            Margin="0,20,0,0"
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="ComboBox" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Filled" />
+                            <md:ComboBox LabelText="label text">
+                                <md:ComboBoxItem Text="item 1" />
+                                <md:ComboBoxItem Text="item 2" />
+                                <md:ComboBoxItem Text="item 3" />
+                            </md:ComboBox>
+                        </HorizontalStackLayout>
 
-                    <md:Label
-                        Margin="0,20,0,0"
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="Switch" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Default" />
-                        <md:Switch />
-                    </HorizontalStackLayout>
-
-                </VerticalStackLayout>
-            </ScrollView>
-        </md:NavigationItem>
-
-        <md:NavigationItem Icon="Star" Text="FABs">
-            <ScrollView>
-                <VerticalStackLayout
-                    Padding="20"
-                    BackgroundColor="{DynamicResource BackgroundColor}"
-                    Spacing="30">
-                    <md:Label
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="FAB(Floating action button)" />
-                    <HorizontalStackLayout Spacing="20">
-                        <md:Label FontSize="18" Text="Surface" />
-                        <md:FAB Icon="Man" Style="{DynamicResource SmallSurfaceFABStyle}" />
-                        <md:FAB Icon="Man" Style="{DynamicResource SurfaceFABStyle}" />
-                        <md:FAB Icon="Man" Style="{DynamicResource LargeSurfaceFABStyle}" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="20">
-                        <md:Label FontSize="18" Text="Secondary" />
-                        <md:FAB Icon="Woman" Style="{DynamicResource SmallSecondaryFABStyle}" />
-                        <md:FAB Icon="Woman" Style="{DynamicResource SecondaryFABStyle}" />
-                        <md:FAB Icon="Woman" Style="{DynamicResource LargeSecondaryFABStyle}" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="20">
-                        <md:Label FontSize="18" Text="Secondary" />
-                        <md:FAB Icon="Flashlight" Style="{DynamicResource SmallTertiaryFABStyle}" />
-                        <md:FAB Icon="Flashlight" Style="{DynamicResource TertiaryFABStyle}" />
-                        <md:FAB Icon="Flashlight" Style="{DynamicResource LargeTertiaryFABStyle}" />
-                    </HorizontalStackLayout>
-
-                    <HorizontalStackLayout Spacing="20">
-                        <md:Label FontSize="18" Text="Extended" />
-                        <md:FAB
-                            Clicked="FAB_Clicked"
-                            Icon="Github"
-                            IsExtended="False"
-                            Text="yiszza" />
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </ScrollView>
-        </md:NavigationItem>
-
-        <md:NavigationItem Icon="Star" Text="Cards">
-            <ScrollView>
-                <VerticalStackLayout
-                    Padding="20"
-                    BackgroundColor="{DynamicResource BackgroundColor}"
-                    Spacing="20">
-                    <md:Label
-                        FontSize="28"
-                        FontWeight="600"
-                        ForegroundColor="{DynamicResource PrimaryColor}"
-                        Text="Card" />
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Default" />
-                        <md:Card Padding="10">
-                            <md:Button Clicked="Button_Clicked" Text="SwitchTheme" />
-                        </md:Card>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Default" />
-                        <md:Card Padding="15,10">
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Outlined" />
                             <md:ComboBox LabelText="label text" Style="{DynamicResource OutlinedComboBoxStyle}">
                                 <md:ComboBoxItem Text="item 1" />
                                 <md:ComboBoxItem Text="item 2" />
                                 <md:ComboBoxItem Text="item 3" />
                             </md:ComboBox>
-                        </md:Card>
-                    </HorizontalStackLayout>
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Elevated" />
-                        <md:Card Padding="10" Style="{DynamicResource ElevatedCardStyle}">
+                        <md:Label
+                            Margin="0,20,0,0"
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="RadioButton" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Vertical" />
                             <md:RadioButton>
                                 <md:RadioButtonItem Text="item 1" />
                                 <md:RadioButtonItem Text="item 2" />
                                 <md:RadioButtonItem Text="item 3" />
                             </md:RadioButton>
-                        </md:Card>
-                    </HorizontalStackLayout>
+                        </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <md:Label FontSize="18" Text="Outlined" />
-                        <md:Card Padding="15" Style="{DynamicResource OutlinedCardStyle}">
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Horizontal" />
+                            <md:RadioButton Orientation="Horizontal">
+                                <md:RadioButtonItem Text="item 1" />
+                                <md:RadioButtonItem Text="item 2" />
+                            </md:RadioButton>
+                        </HorizontalStackLayout>
+
+                        <md:Label
+                            Margin="0,20,0,0"
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="Switch" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label
+                                FontSize="18"
+                                MaximumWidthRequest="50"
+                                MinimumWidthRequest="10"
+                                Text="Default" />
+                            <md:Switch />
+                        </HorizontalStackLayout>
+
+                        <md:Label
+                            Margin="0,20,0,0"
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="ProgressIndicator" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Circular" />
+                            <md:ProgressIndicator />
+                            <md:ProgressIndicator IsIndeterminate="False" Percent="33" />
+                            <md:ProgressIndicator IsIndeterminate="False" Percent="66" />
+                            <md:ProgressIndicator IsIndeterminate="False" Percent="100" />
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout HorizontalOptions="Start" Spacing="20">
+                            <md:Label FontSize="18" Text="Linear" />
+                            <md:ProgressIndicator Style="{DynamicResource LinearProgressIndicatorStyle}" WidthRequest="300" />
+                            <md:ProgressIndicator
+                                IsIndeterminate="False"
+                                Percent="33"
+                                Style="{DynamicResource LinearProgressIndicatorStyle}"
+                                WidthRequest="300" />
+                            <md:ProgressIndicator
+                                IsIndeterminate="False"
+                                Percent="66"
+                                Style="{DynamicResource LinearProgressIndicatorStyle}"
+                                WidthRequest="300" />
+                            <md:ProgressIndicator
+                                IsIndeterminate="False"
+                                Percent="100"
+                                Style="{DynamicResource LinearProgressIndicatorStyle}"
+                                WidthRequest="300" />
+                        </VerticalStackLayout>
+
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </ContentPage>
+        </md:NavigationBarItem>
+        <md:NavigationBarItem Icon="Star" Text="FABs">
+            <ContentPage>
+                <ScrollView>
+                    <VerticalStackLayout
+                        Padding="20"
+                        BackgroundColor="{DynamicResource BackgroundColor}"
+                        Spacing="30">
+                        <md:Label
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="FAB(Floating action button)" />
+                        <HorizontalStackLayout Spacing="20">
+                            <md:Label FontSize="18" Text="Surface" />
+                            <md:FAB Icon="Man" Style="{DynamicResource SmallSurfaceFABStyle}" />
+                            <md:FAB Icon="Man" Style="{DynamicResource SurfaceFABStyle}" />
+                            <md:FAB Icon="Man" Style="{DynamicResource LargeSurfaceFABStyle}" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="20">
+                            <md:Label FontSize="18" Text="Secondary" />
+                            <md:FAB Icon="Woman" Style="{DynamicResource SmallSecondaryFABStyle}" />
+                            <md:FAB Icon="Woman" Style="{DynamicResource SecondaryFABStyle}" />
+                            <md:FAB Icon="Woman" Style="{DynamicResource LargeSecondaryFABStyle}" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="20">
+                            <md:Label FontSize="18" Text="Secondary" />
+                            <md:FAB Icon="Flashlight" Style="{DynamicResource SmallTertiaryFABStyle}" />
+                            <md:FAB Icon="Flashlight" Style="{DynamicResource TertiaryFABStyle}" />
+                            <md:FAB Icon="Flashlight" Style="{DynamicResource LargeTertiaryFABStyle}" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="20">
+                            <md:Label FontSize="18" Text="Extended" />
                             <md:FAB
                                 Clicked="FAB_Clicked"
                                 Icon="Github"
-                                Style="{DynamicResource SmallSecondaryFABStyle}"
-                                Text="https://github.com/yiszza" />
-                        </md:Card>
-                    </HorizontalStackLayout>
+                                IsExtended="False"
+                                Text="yiszza" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </ContentPage>
+        </md:NavigationBarItem>
+        <md:NavigationBarItem Icon="Star" Text="Cards">
+            <ContentPage>
+                <ScrollView>
+                    <VerticalStackLayout
+                        Padding="20"
+                        BackgroundColor="{DynamicResource BackgroundColor}"
+                        Spacing="20">
+                        <md:Label
+                            FontSize="28"
+                            FontWeight="600"
+                            ForegroundColor="{DynamicResource PrimaryColor}"
+                            Text="Card" />
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Default" />
+                            <md:Card Padding="10">
+                                <md:Button Clicked="Button_Clicked" Text="SwitchTheme" />
+                            </md:Card>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Default" />
+                            <md:Card Padding="15,10">
+                                <md:ComboBox LabelText="label text" Style="{DynamicResource OutlinedComboBoxStyle}">
+                                    <md:ComboBoxItem Text="item 1" />
+                                    <md:ComboBoxItem Text="item 2" />
+                                    <md:ComboBoxItem Text="item 3" />
+                                </md:ComboBox>
+                            </md:Card>
+                        </HorizontalStackLayout>
 
-                </VerticalStackLayout>
-            </ScrollView>
-        </md:NavigationItem>
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Elevated" />
+                            <md:Card Padding="10" Style="{DynamicResource ElevatedCardStyle}">
+                                <md:RadioButton>
+                                    <md:RadioButtonItem Text="item 1" />
+                                    <md:RadioButtonItem Text="item 2" />
+                                    <md:RadioButtonItem Text="item 3" />
+                                </md:RadioButton>
+                            </md:Card>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <md:Label FontSize="18" Text="Outlined" />
+                            <md:Card
+                                Padding="15"
+                                HorizontalOptions="Fill"
+                                Style="{DynamicResource OutlinedCardStyle}">
+                                <md:FAB
+                                    Clicked="FAB_Clicked"
+                                    HorizontalOptions="Fill"
+                                    Icon="Github"
+                                    Style="{DynamicResource SmallSecondaryFABStyle}"
+                                    Text="https://github.com/yiszza" />
+                            </md:Card>
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </ContentPage>
+        </md:NavigationBarItem>
     </md:NavigationBar>
+
 </ContentPage>

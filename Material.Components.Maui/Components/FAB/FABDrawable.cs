@@ -1,9 +1,9 @@
-﻿namespace Material.Components.Maui.Core.FAB;
+﻿namespace Material.Components.Maui.Core;
 internal class FABDrawable
 {
-    private readonly MFAB view;
+    private readonly FAB view;
 
-    public FABDrawable(MFAB view)
+    public FABDrawable(FAB view)
     {
         this.view = view;
     }
@@ -29,7 +29,7 @@ internal class FABDrawable
 
     private void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
-#if WINDOWS || MACCATALYST
+#if !__MOBILE__
         if (this.view.StateLayerOpacity != 0f)
         {
             var color = this.view.StateLayerColor.MultiplyAlpha(this.view.StateLayerOpacity);
@@ -48,21 +48,17 @@ internal class FABDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is not null ||
-            this.view.Icon == IconKind.None ||
-            this.view.ChangingPercent != 1f)
+        if (this.view.Image != null || this.view.Icon == IconKind.None)
             return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
             IsAntialias = true,
         };
-        var size = this.view.FABType == FABType.Large ? 36 : 24;
+        var offset = this.view.FABType == FABType.Default ? 16f : this.view.FABType == FABType.Small ? 8f : 28f;
         var scale = this.view.FABType == FABType.Large ? 1.5f : 1f;
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
-        var offset = bounds.MidY - (size / 2);
         var matrix = new SKMatrix
         {
             ScaleX = scale,
@@ -73,18 +69,14 @@ internal class FABDrawable
         };
         path.Transform(matrix);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is null ||
-            this.view.Image is null ||
-            this.view.ChangingPercent != 1f)
+        if (this.view.Image == null || this.view.Image == null)
             return;
         canvas.Save();
-
         var paint = new SKPaint
         {
             IsAntialias = true,
@@ -92,32 +84,28 @@ internal class FABDrawable
                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
                 SKBlendMode.SrcIn)
         };
-        var scale = 24 / this.view.Image.CullRect.Width;
-        var x = 12;
-        var y = 12;
+        var offset = this.view.FABType == FABType.Default ? 16f : this.view.FABType == FABType.Small ? 8f : 30f;
+        var scale = this.view.FABType == FABType.Large ? 1.5f : 1f;
         var matrix = new SKMatrix
         {
             ScaleX = scale,
             ScaleY = scale,
-            TransX = x,
-            TransY = y,
+            TransX = offset,
+            TransY = offset,
             Persp2 = 1f
         };
         canvas.DrawPicture(this.view.Image, ref matrix, paint);
-
         canvas.Restore();
     }
 
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.IsExtended || this.view.ChangingPercent != 1f) return;
+        if (!this.view.IsExtended) return;
         canvas.Save();
-
         this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
-        var x = this.view.FABType == FABType.Default ? 56f : this.view.FABType == FABType.Small ? 40f : 96f;
+        var x = this.view.FABType == FABType.Default ? 52f : this.view.FABType == FABType.Small ? 38f : 88f;
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
-
         canvas.Restore();
     }
 

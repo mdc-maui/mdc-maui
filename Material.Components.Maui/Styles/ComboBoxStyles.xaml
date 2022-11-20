@@ -5,7 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style x:Key="FilledComboBoxStyle" TargetType="views:ComboBox">
+    <Style TargetType="views:ComboBox">
+        <Setter Property="MinimumWidthRequest" Value="200" />
+        <Setter Property="MinimumWidthRequest" Value="280" />
+        <Setter Property="HeightRequest" Value="64" />
         <Setter Property="MinimumWidthRequest" Value="200" />
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="VerticalOptions" Value="Start" />
@@ -21,18 +24,10 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />
-                            <Setter Property="LabelTextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="dropDown">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />
-                            <Setter Property="LabelTextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                             <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="ActiveIndicatorHeight" Value="2" />
                             <Setter Property="LabelTextColor" Value="{DynamicResource PrimaryColor}" />
@@ -55,8 +50,9 @@
         </Setter>
     </Style>
 
+    <Style x:Key="FilledComboBoxStyle" TargetType="views:ComboBox" />
+
     <Style x:Key="OutlinedComboBoxStyle" TargetType="views:ComboBox">
-        <Setter Property="MinimumWidthRequest" Value="200" />
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="VerticalOptions" Value="Start" />
         <Setter Property="FontWeight" Value="500" />
@@ -74,17 +70,10 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="Transparent" />
-                            <Setter Property="LabelTextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="dropDown">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="Transparent" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="LabelTextColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="OutlineColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="OutlineWidth" Value="2" />
@@ -106,12 +95,14 @@
         </Setter>
     </Style>
 
-    <Style BaseResourceKey="FilledComboBoxStyle" TargetType="views:ComboBox" />
-
-
-    <Style x:Key="DefaultComboBoxItemStyle" TargetType="views:ComboBoxItem">
+    <Style TargetType="views:ComboBoxItem">
         <Setter Property="EnableTouchEvents" Value="True" />
         <Setter Property="IgnorePixelScaling" Value="True" />
+        <Setter Property="MinimumWidthRequest" Value="112" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="500" />
+        <Setter Property="BackgroundColour" Value="Transparent" />
         <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
@@ -119,25 +110,15 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                        </VisualState.Setters>
+                        <VisualState.Setters />
                     </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
@@ -146,5 +127,4 @@
         </Setter>
     </Style>
 
-    <Style BaseResourceKey="DefaultComboBoxItemStyle" TargetType="views:ComboBoxItem" />
 </ResourceDictionary>

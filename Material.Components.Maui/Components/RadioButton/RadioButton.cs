@@ -1,26 +1,27 @@
-using Material.Components.Maui.Core.RadioButton;
+using Material.Components.Maui.Core;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class RadioButton : ContentView
+public partial class RadioButton : ContentView, IVisualTreeElement
 {
     private static readonly BindablePropertyKey ItemsPropertyKey =
         BindableProperty.CreateReadOnly(
             nameof(Items),
-            typeof(RadioButtonItemCollection),
+            typeof(ItemCollection<RadioButtonItem>),
             typeof(RadioButton),
             null,
             defaultValueCreator: bo =>
-                new RadioButtonItemCollection { Inner = ((RadioButton)bo).PART_Content });
+                new ItemCollection<RadioButtonItem>());
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
 
-    public RadioButtonItemCollection Items
+    public ItemCollection<RadioButtonItem> Items
     {
-        get => (RadioButtonItemCollection)this.GetValue(ItemsProperty);
+        get => (ItemCollection<RadioButtonItem>)this.GetValue(ItemsProperty);
         set => this.SetValue(ItemsProperty, value);
     }
 
@@ -36,16 +37,36 @@ public partial class RadioButton : ContentView
     [AutoBindable(OnChanged = nameof(OnSpacingChanged))]
     private readonly double spacing;
 
+    [AutoBindable]
+    private readonly ICommand command;
+    [AutoBindable]
+    private readonly object commandParameter;
+
+    public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
+
+    private void OnSelectedIndexChanged()
+    {
+        for (int i = 0; i < this.Items.Count; i++)
+        {
+            if (this.Items[i] is RadioButtonItem item)
+            {
+                item.IsSelected = i == this.SelectedIndex;
+            }
+        }
+        SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(this.SelectedIndex));
+        this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
+    }
+
     private void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-        if (e.Action == NotifyCollectionChangedAction.Add)
+        if (e.Action is NotifyCollectionChangedAction.Add)
         {
             foreach (var item in e.NewItems)
             {
                 this.Items.Add(new RadioButtonItem { Text = item.ToString() });
             }
         }
-        else if (e.Action == NotifyCollectionChangedAction.Remove)
+        else if (e.Action is NotifyCollectionChangedAction.Remove)
         {
             foreach (var item in e.OldItems)
             {
@@ -60,7 +81,7 @@ public partial class RadioButton : ContentView
 
             }
         }
-        else if (e.Action == NotifyCollectionChangedAction.Replace)
+        else if (e.Action is NotifyCollectionChangedAction.Replace)
         {
             for (int j = 0; j < e.OldItems.Count; j++)
             {
@@ -74,7 +95,7 @@ public partial class RadioButton : ContentView
                 }
             }
         }
-        else if (e.Action == NotifyCollectionChangedAction.Reset)
+        else if (e.Action is NotifyCollectionChangedAction.Reset)
         {
             this.Items.Clear();
         }
@@ -82,7 +103,7 @@ public partial class RadioButton : ContentView
 
     private void OnItemsSourceChanged()
     {
-        if (this.ItemsSource is not null)
+        if (this.ItemsSource != null)
         {
             if (this.ItemsSource is INotifyCollectionChanged ncc)
             {
@@ -103,17 +124,6 @@ public partial class RadioButton : ContentView
         }
     }
 
-    private void OnSelectedIndexChanged()
-    {
-        for (int i = 0; i < this.Items.Count; i++)
-        {
-            if (this.Items[i] is RadioButtonItem item)
-            {
-                item.IsSelected = i == this.SelectedIndex;
-            }
-        }
-    }
-
     private void OnOrientationChanged()
     {
         this.PART_Content.Orientation = this.Orientation;
@@ -128,22 +138,36 @@ public partial class RadioButton : ContentView
 
     public RadioButton()
     {
+        this.Items.OnAdded += this.OnItemsAdded;
+        this.Items.OnRemoved += this.OnItemsRemoved;
+        this.Items.OnCleared += this.OnItemsCleared;
         this.HorizontalOptions = LayoutOptions.Start;
         this.VerticalOptions = LayoutOptions.Start;
         this.PART_Content = new StackLayout { Spacing = this.Spacing };
-        this.PART_Content.ChildAdded += this.OnItemsAdded;
         this.Content = this.PART_Content;
     }
 
-    private void OnItemsAdded(object sender, ElementEventArgs e)
+    private void OnItemsAdded(object sender, ItemsChangedEventArgs<RadioButtonItem> e)
     {
-        if (e.Element is RadioButtonItem item)
-        {
-            item.IsSelected = this.Items.IndexOf(item) == this.SelectedIndex;
-            item.SelectedChanged += (sender, e) =>
-            {
-                this.SelectedIndex = this.Items.IndexOf((RadioButtonItem)sender);
-            };
-        }
+        var index = e.Index;
+        var item = this.Items[index];
+        this.PART_Content.Insert(index, item);
+        item.IsSelected = e.Index == this.SelectedIndex;
+        item.Clicked += (sender, e) => this.SelectedIndex = this.Items.IndexOf(sender as RadioButtonItem);
     }
+
+    private void OnItemsRemoved(object sender, ItemsChangedEventArgs<RadioButtonItem> e)
+    {
+        this.PART_Content.RemoveAt(e.Index);
+    }
+
+    private void OnItemsCleared(object sender, EventArgs e)
+    {
+        this.PART_Content.Clear();
+    }
+
+
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<View> { this.Content };
+
+    public IVisualTreeElement GetVisualParent() => this.Window;
 }

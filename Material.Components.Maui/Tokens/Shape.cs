@@ -1,10 +1,11 @@
 ﻿using Material.Components.Maui.Converters;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Material.Components.Maui.Tokens;
 
 [TypeConverter(typeof(ShapeConverter))]
-public struct Shape
+public readonly struct Shape
 {
     public static readonly Shape None = 0;
     public static readonly Shape ExtraSmall = 4;
@@ -39,6 +40,51 @@ public struct Shape
     public static implicit operator Shape(double value)
     {
         return new Shape(value);
+    }
+
+    public static bool operator ==(Shape left, Shape right)
+    {
+        if (left.TopLeft == right.TopLeft
+            && left.TopRight == right.TopRight
+            && left.BottomLeft == right.BottomLeft
+            && left.BottomRight == right.BottomRight)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static bool operator !=(Shape left, Shape right)
+    {
+        if (left.TopLeft != right.TopLeft
+            || left.TopRight != right.TopRight
+            || left.BottomLeft != right.BottomLeft
+            || left.BottomRight != right.BottomRight)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public override bool Equals([NotNullWhen(true)] object obj)
+    {
+        return base.Equals(obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    public SKPoint[] GetRadii()
+    {
+        return new SKPoint[]
+        {
+            new SKPoint((float)this.TopLeft,(float)this.TopLeft),
+            new SKPoint((float)this.TopRight,(float)this.TopRight),
+            new SKPoint((float)this.BottomRight,(float)this.BottomRight),
+            new SKPoint((float)this.BottomLeft,(float)this.BottomLeft),
+        };
     }
 
     public override string ToString()

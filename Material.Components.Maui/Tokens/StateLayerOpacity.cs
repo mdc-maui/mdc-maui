@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace Material.Components.Maui.Tokens;
 
 [TypeConverter(typeof(StateLayerOpacityConverter))]
-public struct StateLayerOpacity
+public readonly struct StateLayerOpacity
 {
     public static readonly StateLayerOpacity Normal = 1f;
     public static readonly StateLayerOpacity Hovered = 0.08f;

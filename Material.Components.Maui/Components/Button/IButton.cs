@@ -1,4 +1,4 @@
-﻿namespace Material.Components.Maui.Core.Button;
-internal interface IButton : IView, IForegroundElement, IOutlineElement, IBackgroundElement, IImageElement, ITouchElement, IElevationElement, IShapeElement, IStateLayerElement, IRippleElement
+﻿namespace Material.Components.Maui.Core;
+internal interface IButton : IView, ITouchElement, IForegroundElement, IOutlineElement, IBackgroundElement, IImageElement, IElevationElement, IShapeElement, IStateLayerElement, IRippleElement
 {
 }

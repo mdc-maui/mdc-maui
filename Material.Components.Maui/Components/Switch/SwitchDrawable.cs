@@ -1,8 +1,8 @@
-﻿namespace Material.Components.Maui.Core.Switch;
+﻿namespace Material.Components.Maui.Core;
 internal class SwitchDrawable
 {
-    private readonly MSwitch view;
-    public SwitchDrawable(MSwitch view)
+    private readonly Switch view;
+    public SwitchDrawable(Switch view)
     {
         this.view = view;
     }
@@ -12,9 +12,8 @@ internal class SwitchDrawable
         var lx = 24;
         var rx = bounds.Right - 16;
         var offX = rx - lx;
-        var cx = this.view.IsSelected ? lx + (this.view.ChangingPercent * offX) : rx - (this.view.ChangingPercent * offX);
+        var cx = this.view.IsChecked ? lx + (this.view.ChangingPercent * offX) : rx - (this.view.ChangingPercent * offX);
         var cy = 24;
-
         canvas.Clear();
         this.DrawTrack(canvas, bounds);
         this.DrawOutline(canvas, bounds);
@@ -27,7 +26,6 @@ internal class SwitchDrawable
     private void DrawTrack(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-
         var shape = new CornerRadius(bounds.Height / 2);
         var radii = shape.GetRadii();
         var paint = new SKPaint
@@ -40,7 +38,6 @@ internal class SwitchDrawable
         rect.SetRectRadii(bounds, radii);
         path.AddRoundRect(rect);
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
@@ -57,23 +54,20 @@ internal class SwitchDrawable
     private void DrawThumb(SKCanvas canvas, float cx, float cy)
     {
         canvas.Save();
-
         var paint = new SKPaint
         {
             Color = this.view.ThumbColor.MultiplyAlpha(this.view.ThumbOpacity).ToSKColor(),
             IsAntialias = true,
         };
-        var radius = this.view.IsSelected ? 8 + (4 * this.view.ChangingPercent) : 12 - (4 * this.view.ChangingPercent);
+        var radius = this.view.IsChecked ? 8 + (4 * this.view.ChangingPercent) : 12 - (4 * this.view.ChangingPercent);
         canvas.DrawCircle(cx, cy, radius, paint);
-
         canvas.Restore();
     }
 
     private void DrawIcon(SKCanvas canvas, float cx, float cy)
     {
-        if (!this.view.IsSelected) return;
+        if (!this.view.IsChecked) return;
         canvas.Save();
-
         var path = SKPath.ParseSvgPathData("M 5.8181543,10.027623 3.4153733,7.2675632 2.0000004,8.7537509 6.0066836,12.999999 14,4.5075 12.714286,3.0000004 Z");
         var matrix = new SKMatrix
         {
@@ -84,20 +78,18 @@ internal class SwitchDrawable
             Persp2 = 1f
         };
         path.Transform(matrix);
-
         var paint = new SKPaint
         {
             Color = this.view.IconColor.MultiplyAlpha(this.view.IconOpacity).ToSKColor(),
             IsAntialias = true,
         };
         canvas.DrawPath(path, paint);
-
         canvas.Restore();
     }
 
     internal void DrawStateLayer(SKCanvas canvas, float cx, float cy)
     {
-#if WINDOWS || MACCATALYST
+#if !__MOBILE__
         if (this.view.StateLayerOpacity != 0f)
         {
             var color = this.view.StateLayerColor.MultiplyAlpha(this.view.StateLayerOpacity);

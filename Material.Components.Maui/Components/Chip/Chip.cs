@@ -1,30 +1,29 @@
-﻿using Material.Components.Maui.Core.Chip;
+﻿using Material.Components.Maui.Converters;
 using Material.Components.Maui.Core;
-using Material.Components.Maui.Converters;
 using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
-public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineElement, IBackgroundElement, IImageElement, IElevationElement, IShapeElement, IStateLayerElement, IRippleElement, ITextElement
+public partial class Chip : SKTouchCanvasView, IView, IForegroundElement, IOutlineElement, IBackgroundElement, IImageElement, IElevationElement, IShapeElement, IStateLayerElement, IRippleElement, ITextElement
 {
     #region interface
-
     #region IView
-
     private ControlState controlState = ControlState.Normal;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
-        private set
+        set
         {
             VisualStateManager.GoToState(this, value switch
             {
-                ControlState.Normal => this.IsSelected ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsSelected ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsSelected ? "pressed:actived" : "pressed",
-                ControlState.Disabled => this.IsSelected ? "disabled:actived" : "disabled",
+                ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
+                ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
+                ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
+                ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
                 _ => "Normal",
             });
             this.controlState = value;
@@ -34,16 +33,15 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
     {
         this.InvalidateSurface();
     }
-
     #endregion
 
     #region ITextElement
-
     public static readonly BindableProperty TextProperty = TextElement.TextProperty;
     public static readonly BindableProperty FontFamilyProperty = TextElement.FontFamilyProperty;
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
@@ -73,18 +71,11 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
     }
     void ITextElement.OnTextBlockChanged()
     {
-        var width = 32d + (this.HasIcon ? 18d : 0d) + this.TextBlock.MeasuredWidth + (this.HasCloseIcon ? 18d : 0d) + this.Margin.HorizontalThickness;
-        var height = 32d + this.Margin.VerticalThickness;
-        this.WidthRequest = width;
-        this.HeightRequest = height;
-        this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-        this.InvalidateSurface();
+        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
     }
-
     #endregion
 
     #region IImageElement
-
     public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
     public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
     public IconKind Icon
@@ -92,18 +83,15 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
-
-    [System.ComponentModel.TypeConverter(typeof(ImageConverter))]
+    [TypeConverter(typeof(ImageConverter))]
     public SKPicture Image
     {
         get => (SKPicture)this.GetValue(ImageProperty);
         set => this.SetValue(ImageProperty, value);
     }
-
     #endregion
 
     #region IForegroundElement
-
     public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
     public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
@@ -116,11 +104,9 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
         get => (float)this.GetValue(ForegroundOpacityProperty);
         set => this.SetValue(ForegroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IBackgroundElement
-
     public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
     public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
@@ -133,11 +119,9 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
         get => (float)this.GetValue(BackgroundOpacityProperty);
         set => this.SetValue(BackgroundOpacityProperty, value);
     }
-
     #endregion
 
     #region IOutlineElement
-
     public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
     public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
@@ -156,33 +140,27 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
         get => (float)this.GetValue(OutlineOpacityProperty);
         set => this.SetValue(OutlineOpacityProperty, value);
     }
-
     #endregion
 
     #region IElevationElement
-
     public static readonly BindableProperty ElevationProperty = ElevationElement.ElevationProperty;
     public Elevation Elevation
     {
         get => (Elevation)this.GetValue(ElevationProperty);
         set => this.SetValue(ElevationProperty, value);
     }
-
     #endregion
 
     #region IShapeElement
-
     public static readonly BindableProperty ShapeProperty = ShapeElement.ShapeProperty;
     public Shape Shape
     {
         get => (Shape)this.GetValue(ShapeProperty);
         set => this.SetValue(ShapeProperty, value);
     }
-
     #endregion
 
     #region IStateLayerElement
-
     public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
     public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
@@ -195,38 +173,35 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
         get => (float)this.GetValue(StateLayerOpacityProperty);
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
-
     #endregion
 
     #region IRippleElement
-
     public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
-    public float RipplePercent { get; private set; } = 0f;
-    public SKPoint TouchPoint { get; private set; } = new SKPoint(-1, -1);
-
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float RipplePercent { get; set; } = 0f;
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
+    #endregion
     #endregion
 
-    #endregion
-
-
-    [AutoBindable(OnChanged = nameof(OnIsSelectedChanged))]
-    private readonly bool isSelected;
+    [AutoBindable(OnChanged = nameof(OnIsCheckedChanged))]
+    private readonly bool isChecked;
 
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnHasIconChanged))]
     private readonly bool hasIcon;
 
-    [AutoBindable(OnChanged = nameof(OnHasCloseIconChanged))]
+    [AutoBindable(OnChanged = nameof(OnHasIconChanged))]
     private readonly bool hasCloseIcon;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
     private readonly Color iconColor;
-
 
     [AutoBindable]
     private readonly ICommand command;
@@ -234,152 +209,60 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
     [AutoBindable]
     private readonly object commandParameter;
 
-    private void OnTextChanged()
-    {
-        var width = 32d + (this.HasIcon ? 18d : 0d) + this.TextBlock.MeasuredWidth + (this.HasCloseIcon ? 18d : 0d) + this.Margin.HorizontalThickness;
-        var height = 32d + this.Margin.VerticalThickness;
-        this.WidthRequest = width;
-        this.HeightRequest = height;
-        this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-        this.InvalidateSurface();
-    }
+    public event EventHandler<CheckedChangedEventArgs> ChangedChanged;
 
-    private void OnIsSelectedChanged()
+
+    private void OnIsCheckedChanged()
     {
-        SelectedChanged?.Invoke(this, this.IsSelected);
         VisualStateManager.GoToState(this, this.ControlState switch
         {
-            ControlState.Normal => this.IsSelected ? "normal:actived" : "normal",
-            ControlState.Hovered => this.IsSelected ? "hovered:actived" : "hovered",
-            ControlState.Pressed => this.IsSelected ? "pressed:actived" : "pressed",
-            ControlState.Disabled => this.IsSelected ? "disabled:actived" : "disabled",
+            ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
+            ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
+            ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
+            ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
             _ => "normal",
         });
-
-        var minWidth = 32d + this.TextBlock.MeasuredWidth + (this.HasCloseIcon ? 18d : 0d) + this.Margin.HorizontalThickness;
-        var height = 32d + this.Margin.VerticalThickness;
-        if (this.Handler is null)
-        {
-            var width = minWidth + (this.HasIcon ? 18d : 0d);
-            this.WidthRequest = width;
-            this.HeightRequest = height;
-            this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-            this.InvalidateSurface();
-            return;
-        }
-
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
-        this.ChangingPercent = 0f;
-        var start = 0f;
-        var end = 1f;
-        var currWidth = 0d;
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            this.ChangingPercent = start.Lerp(end, progress);
-            if (this.HasIcon)
-                currWidth = minWidth + (18d * this.ChangingPercent);
-            else
-                currWidth = minWidth + (18d * (1 - this.ChangingPercent));
-
-            this.WidthRequest = currWidth;
-            this.HeightRequest = height;
-            this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-            this.InvalidateSurface();
-        },
-        duration: 0.25f,
-        easing: Easing.SinInOut));
+        this.CheckedChanged?.Invoke(this, new CheckedChangedEventArgs(this.IsChecked));
     }
 
     private void OnHasIconChanged()
     {
-        var width = 32d + (this.HasIcon ? 18d : 0d) + this.TextBlock.MeasuredWidth + (this.HasCloseIcon ? 18d : 0d) + this.Margin.HorizontalThickness;
-        var height = 32d + this.Margin.VerticalThickness;
-        this.WidthRequest = width;
-        this.HeightRequest = height;
-        this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-        this.InvalidateSurface();
+        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
     }
 
-    private void OnHasCloseIconChanged()
-    {
-        var width = 32d + (this.HasIcon ? 18d : 0d) + this.TextBlock.MeasuredWidth + (this.HasCloseIcon ? 18d : 0d) + this.Margin.HorizontalThickness;
-        var height = 32d + this.Margin.VerticalThickness;
-        this.WidthRequest = width;
-        this.HeightRequest = height;
-        this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
-        this.InvalidateSurface();
-    }
-
-    public event EventHandler<SKTouchEventArgs> Clicked;
-    public event EventHandler<bool> SelectedChanged;
-    public event EventHandler CloseClicked;
+    public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
+    public event EventHandler Closed;
 
     internal float ChangingPercent { get; private set; } = 1f;
     private readonly ChipDrawable drawable;
     private IAnimationManager animationManager;
 
+    private double widthConstraint = -1;
+    private double heightConstraint = -1;
+
     public Chip()
     {
-        this.drawable = new ChipDrawable(this);
-        this.CloseClicked += (sender, e) =>
+        this.Clicked += (sender, e) =>
         {
-            var chip = sender as Chip;
-            if (chip.Parent is Layout parent)
+            if (this.HasCloseIcon && e.Location.X >= this.CanvasSize.Width - 34)
             {
-                parent.Remove(chip);
-            }
-        };
-    }
-
-    protected override void OnTouch(SKTouchEventArgs e)
-    {
-        if (this.ControlState == ControlState.Disabled) return;
-
-        if (e.ActionType == SKTouchAction.Pressed)
-        {
-            this.ControlState = ControlState.Pressed;
-            this.TouchPoint = e.Location;
-            this.StartRippleEffect();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Released)
-        {
-            if (this.HasCloseIcon && this.TouchPoint.X >= this.Width - 34)
-            {
-                this.CloseClicked?.Invoke(this, e);
+                this.Closed?.Invoke(this, e);
+                if (this.Parent is Layout parent)
+                {
+                    parent.Remove(this);
+                }
             }
             else
             {
-                this.Clicked?.Invoke(this, e);
+                this.Command?.Execute(this.CommandParameter ?? e);
             }
+        };
 
-#if WINDOWS || MACCATALYST
-            this.ControlState = ControlState.Hovered;
-#else
-            this.ControlState = ControlState.Normal;
-#endif
-            if (this.RipplePercent == 1f)
-            {
-                this.RipplePercent = 0f;
-            }
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Entered)
-        {
-            this.ControlState = ControlState.Hovered;
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
-        else if (e.ActionType == SKTouchAction.Cancelled || e.ActionType == SKTouchAction.Exited)
-        {
-            this.ControlState = ControlState.Normal;
-            this.InvalidateSurface();
-            e.Handled = true;
-        }
+        this.drawable = new ChipDrawable(this);
     }
 
-    private void StartRippleEffect()
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public void StartRippleEffect()
     {
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
@@ -396,7 +279,7 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
         {
             if (this.ControlState != ControlState.Pressed)
             {
-                this.RipplePercent = 0;
+                this.RipplePercent = 0f;
                 this.InvalidateSurface();
             }
         }));
@@ -408,13 +291,39 @@ public partial class Chip : SKCanvasView, IView, IForegroundElement, IOutlineEle
         this.drawable.Draw(e.Surface.Canvas, e.Info.Rect);
     }
 
+    protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
+    {
+        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity);
+        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity);
+        var iconWidth = (this.HasIcon ? 18d : 0d) + (this.HasCloseIcon ? 18d : 0d);
+        this.TextBlock.MaxWidth = (float)(maxWidth - 32d - iconWidth);
+        this.TextBlock.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
+        var width = this.Margin.HorizontalThickness
+            + Math.Max(this.MinimumWidthRequest, this.WidthRequest is -1
+                ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 32d + iconWidth)
+                : this.WidthRequest);
+        var height = this.Margin.VerticalThickness
+            + Math.Max(this.MinimumHeightRequest, this.HeightRequest != -1
+                ? Math.Min(maxHeight, 32d)
+                : this.HeightRequest);
+        var result = new Size(width, height);
+        this.DesiredSize = result;
+        return result;
+    }
+
+    protected override Size ArrangeOverride(Rect bounds)
+    {
+        this.widthConstraint = bounds.Width;
+        this.heightConstraint = bounds.Height;
+        return base.ArrangeOverride(bounds);
+    }
+
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-        if (propertyName == "IsEnabled")
+        if (propertyName is "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.InvalidateSurface();
         }
     }
 

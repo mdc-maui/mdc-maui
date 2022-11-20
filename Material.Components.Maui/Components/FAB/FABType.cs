@@ -1,4 +1,4 @@
-﻿namespace Material.Components.Maui.Core.FAB;
+﻿namespace Material.Components.Maui;
 public enum FABType
 {
     Default,
