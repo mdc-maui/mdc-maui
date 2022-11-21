@@ -19,16 +19,22 @@ public partial class NavigationBarItem : SKTouchCanvasView, IView, ITextElement,
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            });
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
+            ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
+            ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {

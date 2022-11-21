@@ -25,6 +25,22 @@
                 <VisualStateGroup>
                     <VisualState x:Name="normal">
                         <VisualState.Setters>
+                            <Setter Property="TrackColor" Value="{DynamicResource SurfaceVariantColor}" />
+                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource OutlineColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource SurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="StateLayerOpacity" Value="0.08" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters>
+                            <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="normal:actived">
@@ -32,12 +48,8 @@
                             <Setter Property="TrackColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="ThumbColor" Value="{DynamicResource OnPrimaryColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnPrimaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="OutlineWidth" Value="0" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="hovered">
-                        <VisualState.Setters>
-                            <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="hovered:actived">
@@ -48,11 +60,6 @@
                             <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                             <Setter Property="OutlineWidth" Value="0" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="pressed">
-                        <VisualState.Setters>
-                            <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed:actived">

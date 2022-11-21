@@ -24,9 +24,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="Elevation" Value="Level1" />
@@ -64,9 +62,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="Elevation" Value="Level2" />
@@ -105,9 +101,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="Elevation" Value="Level1" />
@@ -124,6 +118,7 @@
                             <Setter Property="BackgroundOpacity" Value="0.12" />
                             <Setter Property="ForegroundOpacity" Value="0.38" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="BackgroundColour" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -161,16 +156,6 @@
                             <Setter Property="RippleColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="disabled:actived">
-                        <VisualState.Setters>
-                            <Setter Property="HasIcon" Value="True" />
-                            <Setter Property="BackgroundOpacity" Value="0.12" />
-                            <Setter Property="ForegroundOpacity" Value="0.38" />
-                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="BackgroundColour" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -191,9 +176,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="Elevation" Value="Level2" />
@@ -210,6 +193,7 @@
                             <Setter Property="BackgroundOpacity" Value="0.12" />
                             <Setter Property="ForegroundOpacity" Value="0.38" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="BackgroundColour" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -249,16 +233,6 @@
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>
-                    <VisualState x:Name="disabled:actived">
-                        <VisualState.Setters>
-                            <Setter Property="HasIcon" Value="True" />
-                            <Setter Property="BackgroundOpacity" Value="0.12" />
-                            <Setter Property="ForegroundOpacity" Value="0.38" />
-                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="BackgroundColour" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                        </VisualState.Setters>
-                    </VisualState>
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
@@ -276,9 +250,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="StateLayerOpacity" Value="0.08" />
@@ -314,9 +286,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="StateLayerOpacity" Value="0.08" />
@@ -352,9 +322,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="Elevation" Value="2" />

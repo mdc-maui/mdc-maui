@@ -18,16 +18,21 @@ public partial class Chip : SKTouchCanvasView, IView, IForegroundElement, IOutli
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
-                ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
-                _ => "Normal",
-            });
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
+            ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
+            ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {
@@ -214,14 +219,7 @@ public partial class Chip : SKTouchCanvasView, IView, IForegroundElement, IOutli
 
     private void OnIsCheckedChanged()
     {
-        VisualStateManager.GoToState(this, this.ControlState switch
-        {
-            ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
-            ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
-            ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
-            ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
-            _ => "normal",
-        });
+        this.ChangeVisualState();
         this.CheckedChanged?.Invoke(this, new CheckedChangedEventArgs(this.IsChecked));
     }
 

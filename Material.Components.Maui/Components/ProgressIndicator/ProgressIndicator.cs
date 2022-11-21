@@ -11,12 +11,18 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                _ => "normal",
-            });
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {

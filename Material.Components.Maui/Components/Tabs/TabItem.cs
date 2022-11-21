@@ -19,15 +19,20 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
-                _ => "normal",
-            });
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
+            ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
+            ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {

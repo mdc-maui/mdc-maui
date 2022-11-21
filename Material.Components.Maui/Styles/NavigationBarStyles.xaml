@@ -18,10 +18,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters>
-                        </VisualState.Setters>
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
                             <Setter Property="StateLayerOpacity" Value="0.12" />
@@ -62,15 +59,6 @@
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="disabled:actived">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

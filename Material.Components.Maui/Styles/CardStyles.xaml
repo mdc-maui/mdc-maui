@@ -16,9 +16,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="Elevation" Value="Level1" />
@@ -51,9 +49,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="Elevation" Value="Level2" />
@@ -87,9 +83,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="StateLayerOpacity" Value="0.08" />

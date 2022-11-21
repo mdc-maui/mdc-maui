@@ -21,15 +21,20 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => "normal",
-                ControlState.Pressed => this.IsDropDown ? "dropDown" : "normal",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            });
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => this.IsDropDown ? "dropDown" : "normal",
+            ControlState.Pressed => this.IsDropDown ? "dropDown" : "normal",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {

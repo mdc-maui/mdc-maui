@@ -23,9 +23,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="dropDown">
                         <VisualState.Setters>
                             <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
@@ -69,9 +67,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="dropDown">
                         <VisualState.Setters>
                             <Setter Property="LabelTextColor" Value="{DynamicResource PrimaryColor}" />
@@ -109,9 +105,7 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal">
-                        <VisualState.Setters />
-                    </VisualState>
+                    <VisualState x:Name="normal" />
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
                             <Setter Property="StateLayerOpacity" Value="0.08" />

@@ -9,10 +9,10 @@ public class StateLayerOpacityConverter : TypeConverter
     {
         if (value is string text)
         {
-            if (text is "Normal") return StateLayerOpacity.Normal;
-            else if (text is "Hovered") return StateLayerOpacity.Hovered;
+            if (text is "normal") return StateLayerOpacity.Normal;
+            else if (text is "hovered") return StateLayerOpacity.Hovered;
             else if (text is "Focused") return StateLayerOpacity.Focused;
-            else if (text is "Pressed") return StateLayerOpacity.Pressed;
+            else if (text is "pressed") return StateLayerOpacity.Pressed;
             else if (float.TryParse(text, out var f))
             {
                 return new StateLayerOpacity(f);
@@ -24,10 +24,10 @@ public class StateLayerOpacityConverter : TypeConverter
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
         var opacity = (StateLayerOpacity)value;
-        if (opacity == StateLayerOpacity.Normal) return "Normal";
-        else if (opacity == StateLayerOpacity.Hovered) return "Hovered";
+        if (opacity == StateLayerOpacity.Normal) return "normal";
+        else if (opacity == StateLayerOpacity.Hovered) return "hovered";
         else if (opacity == StateLayerOpacity.Focused) return "Focused";
-        else if (opacity == StateLayerOpacity.Pressed) return "Pressed";
+        else if (opacity == StateLayerOpacity.Pressed) return "pressed";
         else
         {
             return opacity.ToString();
@@ -38,10 +38,10 @@ public class StateLayerOpacityConverter : TypeConverter
     {
         return new(new[]
         {
-            "Normal",
-            "Hovered",
-            "Pressed",
-            "Pressed",
+            "normal",
+            "hovered",
+            "pressed",
+            "pressed",
         });
     }
 }

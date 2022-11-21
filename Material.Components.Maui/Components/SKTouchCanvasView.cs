@@ -32,6 +32,7 @@ public partial class SKTouchCanvasView : SKCanvasView, ITouchElement, IContextMe
     private SKTouchEventArgs touchEventArgs;
     private bool isPressed;
 
+
     public SKTouchCanvasView()
     {
         this.touchTimer = this.Dispatcher.CreateTimer();

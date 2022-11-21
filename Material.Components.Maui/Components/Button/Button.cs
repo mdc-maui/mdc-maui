@@ -19,16 +19,21 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => "normal",
-                ControlState.Hovered => "hovered",
-                ControlState.Pressed => "pressed",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            });
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => "normal",
+            ControlState.Hovered => "hovered",
+            ControlState.Pressed => "pressed",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {
@@ -192,7 +197,6 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement
     public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
     #endregion
-
 
     private readonly MixedButtonDrawable drawable;
     private IAnimationManager animationManager;

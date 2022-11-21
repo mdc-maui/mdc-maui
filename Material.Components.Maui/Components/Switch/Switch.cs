@@ -1,5 +1,6 @@
 ﻿using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -15,17 +16,21 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
         get => this.controlState;
         set
         {
-            var state = value switch
-            {
-                ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
-                ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
-                _ => "normal",
-            };
-            VisualStateManager.GoToState(this, state);
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
+            ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
+            ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
+            ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {
@@ -117,15 +122,7 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
 
     private void OnCheckedChanged()
     {
-        var state = this.ControlState switch
-        {
-            ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
-            ControlState.Hovered => this.IsChecked ? "hovered:actived" : "hovered",
-            ControlState.Pressed => this.IsChecked ? "pressed:actived" : "pressed",
-            ControlState.Disabled => this.IsChecked ? "disabled:actived" : "disabled",
-            _ => "normal",
-        };
-        VisualStateManager.GoToState(this, state);
+        this.ChangeVisualState();
         this.StartChangingEffect();
         CheckedChanged?.Invoke(this, new CheckedChangedEventArgs(this.IsChecked));
         this.Command?.Execute(this.CommandParameter ?? this.IsChecked);
@@ -154,10 +151,9 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
     {
         if (this.Handler is null) return;
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
-
+        this.ChangingPercent = 0f;
         var start = 0f;
         var end = 1f;
-
         this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
         {
             this.ChangingPercent = start.Lerp(end, progress);

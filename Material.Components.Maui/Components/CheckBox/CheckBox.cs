@@ -17,16 +17,21 @@ public partial class CheckBox : SKTouchCanvasView, IView, ITextElement, IForegro
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => "normal",
-                ControlState.Hovered => "hovered",
-                ControlState.Pressed => "pressed",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            });
             this.controlState = value;
+            ChangeVisualState();
         }
+    }
+    protected override void ChangeVisualState()
+    {
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => "normal",
+            ControlState.Hovered => "hovered",
+            ControlState.Pressed => "pressed",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
     public void OnPropertyChanged()
     {
