@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.Pages.RadioButtonsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    Title="RadioButtons">
+
+    <ContentPage.Resources>
+        <Style TargetType="md:Label">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="600" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout
+        Padding="25"
+        HorizontalOptions="Center"
+        Spacing="30"
+        VerticalOptions="Center">
+        <md:Label Text="Vertical" />
+        <md:RadioButton SelectedIndex="0">
+            <md:RadioButtonItem Text="item 1" />
+            <md:RadioButtonItem Text="item 2" />
+            <md:RadioButtonItem Text="item 3" />
+        </md:RadioButton>
+        <md:Label Text="Horizontal" />
+        <md:RadioButton Orientation="Horizontal" SelectedIndex="2">
+            <md:RadioButtonItem Text="item 1" />
+            <md:RadioButtonItem Text="item 2" />
+            <md:RadioButtonItem Text="item 3" />
+        </md:RadioButton>
+    </VerticalStackLayout>
+</ContentPage>

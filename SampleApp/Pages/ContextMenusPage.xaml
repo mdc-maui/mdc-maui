@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.Pages.ContextMenusPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    Title="ContextMenus">
+
+    <ContentPage.Resources>
+        <Style TargetType="md:Label">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="600" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout
+        Padding="25"
+        HorizontalOptions="Center"
+        Spacing="30"
+        VerticalOptions="Center">
+        <md:Label
+            HorizontalOptions="Center"
+            Text="{OnPlatform Default=long press me,
+                              WinUI=right click me,
+                              MacCatalyst=right click me}"
+            VerticalOptions="Center" />
+        <md:Button
+            HorizontalOptions="Center"
+            Icon="Menu"
+            Text="button"
+            VerticalOptions="Center">
+            <md:Button.ContextMenu>
+                <md:ContextMenu>
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="Menu"
+                        Text="item 1" />
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="Menu"
+                        Text="item 2" />
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="Menu"
+                        Text="item 3" />
+                </md:ContextMenu>
+            </md:Button.ContextMenu>
+        </md:Button>
+        <md:IconButton
+            HorizontalOptions="Center"
+            Icon="Menu"
+            VerticalOptions="Center">
+            <md:IconButton.ContextMenu>
+                <md:ContextMenu>
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="One"
+                        Text="one" />
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="Two"
+                        Text="two" />
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="Three"
+                        Text="three" />
+                </md:ContextMenu>
+            </md:IconButton.ContextMenu>
+        </md:IconButton>
+        <md:FAB
+            HorizontalOptions="Center"
+            Icon="Settings"
+            Style="{DynamicResource LargeSecondaryFABStyle}"
+            VerticalOptions="Center">
+            <md:FAB.ContextMenu>
+                <md:ContextMenu>
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="About"
+                        Text="item 1" />
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="About"
+                        Text="item 2" />
+                    <md:MenuItem
+                        Clicked="MenuItem_Clicked"
+                        Icon="About"
+                        Text="item 3" />
+                </md:ContextMenu>
+            </md:FAB.ContextMenu>
+        </md:FAB>
+        <md:Label
+            x:Name="Hint"
+            HorizontalOptions="Center"
+            Text="you selected item text:"
+            VerticalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

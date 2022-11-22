@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.Pages.PopupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    Title="Popup">
+    <VerticalStackLayout
+        HorizontalOptions="Center"
+        Spacing="50"
+        VerticalOptions="Center">
+
+        <md:Button
+            Clicked="Button_Clicked"
+            HorizontalOptions="Center"
+            Text="show popup"
+            VerticalOptions="Center" />
+        <md:Label
+            x:Name="Hint"
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="popup result:"
+            VerticalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

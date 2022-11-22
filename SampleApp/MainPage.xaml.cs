@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Material.Components.Maui;
+using Microsoft.Maui.Controls;
+using SampleApp.Pages;
+using SkiaSharp.Views.Maui;
 
 namespace SampleApp;
 
@@ -10,29 +13,31 @@ public partial class MainPage : ContentPage
         this.InitializeComponent();
     }
 
-    private void FAB_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
+    private void Btn_Clicked(object sender, SKTouchEventArgs e)
     {
-        var fab = sender as FAB;
-        fab.IsExtended = !fab.IsExtended;
+        var btn = sender as Material.Components.Maui.Button;
+        Page page = btn.Text switch
+        {
+            "Buttons" => new ButtonsPage(),
+            "Cards" => new CardsPage(),
+            "CheckBoxs" => new CheckBoxsPage(),
+            "Chips" => new ChipsPage(),
+            "ComboBoxs" => new ComboBoxsPage(),
+            "ContextMenus" => new ContextMenusPage(),
+            "FABs" => new FABsPage(),
+            "NavigtionBar" => new NavigtionBarPage(),
+            "Popup" => new PopupPage(),
+            "ProgressIndicators" => new ProgressIndicatorsPage(),
+            "RadioButtons" => new RadioButtonsPage(),
+            "Switchs" => new SwitchsPage(),
+            "Tabs" => new TabsPage(),
+            _ => null,
+        };
+
+        if (page != null)
+        {
+            this.Navigation.PushAsync(page, true);
+        }
     }
-
-    private void Button_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
-    {
-        Application.Current.UserAppTheme =
-           Application.Current.RequestedTheme is AppTheme.Light ?
-           AppTheme.Dark :
-           AppTheme.Light;
-    }
-
-    private void Chip_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
-    {
-        var chip = sender as Chip;
-        chip.IsChecked = !chip.IsChecked;
-    }
-}
-
-public partial class ViewModel : ObservableObject
-{
-
 }
 

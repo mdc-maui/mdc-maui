@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.Pages.CheckBoxsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    Title="CheckBoxs">
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <md:CheckBox Text="checkBox" />
+        <md:CheckBox IsEnabled="False" Text="checkBox" />
+        <md:CheckBox
+            IsChecked="True"
+            IsEnabled="False"
+            Text="checkBox" />
+    </VerticalStackLayout>
+</ContentPage>
