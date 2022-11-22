@@ -145,9 +145,14 @@ internal class ChipDrawable
     {
         canvas.Save();
         this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
-        var leftPadding = this.view.HasIcon ? 34f : 16f;
+        var leftPadding = this.view.HasIcon
+            && (this.view.Icon != IconKind.None
+            || this.view.Image != null) 
+            ? 34f 
+            : 16f;
         var rightPadding = this.view.HasCloseIcon ? 34f : 16f;
-        var x = leftPadding + ((bounds.Right - leftPadding - rightPadding) / 2) - (this.view.TextBlock.MeasuredWidth / 2);
+        var x = leftPadding + (bounds.Width - leftPadding - rightPadding - this.view.TextBlock.MeasuredWidth) / 2;
+        //var x = leftPadding + ((bounds.Right - leftPadding - rightPadding) / 2) - (this.view.TextBlock.MeasuredWidth / 2);
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();

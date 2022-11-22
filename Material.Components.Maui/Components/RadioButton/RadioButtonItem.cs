@@ -1,5 +1,6 @@
 ﻿using Material.Components.Maui.Components.Core;
 using Material.Components.Maui.Core;
+using Material.Components.Maui.Extensions;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -75,11 +76,7 @@ public partial class RadioButtonItem : SKTouchCanvasView, IView, ITextElement, I
     }
     void ITextElement.OnTextBlockChanged()
     {
-        var width = this.TextBlock.MeasuredWidth + 70d + this.Margin.HorizontalThickness;
-        var height = 48d + this.Margin.VerticalThickness;
-        this.WidthRequest = Math.Max(this.WidthRequest, width);
-        this.HeightRequest = Math.Max(this.HeightRequest, height);
-        this.DesiredSize = new Size(this.WidthRequest, this.HeightRequest);
+        this.AllocateSize(this.MeasureOverride(this.widthConstraint,this.heightConstraint));
         this.InvalidateSurface();
     }
     #endregion
@@ -149,7 +146,10 @@ public partial class RadioButtonItem : SKTouchCanvasView, IView, ITextElement, I
 
     public float ChangingPercent { get; private set; } = 1f;
     private readonly RadioButtonItemDrawable drawable;
-    private IAnimationManager animationManager;
+    private IAnimationManager animationManager; 
+
+    private double widthConstraint = double.PositiveInfinity;
+    private double heightConstraint = double.PositiveInfinity;
 
     public RadioButtonItem()
     {
@@ -158,6 +158,7 @@ public partial class RadioButtonItem : SKTouchCanvasView, IView, ITextElement, I
 
     private void StartChangingAnimation()
     {
+        if(this.Handler == null)  return; 
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
         var start = 0f;
@@ -200,6 +201,37 @@ public partial class RadioButtonItem : SKTouchCanvasView, IView, ITextElement, I
     {
         var bounds = new SKRect(e.Info.Rect.Left + 4, e.Info.Rect.Top + 4, e.Info.Rect.Right - 4, e.Info.Rect.Bottom - 4);
         this.drawable.Draw(e.Surface.Canvas, bounds);
+    }
+
+    protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
+    {
+        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity) ;
+        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity);
+        
+        this.TextBlock.MaxWidth = (float)(maxWidth - 70d);
+        this.TextBlock.MaxHeight = 48f;
+        var width = this.HorizontalOptions.Alignment == LayoutAlignment.Fill
+            ? maxWidth
+            : this.Margin.HorizontalThickness
+            + Math.Max(this.MinimumWidthRequest, this.WidthRequest == -1
+                ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 70d)
+                : this.WidthRequest);
+        var height = this.VerticalOptions.Alignment == LayoutAlignment.Fill
+            ? maxHeight
+            : this.Margin.VerticalThickness
+            + Math.Max(this.MinimumHeightRequest, this.HeightRequest == -1
+                ? Math.Min(maxHeight, 48d)
+                : this.HeightRequest);
+        var result = new Size(Math.Ceiling(width), Math.Ceiling(height));
+        this.DesiredSize = result;
+        return result;
+    }
+
+    protected override Size ArrangeOverride(Rect bounds)
+    {
+        this.widthConstraint = bounds.Width;
+        this.heightConstraint = bounds.Height;
+        return base.ArrangeOverride(bounds);
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -2,9 +2,9 @@
 internal class CardDrawable
 {
     private readonly Card view;
-    public CardDrawable(Card card)
+    public CardDrawable(Card view)
     {
-        this.view = card;
+        this.view = view;
     }
 
     internal void Draw(SKCanvas canvas, SKRect bounds)

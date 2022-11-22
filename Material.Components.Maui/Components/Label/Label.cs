@@ -1,5 +1,6 @@
 using Material.Components.Maui.Components.Core;
 using Material.Components.Maui.Core;
+using Microsoft.Maui.Platform;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
@@ -74,6 +75,7 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
     void ITextElement.OnTextBlockChanged()
     {
         this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
+        this.InvalidateSurface();
     }
     #endregion
 
@@ -151,25 +153,25 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
     {
-        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity);
-        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity);
+        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity) - this.Padding.HorizontalThickness;
+        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity) - this.Padding.VerticalThickness;
         this.TextBlock.MaxWidth = (float)maxWidth;
         this.TextBlock.MaxHeight = (float)maxHeight;
-        var width = this.HorizontalOptions.Alignment is LayoutAlignment.Fill
+        var width = this.HorizontalOptions.Alignment == LayoutAlignment.Fill
             ? maxWidth
             : this.Margin.HorizontalThickness
             + this.Padding.HorizontalThickness
-            + Math.Max(this.MinimumWidthRequest, this.WidthRequest is -1
+            + Math.Max(this.MinimumWidthRequest, this.WidthRequest == -1
                 ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth)
                 : this.WidthRequest);
-        var height = this.VerticalOptions.Alignment is LayoutAlignment.Fill
+        var height = this.VerticalOptions.Alignment == LayoutAlignment.Fill
             ? maxHeight
             : this.Margin.VerticalThickness
             + this.Padding.VerticalThickness
-            + Math.Max(this.MinimumHeightRequest, this.HeightRequest is -1
+            + Math.Max(this.MinimumHeightRequest, this.HeightRequest == -1
                 ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight)
                 : this.HeightRequest);
-        var result = new Size(width, height);
+        var result = new Size(Math.Ceiling(width), Math.Ceiling(height));
         this.DesiredSize = result;
         return result;
     }

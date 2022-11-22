@@ -96,7 +96,7 @@ public partial class NavigationBar : ContentView, IVisualTreeElement
                 this.Items[i].IsActived = i == e.SelectedIndex;
             }
         };
-        this.PART_Bar = new Grid { HeightRequest = 80 };
+        this.PART_Bar = new Grid { HeightRequest = 80,BackgroundColor=Colors.Green };
 
         this.Content = new Grid
         {

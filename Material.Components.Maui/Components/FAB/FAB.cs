@@ -76,6 +76,7 @@ public partial class FAB : SKTouchCanvasView, IView, IImageElement, ITextElement
     void ITextElement.OnTextBlockChanged()
     {
         this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
+        this.InvalidateSurface();
     }
     #endregion
 

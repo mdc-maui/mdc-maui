@@ -77,6 +77,7 @@ public partial class Chip : SKTouchCanvasView, IView, IForegroundElement, IOutli
     void ITextElement.OnTextBlockChanged()
     {
         this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
+        this.InvalidateSurface();
     }
     #endregion
 
@@ -293,7 +294,11 @@ public partial class Chip : SKTouchCanvasView, IView, IForegroundElement, IOutli
     {
         var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity);
         var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity);
-        var iconWidth = (this.HasIcon ? 18d : 0d) + (this.HasCloseIcon ? 18d : 0d);
+        var iconWidth = (this.HasCloseIcon ? 18d : 0d) + (this.HasIcon
+                && (this.Icon != IconKind.None
+                || this.Image != null)
+                ? 18d
+                : 0d);
         this.TextBlock.MaxWidth = (float)(maxWidth - 32d - iconWidth);
         this.TextBlock.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
         var width = this.Margin.HorizontalThickness

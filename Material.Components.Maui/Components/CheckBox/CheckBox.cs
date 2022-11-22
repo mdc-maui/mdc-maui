@@ -77,6 +77,7 @@ public partial class CheckBox : SKTouchCanvasView, IView, ITextElement, IForegro
     void ITextElement.OnTextBlockChanged()
     {
         this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
+        this.InvalidateSurface();
     }
     #endregion
 

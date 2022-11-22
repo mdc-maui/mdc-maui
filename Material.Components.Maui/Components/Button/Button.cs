@@ -1,3 +1,4 @@
+using Material.Components.Maui.Components.Core;
 using Material.Components.Maui.Converters;
 using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
@@ -8,7 +9,7 @@ using IButton = Material.Components.Maui.Core.IButton;
 
 namespace Material.Components.Maui;
 
-public partial class Button : SKTouchCanvasView, IButton, ITextElement
+public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPaddingElement
 {
     #region interface
     #region IView
@@ -78,6 +79,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement
     void ITextElement.OnTextBlockChanged()
     {
         this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
+        this.InvalidateSurface();
     }
 
     #endregion
@@ -196,7 +198,22 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement
     [EditorBrowsable(EditorBrowsableState.Never)]
     public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
+
+    #region IPaddingElement
+    public static readonly BindableProperty PaddingProperty = PaddingElement.PaddingProperty;
+    public Thickness Padding
+    {
+        get => (Thickness)this.GetValue(PaddingProperty);
+        set => this.SetValue(PaddingProperty, value);
+    }
     #endregion
+    #endregion
+
+    [AutoBindable(DefaultValue = "Microsoft.Maui.TextAlignment.Center", OnChanged = nameof(OnPropertyChanged))]
+    private readonly TextAlignment horizontalTextAlignment;
+
+    [AutoBindable(DefaultValue = "Microsoft.Maui.TextAlignment.Center", OnChanged = nameof(OnPropertyChanged))]
+    private readonly TextAlignment verticalTextAlignment;
 
     private readonly MixedButtonDrawable drawable;
     private IAnimationManager animationManager;
@@ -244,22 +261,27 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
     {
-        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity);
-        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity);
-        var iconWidth = this.Icon != IconKind.None || this.Image != null ? 18d : 0d;
-        this.TextBlock.MaxWidth = (float)(maxWidth - 48d - iconWidth);
+        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity) - this.Padding.HorizontalThickness;
+        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity) - this.Padding.VerticalThickness;
+        var textScale = this.FontSize / 14f;
+        var iconSize = this.Icon != IconKind.None || this.Image != null ? 18d * textScale : 0d;
+        this.TextBlock.MaxWidth = (float)(maxWidth - 48d * textScale - iconSize);
         this.TextBlock.MaxHeight = (float)maxHeight;
         var width = this.HorizontalOptions.Alignment == LayoutAlignment.Fill
             ? maxWidth
-            : this.Margin.HorizontalThickness + Math.Max(this.MinimumWidthRequest, this.WidthRequest == -1
-                ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 48d + iconWidth)
+            : this.Margin.HorizontalThickness
+            + this.Padding.HorizontalThickness
+            + Math.Max(this.MinimumWidthRequest, this.WidthRequest == -1
+                ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 48d * textScale + iconSize)
                 : this.WidthRequest);
         var height = this.VerticalOptions.Alignment == LayoutAlignment.Fill
             ? maxHeight
-            : this.Margin.VerticalThickness + Math.Max(this.MinimumHeightRequest, this.HeightRequest == -1
-                ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight + 24d)
+            : this.Margin.VerticalThickness
+            + this.Padding.VerticalThickness
+            + Math.Max(this.MinimumHeightRequest, this.HeightRequest == -1
+                ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight + 22d * textScale)
                 : this.HeightRequest);
-        var result = new Size(width, height);
+        var result = new Size(Math.Ceiling(width), Math.Ceiling(height));
         this.DesiredSize = result;
         return result;
     }

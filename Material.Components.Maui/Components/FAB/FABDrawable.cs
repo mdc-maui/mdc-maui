@@ -56,7 +56,7 @@ internal class FABDrawable
             Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
             IsAntialias = true,
         };
-        var offset = this.view.FABType == FABType.Default ? 16f : this.view.FABType == FABType.Small ? 8f : 28f;
+        var offset = this.view.FABType == FABType.Default ? 16f : this.view.FABType == FABType.Small ? 8f : 30f;
         var scale = this.view.FABType == FABType.Large ? 1.5f : 1f;
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
         var matrix = new SKMatrix

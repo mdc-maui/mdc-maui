@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class Card : TemplatedView, IView, IShapeElement, IElevationElement, IRippleElement, IBackgroundElement, IStateLayerElement, IOutlineElement, IVisualTreeElement
+public partial class Card : TemplatedView,IView, IShapeElement, IElevationElement, IRippleElement, IBackgroundElement, IStateLayerElement, IOutlineElement, IVisualTreeElement
 {
     #region interface
     #region IView
@@ -111,7 +111,7 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
         set => this.SetValue(RippleColorProperty, value);
     }
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public float RippleSize { get; private set; } = 0f;
+    public float RippleSize { get; internal set; } = 0f;
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RipplePercent { get; set; } = 0f;
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -119,94 +119,45 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
     #endregion
     #endregion
 
-    [AutoBindable(OnChanged = nameof(OnContentChanged))]
-    private readonly View content;
-
-    [AutoBindable(DefaultValue = "true")]
+    [AutoBindable(OnChanged = nameof(OnEnableTouchEventsChanged))]
     private readonly bool enableTouchEvents;
 
-    [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnHorizontalOptionsChanged))]
-    private readonly LayoutOptions horizontalOptions;
+    private void OnEnableTouchEventsChanged()
+    {
+        if(this.PART_Container != null)
+        {
+            this.PART_Container.EnableTouchEvents = this.EnableTouchEvents;
+        }
+    }
 
-    [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnVerticalOptionsChanged))]
-    private readonly LayoutOptions verticalOptions;
-
-    [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnWidthRequestChanged))]
-    private readonly double widthRequest;
-
-    [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnHeightRequestChanged))]
-    private readonly double heightRequest;
+    [AutoBindable(OnChanged = nameof(OnContentChanged))]
+    private readonly View content;
 
     [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnPaddingChanged))]
     private readonly Thickness padding;
 
     private void OnContentChanged() => this.PART_Content.Content = this.Content;
 
-    private void OnHorizontalOptionsChanged()
-    {
-        base.HorizontalOptions = this.HorizontalOptions;
-        if (this.PART_Root != null)
-        {
-            this.PART_Root.HorizontalOptions = this.HorizontalOptions;
-            this.PART_Container?.InvalidateSurface();
-        }
-    }
-
-    private void OnVerticalOptionsChanged()
-    {
-        base.VerticalOptions = this.VerticalOptions;
-        if (this.PART_Root != null)
-        {
-            this.PART_Root.VerticalOptions = this.VerticalOptions;
-        }
-    }
-
-    private void OnWidthRequestChanged()
-    {
-        base.WidthRequest = this.WidthRequest;
-        if (this.PART_Root != null)
-        {
-            this.PART_Root.WidthRequest = this.WidthRequest;
-            this.PART_Container?.InvalidateSurface();
-        }
-    }
-
-    private void OnHeightRequestChanged()
-    {
-        base.WidthRequest = this.WidthRequest;
-        if (this.PART_Root != null)
-        {
-            this.PART_Root.HeightRequest = this.HeightRequest;
-        }
-    }
-
     private void OnPaddingChanged()
     {
-        if (this.PART_Root != null)
+        if (this.PART_Content != null)
         {
             this.PART_Content.Padding = this.Padding;
         }
     }
 
     private readonly Grid PART_Root;
-    private readonly SKTouchCanvasView PART_Container;
+    private readonly CardContainer PART_Container;
     private readonly ContentPresenter PART_Content = new();
-    private readonly CardDrawable drawable;
-    private IAnimationManager animationManager;
 
     public Card()
     {
-        this.PART_Container = new SKTouchCanvasView
+        this.PART_Container = new CardContainer(this)
         {
-            EnableTouchEvents = true,
-            IgnorePixelScaling = true,
+            EnableTouchEvents = this.EnableTouchEvents
         };
-
-        this.PART_Container.PaintSurface += this.OnPaintSurface;
         this.PART_Root = new Grid
         {
-            HorizontalOptions = this.HorizontalOptions,
-            VerticalOptions = this.VerticalOptions,
             Children =
             {
                 this.PART_Container,
@@ -214,51 +165,12 @@ public partial class Card : TemplatedView, IView, IShapeElement, IElevationEleme
             }
         };
         this.ControlTemplate = new ControlTemplate(() => this.PART_Root);
-        this.drawable = new CardDrawable(this);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void StartRippleEffect()
+    public void StartRippleEffect() 
     {
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
-        var start = 0f;
-        var end = 1f;
-
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            this.RipplePercent = start.Lerp(end, progress);
-            this.PART_Container.InvalidateSurface();
-        },
-        duration: 0.35f,
-        easing: Easing.SinInOut,
-        finished: () =>
-        {
-            if (this.ControlState != ControlState.Pressed)
-            {
-                this.RipplePercent = 0f;
-                this.PART_Container.InvalidateSurface();
-            }
-        }));
-    }
-
-    private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
-    {
-        this.RippleSize = e.Info.Rect.GetRippleSize(this.TouchPoint);
-        this.drawable.Draw(e.Surface.Canvas, e.Info.Rect);
-    }
-
-    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        base.OnPropertyChanged(propertyName);
-        if (propertyName is "IsEnabled")
-        {
-            this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-        }
-        else if (propertyName is "Padding")
-        {
-            this.PART_Content.Padding = this.Padding;
-        }
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<View> { this.Content };
