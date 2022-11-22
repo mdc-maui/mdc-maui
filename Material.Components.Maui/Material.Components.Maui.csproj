@@ -23,10 +23,10 @@
 	
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui.Markup" Version="1.1.1" />
-	  <PackageReference Include="M.BindableProperty.Generator" Version="0.9.1" />
-	  <PackageReference Include="MaterialColorUtilities" Version="0.1.2" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.2" />
-	  <PackageReference Include="Svg.Skia" Version="0.5.16" />
+	  <PackageReference Include="M.BindableProperty.Generator" Version="0.9.2" />
+	  <PackageReference Include="MaterialColorUtilities" Version="0.2.0" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
+	  <PackageReference Include="Svg.Skia" Version="0.5.18" />
 	  <PackageReference Include="Topten.RichTextKit" Version="0.4.163-preview" />
 	</ItemGroup>
 	

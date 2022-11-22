@@ -73,45 +73,45 @@ public static class SchemeExtensions
 
     public static Scheme<Color> GetScheme(this Color seedColor, AppTheme theme = AppTheme.Light)
     {
-        var corePalette = CorePalette.Of(seedColor.ToInt());
+        var corePalette = CorePalette.Of(seedColor.ToUint());
         dynamic schemeMapper = theme is AppTheme.Dark ? new DarkSchemeMapper() : new LightSchemeMapper();
-        Scheme<int> scheme = schemeMapper.Map(corePalette);
-        var result = scheme.ConvertTo(Color.FromInt);
+        Scheme<uint> scheme = schemeMapper.Map(corePalette);
+        var result = scheme.Convert(Color.FromUint);
         return result;
     }
 }
 
-internal static class MaterialColors
+public static class MaterialColors
 {
-    internal static ResourceDictionary Colors => MaterialComponentsExtensions.ColorRes;
+    public static ResourceDictionary Colors => MaterialComponentsExtensions.ColorRes;
 
-    internal static Color Primary => (Color)Colors["PrimaryColor"];
-    internal static Color PrimaryContainer => (Color)Colors["PrimaryContainerColor"];
-    internal static Color Secondary => (Color)Colors["SecondaryColor"];
-    internal static Color SecondaryContainer => (Color)Colors["SecondaryContainerColor"];
-    internal static Color Tertiary => (Color)Colors["TertiaryColor"];
-    internal static Color TertiaryContainer => (Color)Colors["TertiaryContainerColor"];
-    internal static Color Surface => (Color)Colors["SurfaceColor"];
-    internal static Color SurfaceVariant => (Color)Colors["SurfaceVariantColor"];
-    internal static Color Background => (Color)Colors["BackgroundColor"];
-    internal static Color Error => (Color)Colors["ErrorColor"];
-    internal static Color ErrorContainer => (Color)Colors["ErrorContainerColor"];
-    internal static Color OnPrimary => (Color)Colors["OnPrimaryColor"];
-    internal static Color OnPrimaryContainer => (Color)Colors["OnPrimaryContainerColor"];
-    internal static Color OnSecondary => (Color)Colors["OnSecondaryColor"];
-    internal static Color OnSecondaryContainer => (Color)Colors["OnSecondaryContainerColor"];
-    internal static Color OnTertiary => (Color)Colors["OnTertiaryColor"];
-    internal static Color OnTertiaryContainer => (Color)Colors["OnTertiaryContainerColor"];
-    internal static Color OnSurface => (Color)Colors["OnSurfaceColor"];
-    internal static Color OnSurfaceVariant => (Color)Colors["OnSurfaceVariantColor"];
-    internal static Color OnError => (Color)Colors["OnErrorColor"];
-    internal static Color OnErrorContainer => (Color)Colors["OnErrorContainerColor"];
-    internal static Color OnBackground => (Color)Colors["OnBackgroundColor"];
-    internal static Color Outline => (Color)Colors["OutlineColor"];
-    internal static Color Shadow => (Color)Colors["ShadowColor"];
-    internal static Color SurfaceTint => (Color)Colors["SurfaceTintColor"];
-    internal static Color InverseSurface => (Color)Colors["InverseSurfaceColor"];
-    internal static Color InverseOnSurface => (Color)Colors["InverseOnSurfaceColor"];
-    internal static Color InversePrimary => (Color)Colors["InversePrimaryColor"];
-    internal static Color Scrim => (Color)Colors["ScrimColor"];
+    public static Color Primary => (Color)Colors["PrimaryColor"];
+    public static Color PrimaryContainer => (Color)Colors["PrimaryContainerColor"];
+    public static Color Secondary => (Color)Colors["SecondaryColor"];
+    public static Color SecondaryContainer => (Color)Colors["SecondaryContainerColor"];
+    public static Color Tertiary => (Color)Colors["TertiaryColor"];
+    public static Color TertiaryContainer => (Color)Colors["TertiaryContainerColor"];
+    public static Color Surface => (Color)Colors["SurfaceColor"];
+    public static Color SurfaceVariant => (Color)Colors["SurfaceVariantColor"];
+    public static Color Background => (Color)Colors["BackgroundColor"];
+    public static Color Error => (Color)Colors["ErrorColor"];
+    public static Color ErrorContainer => (Color)Colors["ErrorContainerColor"];
+    public static Color OnPrimary => (Color)Colors["OnPrimaryColor"];
+    public static Color OnPrimaryContainer => (Color)Colors["OnPrimaryContainerColor"];
+    public static Color OnSecondary => (Color)Colors["OnSecondaryColor"];
+    public static Color OnSecondaryContainer => (Color)Colors["OnSecondaryContainerColor"];
+    public static Color OnTertiary => (Color)Colors["OnTertiaryColor"];
+    public static Color OnTertiaryContainer => (Color)Colors["OnTertiaryContainerColor"];
+    public static Color OnSurface => (Color)Colors["OnSurfaceColor"];
+    public static Color OnSurfaceVariant => (Color)Colors["OnSurfaceVariantColor"];
+    public static Color OnError => (Color)Colors["OnErrorColor"];
+    public static Color OnErrorContainer => (Color)Colors["OnErrorContainerColor"];
+    public static Color OnBackground => (Color)Colors["OnBackgroundColor"];
+    public static Color Outline => (Color)Colors["OutlineColor"];
+    public static Color Shadow => (Color)Colors["ShadowColor"];
+    public static Color SurfaceTint => (Color)Colors["SurfaceTintColor"];
+    public static Color InverseSurface => (Color)Colors["InverseSurfaceColor"];
+    public static Color InverseOnSurface => (Color)Colors["InverseOnSurfaceColor"];
+    public static Color InversePrimary => (Color)Colors["InversePrimaryColor"];
+    public static Color Scrim => (Color)Colors["ScrimColor"];
 }
