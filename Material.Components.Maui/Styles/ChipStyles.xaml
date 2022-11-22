@@ -89,7 +89,6 @@
 
     <Style x:Key="FilterChipStyle" TargetType="views:Chip">
         <Setter Property="Icon" Value="Check" />
-        <Setter Property="HasIcon" Value="False" />
         <Setter Property="Icon" Value="Check" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColour" Value="Transparent" />
@@ -165,7 +164,6 @@
 
     <Style x:Key="FilterElevatedChipStyle" TargetType="views:Chip">
         <Setter Property="Icon" Value="Check" />
-        <Setter Property="HasIcon" Value="False" />
         <Setter Property="OutlineWidth" Value="0" />
         <Setter Property="Elevation" Value="1" />
         <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
@@ -275,7 +273,6 @@
     </Style>
 
     <Style x:Key="SuggestionChipStyle" TargetType="views:Chip">
-        <Setter Property="HasIcon" Value="False" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColour" Value="Transparent" />
         <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
@@ -311,7 +308,6 @@
     </Style>
 
     <Style x:Key="SuggestionElevatedChipStyle" TargetType="views:Chip">
-        <Setter Property="HasIcon" Value="False" />
         <Setter Property="Elevation" Value="1" />
         <Setter Property="OutlineWidth" Value="0" />
         <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />

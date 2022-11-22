@@ -6,12 +6,13 @@
     xmlns:views="clr-namespace:Material.Components.Maui">
 
     <Style TargetType="views:Label">
+        <Setter Property="MinimumHeightRequest" Value="28" />
         <Setter Property="EnableTouchEvents" Value="False" />
         <Setter Property="IgnorePixelScaling" Value="True" />
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="VerticalOptions" Value="Start" />
         <Setter Property="HorizontalTextAlignment" Value="Start" />
-        <Setter Property="VerticalTextAlignment" Value="Start" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="ForegroundOpacity" Value="1" />
         <Setter Property="BackgroundColour" Value="Transparent" />

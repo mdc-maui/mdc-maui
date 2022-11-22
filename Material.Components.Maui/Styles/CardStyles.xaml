@@ -6,8 +6,6 @@
     xmlns:views="clr-namespace:Material.Components.Maui">
 
     <Style TargetType="views:Card">
-        <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="VerticalOptions" Value="Start" />
         <Setter Property="EnableTouchEvents" Value="True" />
         <Setter Property="Shape" Value="Medium" />
         <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />

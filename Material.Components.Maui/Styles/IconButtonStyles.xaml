@@ -105,6 +105,7 @@
                         <VisualState.Setters>
                             <Setter Property="OutlineOpacity" Value="0.12" />
                             <Setter Property="ForegroundOpacity" Value="0.38" />
+                            <Setter Property="BackgroundColour" Value="Transparent" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -135,6 +136,7 @@
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
                             <Setter Property="ForegroundOpacity" Value="0.38" />
+                            <Setter Property="BackgroundColour" Value="Transparent" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
