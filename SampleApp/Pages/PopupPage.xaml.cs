@@ -1,4 +1,5 @@
 using Material.Components.Maui;
+using SampleApp.Views;
 
 namespace SampleApp.Pages;
 
@@ -11,37 +12,45 @@ public partial class PopupPage : ContentPage
 
     private async void Button_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
     {
-        var btn1 = new Material.Components.Maui.Button
-        {
-            Text = "result abc"
-        };
-        var btn2 = new Material.Components.Maui.Button
-        {
-            Text = "result 123"
-        };
+        var btn = sender as Material.Components.Maui.Button;
 
-        var popup = new Popup
+        var horizontalOptions = btn.CommandParameter switch
         {
-            Content = new Card
-            {
-                Content = new HorizontalStackLayout
-                {
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.End,
-                    Padding = new Thickness(100,200,100,50),
-                    Spacing = 80,
-                    Children =
-                    {
-                        btn1,
-                        btn2
-                    }
-                }
-            }
+            "left-top"
+             or "left-center"
+             or "left-bottom"
+                => LayoutAlignment.Start,
+            "center-top"
+            or "center"
+            or "center-bottom"
+                => LayoutAlignment.Center,
+            "right-top"
+            or "right-center"
+            or "right-bottom"
+                => LayoutAlignment.End,
         };
 
-        btn1.Clicked += (s, e) => popup.Close("abc");
-        btn2.Clicked += (s, e) => popup.Close("123");
+        var verticalOptions = btn.CommandParameter switch
+        {
+            "left-top"
+             or "center-top"
+             or "right-top"
+                => LayoutAlignment.Start,
+            "left-center"
+            or "center"
+            or "right-center"
+                => LayoutAlignment.Center,
+            "left-bottom"
+            or "center-bottom"
+            or "right-bottom"
+                => LayoutAlignment.End,
+        };
 
+        var popup = new Dialog
+        {
+            HorizontalOptions = horizontalOptions,
+            VerticalOptions = verticalOptions
+        };
         var result = await popup.ShowAtAsync(this);
         this.Hint.Text = $"popup result: {result}";
     }
