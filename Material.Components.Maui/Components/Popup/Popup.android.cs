@@ -22,27 +22,30 @@ public partial class Popup
 
             this.container.SetCanceledOnTouchOutside(this.DismissOnOutside);
             this.container.SetContentView(this.platformContent);
+            this.container.Window.DecorView.SetPadding(0, 0, 0, 0);
             this.container.Window.DecorView.SetBackgroundColor(Colors.Transparent.ToPlatform());
         }
         var window = this.container.Window;
         window.DecorView.Measure((int)MeasureSpecMode.Unspecified, (int)MeasureSpecMode.Unspecified);
-        var width = window.DecorView.MeasuredWidth;
-        var height = window.DecorView.MeasuredHeight;
-        var x = this.OffsetX + this.HorizontalOptions switch
+        window.Attributes.Width = window.DecorView.MeasuredWidth;
+        window.Attributes.Height = window.DecorView.MeasuredHeight;
+
+        var gravity = this.HorizontalOptions switch
         {
-            LayoutAlignment.Start => 0,
-            LayoutAlignment.End => this.platformAnchor.Width - width,
-            _ => (this.platformAnchor.Width - width) / 2
+            LayoutAlignment.Start => GravityFlags.Left,
+            LayoutAlignment.End => GravityFlags.Right,
+            _ => GravityFlags.Center
         };
-        var y = this.OffsetY + this.VerticalOptions switch
+        gravity |= this.VerticalOptions switch
         {
-            LayoutAlignment.Start => 0,
-            LayoutAlignment.End => this.platformAnchor.Height - height,
-            _ => (this.platformAnchor.Height - height) / 2
+            LayoutAlignment.Start => GravityFlags.Top,
+            LayoutAlignment.End => GravityFlags.Bottom,
+            _ => GravityFlags.Center
         };
-        window.SetGravity(GravityFlags.Start | GravityFlags.Top);
-        window.Attributes.X = x;
-        window.Attributes.Y = y;
+
+        window.SetGravity(gravity);
+        window.Attributes.X = this.OffsetX;
+        window.Attributes.Y = this.OffsetY;
         this.container.Show();
     }
 
