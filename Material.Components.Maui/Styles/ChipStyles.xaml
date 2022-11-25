@@ -88,7 +88,7 @@
     </Style>
 
     <Style x:Key="FilterChipStyle" TargetType="views:Chip">
-        <Setter Property="Icon" Value="Check" />
+        <Setter Property="HasIcon" Value="False" />
         <Setter Property="Icon" Value="Check" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColour" Value="Transparent" />
@@ -163,6 +163,7 @@
     </Style>
 
     <Style x:Key="FilterElevatedChipStyle" TargetType="views:Chip">
+        <Setter Property="HasIcon" Value="False" />
         <Setter Property="Icon" Value="Check" />
         <Setter Property="OutlineWidth" Value="0" />
         <Setter Property="Elevation" Value="1" />
