@@ -13,7 +13,7 @@ internal class ProgressIndicatorDrawable
         if (this.view.IndicatorType is IndicatorType.Circular)
         {
             this.DrawCircularBackground(canvas, bounds);
-            if (this.view.IsIndeterminate)
+            if (this.view.Percent == -1f)
             {
                 this.DrawCircularIndeterminateAnimation(canvas, bounds);
             }
@@ -25,7 +25,7 @@ internal class ProgressIndicatorDrawable
         else
         {
             this.DrawLinearBackground(canvas, bounds);
-            if (this.view.IsIndeterminate)
+            if (this.view.Percent == -1f)
             {
                 this.DrawLinearIndeterminateAnimation(canvas, bounds);
             }

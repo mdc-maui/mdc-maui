@@ -51,22 +51,19 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
     private readonly Color activeIndicatorColor;
 
-    [AutoBindable(DefaultValue = "0.5f", OnChanged = nameof(OnPropertyChanged))]
+    [AutoBindable(DefaultValue = "-1f", OnChanged = nameof(OnPercentChanged))]
     private readonly float percent;
-
-    [AutoBindable(OnChanged = nameof(OnIsIndeterminate))]
-    private readonly bool isIndeterminate;
 
     [AutoBindable(DefaultValue = "1.5f")]
     private readonly float animationDuration;
 
-    private void OnIsIndeterminate()
+    private void OnPercentChanged()
     {
-        if (this.IsIndeterminate)
+        if (this.Percent == -1f)
         {
             this.AnimationIsPositive = true;
+            this.StartIndeterminateAnimation();
         }
-        this.StartIndeterminateAnimation();
     }
 
     private readonly ProgressIndicatorDrawable drawable;
@@ -80,28 +77,36 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
 
     private void StartIndeterminateAnimation()
     {
-        if (!this.IsIndeterminate || this.Handler is null) return;
+        if (this.Percent != -1f || this.Handler is null) return;
         this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
-        var start = this.AnimationIsPositive ? 0f : 1f;
-        var end = this.AnimationIsPositive ? 1f : 0f;
-        this.animationManager.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
+
+        var animation = new Microsoft.Maui.Animations.Animation(callback: (progress) =>
         {
-            this.AnimationPercent = start.Lerp(end, progress);
-            this.InvalidateSurface();
-        },
-        duration: this.AnimationDuration,
-        easing: Easing.Linear,
-        finished: () =>
-        {
-            if (this.IndicatorType is IndicatorType.Circular)
+            if (!this.AnimationIsPositive)
             {
-                if (start is 0f)
-                    this.AnimationIsPositive = false;
-                else
-                    this.AnimationIsPositive = true;
+                this.AnimationPercent = 1 - 0f.Lerp(1f, progress);
             }
-            this.StartIndeterminateAnimation();
-        }));
+            else
+            {
+                this.AnimationPercent = 0f.Lerp(1f, progress);
+            }
+            this.InvalidateSurface();
+        });
+        animation.Duration = this.AnimationDuration;
+        animation.Easing = Easing.Linear;
+        animation.Repeats = true;
+        animation.Finished = () =>
+        {
+            if (this.Percent != -1f)
+            {
+                this.animationManager.Remove(animation);
+            }
+            else if (this.IndicatorType is IndicatorType.Circular)
+            {
+                this.AnimationIsPositive = !this.AnimationIsPositive;
+            }
+        };
+        this.animationManager.Add(animation);
     }
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
@@ -111,8 +116,9 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
 
     protected override void OnHandlerChanged()
     {
-        if (this.IsIndeterminate)
+        if (this.Percent == -1f)
         {
+            this.AnimationIsPositive = true;
             this.StartIndeterminateAnimation();
         }
     }
