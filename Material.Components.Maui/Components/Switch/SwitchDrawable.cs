@@ -23,7 +23,7 @@ internal class SwitchDrawable
         this.DrawOutline(canvas, bounds);
         this.DrawStateLayer(canvas, cx, cy);
         this.DrawThumb(canvas, cx, cy);
-        if (this.view.IsIconVisible)
+        if (this.view.HasIcon)
         {
             this.DrawIcon(canvas, cx, cy);
         }
@@ -38,7 +38,8 @@ internal class SwitchDrawable
         var radii = shape.GetRadii();
         var paint = new SKPaint
         {
-            Color = this.view.TrackColor.MultiplyAlpha(this.view.TrackOpacity).ToSKColor(), IsAntialias = true,
+            Color = this.view.TrackColor.MultiplyAlpha(this.view.TrackOpacity).ToSKColor(),
+            IsAntialias = true,
         };
         var path = new SKPath();
         var rect = new SKRoundRect();
@@ -63,7 +64,8 @@ internal class SwitchDrawable
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ThumbColor.MultiplyAlpha(this.view.ThumbOpacity).ToSKColor(), IsAntialias = true,
+            Color = this.view.ThumbColor.MultiplyAlpha(this.view.ThumbOpacity).ToSKColor(),
+            IsAntialias = true,
         };
 
         var radius = GetThumbRadius(8, 12, 14);
@@ -75,20 +77,24 @@ internal class SwitchDrawable
     {
         if (!this.view.IsChecked) return;
         canvas.Save();
+        var sx = cx - 8f;
+        var sy = cy - 8f;
+        canvas.ClipRect(new SKRect(sx, sy, sx + 16f * this.view.ChangingPercent, sy + 16f * this.view.ChangingPercent));
         var path = SKPath.ParseSvgPathData(
             "M 5.8181543,10.027623 3.4153733,7.2675632 2.0000004,8.7537509 6.0066836,12.999999 14,4.5075 12.714286,3.0000004 Z");
         var matrix = new SKMatrix
         {
-            ScaleX = this.view.ChangingPercent,
-            ScaleY = this.view.ChangingPercent,
-            TransX = cx - (8 * this.view.ChangingPercent),
-            TransY = cy - (8 * this.view.ChangingPercent),
+            ScaleX = 1f,
+            ScaleY = 1f,
+            TransX = sx,
+            TransY = sy,
             Persp2 = 1f
         };
         path.Transform(matrix);
         var paint = new SKPaint
         {
-            Color = this.view.IconColor.MultiplyAlpha(this.view.IconOpacity).ToSKColor(), IsAntialias = true,
+            Color = this.view.IconColor.MultiplyAlpha(this.view.IconOpacity).ToSKColor(),
+            IsAntialias = true,
         };
         canvas.DrawPath(path, paint);
         canvas.Restore();

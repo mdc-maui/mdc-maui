@@ -142,7 +142,7 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
     private readonly float thumbOpacity;
 
     [AutoBindable(DefaultValue = "true")]
-    private readonly bool isIconVisible;
+    private readonly bool hasIcon;
 
     [AutoBindable]
     private readonly Color iconColor;
@@ -188,7 +188,7 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
                 this.InvalidateSurface();
             },
             duration: 0.75f,
-            easing: Easing.SinInOut));
+            easing: Easing.CubicInOut));
     }
 
 
