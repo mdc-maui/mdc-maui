@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.NavigationDrawerItemStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+    <Style TargetType="views:NavigationDrawerItem">
+        <Setter Property="EnableTouchEvents" Value="True" />
+        <Setter Property="IgnorePixelScaling" Value="True" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="FontWeight" Value="500" />
+        <Setter Property="BackgroundColour" Value="Transparent" />
+        <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal" />
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="StateLayerOpacity" Value="0.08" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters>
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerOpacity" Value="0.12" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="normal:actived">
+                        <VisualState.Setters>
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="hovered:actived">
+                        <VisualState.Setters>
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerOpacity" Value="0.08" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed:actived">
+                        <VisualState.Setters>
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerOpacity" Value="0.12" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundOpacity" Value="0.12" />
+                            <Setter Property="ForegroundOpacity" Value="0.38" />
+                            <Setter Property="BackgroundColour" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+</ResourceDictionary>

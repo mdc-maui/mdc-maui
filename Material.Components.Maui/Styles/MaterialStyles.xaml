@@ -21,6 +21,8 @@
         <local:ProgressIndicatorStyles />
         <local:TabsStyles />
         <local:ContextMenuStyles />
+        <local:NavigationDrawerStyles />
+        <local:NavigationDrawerItemStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

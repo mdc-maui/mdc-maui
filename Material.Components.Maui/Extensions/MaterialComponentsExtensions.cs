@@ -46,6 +46,7 @@ public static class MaterialComponentsExtensions
         return builder.ConfigureMauiHandlers((handlers) =>
         {
             handlers.AddHandler(typeof(ViewPager), typeof(ViewPagerHandler));
+            handlers.AddHandler(typeof(SplitView), typeof(SplitViewHandler));
         })
         .UseSkiaSharp();
     }

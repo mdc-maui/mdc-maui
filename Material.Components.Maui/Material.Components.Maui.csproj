@@ -37,6 +37,12 @@
 	  <Compile Update="Styles\NavigationBarStyles.xaml.cs">
 	    <DependentUpon>NavigationBarStyles.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Styles\NavigationDrawerItemStyles.xaml.cs">
+	    <DependentUpon>NavigationDrawerItemStyles.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Styles\NavigationDrawerStyles.xaml.cs">
+	    <DependentUpon>NavigationDrawerStyles.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Styles\ProgressIndicatorStyles.xaml.cs">
 	    <DependentUpon>ProgressIndicatorStyles.xaml</DependentUpon>
 	  </Compile>
@@ -59,6 +65,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Styles\NavigationBarStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\NavigationDrawerItemStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\NavigationDrawerStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Styles\ProgressIndicatorStyles.xaml">
