@@ -11,6 +11,7 @@ namespace Material.Components.Maui.Core;
 public partial class ViewPagerHandler : ViewHandler<MViewPager, AViewPager>
 {
     private readonly List<Android.Views.View> items = new();
+    private bool hasAnimation;
     protected override AViewPager CreatePlatformView()
     {
         var platformView = new AViewPager(this.Context)
@@ -30,12 +31,17 @@ public partial class ViewPagerHandler : ViewHandler<MViewPager, AViewPager>
 
     private static void MapSelectedIndex(ViewPagerHandler handler, MViewPager view)
     {
-        handler.PlatformView.SetCurrentItem(view.SelectedIndex, true);
+        handler.PlatformView.SetCurrentItem(view.SelectedIndex, handler.hasAnimation);
     }
 
     private static void MapUserInputEnabled(ViewPagerHandler handler, MViewPager view)
     {
         handler.PlatformView.UserInputEnabled = view.UserInputEnabled;
+    }
+
+    private static void MapHasAnimation(ViewPagerHandler handler, MViewPager view)
+    {
+        handler.hasAnimation = view.HasAnimation;
     }
 
     internal static void AddItem(ViewPagerHandler handler, int index, Page item)

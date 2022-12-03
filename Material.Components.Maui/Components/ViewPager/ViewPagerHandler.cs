@@ -8,6 +8,7 @@ public partial class ViewPagerHandler
     {
         [nameof(MViewPager.SelectedIndex)] = MapSelectedIndex,
         [nameof(MViewPager.UserInputEnabled)] = MapUserInputEnabled,
+        [nameof(MViewPager.HasAnimation)] = MapHasAnimation,
     };
 
     public ViewPagerHandler(PropertyMapper mapper) : base(mapper)
@@ -27,6 +28,11 @@ public partial class ViewPagerHandler
     }
 
     private static void MapUserInputEnabled(ViewPagerHandler handler, MViewPager view)
+    {
+
+    }
+
+    private static void MapHasAnimation(ViewPagerHandler handler, MViewPager view)
     {
 
     }

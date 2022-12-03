@@ -88,12 +88,12 @@ public partial class NavigationBar : ContentView, IVisualTreeElement
         this.Items.OnCleared += this.OnItemsCleared;
 
         this.PART_Content = new ViewPager();
-        this.PART_Content.SelectedIndexChanged += (sender, e) =>
+        this.PART_Content.SelectedItemChanged += (sender, e) =>
         {
-            this.SetValue(SelectedIndexProperty, e.SelectedIndex);
+            this.SetValue(SelectedIndexProperty, e.SelectedItemIndex);
             for (int i = 0; i < this.Items.Count; i++)
             {
-                this.Items[i].IsActived = i == e.SelectedIndex;
+                this.Items[i].IsActived = i == e.SelectedItemIndex;
             }
         };
         this.PART_Bar = new Grid { HeightRequest = 80,BackgroundColor=Colors.Green };

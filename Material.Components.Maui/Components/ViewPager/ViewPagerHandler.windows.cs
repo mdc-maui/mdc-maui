@@ -3,6 +3,7 @@ using Microsoft.Maui.Platform;
 using MViewPager = Material.Components.Maui.ViewPager;
 
 namespace Material.Components.Maui.Core;
+
 public partial class ViewPagerHandler : ViewHandler<MViewPager, WViewPager>
 {
     protected override WViewPager CreatePlatformView()
@@ -21,9 +22,11 @@ public partial class ViewPagerHandler : ViewHandler<MViewPager, WViewPager>
         handler.PlatformView.SelectedIndex = view.SelectedIndex;
     }
 
-    private static void MapUserInputEnabled(ViewPagerHandler handler, MViewPager view)
-    {
+    private static void MapUserInputEnabled(ViewPagerHandler handler, MViewPager view) { }
 
+    private static void MapHasAnimation(ViewPagerHandler handler, MViewPager view)
+    {
+        handler.PlatformView.UseTouchAnimationsForAllNavigation = view.HasAnimation;
     }
 
     internal static void AddItem(ViewPagerHandler handler, int index, Page item)

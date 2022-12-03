@@ -26,6 +26,12 @@ public partial class ViewPager : View, IVisualTreeElement
     [AutoBindable(DefaultValue = "0", OnChanged = nameof(OnSelectedIndexChanged))]
     private readonly int selectedIndex;
 
+    [AutoBindable(OnChanged = nameof(OnSelectedItemChanged))]
+    private readonly Page selectedItem;
+
+    [AutoBindable(DefaultValue = "true")]
+    private readonly bool hasAnimation;
+
     [SupportedOSPlatform("android")]
     public static readonly BindableProperty UserInputEnabledProperty = BindableProperty.Create(
         nameof(UserInputEnabled),
@@ -43,10 +49,19 @@ public partial class ViewPager : View, IVisualTreeElement
     private void OnSelectedIndexChanged()
     {
         if (this.SelectedIndex < 0 || this.SelectedIndex >= this.Items.Count) return;
-        //this.Items[this.currentIndex]?.SendDisappearing();
-        //this.currentIndex = this.SelectedIndex;
-        //this.Items[this.currentIndex]?.SendAppearing();
-        this.SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(this.SelectedIndex));
+        if(this.SelectedItem != this.Items[this.SelectedIndex])
+        {
+            this.SelectedItem = this.Items[this.SelectedIndex];
+        }
+    }
+
+    private void OnSelectedItemChanged()
+    {
+        if (this.SelectedItem != this.Items[this.SelectedIndex])
+        {
+            this.SelectedIndex = this.Items.IndexOf(this.SelectedItem);
+        }
+        this.SelectedItemChanged?.Invoke(this, new SelectedItemChangedEventArgs(this.SelectedItem, this.SelectedIndex));
         this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
     }
 
@@ -56,7 +71,7 @@ public partial class ViewPager : View, IVisualTreeElement
     [AutoBindable]
     private readonly object commandParameter;
 
-    public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
+    public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
 
     public ViewPager() : base()
     {

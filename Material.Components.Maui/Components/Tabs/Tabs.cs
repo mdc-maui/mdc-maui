@@ -119,12 +119,12 @@ public partial class Tabs : ContentView, IVisualTreeElement
         this.Items.OnRemoved += this.OnItemsRemoved;
         this.Items.OnCleared += this.OnItemsCleared;
         this.PART_Content = new ViewPager();
-        this.PART_Content.SelectedIndexChanged += (sender, e) =>
+        this.PART_Content.SelectedItemChanged += (sender, e) =>
         {
-            this.SelectedIndex = e.SelectedIndex;
+            this.SelectedIndex = e.SelectedItemIndex;
             for (int i = 0; i < this.Items.Count; i++)
             {
-                this.Items[i].IsActived = i == e.SelectedIndex;
+                this.Items[i].IsActived = i == e.SelectedItemIndex;
             }
         };
         this.PART_Scroller = new ScrollView
