@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class CheckBoxDrawable
 {
     private readonly CheckBox view;
+
     public CheckBoxDrawable(CheckBox checkBox)
     {
         this.view = checkBox;
@@ -30,7 +32,9 @@ internal class CheckBoxDrawable
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            Color = this.view.ForegroundColor
+                .MultiplyAlpha(this.view.ForegroundOpacity)
+                .ToSKColor(),
             IsStroke = true,
             StrokeWidth = 1,
             IsAntialias = true,
@@ -38,7 +42,10 @@ internal class CheckBoxDrawable
         var radii = new CornerRadius(2).GetRadii();
         var path = new SKPath();
         var rect = new SKRoundRect();
-        rect.SetRectRadii(new SKRect(bounds.Left, bounds.Top, bounds.Left + 18, bounds.Bottom), radii);
+        rect.SetRectRadii(
+            new SKRect(bounds.Left, bounds.Top, bounds.Left + 18, bounds.Bottom),
+            radii
+        );
         path.AddRoundRect(rect);
         canvas.DrawPath(path, paint);
         canvas.Restore();
@@ -51,14 +58,19 @@ internal class CheckBoxDrawable
             canvas.Save();
             var paint = new SKPaint
             {
-                Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                Color = this.view.ForegroundColor
+                    .MultiplyAlpha(this.view.ForegroundOpacity)
+                    .ToSKColor(),
                 IsAntialias = true,
             };
 
             var radii = new CornerRadius(2).GetRadii();
             var path = new SKPath();
             var rect = new SKRoundRect();
-            rect.SetRectRadii(new SKRect(bounds.Left, bounds.Top, bounds.Left + 18, bounds.Bottom), radii);
+            rect.SetRectRadii(
+                new SKRect(bounds.Left, bounds.Top, bounds.Left + 18, bounds.Bottom),
+                radii
+            );
             path.AddRoundRect(rect);
             canvas.DrawPath(path, paint);
             canvas.Restore();
@@ -90,7 +102,6 @@ internal class CheckBoxDrawable
             canvas.DrawPath(path, paint);
             canvas.Restore();
         }
-
     }
 
     private void DrawBackgound(SKCanvas canvas, SKRect bounds)
@@ -113,18 +124,18 @@ internal class CheckBoxDrawable
     private void DrawMarkIcon(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        canvas.ClipRect(new SKRect(bounds.Left,
-            bounds.Top,
-            bounds.Left + (18 * this.view.ChangingPercent),
-            bounds.Top + (bounds.Height * this.view.ChangingPercent)));
+        canvas.ClipRect(
+            new SKRect(
+                bounds.Left,
+                bounds.Top,
+                bounds.Left + (18 * this.view.ChangingPercent),
+                bounds.Top + (bounds.Height * this.view.ChangingPercent)
+            )
+        );
 
         var path = SKPath.ParseSvgPathData("m 7,10.9 -2.6,-2.6 -1.4,1.4 4,4 8,-8 -1.4,-1.4 z");
         path.Offset(bounds.Left, bounds.Top);
-        var paint = new SKPaint
-        {
-            Color = this.view.MarkColor.ToSKColor(),
-            IsAntialias = true,
-        };
+        var paint = new SKPaint { Color = this.view.MarkColor.ToSKColor(), IsAntialias = true, };
         canvas.DrawPath(path, paint);
         canvas.Restore();
     }
@@ -145,7 +156,9 @@ internal class CheckBoxDrawable
     {
         canvas.Save();
 
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
         var x = 42;
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
@@ -155,10 +168,18 @@ internal class CheckBoxDrawable
 
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.RipplePercent < 0) return;
+        if (this.view.RipplePercent < 0)
+            return;
         var color = this.view.RippleColor;
         var point = new SKPoint((bounds.Height / 2) + bounds.Top, (bounds.Height / 2) + bounds.Top);
-        canvas.DrawRippleEffect(bounds, 0, this.view.RippleSize, point, color, this.view.RipplePercent, false);
+        canvas.DrawRippleEffect(
+            bounds,
+            0,
+            this.view.RippleSize,
+            point,
+            color,
+            this.view.RipplePercent,
+            false
+        );
     }
-
 }

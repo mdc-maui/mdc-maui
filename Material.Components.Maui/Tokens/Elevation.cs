@@ -30,6 +30,7 @@ public readonly struct Elevation
     {
         return this.Value;
     }
+
     public override string ToString()
     {
         return this.Value.ToString();

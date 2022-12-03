@@ -1,4 +1,5 @@
 ﻿namespace Material.Components.Maui.Core;
+
 public class SelectedIndexChangedEventArgs : EventArgs
 {
     public int SelectedIndex { get; init; }

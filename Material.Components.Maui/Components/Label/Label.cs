@@ -1,17 +1,23 @@
 using Material.Components.Maui.Components.Core;
 using Material.Components.Maui.Core;
-using Microsoft.Maui.Platform;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
 
-public partial class Label : SKTouchCanvasView, IView, ITextElement, IForegroundElement, IBackgroundElement, IPaddingElement
+public partial class Label
+    : SKTouchCanvasView,
+        IView,
+        ITextElement,
+        IForegroundElement,
+        IBackgroundElement,
+        IPaddingElement
 {
     #region interface
     #region IView
     private ControlState controlState = ControlState.Normal;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
@@ -22,6 +28,7 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
             this.ChangeVisualState();
         }
     }
+
     protected override void ChangeVisualState()
     {
         var state = this.ControlState switch
@@ -32,6 +39,7 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
         };
         VisualStateManager.GoToState(this, state);
     }
+
     public void OnPropertyChanged()
     {
         this.InvalidateSurface();
@@ -44,6 +52,7 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -72,6 +81,7 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
         get => (bool)this.GetValue(FontItalicProperty);
         set => this.SetValue(FontItalicProperty, value);
     }
+
     void ITextElement.OnTextBlockChanged()
     {
         this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
@@ -80,8 +90,10 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
     #endregion
 
     #region IForegroundElement
-    public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
-    public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
+    public static readonly BindableProperty ForegroundColorProperty =
+        ForegroundElement.ForegroundColorProperty;
+    public static readonly BindableProperty ForegroundOpacityProperty =
+        ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
     {
         get => (Color)this.GetValue(ForegroundColorProperty);
@@ -95,8 +107,10 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
     #endregion
 
     #region IBackgroundElement
-    public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
+    public static readonly BindableProperty BackgroundColourProperty =
+        BackgroundElement.BackgroundColourProperty;
+    public static readonly BindableProperty BackgroundOpacityProperty =
+        BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
     {
         get => (Color)this.GetValue(BackgroundColourProperty);
@@ -153,24 +167,40 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
     {
-        var maxWidth = Math.Min(Math.Min(widthConstraint, this.MaximumWidthRequest), this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity) - this.Padding.HorizontalThickness;
-        var maxHeight = Math.Min(Math.Min(heightConstraint, this.MaximumHeightRequest), this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity) - this.Padding.VerticalThickness;
+        var maxWidth =
+            Math.Min(
+                Math.Min(widthConstraint, this.MaximumWidthRequest),
+                this.WidthRequest != -1 ? this.WidthRequest : double.PositiveInfinity
+            ) - this.Padding.HorizontalThickness;
+        var maxHeight =
+            Math.Min(
+                Math.Min(heightConstraint, this.MaximumHeightRequest),
+                this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
+            ) - this.Padding.VerticalThickness;
         this.TextBlock.MaxWidth = (float)maxWidth;
         this.TextBlock.MaxHeight = (float)maxHeight;
-        var width = this.HorizontalOptions.Alignment == LayoutAlignment.Fill
-            ? maxWidth
-            : this.Margin.HorizontalThickness
-            + this.Padding.HorizontalThickness
-            + Math.Max(this.MinimumWidthRequest, this.WidthRequest == -1
-                ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth)
-                : this.WidthRequest);
-        var height = this.VerticalOptions.Alignment == LayoutAlignment.Fill
-            ? maxHeight
-            : this.Margin.VerticalThickness
-            + this.Padding.VerticalThickness
-            + Math.Max(this.MinimumHeightRequest, this.HeightRequest == -1
-                ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight)
-                : this.HeightRequest);
+        var width =
+            this.HorizontalOptions.Alignment == LayoutAlignment.Fill
+                ? maxWidth
+                : this.Margin.HorizontalThickness
+                    + this.Padding.HorizontalThickness
+                    + Math.Max(
+                        this.MinimumWidthRequest,
+                        this.WidthRequest == -1
+                            ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth)
+                            : this.WidthRequest
+                    );
+        var height =
+            this.VerticalOptions.Alignment == LayoutAlignment.Fill
+                ? maxHeight
+                : this.Margin.VerticalThickness
+                    + this.Padding.VerticalThickness
+                    + Math.Max(
+                        this.MinimumHeightRequest,
+                        this.HeightRequest == -1
+                            ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight)
+                            : this.HeightRequest
+                    );
         var result = new Size(Math.Ceiling(width), Math.Ceiling(height));
         this.DesiredSize = result;
         return result;
@@ -182,5 +212,4 @@ public partial class Label : SKTouchCanvasView, IView, ITextElement, IForeground
         this.heightConstraint = bounds.Height;
         return base.ArrangeOverride(bounds);
     }
-
 }

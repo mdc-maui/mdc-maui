@@ -5,28 +5,42 @@ using System.ComponentModel;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
-public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IForegroundElement, IImageElement, ITextElement, IRippleElement, IStateLayerElement
+
+public partial class MenuItem
+    : SKTouchCanvasView,
+        IView,
+        IBackgroundElement,
+        IForegroundElement,
+        IImageElement,
+        ITextElement,
+        IRippleElement,
+        IStateLayerElement
 {
     #region interface
     #region IView
     private ControlState controlState = ControlState.Normal;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => "normal",
-                ControlState.Hovered => "hovered",
-                ControlState.Pressed => "pressed",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            });
+            VisualStateManager.GoToState(
+                this,
+                value switch
+                {
+                    ControlState.Normal => "normal",
+                    ControlState.Hovered => "hovered",
+                    ControlState.Pressed => "pressed",
+                    ControlState.Disabled => "disabled",
+                    _ => "normal",
+                }
+            );
             this.controlState = value;
         }
     }
+
     public void OnPropertyChanged()
     {
         this.InvalidateSurface();
@@ -39,6 +53,7 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -67,6 +82,7 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
         get => (bool)this.GetValue(FontItalicProperty);
         set => this.SetValue(FontItalicProperty, value);
     }
+
     void ITextElement.OnTextBlockChanged()
     {
         this.OnPropertyChanged();
@@ -81,17 +97,21 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
         typeof(IconKind),
         typeof(MenuItem),
         IconKind.None,
-        propertyChanged: OnTrailIconChanged);
+        propertyChanged: OnTrailIconChanged
+    );
     public static readonly BindableProperty TrailImageProperty = BindableProperty.Create(
         nameof(TrailImage),
         typeof(SKPicture),
         typeof(MenuItem),
         null,
-        propertyChanged: OnTrailIconChanged);
+        propertyChanged: OnTrailIconChanged
+    );
+
     public static void OnTrailIconChanged(BindableObject bo, object oldValue, object newValue)
     {
         ((IView)bo).OnPropertyChanged();
     }
+
     public IconKind Icon
     {
         get => (IconKind)this.GetValue(IconProperty);
@@ -119,8 +139,10 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
     #endregion
 
     #region IForegroundElement
-    public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
-    public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
+    public static readonly BindableProperty ForegroundColorProperty =
+        ForegroundElement.ForegroundColorProperty;
+    public static readonly BindableProperty ForegroundOpacityProperty =
+        ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
     {
         get => (Color)this.GetValue(ForegroundColorProperty);
@@ -134,8 +156,10 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
     #endregion
 
     #region IBackgroundElement
-    public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
+    public static readonly BindableProperty BackgroundColourProperty =
+        BackgroundElement.BackgroundColourProperty;
+    public static readonly BindableProperty BackgroundOpacityProperty =
+        BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
     {
         get => (Color)this.GetValue(BackgroundColourProperty);
@@ -148,8 +172,10 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
     }
     #endregion
     #region IStateLayerElement
-    public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
-    public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
+    public static readonly BindableProperty StateLayerColorProperty =
+        StateLayerElement.StateLayerColorProperty;
+    public static readonly BindableProperty StateLayerOpacityProperty =
+        StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
     {
         get => (Color)this.GetValue(StateLayerColorProperty);
@@ -169,10 +195,13 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RipplePercent { get; set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
@@ -193,28 +222,33 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void StartRippleEffect()
     {
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??=
+            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
         var end = 1f;
 
-        this.animationManager.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            if (this.ControlState == ControlState.Pressed)
-            {
-                this.RipplePercent = start.Lerp(end, progress);
-                this.InvalidateSurface();
-            }
-        },
-        duration: 0.15f,
-        easing: Easing.SinInOut,
-        finished: () =>
-        {
-            if (this.ControlState != ControlState.Pressed)
-            {
-                this.RipplePercent = 0f;
-                this.InvalidateSurface();
-            }
-        }));
+        this.animationManager.Add(
+            new Microsoft.Maui.Animations.Animation(
+                callback: (progress) =>
+                {
+                    if (this.ControlState == ControlState.Pressed)
+                    {
+                        this.RipplePercent = start.Lerp(end, progress);
+                        this.InvalidateSurface();
+                    }
+                },
+                duration: 0.15f,
+                easing: Easing.SinInOut,
+                finished: () =>
+                {
+                    if (this.ControlState != ControlState.Pressed)
+                    {
+                        this.RipplePercent = 0f;
+                        this.InvalidateSurface();
+                    }
+                }
+            )
+        );
     }
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
@@ -227,10 +261,14 @@ public partial class MenuItem : SKTouchCanvasView, IView, IBackgroundElement, IF
     {
         var minWidth = this.MinimumWidthRequest;
         var maxWidth = this.MaximumWidthRequest;
-        var offsetWidth = (this.Icon != IconKind.None || this.Image != null ? 48d : 12d)
-                     + (this.TrailIcon != IconKind.None || this.TrailImage != null ? 48d : 12d);
+        var offsetWidth =
+            (this.Icon != IconKind.None || this.Image != null ? 48d : 12d)
+            + (this.TrailIcon != IconKind.None || this.TrailImage != null ? 48d : 12d);
         this.TextBlock.MaxWidth = (float)(maxWidth - 24d - offsetWidth);
         this.TextBlock.MaxHeight = 48f;
-        return Math.Max(minWidth, Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 24d + offsetWidth));
+        return Math.Max(
+            minWidth,
+            Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 24d + offsetWidth)
+        );
     }
 }

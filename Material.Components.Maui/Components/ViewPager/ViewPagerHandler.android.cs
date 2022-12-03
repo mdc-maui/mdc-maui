@@ -12,6 +12,7 @@ public partial class ViewPagerHandler : ViewHandler<MViewPager, AViewPager>
 {
     private readonly List<Android.Views.View> items = new();
     private bool hasAnimation;
+
     protected override AViewPager CreatePlatformView()
     {
         var platformView = new AViewPager(this.Context)
@@ -22,10 +23,14 @@ public partial class ViewPagerHandler : ViewHandler<MViewPager, AViewPager>
             Adapter = new PageAdapter(this.Context.GetActivity() as FragmentActivity, this.items),
         };
 
-        platformView.RegisterOnPageChangeCallback(new OnPageChangeCallback((positon) =>
-        {
-            this.VirtualView.SelectedIndex = positon;
-        }));
+        platformView.RegisterOnPageChangeCallback(
+            new OnPageChangeCallback(
+                (positon) =>
+                {
+                    this.VirtualView.SelectedIndex = positon;
+                }
+            )
+        );
         return platformView;
     }
 
@@ -63,6 +68,7 @@ public partial class ViewPagerHandler : ViewHandler<MViewPager, AViewPager>
 internal class OnPageChangeCallback : AViewPager.OnPageChangeCallback
 {
     private readonly Action<int> callback;
+
     public OnPageChangeCallback(Action<int> callback)
     {
         this.callback = callback;

@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal abstract class ButtonDrawable
 {
     private readonly IButton view;
+
     internal ButtonDrawable(IButton view)
     {
         this.view = view;
@@ -15,7 +17,6 @@ internal abstract class ButtonDrawable
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
         canvas.DrawBackground(bounds, color, radii);
     }
-
 
     internal void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
@@ -31,7 +32,8 @@ internal abstract class ButtonDrawable
 
     internal void DrawOverlayLayer(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.ControlState == ControlState.Disabled) return;
+        if (this.view.ControlState == ControlState.Disabled)
+            return;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
         canvas.DrawOverlayLayer(bounds, this.view.Elevation, radii);
     }
@@ -51,6 +53,13 @@ internal abstract class ButtonDrawable
     {
         var color = this.view.RippleColor;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
-        canvas.DrawRippleEffect(bounds, radii, this.view.RippleSize, this.view.TouchPoint, color, this.view.RipplePercent);
+        canvas.DrawRippleEffect(
+            bounds,
+            radii,
+            this.view.RippleSize,
+            this.view.TouchPoint,
+            color,
+            this.view.RipplePercent
+        );
     }
 }

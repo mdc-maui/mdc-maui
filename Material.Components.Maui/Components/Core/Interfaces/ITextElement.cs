@@ -1,6 +1,7 @@
 ﻿using Topten.RichTextKit;
 
 namespace Material.Components.Maui.Core.Interfaces;
+
 internal interface ITextElement
 {
     string Text { get; set; }

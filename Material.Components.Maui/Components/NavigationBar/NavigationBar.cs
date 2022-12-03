@@ -1,20 +1,21 @@
 ﻿using CommunityToolkit.Maui.Markup;
 using Material.Components.Maui.Core;
+using Material.Components.Maui.Core.Interfaces;
 using System.Runtime.Versioning;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class NavigationBar : ContentView, IVisualTreeElement
+public partial class NavigationBar : ContentView, IVisualTreeElement, ICommandElement
 {
-    private static readonly BindablePropertyKey ItemsPropertyKey =
-        BindableProperty.CreateReadOnly(
-            nameof(Items),
-            typeof(ItemCollection<NavigationBarItem>),
-            typeof(NavigationBar),
-            null,
-            defaultValueCreator: bo => new ItemCollection<NavigationBarItem>());
+    private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
+        nameof(Items),
+        typeof(ItemCollection<NavigationBarItem>),
+        typeof(NavigationBar),
+        null,
+        defaultValueCreator: bo => new ItemCollection<NavigationBarItem>()
+    );
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
 
@@ -36,7 +37,8 @@ public partial class NavigationBar : ContentView, IVisualTreeElement
         typeof(bool),
         typeof(NavigationBar),
         false,
-         propertyChanged: OnUserInputEnabledChanged);
+        propertyChanged: OnUserInputEnabledChanged
+    );
 
     [SupportedOSPlatform("android")]
     public bool UserInputEnabled
@@ -46,13 +48,18 @@ public partial class NavigationBar : ContentView, IVisualTreeElement
     }
 
     [SupportedOSPlatform("android")]
-    private static void OnUserInputEnabledChanged(BindableObject bo, object oldValue, object NewValue)
+    private static void OnUserInputEnabledChanged(
+        BindableObject bo,
+        object oldValue,
+        object NewValue
+    )
     {
         ((NavigationBar)bo).PART_Content.UserInputEnabled = (bool)NewValue;
     }
 
     [AutoBindable]
     private readonly ICommand command;
+
     [AutoBindable]
     private readonly object commandParameter;
 
@@ -96,7 +103,7 @@ public partial class NavigationBar : ContentView, IVisualTreeElement
                 this.Items[i].IsActived = i == e.SelectedItemIndex;
             }
         };
-        this.PART_Bar = new Grid { HeightRequest = 80,BackgroundColor=Colors.Green };
+        this.PART_Bar = new Grid { HeightRequest = 80, BackgroundColor = Colors.Green };
 
         this.Content = new Grid
         {
@@ -105,11 +112,7 @@ public partial class NavigationBar : ContentView, IVisualTreeElement
                 new RowDefinition(GridLength.Star),
                 new RowDefinition(GridLength.Auto),
             },
-            Children =
-            {
-                this.PART_Content,
-                this.PART_Bar.Row(1)
-            }
+            Children = { this.PART_Content, this.PART_Bar.Row(1) }
         };
     }
 
@@ -155,6 +158,7 @@ public partial class NavigationBar : ContentView, IVisualTreeElement
         this.PART_Bar.Clear();
         this.PART_Content.Items.Clear();
     }
+
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
 
     public IVisualTreeElement GetVisualParent() => this.Window;

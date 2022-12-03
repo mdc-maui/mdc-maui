@@ -24,10 +24,8 @@ public readonly struct Shape
     public readonly double BottomLeft { get; }
     public readonly double BottomRight { get; }
 
-    public Shape(double uniformRadius) : this(uniformRadius, uniformRadius, uniformRadius, uniformRadius)
-    {
-
-    }
+    public Shape(double uniformRadius)
+        : this(uniformRadius, uniformRadius, uniformRadius, uniformRadius) { }
 
     public Shape(double topLeft, double topRight, double bottomLeft, double bottomRight)
     {
@@ -44,10 +42,12 @@ public readonly struct Shape
 
     public static bool operator ==(Shape left, Shape right)
     {
-        if (left.TopLeft == right.TopLeft
+        if (
+            left.TopLeft == right.TopLeft
             && left.TopRight == right.TopRight
             && left.BottomLeft == right.BottomLeft
-            && left.BottomRight == right.BottomRight)
+            && left.BottomRight == right.BottomRight
+        )
         {
             return true;
         }
@@ -56,10 +56,12 @@ public readonly struct Shape
 
     public static bool operator !=(Shape left, Shape right)
     {
-        if (left.TopLeft != right.TopLeft
+        if (
+            left.TopLeft != right.TopLeft
             || left.TopRight != right.TopRight
             || left.BottomLeft != right.BottomLeft
-            || left.BottomRight != right.BottomRight)
+            || left.BottomRight != right.BottomRight
+        )
         {
             return true;
         }
@@ -80,10 +82,10 @@ public readonly struct Shape
     {
         return new SKPoint[]
         {
-            new SKPoint((float)this.TopLeft,(float)this.TopLeft),
-            new SKPoint((float)this.TopRight,(float)this.TopRight),
-            new SKPoint((float)this.BottomRight,(float)this.BottomRight),
-            new SKPoint((float)this.BottomLeft,(float)this.BottomLeft),
+            new SKPoint((float)this.TopLeft, (float)this.TopLeft),
+            new SKPoint((float)this.TopRight, (float)this.TopRight),
+            new SKPoint((float)this.BottomRight, (float)this.BottomRight),
+            new SKPoint((float)this.BottomLeft, (float)this.BottomLeft),
         };
     }
 

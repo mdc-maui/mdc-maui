@@ -74,7 +74,8 @@ public static class SchemeExtensions
     public static Scheme<Color> GetScheme(this Color seedColor, AppTheme theme = AppTheme.Light)
     {
         var corePalette = CorePalette.Of(seedColor.ToUint());
-        dynamic schemeMapper = theme is AppTheme.Dark ? new DarkSchemeMapper() : new LightSchemeMapper();
+        dynamic schemeMapper =
+            theme is AppTheme.Dark ? new DarkSchemeMapper() : new LightSchemeMapper();
         Scheme<uint> scheme = schemeMapper.Map(corePalette);
         var result = scheme.Convert(Color.FromUint);
         return result;

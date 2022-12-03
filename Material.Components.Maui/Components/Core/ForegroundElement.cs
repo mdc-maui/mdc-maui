@@ -7,15 +7,16 @@ internal static class ForegroundElement
         typeof(Color),
         typeof(IForegroundElement),
         null,
-        propertyChanged: OnChanged);
+        propertyChanged: OnChanged
+    );
 
     public static readonly BindableProperty ForegroundOpacityProperty = BindableProperty.Create(
         nameof(IForegroundElement.ForegroundOpacity),
         typeof(float),
         typeof(IForegroundElement),
         1f,
-        propertyChanged: OnChanged);
-
+        propertyChanged: OnChanged
+    );
 
     public static void OnChanged(BindableObject bo, object oldValue, object newValue)
     {

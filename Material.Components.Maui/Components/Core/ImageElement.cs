@@ -7,15 +7,16 @@ internal static class ImageElement
         typeof(IconKind),
         typeof(IImageElement),
         IconKind.None,
-        propertyChanged: OnChanged);
+        propertyChanged: OnChanged
+    );
 
     public static readonly BindableProperty ImageProperty = BindableProperty.Create(
         nameof(IImageElement.Image),
         typeof(SKPicture),
         typeof(IImageElement),
         null,
-        propertyChanged: OnChanged);
-
+        propertyChanged: OnChanged
+    );
 
     public static void OnChanged(BindableObject bo, object oldValue, object newValue)
     {

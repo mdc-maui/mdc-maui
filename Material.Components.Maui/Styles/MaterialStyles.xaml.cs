@@ -27,14 +27,13 @@ public partial class MaterialStyles : ResourceDictionary
     {
         this.InitializeComponent();
         MaterialComponentsExtensions.ColorRes = this.MergedDictionaries.First(
-            x => x.GetType() == typeof(Colors));
+            x => x.GetType() == typeof(Colors)
+        );
         MaterialComponentsExtensions.UpdateMaterialColors();
 
         Application.Current.RequestedThemeChanged += (sender, e) =>
-         {
-             MaterialComponentsExtensions.UpdateMaterialColors();
-         };
+        {
+            MaterialComponentsExtensions.UpdateMaterialColors();
+        };
     }
-
-
 }

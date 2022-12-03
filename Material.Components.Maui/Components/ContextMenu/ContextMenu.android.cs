@@ -2,6 +2,7 @@
 using Microsoft.Maui.Platform;
 
 namespace Material.Components.Maui;
+
 public partial class ContextMenu
 {
     private PopupWindow container;

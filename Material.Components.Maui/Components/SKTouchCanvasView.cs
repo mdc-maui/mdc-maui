@@ -2,13 +2,15 @@
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
+
 public partial class SKTouchCanvasView : SKCanvasView, ITouchElement, IContextMenu
 {
     [AutoBindable]
     private readonly ContextMenu contextMenu;
 
     public static readonly BindableProperty CommandProperty = TouchElement.CommandProperty;
-    public static readonly BindableProperty CommandParameterProperty = TouchElement.CommandParameterProperty;
+    public static readonly BindableProperty CommandParameterProperty =
+        TouchElement.CommandParameterProperty;
     public ICommand Command
     {
         get => (ICommand)this.GetValue(CommandProperty);
@@ -31,7 +33,6 @@ public partial class SKTouchCanvasView : SKCanvasView, ITouchElement, IContextMe
     private readonly IDispatcherTimer touchTimer;
     private SKTouchEventArgs touchEventArgs;
     private bool isPressed;
-
 
     public SKTouchCanvasView()
     {
@@ -121,13 +122,15 @@ public partial class SKTouchCanvasView : SKCanvasView, ITouchElement, IContextMe
             view.ControlState = e.ActionType switch
             {
                 SKTouchAction.Pressed => ControlState.Pressed,
-                SKTouchAction.Released =>
+                SKTouchAction.Released
+                    =>
 #if __MOBILE__
-                ControlState.Normal,
+                    ControlState.Normal,
 #else
-                ControlState.Hovered,
+                    ControlState.Hovered,
 #endif
-                SKTouchAction.Entered => ControlState.Hovered,
+                SKTouchAction.Entered
+                    => ControlState.Hovered,
                 SKTouchAction.Moved => view.ControlState,
                 _ => ControlState.Normal
             };
@@ -143,7 +146,12 @@ public partial class SKTouchCanvasView : SKCanvasView, ITouchElement, IContextMe
                 element.TouchPoint = e.Location;
                 element.StartRippleEffect();
             }
-            else if (e.ActionType is SKTouchAction.Released or SKTouchAction.Exited or SKTouchAction.Cancelled)
+            else if (
+                e.ActionType
+                is SKTouchAction.Released
+                    or SKTouchAction.Exited
+                    or SKTouchAction.Cancelled
+            )
             {
                 if (element.RipplePercent == 1f)
                 {

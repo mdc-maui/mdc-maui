@@ -1,14 +1,18 @@
 ﻿using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
-public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeElement, IStateLayerElement,
-    IRippleElement
+public partial class Switch
+    : SKTouchCanvasView,
+        IView,
+        IOutlineElement,
+        IShapeElement,
+        IStateLayerElement,
+        IRippleElement
 {
     #region interface
 
@@ -48,9 +52,12 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
 
     #region IOutlineElement
 
-    public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
-    public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
+    public static readonly BindableProperty OutlineColorProperty =
+        OutlineElement.OutlineColorProperty;
+    public static readonly BindableProperty OutlineWidthProperty =
+        OutlineElement.OutlineWidthProperty;
+    public static readonly BindableProperty OutlineOpacityProperty =
+        OutlineElement.OutlineOpacityProperty;
 
     public Color OutlineColor
     {
@@ -86,8 +93,10 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
 
     #region IStateLayerElement
 
-    public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
-    public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
+    public static readonly BindableProperty StateLayerColorProperty =
+        StateLayerElement.StateLayerColorProperty;
+    public static readonly BindableProperty StateLayerOpacityProperty =
+        StateLayerElement.StateLayerOpacityProperty;
 
     public Color StateLayerColor
     {
@@ -129,7 +138,7 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
     [AutoBindable(OnChanged = nameof(OnCheckedChanged))]
     private readonly bool isChecked;
 
-    [AutoBindable] 
+    [AutoBindable]
     private readonly Color trackColor;
 
     [AutoBindable(DefaultValue = "1f")]
@@ -158,9 +167,11 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
         this.Command?.Execute(this.CommandParameter ?? this.IsChecked);
     }
 
-    [AutoBindable] private readonly ICommand command;
+    [AutoBindable]
+    private readonly ICommand command;
 
-    [AutoBindable] private readonly object commandParameter;
+    [AutoBindable]
+    private readonly object commandParameter;
 
     public event EventHandler<CheckedChangedEventArgs> CheckedChanged;
 
@@ -177,50 +188,64 @@ public partial class Switch : SKTouchCanvasView, IView, IOutlineElement, IShapeE
 
     private void StartChangingEffect()
     {
-        if (this.Handler is null) return;
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        if (this.Handler is null)
+            return;
+        this.animationManager ??=
+            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         this.ChangingPercent = 0f;
         var start = 0f;
         var end = 1f;
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-            {
-                this.ChangingPercent = start.Lerp(end, progress);
-                this.InvalidateSurface();
-            },
-            duration: 0.75f,
-            easing: Easing.CubicInOut));
+        this.animationManager?.Add(
+            new Microsoft.Maui.Animations.Animation(
+                callback: (progress) =>
+                {
+                    this.ChangingPercent = start.Lerp(end, progress);
+                    this.InvalidateSurface();
+                },
+                duration: 0.75f,
+                easing: Easing.CubicInOut
+            )
+        );
     }
-
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void StartRippleEffect()
     {
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??=
+            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
         var start = -1f;
         var end = 1f;
 
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-            {
-                this.RipplePercent = start.Lerp(end, progress);
-                this.InvalidateSurface();
-            },
-            duration: 0.35f,
-            easing: Easing.SinInOut,
-            finished: () =>
-            {
-                if (this.ControlState != ControlState.Pressed)
+        this.animationManager?.Add(
+            new Microsoft.Maui.Animations.Animation(
+                callback: (progress) =>
                 {
-                    this.RipplePercent = 0;
+                    this.RipplePercent = start.Lerp(end, progress);
                     this.InvalidateSurface();
+                },
+                duration: 0.35f,
+                easing: Easing.SinInOut,
+                finished: () =>
+                {
+                    if (this.ControlState != ControlState.Pressed)
+                    {
+                        this.RipplePercent = 0;
+                        this.InvalidateSurface();
+                    }
                 }
-            }));
+            )
+        );
     }
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
     {
-        var bounds = new SKRect(e.Info.Rect.Left + 8, e.Info.Rect.Top + 8, e.Info.Rect.Right - 8,
-            e.Info.Rect.Bottom - 8);
+        var bounds = new SKRect(
+            e.Info.Rect.Left + 8,
+            e.Info.Rect.Top + 8,
+            e.Info.Rect.Right - 8,
+            e.Info.Rect.Bottom - 8
+        );
         this.drawable.Draw(e.Surface.Canvas, bounds);
     }
 

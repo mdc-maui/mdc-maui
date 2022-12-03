@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class CardDrawable
 {
     private readonly Card view;
+
     public CardDrawable(Card view)
     {
         this.view = view;
@@ -25,7 +27,8 @@ internal class CardDrawable
 
     internal void DrawOverlayLayer(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.ControlState is ControlState.Disabled) return;
+        if (this.view.ControlState is ControlState.Disabled)
+            return;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
         canvas.DrawOverlayLayer(bounds, this.view.Elevation, radii);
     }
@@ -45,6 +48,13 @@ internal class CardDrawable
     {
         var color = this.view.RippleColor;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
-        canvas.DrawRippleEffect(bounds, radii, this.view.RippleSize, this.view.TouchPoint, color, this.view.RipplePercent);
+        canvas.DrawRippleEffect(
+            bounds,
+            radii,
+            this.view.RippleSize,
+            this.view.TouchPoint,
+            color,
+            this.view.RipplePercent
+        );
     }
 }

@@ -1,4 +1,5 @@
 ﻿namespace Material.Components.Maui.Extensions;
+
 public static class PopupExtensions
 {
     public static void ShowPopup(this Page page, IPopup popup)

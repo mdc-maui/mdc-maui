@@ -1,33 +1,45 @@
 ﻿using Material.Components.Maui.Core;
-using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class Card : TemplatedView,IView, IShapeElement, IElevationElement, IRippleElement, IBackgroundElement, IStateLayerElement, IOutlineElement, IVisualTreeElement
+public partial class Card
+    : TemplatedView,
+        IView,
+        IShapeElement,
+        IElevationElement,
+        IRippleElement,
+        IBackgroundElement,
+        IStateLayerElement,
+        IOutlineElement,
+        IVisualTreeElement
 {
     #region interface
     #region IView
     private ControlState controlState = ControlState.Normal;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(this, value switch
-            {
-                ControlState.Normal => "normal",
-                ControlState.Hovered => "hovered",
-                ControlState.Pressed => "pressed",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            });
+            VisualStateManager.GoToState(
+                this,
+                value switch
+                {
+                    ControlState.Normal => "normal",
+                    ControlState.Hovered => "hovered",
+                    ControlState.Pressed => "pressed",
+                    ControlState.Disabled => "disabled",
+                    _ => "normal",
+                }
+            );
             this.controlState = value;
         }
     }
+
     public void OnPropertyChanged()
     {
         this.PART_Container?.InvalidateSurface();
@@ -35,8 +47,10 @@ public partial class Card : TemplatedView,IView, IShapeElement, IElevationElemen
     #endregion
 
     #region IBackgroundElement
-    public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
+    public static readonly BindableProperty BackgroundColourProperty =
+        BackgroundElement.BackgroundColourProperty;
+    public static readonly BindableProperty BackgroundOpacityProperty =
+        BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
     {
         get => (Color)this.GetValue(BackgroundColourProperty);
@@ -50,9 +64,12 @@ public partial class Card : TemplatedView,IView, IShapeElement, IElevationElemen
     #endregion
 
     #region IOutlineElement
-    public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
-    public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
+    public static readonly BindableProperty OutlineColorProperty =
+        OutlineElement.OutlineColorProperty;
+    public static readonly BindableProperty OutlineWidthProperty =
+        OutlineElement.OutlineWidthProperty;
+    public static readonly BindableProperty OutlineOpacityProperty =
+        OutlineElement.OutlineOpacityProperty;
     public Color OutlineColor
     {
         get => (Color)this.GetValue(OutlineColorProperty);
@@ -89,8 +106,10 @@ public partial class Card : TemplatedView,IView, IShapeElement, IElevationElemen
     #endregion
 
     #region IStateLayerElement
-    public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
-    public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
+    public static readonly BindableProperty StateLayerColorProperty =
+        StateLayerElement.StateLayerColorProperty;
+    public static readonly BindableProperty StateLayerOpacityProperty =
+        StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
     {
         get => (Color)this.GetValue(StateLayerColorProperty);
@@ -110,10 +129,13 @@ public partial class Card : TemplatedView,IView, IShapeElement, IElevationElemen
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; internal set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RipplePercent { get; set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
@@ -124,7 +146,7 @@ public partial class Card : TemplatedView,IView, IShapeElement, IElevationElemen
 
     private void OnEnableTouchEventsChanged()
     {
-        if(this.PART_Container != null)
+        if (this.PART_Container != null)
         {
             this.PART_Container.EnableTouchEvents = this.EnableTouchEvents;
         }
@@ -156,22 +178,12 @@ public partial class Card : TemplatedView,IView, IShapeElement, IElevationElemen
         {
             EnableTouchEvents = this.EnableTouchEvents
         };
-        this.PART_Root = new Grid
-        {
-            Children =
-            {
-                this.PART_Container,
-                this.PART_Content
-            }
-        };
+        this.PART_Root = new Grid { Children = { this.PART_Container, this.PART_Content } };
         this.ControlTemplate = new ControlTemplate(() => this.PART_Root);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void StartRippleEffect() 
-    {
-
-    }
+    public void StartRippleEffect() { }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<View> { this.Content };
 

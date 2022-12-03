@@ -10,11 +10,21 @@ using Topten.RichTextKit;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundElement, IForegroundElement, IShapeElement, IOutlineElement, IVisualTreeElement
+public partial class ComboBox
+    : ContentView,
+        IView,
+        ITextElement,
+        IBackgroundElement,
+        IForegroundElement,
+        IShapeElement,
+        IOutlineElement,
+        IVisualTreeElement,
+        ICommandElement
 {
     #region interface
     #region IView
     private ControlState controlState = ControlState.Normal;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
@@ -25,6 +35,7 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
             this.ChangeVisualState();
         }
     }
+
     protected override void ChangeVisualState()
     {
         var state = this.ControlState switch
@@ -36,6 +47,7 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
         };
         VisualStateManager.GoToState(this, state);
     }
+
     public void OnPropertyChanged()
     {
         this.PART_Content?.InvalidateSurface();
@@ -48,6 +60,7 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -76,6 +89,7 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
         get => (bool)this.GetValue(FontItalicProperty);
         set => this.SetValue(FontItalicProperty, value);
     }
+
     void ITextElement.OnTextBlockChanged()
     {
         this.UpdateLabelTextBounds();
@@ -83,8 +97,10 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
     #endregion
 
     #region IForegroundElement
-    public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
-    public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
+    public static readonly BindableProperty ForegroundColorProperty =
+        ForegroundElement.ForegroundColorProperty;
+    public static readonly BindableProperty ForegroundOpacityProperty =
+        ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
     {
         get => (Color)this.GetValue(ForegroundColorProperty);
@@ -98,8 +114,10 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
     #endregion
 
     #region IBackgroundElement
-    public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
+    public static readonly BindableProperty BackgroundColourProperty =
+        BackgroundElement.BackgroundColourProperty;
+    public static readonly BindableProperty BackgroundOpacityProperty =
+        BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
     {
         get => (Color)this.GetValue(BackgroundColourProperty);
@@ -113,9 +131,12 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
     #endregion
 
     #region IOutlineElement
-    public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
-    public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
+    public static readonly BindableProperty OutlineColorProperty =
+        OutlineElement.OutlineColorProperty;
+    public static readonly BindableProperty OutlineWidthProperty =
+        OutlineElement.OutlineWidthProperty;
+    public static readonly BindableProperty OutlineOpacityProperty =
+        OutlineElement.OutlineOpacityProperty;
     public Color OutlineColor
     {
         get => (Color)this.GetValue(OutlineColorProperty);
@@ -143,8 +164,10 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
     #endregion
 
     #region IStateLayerElement
-    public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
-    public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
+    public static readonly BindableProperty StateLayerColorProperty =
+        StateLayerElement.StateLayerColorProperty;
+    public static readonly BindableProperty StateLayerOpacityProperty =
+        StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
     {
         get => (Color)this.GetValue(StateLayerColorProperty);
@@ -158,14 +181,13 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
     #endregion
     #endregion
 
-    private static readonly BindablePropertyKey ItemsPropertyKey =
-       BindableProperty.CreateReadOnly(
-           nameof(Items),
-           typeof(ItemCollection<ComboBoxItem>),
-           typeof(ComboBox),
-           null,
-           defaultValueCreator: bo =>
-               new ItemCollection<ComboBoxItem>());
+    private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
+        nameof(Items),
+        typeof(ItemCollection<ComboBoxItem>),
+        typeof(ComboBox),
+        null,
+        defaultValueCreator: bo => new ItemCollection<ComboBoxItem>()
+    );
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
     public ItemCollection<ComboBoxItem> Items
@@ -204,7 +226,10 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
     private void OnSelectedIndexChanged()
     {
         this.Text = this.Items[this.SelectedIndex].Text;
-        this.SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(this.SelectedIndex));
+        this.SelectedIndexChanged?.Invoke(
+            this,
+            new SelectedIndexChangedEventArgs(this.SelectedIndex)
+        );
         this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
     }
 
@@ -229,7 +254,6 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
                         break;
                     }
                 }
-
             }
         }
         else if (e.Action is NotifyCollectionChangedAction.Replace)
@@ -341,7 +365,10 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
                 if (result != this.SelectedIndex)
                 {
                     this.SelectedIndex = result;
-                    this.SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(result));
+                    this.SelectedIndexChanged?.Invoke(
+                        this,
+                        new SelectedIndexChangedEventArgs(result)
+                    );
                 }
             }
             this.IsDropDown = false;
@@ -359,23 +386,34 @@ public partial class ComboBox : ContentView, IView, ITextElement, IBackgroundEle
 
     public void StartLabelTextAnimation()
     {
-        if (this.SelectedIndex != -1) return;
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        if (this.SelectedIndex != -1)
+            return;
+        this.animationManager ??=
+            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
         var end = 1f;
 
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            this.PlaceholderAnimationPercent = start.Lerp(end, progress);
-            this.PART_Content.InvalidateSurface();
-        },
-        duration: 0.25f,
-        easing: Easing.SinInOut));
+        this.animationManager?.Add(
+            new Microsoft.Maui.Animations.Animation(
+                callback: (progress) =>
+                {
+                    this.PlaceholderAnimationPercent = start.Lerp(end, progress);
+                    this.PART_Content.InvalidateSurface();
+                },
+                duration: 0.25f,
+                easing: Easing.SinInOut
+            )
+        );
     }
 
     private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
     {
-        var bounds = new SKRect(e.Info.Rect.Left, e.Info.Rect.Top + 8, e.Info.Rect.Right, e.Info.Rect.Bottom);
+        var bounds = new SKRect(
+            e.Info.Rect.Left,
+            e.Info.Rect.Top + 8,
+            e.Info.Rect.Right,
+            e.Info.Rect.Bottom
+        );
         this.drawable.Draw(e.Surface.Canvas, bounds);
     }
 

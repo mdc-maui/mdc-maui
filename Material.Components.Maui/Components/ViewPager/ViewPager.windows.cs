@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Media;
 using Windows.System;
 
 namespace Material.Components.Maui.Core;
+
 public class WViewPager : FlipView
 {
     public WViewPager()
@@ -34,7 +35,12 @@ public class WViewPagerItem : FlipViewItem
 {
     protected override void OnKeyDown(KeyRoutedEventArgs e)
     {
-        if (e.Key is VirtualKey.Left || e.Key is VirtualKey.Right || e.Key is VirtualKey.Up || e.Key is VirtualKey.Down)
+        if (
+            e.Key is VirtualKey.Left
+            || e.Key is VirtualKey.Right
+            || e.Key is VirtualKey.Up
+            || e.Key is VirtualKey.Down
+        )
         {
             e.Handled = true;
         }

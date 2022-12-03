@@ -5,16 +5,15 @@ using System.Windows.Input;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class ViewPager : View, IVisualTreeElement
+public partial class ViewPager : View, IVisualTreeElement, ICommandElement
 {
-    private static readonly BindablePropertyKey ItemsPropertyKey =
-       BindableProperty.CreateReadOnly(
-           nameof(Items),
-           typeof(ItemCollection<Page>),
-           typeof(ViewPager),
-           null,
-           defaultValueCreator: bo =>
-               new ItemCollection<Page>());
+    private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
+        nameof(Items),
+        typeof(ItemCollection<Page>),
+        typeof(ViewPager),
+        null,
+        defaultValueCreator: bo => new ItemCollection<Page>()
+    );
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
     public ItemCollection<Page> Items
@@ -37,7 +36,8 @@ public partial class ViewPager : View, IVisualTreeElement
         nameof(UserInputEnabled),
         typeof(bool),
         typeof(ViewPager),
-        true);
+        true
+    );
 
     [SupportedOSPlatform("android")]
     public bool UserInputEnabled
@@ -46,10 +46,19 @@ public partial class ViewPager : View, IVisualTreeElement
         set => this.SetValue(UserInputEnabledProperty, value);
     }
 
+    [AutoBindable]
+    private readonly ICommand command;
+
+    [AutoBindable]
+    private readonly object commandParameter;
+
+    public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
+
     private void OnSelectedIndexChanged()
     {
-        if (this.SelectedIndex < 0 || this.SelectedIndex >= this.Items.Count) return;
-        if(this.SelectedItem != this.Items[this.SelectedIndex])
+        if (this.SelectedIndex < 0 || this.SelectedIndex >= this.Items.Count)
+            return;
+        if (this.SelectedItem != this.Items[this.SelectedIndex])
         {
             this.SelectedItem = this.Items[this.SelectedIndex];
         }
@@ -61,17 +70,12 @@ public partial class ViewPager : View, IVisualTreeElement
         {
             this.SelectedIndex = this.Items.IndexOf(this.SelectedItem);
         }
-        this.SelectedItemChanged?.Invoke(this, new SelectedItemChangedEventArgs(this.SelectedItem, this.SelectedIndex));
+        this.SelectedItemChanged?.Invoke(
+            this,
+            new SelectedItemChangedEventArgs(this.SelectedItem, this.SelectedIndex)
+        );
         this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
     }
-
-    [AutoBindable]
-    private readonly ICommand command;
-
-    [AutoBindable]
-    private readonly object commandParameter;
-
-    public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
 
     public ViewPager() : base()
     {
@@ -86,7 +90,11 @@ public partial class ViewPager : View, IVisualTreeElement
         {
             if (e.EventType is "Add" or "Insert")
             {
-                ViewPagerHandler.AddItem((ViewPagerHandler)this.Handler, e.Index, this.Items[e.Index]);
+                ViewPagerHandler.AddItem(
+                    (ViewPagerHandler)this.Handler,
+                    e.Index,
+                    this.Items[e.Index]
+                );
             }
             else
             {

@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class RadioButtonItemDrawable
 {
     private readonly RadioButtonItem view;
+
     public RadioButtonItemDrawable(RadioButtonItem view)
     {
         this.view = view;
@@ -36,7 +38,8 @@ internal class RadioButtonItemDrawable
 
     private void DrawCircle(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.IsSelected) return;
+        if (!this.view.IsSelected)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
@@ -65,7 +68,9 @@ internal class RadioButtonItemDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
         var x = bounds.Left + 46;
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
@@ -74,7 +79,8 @@ internal class RadioButtonItemDrawable
 
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.RipplePercent < 0) return;
+        if (this.view.RipplePercent < 0)
+            return;
         var color = this.view.RippleColor;
         var point = new SKPoint(bounds.Left + 20, bounds.Top + 20);
         canvas.DrawRippleEffect(bounds, 0, 20, point, color, this.view.RipplePercent, false);

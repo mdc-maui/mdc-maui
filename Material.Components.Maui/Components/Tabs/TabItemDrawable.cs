@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class TabItemDrawable
 {
     private readonly TabItem view;
+
     public TabItemDrawable(TabItem view)
     {
         this.view = view;
@@ -22,14 +24,24 @@ internal class TabItemDrawable
     private void DrawBackground(SKCanvas canvas, SKRect bounds)
     {
         var color = this.view.BackgroundColour.MultiplyAlpha(this.view.BackgroundOpacity);
-        var _bounds = new SKRect(bounds.Left - 1, bounds.Top - 1, bounds.Right + 1, bounds.Bottom + 1);
+        var _bounds = new SKRect(
+            bounds.Left - 1,
+            bounds.Top - 1,
+            bounds.Right + 1,
+            bounds.Bottom + 1
+        );
         canvas.DrawBackground(_bounds, color, 0);
     }
 
     private void DrawOverlayLayer(SKCanvas canvas, SKRect bounds)
     {
         var radii = new CornerRadius(0).GetRadii();
-        var _bounds = new SKRect(bounds.Left - 1, bounds.Top - 1, bounds.Right + 1, bounds.Bottom + 1);
+        var _bounds = new SKRect(
+            bounds.Left - 1,
+            bounds.Top - 1,
+            bounds.Right + 1,
+            bounds.Bottom + 1
+        );
         canvas.DrawOverlayLayer(_bounds, Elevation.Level2, radii);
     }
 
@@ -43,11 +55,14 @@ internal class TabItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image != null || this.view.Icon is IconKind.None) return;
+        if (!this.view.HasIcon || this.view.Image != null || this.view.Icon is IconKind.None)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            Color = this.view.ForegroundColor
+                .MultiplyAlpha(this.view.ForegroundOpacity)
+                .ToSKColor(),
             IsAntialias = true,
         };
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
@@ -60,14 +75,16 @@ internal class TabItemDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image is null) return;
+        if (!this.view.HasIcon || this.view.Image is null)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
             IsAntialias = true,
             ColorFilter = SKColorFilter.CreateBlendMode(
-               this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
-                SKBlendMode.SrcIn)
+                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                SKBlendMode.SrcIn
+            )
         };
         var scale = 24 / this.view.Image.CullRect.Width;
         var x = bounds.MidX - 12;
@@ -86,29 +103,40 @@ internal class TabItemDrawable
 
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasLabel) return;
+        if (!this.view.HasLabel)
+            return;
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
         var x = bounds.MidX - (this.view.TextBlock.MeasuredWidth / 2);
-        var y = this.view.HasIcon ? 36 + ((25 - this.view.TextBlock.MeasuredHeight) / 2) : bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
+        var y = this.view.HasIcon
+            ? 36 + ((25 - this.view.TextBlock.MeasuredHeight) / 2)
+            : bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 
     private void DrawActiveIndicator(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.IsActived) return;
+        if (!this.view.IsActived)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ActiveIndicatorColor.MultiplyAlpha(this.view.ActiveIndicatorOpacity).ToSKColor(),
+            Color = this.view.ActiveIndicatorColor
+                .MultiplyAlpha(this.view.ActiveIndicatorOpacity)
+                .ToSKColor(),
             IsAntialias = true,
         };
         var x = bounds.MidX - 20;
         var y = bounds.Bottom - 3;
         var path = new SKPath();
         var rect = new SKRoundRect();
-        rect.SetRectRadii(new SKRect(x, y, x + 40, y + 3), this.view.ActiveIndicatorShape.GetRadii());
+        rect.SetRectRadii(
+            new SKRect(x, y, x + 40, y + 3),
+            this.view.ActiveIndicatorShape.GetRadii()
+        );
         path.AddRoundRect(rect);
         canvas.DrawPath(path, paint);
         canvas.Restore();
@@ -116,9 +144,17 @@ internal class TabItemDrawable
 
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.RipplePercent < 0) return;
+        if (this.view.RipplePercent < 0)
+            return;
         var color = this.view.RippleColor;
         var point = new SKPoint(bounds.MidX, bounds.MidY);
-        canvas.DrawRippleEffect(bounds, 0, this.view.RippleSize, point, color, this.view.RipplePercent);
+        canvas.DrawRippleEffect(
+            bounds,
+            0,
+            this.view.RippleSize,
+            point,
+            color,
+            this.view.RipplePercent
+        );
     }
 }

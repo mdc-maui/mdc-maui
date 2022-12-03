@@ -8,11 +8,13 @@ internal static class TouchElement
         nameof(ITouchElement.Command),
         typeof(ICommand),
         typeof(ITouchElement),
-        null);
+        null
+    );
 
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(
         nameof(ITouchElement.CommandParameter),
         typeof(object),
         typeof(ITouchElement),
-        null);
+        null
+    );
 }

@@ -1,4 +1,5 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class MenuItemDrawable
 {
     private readonly MenuItem view;
@@ -34,11 +35,14 @@ internal class MenuItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Icon == IconKind.None) return;
+        if (this.view.Image != null || this.view.Icon == IconKind.None)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            Color = this.view.ForegroundColor
+                .MultiplyAlpha(this.view.ForegroundOpacity)
+                .ToSKColor(),
             IsAntialias = true,
         };
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
@@ -51,14 +55,16 @@ internal class MenuItemDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image == null) return;
+        if (this.view.Image == null)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
             IsAntialias = true,
             ColorFilter = SKColorFilter.CreateBlendMode(
-               this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
-                SKBlendMode.SrcIn)
+                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                SKBlendMode.SrcIn
+            )
         };
         var scale = 24f / this.view.Image.CullRect.Width;
         var x = 12f;
@@ -77,11 +83,14 @@ internal class MenuItemDrawable
 
     private void DrawTrailPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.TrailImage != null || this.view.TrailIcon == IconKind.None) return;
+        if (this.view.TrailImage != null || this.view.TrailIcon == IconKind.None)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            Color = this.view.ForegroundColor
+                .MultiplyAlpha(this.view.ForegroundOpacity)
+                .ToSKColor(),
             IsAntialias = true,
         };
         var path = SKPath.ParseSvgPathData(this.view.TrailIcon.GetData());
@@ -94,14 +103,16 @@ internal class MenuItemDrawable
 
     private void DrawTrailImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.TrailImage == null) return;
+        if (this.view.TrailImage == null)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
             IsAntialias = true,
             ColorFilter = SKColorFilter.CreateBlendMode(
-               this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
-                SKBlendMode.SrcIn)
+                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                SKBlendMode.SrcIn
+            )
         };
         var scale = 24f / this.view.TrailImage.CullRect.Width;
         var x = bounds.Right - 36f;
@@ -121,7 +132,9 @@ internal class MenuItemDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
         var x = this.view.Image != null || this.view.Icon != IconKind.None ? 48f : 12f;
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2f);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
@@ -131,6 +144,13 @@ internal class MenuItemDrawable
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
         if (this.view.RipplePercent > 0f && bounds.Contains(this.view.TouchPoint))
-            canvas.DrawRippleEffect(bounds, 0, this.view.RippleSize, this.view.TouchPoint, this.view.RippleColor, this.view.RipplePercent);
+            canvas.DrawRippleEffect(
+                bounds,
+                0,
+                this.view.RippleSize,
+                this.view.TouchPoint,
+                this.view.RippleColor,
+                this.view.RipplePercent
+            );
     }
 }

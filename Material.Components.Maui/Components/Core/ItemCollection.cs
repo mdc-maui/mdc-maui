@@ -28,42 +28,35 @@ public class ItemCollection<T> : IList<T>
     public void Add(T item)
     {
         this.inner.Add(item);
-        this.OnAdded?.Invoke(this, new ItemsChangedEventArgs<T>
-        {
-            EventType = "Add",
-            Index = this.inner.Count - 1
-        });
+        this.OnAdded?.Invoke(
+            this,
+            new ItemsChangedEventArgs<T> { EventType = "Add", Index = this.inner.Count - 1 }
+        );
     }
 
     public void Insert(int index, T item)
     {
         this.inner.Insert(index, item);
-        OnAdded?.Invoke(this, new ItemsChangedEventArgs<T>
-        {
-            EventType = "Insert",
-            Index = index
-        });
+        OnAdded?.Invoke(this, new ItemsChangedEventArgs<T> { EventType = "Insert", Index = index });
     }
 
     public bool Remove(T item)
     {
         var index = this.inner.IndexOf(item);
-        OnRemoved?.Invoke(this, new ItemsChangedEventArgs<T>
-        {
-            EventType = "Remove",
-            Index = index
-        });
+        OnRemoved?.Invoke(
+            this,
+            new ItemsChangedEventArgs<T> { EventType = "Remove", Index = index }
+        );
         return this.inner.Remove(item);
     }
 
     public void RemoveAt(int index)
     {
         var item = this.inner[index];
-        OnRemoved?.Invoke(this, new ItemsChangedEventArgs<T>
-        {
-            EventType = "Remove",
-            Index = index
-        });
+        OnRemoved?.Invoke(
+            this,
+            new ItemsChangedEventArgs<T> { EventType = "Remove", Index = index }
+        );
         this.inner.RemoveAt(index);
     }
 

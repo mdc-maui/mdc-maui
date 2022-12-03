@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class ChipDrawable
 {
     private readonly Chip view;
+
     public ChipDrawable(Chip view)
     {
         this.view = view;
@@ -28,7 +30,6 @@ internal class ChipDrawable
         canvas.DrawBackground(bounds, color, radii);
     }
 
-
     internal void DrawStateLayer(SKCanvas canvas, SKRect bounds)
     {
 #if !__MOBILE__
@@ -43,7 +44,8 @@ internal class ChipDrawable
 
     private void DrawOverlayLayer(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.ControlState == ControlState.Disabled) return;
+        if (this.view.ControlState == ControlState.Disabled)
+            return;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
         canvas.DrawOverlayLayer(bounds, this.view.Elevation, radii);
     }
@@ -61,9 +63,7 @@ internal class ChipDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon ||
-            this.view.Image != null ||
-            this.view.Icon == IconKind.None)
+        if (!this.view.HasIcon || this.view.Image != null || this.view.Icon == IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -90,14 +90,16 @@ internal class ChipDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image == null) return;
+        if (!this.view.HasIcon || this.view.Image == null)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
             IsAntialias = true,
             ColorFilter = SKColorFilter.CreateBlendMode(
-               this.view.IconColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
-                SKBlendMode.SrcIn)
+                this.view.IconColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                SKBlendMode.SrcIn
+            )
         };
         var svgBounds = this.view.Image.CullRect;
         var scale = 18 / svgBounds.Width;
@@ -117,7 +119,8 @@ internal class ChipDrawable
 
     private void DrawCloseIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasCloseIcon) return;
+        if (!this.view.HasCloseIcon)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
@@ -144,23 +147,34 @@ internal class ChipDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
-        var leftPadding = this.view.HasIcon
-            && (this.view.Icon != IconKind.None
-            || this.view.Image != null) 
-            ? 34f 
-            : 16f;
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
+        var leftPadding =
+            this.view.HasIcon && (this.view.Icon != IconKind.None || this.view.Image != null)
+                ? 34f
+                : 16f;
         var rightPadding = this.view.HasCloseIcon ? 34f : 16f;
-        var x = leftPadding + (bounds.Width - leftPadding - rightPadding - this.view.TextBlock.MeasuredWidth) / 2;
+        var x =
+            leftPadding
+            + (bounds.Width - leftPadding - rightPadding - this.view.TextBlock.MeasuredWidth) / 2;
         //var x = leftPadding + ((bounds.Right - leftPadding - rightPadding) / 2) - (this.view.TextBlock.MeasuredWidth / 2);
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
+
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
         var color = this.view.RippleColor;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
-        canvas.DrawRippleEffect(bounds, radii, this.view.RippleSize, this.view.TouchPoint, color, this.view.RipplePercent);
+        canvas.DrawRippleEffect(
+            bounds,
+            radii,
+            this.view.RippleSize,
+            this.view.TouchPoint,
+            color,
+            this.view.RipplePercent
+        );
     }
 }

@@ -17,22 +17,20 @@ public partial class Popup : Element
 
     [AutoBindable]
     private readonly int offsetX;
+
     [AutoBindable]
     private readonly int offsetY;
-
 
     public EventHandler Opened;
     public EventHandler<object> Closed;
 
     private readonly TaskCompletionSource<object> taskCompletionSource = new();
 
-
     public async Task<object> ShowAtAsync(Page anchor)
     {
         this.PlatformShow(anchor);
         return await this.taskCompletionSource.Task;
     }
-
 
 #if !WINDOWS && !__ANDROID__
 

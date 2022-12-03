@@ -8,11 +8,21 @@ using Topten.RichTextKit;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageElement, IForegroundElement, IBackgroundElement, IStateLayerElement, IRippleElement, IVisualTreeElement
+public partial class TabItem
+    : SKTouchCanvasView,
+        IView,
+        ITextElement,
+        IImageElement,
+        IForegroundElement,
+        IBackgroundElement,
+        IStateLayerElement,
+        IRippleElement,
+        IVisualTreeElement
 {
     #region interface
     #region IView
     private ControlState controlState = ControlState.Normal;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
@@ -23,6 +33,7 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
             this.ChangeVisualState();
         }
     }
+
     protected override void ChangeVisualState()
     {
         var state = this.ControlState switch
@@ -34,6 +45,7 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
         };
         VisualStateManager.GoToState(this, state);
     }
+
     public void OnPropertyChanged()
     {
         this.InvalidateSurface();
@@ -46,6 +58,7 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -74,6 +87,7 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
         get => (bool)this.GetValue(FontItalicProperty);
         set => this.SetValue(FontItalicProperty, value);
     }
+
     void ITextElement.OnTextBlockChanged()
     {
         this.InvalidateSurface();
@@ -88,6 +102,7 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
+
     [TypeConverter(typeof(ImageConverter))]
     public SKPicture Image
     {
@@ -97,8 +112,10 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
     #endregion
 
     #region IForegroundElement
-    public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
-    public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
+    public static readonly BindableProperty ForegroundColorProperty =
+        ForegroundElement.ForegroundColorProperty;
+    public static readonly BindableProperty ForegroundOpacityProperty =
+        ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
     {
         get => (Color)this.GetValue(ForegroundColorProperty);
@@ -112,8 +129,10 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
     #endregion
 
     #region IBackgroundElement
-    public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
+    public static readonly BindableProperty BackgroundColourProperty =
+        BackgroundElement.BackgroundColourProperty;
+    public static readonly BindableProperty BackgroundOpacityProperty =
+        BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
     {
         get => (Color)this.GetValue(BackgroundColourProperty);
@@ -127,8 +146,10 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
     #endregion
 
     #region IStateLayerElement
-    public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
-    public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
+    public static readonly BindableProperty StateLayerColorProperty =
+        StateLayerElement.StateLayerColorProperty;
+    public static readonly BindableProperty StateLayerOpacityProperty =
+        StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
     {
         get => (Color)this.GetValue(StateLayerColorProperty);
@@ -148,10 +169,13 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RipplePercent { get; set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
@@ -178,7 +202,6 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
     [AutoBindable(DefaultValue = "1f", OnChanged = nameof(OnPropertyChanged))]
     private readonly float activeIndicatorOpacity;
 
-
     public event EventHandler<Page> ContentChanged;
 
     private void OnContentChanged()
@@ -191,14 +214,17 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
 
     private void OnIsActivedChanged()
     {
-        VisualStateManager.GoToState(this, this.ControlState switch
-        {
-            ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
-            ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
-            ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
-            ControlState.Disabled => "disabled",
-            _ => "normal",
-        });
+        VisualStateManager.GoToState(
+            this,
+            this.ControlState switch
+            {
+                ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
+                ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
+                ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
+                ControlState.Disabled => "disabled",
+                _ => "normal",
+            }
+        );
         this.InvalidateSurface();
     }
 
@@ -215,26 +241,31 @@ public partial class TabItem : SKTouchCanvasView, IView, ITextElement, IImageEle
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void StartRippleEffect()
     {
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??=
+            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
         var start = 0f;
         var end = 1f;
 
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            this.RipplePercent = start.Lerp(end, progress);
-            this.InvalidateSurface();
-        },
-        duration: 0.35f,
-        easing: Easing.SinInOut,
-        finished: () =>
-        {
-            if (this.controlState != ControlState.Pressed)
-            {
-                this.RipplePercent = 0f;
-                this.InvalidateSurface();
-            }
-        }));
+        this.animationManager?.Add(
+            new Microsoft.Maui.Animations.Animation(
+                callback: (progress) =>
+                {
+                    this.RipplePercent = start.Lerp(end, progress);
+                    this.InvalidateSurface();
+                },
+                duration: 0.35f,
+                easing: Easing.SinInOut,
+                finished: () =>
+                {
+                    if (this.controlState != ControlState.Pressed)
+                    {
+                        this.RipplePercent = 0f;
+                        this.InvalidateSurface();
+                    }
+                }
+            )
+        );
     }
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)

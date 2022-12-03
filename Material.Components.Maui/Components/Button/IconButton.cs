@@ -6,11 +6,13 @@ using System.Runtime.CompilerServices;
 using IButton = Material.Components.Maui.Core.IButton;
 
 namespace Material.Components.Maui;
+
 public partial class IconButton : SKTouchCanvasView, IButton
 {
     #region interface
     #region IView
     private ControlState controlState = ControlState.Normal;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
@@ -21,6 +23,7 @@ public partial class IconButton : SKTouchCanvasView, IButton
             this.ChangeVisualState();
         }
     }
+
     protected override void ChangeVisualState()
     {
         var state = this.ControlState switch
@@ -33,6 +36,7 @@ public partial class IconButton : SKTouchCanvasView, IButton
         };
         VisualStateManager.GoToState(this, state);
     }
+
     public void OnPropertyChanged()
     {
         this.InvalidateSurface();
@@ -47,6 +51,7 @@ public partial class IconButton : SKTouchCanvasView, IButton
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
+
     [TypeConverter(typeof(ImageConverter))]
     public SKPicture Image
     {
@@ -56,8 +61,10 @@ public partial class IconButton : SKTouchCanvasView, IButton
     #endregion
 
     #region IForegroundElement
-    public static readonly BindableProperty ForegroundColorProperty = ForegroundElement.ForegroundColorProperty;
-    public static readonly BindableProperty ForegroundOpacityProperty = ForegroundElement.ForegroundOpacityProperty;
+    public static readonly BindableProperty ForegroundColorProperty =
+        ForegroundElement.ForegroundColorProperty;
+    public static readonly BindableProperty ForegroundOpacityProperty =
+        ForegroundElement.ForegroundOpacityProperty;
     public Color ForegroundColor
     {
         get => (Color)this.GetValue(ForegroundColorProperty);
@@ -71,8 +78,10 @@ public partial class IconButton : SKTouchCanvasView, IButton
     #endregion
 
     #region IBackgroundElement
-    public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
+    public static readonly BindableProperty BackgroundColourProperty =
+        BackgroundElement.BackgroundColourProperty;
+    public static readonly BindableProperty BackgroundOpacityProperty =
+        BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
     {
         get => (Color)this.GetValue(BackgroundColourProperty);
@@ -86,9 +95,12 @@ public partial class IconButton : SKTouchCanvasView, IButton
     #endregion
 
     #region IOutlineElement
-    public static readonly BindableProperty OutlineColorProperty = OutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty OutlineWidthProperty = OutlineElement.OutlineWidthProperty;
-    public static readonly BindableProperty OutlineOpacityProperty = OutlineElement.OutlineOpacityProperty;
+    public static readonly BindableProperty OutlineColorProperty =
+        OutlineElement.OutlineColorProperty;
+    public static readonly BindableProperty OutlineWidthProperty =
+        OutlineElement.OutlineWidthProperty;
+    public static readonly BindableProperty OutlineOpacityProperty =
+        OutlineElement.OutlineOpacityProperty;
     public Color OutlineColor
     {
         get => (Color)this.GetValue(OutlineColorProperty);
@@ -125,8 +137,10 @@ public partial class IconButton : SKTouchCanvasView, IButton
     #endregion
 
     #region IStateLayerElement
-    public static readonly BindableProperty StateLayerColorProperty = StateLayerElement.StateLayerColorProperty;
-    public static readonly BindableProperty StateLayerOpacityProperty = StateLayerElement.StateLayerOpacityProperty;
+    public static readonly BindableProperty StateLayerColorProperty =
+        StateLayerElement.StateLayerColorProperty;
+    public static readonly BindableProperty StateLayerOpacityProperty =
+        StateLayerElement.StateLayerOpacityProperty;
     public Color StateLayerColor
     {
         get => (Color)this.GetValue(StateLayerColorProperty);
@@ -146,10 +160,13 @@ public partial class IconButton : SKTouchCanvasView, IButton
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RipplePercent { get; set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
@@ -167,25 +184,30 @@ public partial class IconButton : SKTouchCanvasView, IButton
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void StartRippleEffect()
     {
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??=
+            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
         var end = 1f;
 
-        this.animationManager?.Add(new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            this.RipplePercent = start.Lerp(end, progress);
-            this.InvalidateSurface();
-        },
-        duration: 0.35f,
-        easing: Easing.SinInOut,
-        finished: () =>
-        {
-            if (this.ControlState != ControlState.Pressed)
-            {
-                this.RipplePercent = 0f;
-                this.InvalidateSurface();
-            }
-        }));
+        this.animationManager?.Add(
+            new Microsoft.Maui.Animations.Animation(
+                callback: (progress) =>
+                {
+                    this.RipplePercent = start.Lerp(end, progress);
+                    this.InvalidateSurface();
+                },
+                duration: 0.35f,
+                easing: Easing.SinInOut,
+                finished: () =>
+                {
+                    if (this.ControlState != ControlState.Pressed)
+                    {
+                        this.RipplePercent = 0f;
+                        this.InvalidateSurface();
+                    }
+                }
+            )
+        );
     }
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)

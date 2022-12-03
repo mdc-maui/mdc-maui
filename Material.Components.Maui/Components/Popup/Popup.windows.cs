@@ -6,7 +6,6 @@ namespace Material.Components.Maui;
 
 public partial class Popup
 {
-
     private static readonly Microsoft.UI.Xaml.Style flyoutStyle;
     private WPopup container;
     private ContentPanel platformAnchor;
@@ -28,18 +27,22 @@ public partial class Popup
             this.container.Opened += (s, e) => this.Opened?.Invoke(this, EventArgs.Empty);
             this.container.Closed += (s, e) => this.Close();
             var size = this.Content.Measure(double.PositiveInfinity, double.PositiveInfinity);
-            var x = this.OffsetX + this.HorizontalOptions switch
-            {
-                LayoutAlignment.Start => 0,
-                LayoutAlignment.End => this.platformAnchor.ActualWidth - size.Request.Width,
-                _ => (this.platformAnchor.ActualWidth - size.Request.Width) / 2
-            };
-            var y = this.OffsetY + this.VerticalOptions switch
-            {
-                LayoutAlignment.Start => 0,
-                LayoutAlignment.End => this.platformAnchor.ActualHeight - size.Request.Height,
-                _ => (this.platformAnchor.ActualHeight - size.Request.Height) / 2
-            };
+            var x =
+                this.OffsetX
+                + this.HorizontalOptions switch
+                {
+                    LayoutAlignment.Start => 0,
+                    LayoutAlignment.End => this.platformAnchor.ActualWidth - size.Request.Width,
+                    _ => (this.platformAnchor.ActualWidth - size.Request.Width) / 2
+                };
+            var y =
+                this.OffsetY
+                + this.VerticalOptions switch
+                {
+                    LayoutAlignment.Start => 0,
+                    LayoutAlignment.End => this.platformAnchor.ActualHeight - size.Request.Height,
+                    _ => (this.platformAnchor.ActualHeight - size.Request.Height) / 2
+                };
             this.container.HorizontalOffset = x;
             this.container.VerticalOffset = y;
         }

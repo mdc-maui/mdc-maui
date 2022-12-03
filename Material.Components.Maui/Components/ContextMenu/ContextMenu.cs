@@ -5,13 +5,13 @@ namespace Material.Components.Maui;
 [ContentProperty(nameof(Items))]
 public partial class ContextMenu : Card, IVisualTreeElement
 {
-    private static readonly BindablePropertyKey ItemsPropertyKey =
-        BindableProperty.CreateReadOnly(
-            nameof(Items),
-            typeof(ItemCollection<MenuItem>),
-            typeof(ContextMenu),
-            null,
-            defaultValueCreator: bo => new ItemCollection<MenuItem>());
+    private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
+        nameof(Items),
+        typeof(ItemCollection<MenuItem>),
+        typeof(ContextMenu),
+        null,
+        defaultValueCreator: bo => new ItemCollection<MenuItem>()
+    );
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
 
@@ -82,14 +82,20 @@ public partial class ContextMenu : Card, IVisualTreeElement
             }
             this.WidthRequest = desiredWidth;
         }
-        this.HeightRequest = ((this.VisibleItemCount > 0 ? Math.Min(this.Items.Count, this.VisibleItemCount) : this.Items.Count) * 48) + 16d;
+        this.HeightRequest =
+            (
+                (
+                    this.VisibleItemCount > 0
+                        ? Math.Min(this.Items.Count, this.VisibleItemCount)
+                        : this.Items.Count
+                ) * 48
+            ) + 16d;
         this.PlatformShow(anchor);
     }
 
     public new IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
 
     public new IVisualTreeElement GetVisualParent() => this.Window;
-
 
 #if !WINDOWS && !__ANDROID__
     private void PlatformShow(View anchor)

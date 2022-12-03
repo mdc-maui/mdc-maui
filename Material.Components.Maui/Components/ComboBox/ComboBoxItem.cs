@@ -1,5 +1,3 @@
 ﻿namespace Material.Components.Maui;
-public class ComboBoxItem : MenuItem
-{
 
-}
+public class ComboBoxItem : MenuItem { }

@@ -4,7 +4,6 @@ namespace Material.Components.Maui.Extensions;
 
 public static class SkCanvasViewExtensions
 {
-
     public static void AllocateSize(this SKCanvasView view, double width, double height)
     {
         if (view.Handler != null)
@@ -18,12 +17,15 @@ public static class SkCanvasViewExtensions
             lp.Width = (int)platformView.Context.ToPixels(width);
             lp.Height = (int)platformView.Context.ToPixels(height);
             platformView.LayoutParameters = lp;
-#elif WINDOWS     
-            ((Microsoft.UI.Xaml.FrameworkElement)view.Handler.PlatformView).Width = width;
+#elif WINDOWS
+            (
+                (Microsoft.UI.Xaml.FrameworkElement)view.Handler.PlatformView
+            ).Width = width;
             ((Microsoft.UI.Xaml.FrameworkElement)view.Handler.PlatformView).Height = height;
 #endif
         }
     }
+
     public static void AllocateSize(this SKCanvasView view, Size size)
     {
         view.AllocateSize(size.Width, size.Height);

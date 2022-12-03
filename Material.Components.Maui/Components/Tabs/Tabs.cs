@@ -6,15 +6,15 @@ using System.Windows.Input;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class Tabs : ContentView, IVisualTreeElement
+public partial class Tabs : ContentView, IVisualTreeElement,ICommandElement
 {
-    private static readonly BindablePropertyKey ItemsPropertyKey =
-        BindableProperty.CreateReadOnly(
-            nameof(Items),
-            typeof(ItemCollection<TabItem>),
-            typeof(Tabs),
-            null,
-            defaultValueCreator: bo => new ItemCollection<TabItem>());
+    private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
+        nameof(Items),
+        typeof(ItemCollection<TabItem>),
+        typeof(Tabs),
+        null,
+        defaultValueCreator: bo => new ItemCollection<TabItem>()
+    );
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
 
@@ -39,14 +39,14 @@ public partial class Tabs : ContentView, IVisualTreeElement
     [AutoBindable(OnChanged = nameof(OnIndicatorColorChanged))]
     private readonly Color activeIndicatorColor;
 
-
     [SupportedOSPlatform("android")]
     public static readonly BindableProperty UserInputEnabledProperty = BindableProperty.Create(
         nameof(UserInputEnabled),
         typeof(bool),
         typeof(Tabs),
         true,
-         propertyChanged: OnUserInputEnabledChanged);
+        propertyChanged: OnUserInputEnabledChanged
+    );
 
     [SupportedOSPlatform("android")]
     public bool UserInputEnabled
@@ -56,13 +56,18 @@ public partial class Tabs : ContentView, IVisualTreeElement
     }
 
     [SupportedOSPlatform("android")]
-    private static void OnUserInputEnabledChanged(BindableObject bo, object oldValue, object NewValue)
+    private static void OnUserInputEnabledChanged(
+        BindableObject bo,
+        object oldValue,
+        object NewValue
+    )
     {
         ((Tabs)bo).PART_Content.UserInputEnabled = (bool)NewValue;
     }
 
     [AutoBindable]
     private readonly ICommand command;
+
     [AutoBindable]
     private readonly object commandParameter;
 
@@ -78,7 +83,11 @@ public partial class Tabs : ContentView, IVisualTreeElement
         {
             this.PART_Content.SelectedIndex = this.SelectedIndex;
         }
-        await this.PART_Scroller.ScrollToAsync(this.Items[this.SelectedIndex], ScrollToPosition.MakeVisible, true);
+        await this.PART_Scroller.ScrollToAsync(
+            this.Items[this.SelectedIndex],
+            ScrollToPosition.MakeVisible,
+            true
+        );
         SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(this.SelectedIndex));
         this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
     }
@@ -140,11 +149,7 @@ public partial class Tabs : ContentView, IVisualTreeElement
                 new RowDefinition(GridLength.Auto),
                 new RowDefinition(GridLength.Star),
             },
-            Children =
-            {
-                this.PART_Scroller ,
-                this.PART_Content.Row(1),
-            }
+            Children = { this.PART_Scroller, this.PART_Content.Row(1), }
         };
     }
 

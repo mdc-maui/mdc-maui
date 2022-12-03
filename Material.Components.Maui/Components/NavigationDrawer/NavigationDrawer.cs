@@ -1,15 +1,10 @@
-﻿using CommunityToolkit.Maui.Markup;
-using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
-using Material.Components.Maui.Extensions;
-using Microsoft.Maui.Platform;
-using ShimSkiaSharp;
-using System.ComponentModel;
+﻿using Material.Components.Maui.Core;
+using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class NavigationDrawer : ContentView, IVisualTreeElement
+public partial class NavigationDrawer : ContentView, IVisualTreeElement, ICommandElement
 {
     private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
         nameof(Items),
@@ -72,13 +67,19 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement
     [AutoBindable]
     private readonly bool hasToolBar;
 
+    [AutoBindable]
+    private readonly ICommand command;
+
+    [AutoBindable]
+    private readonly object commandParameter;
+
+    public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
+
     private void OnDisplayModeChanged()
     {
         if (this.Handler != null)
         {
-            throw new Exception(
-                "Cannot be change DisplayMode at after Initialize completed!"
-            );
+            throw new Exception("Cannot be change DisplayMode at after Initialize completed!");
         }
 
         if (this.DisplayMode == DrawerDisplayMode.Popup)
@@ -133,6 +134,14 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement
         {
             this.IsPaneOpen = false;
         }
+        this.SelectedItemChanged?.Invoke(
+                this,
+                new SelectedItemChangedEventArgs(
+                    this.SelectedItem,
+                    this.PART_Content.Items.IndexOf(this.SelectedItem.Content)
+                )
+            );
+        this.Command?.Execute(this.CommandParameter ?? this.SelectedItem);
     }
 
     private SplitView PART_Root;

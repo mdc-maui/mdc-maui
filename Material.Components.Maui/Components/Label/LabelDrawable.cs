@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class LabelDrawable
 {
     private readonly Label view;
+
     public LabelDrawable(Label view)
     {
         this.view = view;
@@ -15,7 +17,8 @@ internal class LabelDrawable
             (float)(bounds.Left + this.view.Padding.Left),
             (float)(bounds.Top + this.view.Padding.Top),
             (float)(bounds.Right - this.view.Padding.Right),
-            (float)(bounds.Bottom - this.view.Padding.Bottom));
+            (float)(bounds.Bottom - this.view.Padding.Bottom)
+        );
         this.DrawText(canvas, textBounds);
     }
 
@@ -28,7 +31,9 @@ internal class LabelDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
         var x = this.view.HorizontalTextAlignment switch
         {
             TextAlignment.Center => bounds.MidX - (this.view.TextBlock.MeasuredWidth / 2),

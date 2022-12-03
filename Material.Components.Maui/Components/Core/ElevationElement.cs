@@ -7,7 +7,8 @@ internal static class ElevationElement
         typeof(Elevation),
         typeof(IElevationElement),
         Elevation.Level0,
-        propertyChanged: OnChanged);
+        propertyChanged: OnChanged
+    );
 
     public static void OnChanged(BindableObject bo, object oldValue, object newValue)
     {

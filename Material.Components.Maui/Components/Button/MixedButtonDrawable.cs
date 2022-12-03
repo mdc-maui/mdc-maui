@@ -1,6 +1,7 @@
 ﻿using Svg.Skia;
 
 namespace Material.Components.Maui.Core;
+
 internal class MixedButtonDrawable : ButtonDrawable
 {
     private readonly Button view;
@@ -18,10 +19,12 @@ internal class MixedButtonDrawable : ButtonDrawable
         this.DrawOverlayLayer(canvas, bounds);
         this.DrawStateLayer(canvas, bounds);
 
-        var paddingBounds = new SKRect((int)(bounds.Left + this.view.Padding.Left),
+        var paddingBounds = new SKRect(
+            (int)(bounds.Left + this.view.Padding.Left),
             (int)(bounds.Top + this.view.Padding.Top),
             (int)(bounds.Right - this.view.Padding.Right),
-            (int)(bounds.Bottom - this.view.Padding.Bottom));
+            (int)(bounds.Bottom - this.view.Padding.Bottom)
+        );
         var textScale = this.view.FontSize / 14f;
         this.DrawPathIcon(canvas, paddingBounds, textScale);
         this.DrawImageIcon(canvas, paddingBounds, textScale);
@@ -31,20 +34,25 @@ internal class MixedButtonDrawable : ButtonDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds, float textScale)
     {
-        if (this.view.Image != null || this.view.Icon is IconKind.None) return;
+        if (this.view.Image != null || this.view.Icon is IconKind.None)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            Color = this.view.ForegroundColor
+                .MultiplyAlpha(this.view.ForegroundOpacity)
+                .ToSKColor(),
             IsAntialias = true,
         };
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
         var iconScale = 18f / 24f * textScale;
-        var iconNeedWidth = (18f + 8f) * textScale;
         var x = this.view.HorizontalTextAlignment switch
         {
             TextAlignment.Start => bounds.Left + 16f * textScale,
-            TextAlignment.Center => bounds.MidX - (this.view.TextBlock.MeasuredWidth + (18f + 48f) * textScale) / 2f + 16f * textScale,
+            TextAlignment.Center
+                => bounds.MidX
+                    - (this.view.TextBlock.MeasuredWidth + (18f + 48f) * textScale) / 2f
+                    + 16f * textScale,
             _ => bounds.Right - (18f + 8f + 24f) * textScale - this.view.TextBlock.MeasuredWidth,
         };
         var y = this.view.VerticalTextAlignment switch
@@ -68,23 +76,27 @@ internal class MixedButtonDrawable : ButtonDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds, float textScale)
     {
-        if (this.view.Image is null) return;
+        if (this.view.Image is null)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
             IsAntialias = true,
             ColorFilter = SKColorFilter.CreateBlendMode(
-               this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
-                SKBlendMode.SrcIn)
+                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                SKBlendMode.SrcIn
+            )
         };
         var svgBounds = this.view.Image.CullRect;
         var iconScale = 18f / svgBounds.Width * textScale;
         var x = this.view.HorizontalTextAlignment switch
         {
             TextAlignment.Start => bounds.Left + 16f * textScale,
-            TextAlignment.Center => bounds.MidX - (this.view.TextBlock.MeasuredWidth + (18f + 48f) * textScale) / 2f + 16f * textScale,
+            TextAlignment.Center
+                => bounds.MidX
+                    - (this.view.TextBlock.MeasuredWidth + (18f + 48f) * textScale) / 2f
+                    + 16f * textScale,
             _ => bounds.Right - (18f + 8f + 24f) * textScale - this.view.TextBlock.MeasuredWidth,
-
         };
         var y = this.view.VerticalTextAlignment switch
         {
@@ -107,12 +119,19 @@ internal class MixedButtonDrawable : ButtonDrawable
     internal void DrawText(SKCanvas canvas, SKRect bounds, float textScale)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
-        var iconSize = this.view.Icon != IconKind.None || this.view.Image != null ? 18f * textScale : 0f;
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
+        var iconSize =
+            this.view.Icon != IconKind.None || this.view.Image != null ? 18f * textScale : 0f;
         var x = this.view.HorizontalTextAlignment switch
         {
             TextAlignment.Start => bounds.Left + 24f * textScale + iconSize,
-            TextAlignment.Center => bounds.MidX - (this.view.TextBlock.MeasuredWidth + iconSize + 48f * textScale) / 2f + iconSize + 24f * textScale,
+            TextAlignment.Center
+                => bounds.MidX
+                    - (this.view.TextBlock.MeasuredWidth + iconSize + 48f * textScale) / 2f
+                    + iconSize
+                    + 24f * textScale,
             _ => bounds.Right - 24f * textScale - this.view.TextBlock.MeasuredWidth,
         };
         var y = this.view.VerticalTextAlignment switch

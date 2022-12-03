@@ -23,6 +23,7 @@ public partial class NavigationDrawerItem
 
     #region IView
     private ControlState controlState = ControlState.Normal;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
@@ -33,6 +34,7 @@ public partial class NavigationDrawerItem
             ChangeVisualState();
         }
     }
+
     protected override void ChangeVisualState()
     {
         var state = this.ControlState switch
@@ -45,6 +47,7 @@ public partial class NavigationDrawerItem
         };
         VisualStateManager.GoToState(this, state);
     }
+
     public void OnPropertyChanged()
     {
         this.InvalidateSurface();
@@ -57,8 +60,10 @@ public partial class NavigationDrawerItem
     public static readonly BindableProperty FontSizeProperty = TextElement.FontSizeProperty;
     public static readonly BindableProperty FontWeightProperty = TextElement.FontWeightProperty;
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
@@ -86,6 +91,7 @@ public partial class NavigationDrawerItem
         get => (bool)this.GetValue(FontItalicProperty);
         set => this.SetValue(FontItalicProperty, value);
     }
+
     void ITextElement.OnTextBlockChanged()
     {
         this.InvalidateSurface();
@@ -100,6 +106,7 @@ public partial class NavigationDrawerItem
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
+
     [TypeConverter(typeof(ImageConverter))]
     public SKPicture Image
     {
@@ -152,6 +159,7 @@ public partial class NavigationDrawerItem
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
@@ -167,12 +175,15 @@ public partial class NavigationDrawerItem
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
+
     [EditorBrowsable(EditorBrowsableState.Never)]
     public float RippleSize { get; private set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public float RipplePercent { get;  set; } = 0f;
+    public float RipplePercent { get; set; } = 0f;
+
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public SKPoint TouchPoint { get;  set; } = new SKPoint(-1, -1);
+    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
 
     #endregion

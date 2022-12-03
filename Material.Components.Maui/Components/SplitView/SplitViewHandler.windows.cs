@@ -1,14 +1,6 @@
-﻿using Material.Components.Maui.Core;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Platform;
+﻿using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using WSplitView = Microsoft.UI.Xaml.Controls.SplitView;
 
 namespace Material.Components.Maui.Core;

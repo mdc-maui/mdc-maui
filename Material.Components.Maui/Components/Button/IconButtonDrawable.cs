@@ -1,9 +1,11 @@
 ﻿using Svg.Skia;
 
 namespace Material.Components.Maui.Core;
+
 internal class IconButtonDrawable : ButtonDrawable
 {
     private readonly IconButton view;
+
     public IconButtonDrawable(IconButton button) : base(button)
     {
         this.view = button;
@@ -23,11 +25,14 @@ internal class IconButtonDrawable : ButtonDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Icon == IconKind.None) return;
+        if (this.view.Image != null || this.view.Icon == IconKind.None)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            Color = this.view.ForegroundColor
+                .MultiplyAlpha(this.view.ForegroundOpacity)
+                .ToSKColor(),
             IsAntialias = true,
         };
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
@@ -40,14 +45,16 @@ internal class IconButtonDrawable : ButtonDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Image == null) return;
+        if (this.view.Image != null || this.view.Image == null)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
             IsAntialias = true,
             ColorFilter = SKColorFilter.CreateBlendMode(
-               this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
-                SKBlendMode.SrcIn)
+                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                SKBlendMode.SrcIn
+            )
         };
         var scale = 24 / this.view.Image.CullRect.Width;
         var x = bounds.MidX - 12;

@@ -36,24 +36,31 @@ public static class MaterialComponentsExtensions
         }
     }
 
-    public static MauiAppBuilder UseMaterialComponents(this MauiAppBuilder builder, List<string> defaultFontCollection)
+    public static MauiAppBuilder UseMaterialComponents(
+        this MauiAppBuilder builder,
+        List<string> defaultFontCollection
+    )
     {
         foreach (var filename in defaultFontCollection)
         {
             FontMapper.AddFont(filename, "default");
         }
 
-        return builder.ConfigureMauiHandlers((handlers) =>
-        {
-            handlers.AddHandler(typeof(ViewPager), typeof(ViewPagerHandler));
-            handlers.AddHandler(typeof(SplitView), typeof(SplitViewHandler));
-        })
-        .UseSkiaSharp();
+        return builder
+            .ConfigureMauiHandlers(
+                (handlers) =>
+                {
+                    handlers.AddHandler(typeof(ViewPager), typeof(ViewPagerHandler));
+                    handlers.AddHandler(typeof(SplitView), typeof(SplitViewHandler));
+                }
+            )
+            .UseSkiaSharp();
     }
 
     internal static void UpdateMaterialColors()
     {
-        var scheme = Application.Current.RequestedTheme is AppTheme.Light ? LightScheme : DarkScheme;
+        var scheme =
+            Application.Current.RequestedTheme is AppTheme.Light ? LightScheme : DarkScheme;
         ColorRes["PrimaryColor"] = scheme.Primary;
         ColorRes["PrimaryContainerColor"] = scheme.PrimaryContainer;
         ColorRes["SecondaryColor"] = scheme.Secondary;

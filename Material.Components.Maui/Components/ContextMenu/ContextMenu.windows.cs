@@ -16,8 +16,15 @@ public partial class ContextMenu
         flyoutStyle.Setters.Add(new Microsoft.UI.Xaml.Setter(Control.MarginProperty, 0));
         flyoutStyle.Setters.Add(new Microsoft.UI.Xaml.Setter(Control.PaddingProperty, 0));
         flyoutStyle.Setters.Add(new Microsoft.UI.Xaml.Setter(Control.BorderThicknessProperty, 0));
-        flyoutStyle.Setters.Add(new Microsoft.UI.Xaml.Setter(Control.BackgroundProperty, Colors.Transparent.ToWindowsColor()));
-        flyoutStyle.Setters.Add(new Microsoft.UI.Xaml.Setter(FlyoutPresenter.IsDefaultShadowEnabledProperty, false));
+        flyoutStyle.Setters.Add(
+            new Microsoft.UI.Xaml.Setter(
+                Control.BackgroundProperty,
+                Colors.Transparent.ToWindowsColor()
+            )
+        );
+        flyoutStyle.Setters.Add(
+            new Microsoft.UI.Xaml.Setter(FlyoutPresenter.IsDefaultShadowEnabledProperty, false)
+        );
     }
 
     private void PlatformShow(View anchor)

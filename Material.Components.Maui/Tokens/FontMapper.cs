@@ -3,6 +3,7 @@
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui.Tokens;
+
 public class FontMapper : Topten.RichTextKit.FontMapper
 {
     internal static TextStyle DefaultStyle { get; private set; }
@@ -18,10 +19,12 @@ public class FontMapper : Topten.RichTextKit.FontMapper
         stream.CopyTo(ms);
         ms.Position = 0;
         var tf = SKTypeface.FromStream(ms);
-        if (tf == null) return;
+        if (tf == null)
+            return;
 
         var qualifiedName = alias ?? tf.FamilyName;
-        if (tf.FontSlant != SKFontStyleSlant.Upright) qualifiedName += "-Italic";
+        if (tf.FontSlant != SKFontStyleSlant.Upright)
+            qualifiedName += "-Italic";
 
         if (!fonts.TryGetValue(qualifiedName, out var listFonts))
         {
@@ -46,11 +49,11 @@ public class FontMapper : Topten.RichTextKit.FontMapper
 
     private FontMapper() { }
 
-
     public override SKTypeface TypefaceFromStyle(IStyle style, bool ignoreFontVariants)
     {
         var qualifiedName = style.FontFamily;
-        if (style.FontItalic) qualifiedName += "-Italic";
+        if (style.FontItalic)
+            qualifiedName += "-Italic";
 
         if (fonts.TryGetValue(qualifiedName, out var listFonts))
         {
@@ -59,5 +62,4 @@ public class FontMapper : Topten.RichTextKit.FontMapper
         var s = base.TypefaceFromStyle(style, ignoreFontVariants);
         return s;
     }
-
 }

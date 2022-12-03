@@ -1,4 +1,5 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
+
 internal interface IOutlineElement
 {
     int OutlineWidth { get; }

@@ -7,7 +7,8 @@ internal static class ShapeElement
         typeof(Shape),
         typeof(IShapeElement),
         Shape.None,
-        propertyChanged: OnChanged);
+        propertyChanged: OnChanged
+    );
 
     public static void OnChanged(BindableObject bo, object oldValue, object newValue)
     {

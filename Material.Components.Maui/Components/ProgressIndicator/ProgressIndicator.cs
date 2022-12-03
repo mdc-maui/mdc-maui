@@ -1,7 +1,9 @@
 ﻿using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
+using System.Windows.Input;
 
 namespace Material.Components.Maui;
+
 public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
 {
     #region IView
@@ -24,6 +26,7 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
         };
         VisualStateManager.GoToState(this, state);
     }
+
     public void OnPropertyChanged()
     {
         this.InvalidateSurface();
@@ -31,8 +34,10 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
     #endregion
 
     #region IBackgroundElement
-    public static readonly BindableProperty BackgroundColourProperty = BackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty = BackgroundElement.BackgroundOpacityProperty;
+    public static readonly BindableProperty BackgroundColourProperty =
+        BackgroundElement.BackgroundColourProperty;
+    public static readonly BindableProperty BackgroundOpacityProperty =
+        BackgroundElement.BackgroundOpacityProperty;
     public Color BackgroundColour
     {
         get => (Color)this.GetValue(BackgroundColourProperty);
@@ -57,6 +62,14 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
     [AutoBindable(DefaultValue = "1.5f")]
     private readonly float animationDuration;
 
+    [AutoBindable]
+    private readonly ICommand command;
+
+    [AutoBindable]
+    private readonly object commandParameter;
+
+    public event EventHandler<ValueChangedEventArgs> PercentChanged;
+
     private void OnPercentChanged()
     {
         if (this.Percent == -1f)
@@ -64,12 +77,15 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
             this.AnimationIsPositive = true;
             this.StartIndeterminateAnimation();
         }
+        PercentChanged?.Invoke(this, new ValueChangedEventArgs(this.Percent));
+        this.Command?.Execute(this.CommandParameter ?? this.Percent);
     }
 
     private readonly ProgressIndicatorDrawable drawable;
     private IAnimationManager animationManager;
     internal float AnimationPercent { get; private set; } = 0f;
     internal bool AnimationIsPositive = true;
+
     public ProgressIndicator()
     {
         this.drawable = new ProgressIndicatorDrawable(this);
@@ -77,21 +93,25 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
 
     private void StartIndeterminateAnimation()
     {
-        if (this.Percent != -1f || this.Handler is null) return;
-        this.animationManager ??= this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        if (this.Percent != -1f || this.Handler is null)
+            return;
+        this.animationManager ??=
+            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
 
-        var animation = new Microsoft.Maui.Animations.Animation(callback: (progress) =>
-        {
-            if (!this.AnimationIsPositive)
+        var animation = new Microsoft.Maui.Animations.Animation(
+            callback: (progress) =>
             {
-                this.AnimationPercent = 1 - 0f.Lerp(1f, progress);
+                if (!this.AnimationIsPositive)
+                {
+                    this.AnimationPercent = 1 - 0f.Lerp(1f, progress);
+                }
+                else
+                {
+                    this.AnimationPercent = 0f.Lerp(1f, progress);
+                }
+                this.InvalidateSurface();
             }
-            else
-            {
-                this.AnimationPercent = 0f.Lerp(1f, progress);
-            }
-            this.InvalidateSurface();
-        });
+        );
         animation.Duration = this.AnimationDuration;
         animation.Easing = Easing.Linear;
         animation.Repeats = true;

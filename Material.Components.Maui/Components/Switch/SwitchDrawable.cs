@@ -75,13 +75,22 @@ internal class SwitchDrawable
 
     private void DrawIcon(SKCanvas canvas, float cx, float cy)
     {
-        if (!this.view.IsChecked) return;
+        if (!this.view.IsChecked)
+            return;
         canvas.Save();
         var sx = cx - 8f;
         var sy = cy - 8f;
-        canvas.ClipRect(new SKRect(sx, sy, sx + 16f * this.view.ChangingPercent, sy + 16f * this.view.ChangingPercent));
+        canvas.ClipRect(
+            new SKRect(
+                sx,
+                sy,
+                sx + 16f * this.view.ChangingPercent,
+                sy + 16f * this.view.ChangingPercent
+            )
+        );
         var path = SKPath.ParseSvgPathData(
-            "M 5.8181543,10.027623 3.4153733,7.2675632 2.0000004,8.7537509 6.0066836,12.999999 14,4.5075 12.714286,3.0000004 Z");
+            "M 5.8181543,10.027623 3.4153733,7.2675632 2.0000004,8.7537509 6.0066836,12.999999 14,4.5075 12.714286,3.0000004 Z"
+        );
         var matrix = new SKMatrix
         {
             ScaleX = 1f,
@@ -114,10 +123,19 @@ internal class SwitchDrawable
 
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds, float cx, float cy)
     {
-        if (this.view.RipplePercent < 0) return;
+        if (this.view.RipplePercent < 0)
+            return;
         var color = this.view.RippleColor;
         var point = new SKPoint(cx, cy);
-        canvas.DrawRippleEffect(bounds, 0, this.view.RippleSize, point, color, this.view.RipplePercent, false);
+        canvas.DrawRippleEffect(
+            bounds,
+            0,
+            this.view.RippleSize,
+            point,
+            color,
+            this.view.RipplePercent,
+            false
+        );
     }
 
     /**
@@ -144,9 +162,7 @@ internal class SwitchDrawable
         {
             // Extract percentage when between 25% and 75% of animation
             var percent = (this.view.ChangingPercent - 0.25f) / 0.5f;
-            cx = this.view.IsChecked
-                ? lx + (percent * offX)
-                : rx - (percent * offX);
+            cx = this.view.IsChecked ? lx + (percent * offX) : rx - (percent * offX);
         }
         else if (isAnimating)
         {
@@ -188,21 +204,24 @@ internal class SwitchDrawable
         else if (isAnimating)
         {
             // Current percent when we are in the dead zone
-            var percent = this.view.ChangingPercent < 0.25f
-                ? this.view.ChangingPercent / 0.25f
-                : (this.view.ChangingPercent - 0.75f) / 0.25f;
+            var percent =
+                this.view.ChangingPercent < 0.25f
+                    ? this.view.ChangingPercent / 0.25f
+                    : (this.view.ChangingPercent - 0.75f) / 0.25f;
 
             // If we are in the dead zone and animating, we need to adjust the radius
             if (this.view.IsChecked)
                 // When we are animating to the right
-                radius = this.view.ChangingPercent < 0.25f
-                    ? leftSize.Lerp(moveSize, percent)
-                    : moveSize.Lerp(rightSize, percent);
+                radius =
+                    this.view.ChangingPercent < 0.25f
+                        ? leftSize.Lerp(moveSize, percent)
+                        : moveSize.Lerp(rightSize, percent);
             else
                 // When we are animating to the left
-                radius = this.view.ChangingPercent < 0.25f
-                    ? rightSize.Lerp(moveSize, percent)
-                    : moveSize.Lerp(leftSize, percent);
+                radius =
+                    this.view.ChangingPercent < 0.25f
+                        ? rightSize.Lerp(moveSize, percent)
+                        : moveSize.Lerp(leftSize, percent);
         }
 
         return radius;

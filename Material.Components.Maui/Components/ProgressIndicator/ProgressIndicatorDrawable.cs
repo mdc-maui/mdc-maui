@@ -1,7 +1,9 @@
 ﻿namespace Material.Components.Maui.Core;
+
 internal class ProgressIndicatorDrawable
 {
     private readonly ProgressIndicator view;
+
     internal ProgressIndicatorDrawable(ProgressIndicator view)
     {
         this.view = view;
@@ -65,7 +67,6 @@ internal class ProgressIndicatorDrawable
         }
         canvas.Restore();
     }
-
 
     private void DrawCircularProgressIndicator(SKCanvas canvas, SKRect bounds)
     {

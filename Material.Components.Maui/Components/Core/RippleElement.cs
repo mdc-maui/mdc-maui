@@ -6,5 +6,6 @@ internal static class RippleElement
         nameof(IRippleElement.RippleColor),
         typeof(Color),
         typeof(IRippleElement),
-        null);
+        null
+    );
 }

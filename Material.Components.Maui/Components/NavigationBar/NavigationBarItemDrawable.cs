@@ -5,6 +5,7 @@ namespace Material.Components.Maui.Core;
 internal class NavigationBarItemDrawable
 {
     private readonly NavigationBarItem view;
+
     internal NavigationBarItemDrawable(NavigationBarItem view)
     {
         this.view = view;
@@ -31,7 +32,8 @@ internal class NavigationBarItemDrawable
 
     private void DrawActiveIndicator(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.IsActived) return;
+        if (!this.view.IsActived)
+            return;
         canvas.Save();
         var percent = this.view.RipplePercent is 0f ? 1f : this.view.RipplePercent;
         var _bounds = new SKRect
@@ -48,7 +50,12 @@ internal class NavigationBarItemDrawable
     private void DrawOverlayLayer(SKCanvas canvas, SKRect bounds)
     {
         var radii = new CornerRadius(0).GetRadii();
-        var _bounds = new SKRect(bounds.Left - 1, bounds.Top - 1, bounds.Right + 1, bounds.Bottom + 1);
+        var _bounds = new SKRect(
+            bounds.Left - 1,
+            bounds.Top - 1,
+            bounds.Right + 1,
+            bounds.Bottom + 1
+        );
         canvas.DrawOverlayLayer(_bounds, Elevation.Level2, radii);
     }
 
@@ -69,11 +76,14 @@ internal class NavigationBarItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Icon is IconKind.None) return;
+        if (this.view.Image != null || this.view.Icon is IconKind.None)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
-            Color = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            Color = this.view.ForegroundColor
+                .MultiplyAlpha(this.view.ForegroundOpacity)
+                .ToSKColor(),
             IsAntialias = true,
         };
         var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
@@ -90,14 +100,16 @@ internal class NavigationBarItemDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is null) return;
+        if (this.view.Image is null)
+            return;
         canvas.Save();
         var paint = new SKPaint
         {
             IsAntialias = true,
             ColorFilter = SKColorFilter.CreateBlendMode(
-               this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
-                SKBlendMode.SrcIn)
+                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+                SKBlendMode.SrcIn
+            )
         };
         var scale = 24 / this.view.Image.CullRect.Width;
         var x = (bounds.Width / 2) - 12;
@@ -123,9 +135,12 @@ internal class NavigationBarItemDrawable
 
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasLabel) return;
+        if (!this.view.HasLabel)
+            return;
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor();
+        this.view.TextStyle.TextColor = this.view.ForegroundColor
+            .MultiplyAlpha(this.view.ForegroundOpacity)
+            .ToSKColor();
         var x = bounds.MidX - (this.view.TextBlock.MeasuredWidth / 2);
         var y = 48 + ((16 - this.view.TextBlock.MeasuredHeight) / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
@@ -134,7 +149,8 @@ internal class NavigationBarItemDrawable
 
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.RipplePercent < 0) return;
+        if (this.view.RipplePercent < 0)
+            return;
         var color = this.view.RippleColor;
         var _bounds = new SKRect
         {

@@ -3,6 +3,7 @@ using Android.Views;
 using Microsoft.Maui.Platform;
 
 namespace Material.Components.Maui;
+
 public partial class Popup
 {
     private Dialog container;
@@ -26,7 +27,10 @@ public partial class Popup
             this.container.Window.DecorView.SetBackgroundColor(Colors.Transparent.ToPlatform());
         }
         var window = this.container.Window;
-        window.DecorView.Measure((int)MeasureSpecMode.Unspecified, (int)MeasureSpecMode.Unspecified);
+        window.DecorView.Measure(
+            (int)MeasureSpecMode.Unspecified,
+            (int)MeasureSpecMode.Unspecified
+        );
         window.Attributes.Width = window.DecorView.MeasuredWidth;
         window.Attributes.Height = window.DecorView.MeasuredHeight;
 

@@ -1,13 +1,11 @@
-using Material.Components.Maui.Core;
-
 namespace Material.Components.Maui.Styles;
 
 public partial class NavigationDrawerStyles : ResourceDictionary
 {
-	public NavigationDrawerStyles()
-	{
-		InitializeComponent();
-	}
+    public NavigationDrawerStyles()
+    {
+        InitializeComponent();
+    }
 
     private void MenuBtn_Clicked(object sender, SKTouchEventArgs e)
     {

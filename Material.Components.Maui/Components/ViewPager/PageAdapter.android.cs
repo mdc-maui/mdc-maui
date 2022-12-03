@@ -25,12 +25,17 @@ internal class PageAdapter : FragmentStateAdapter
 internal class ViewPagerFragment : AndroidX.Fragment.App.Fragment
 {
     private readonly AView view;
+
     public ViewPagerFragment(AView view) : base()
     {
         this.view = view;
     }
 
-    public override AView OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public override AView OnCreateView(
+        LayoutInflater inflater,
+        ViewGroup container,
+        Bundle savedInstanceState
+    )
     {
         return this.view;
     }

@@ -1,14 +1,17 @@
 ﻿using Microsoft.Maui.Animations;
 
 namespace Material.Components.Maui.Extensions;
+
 internal static class DrawableExtensions
 {
     internal static Shape GetShape(this IShapeElement view, float width, float height)
     {
-        if (view.Shape.TopLeft is -1 &&
-            view.Shape.TopRight is -1 &&
-            view.Shape.BottomLeft is -1 &&
-            view.Shape.BottomRight is -1)
+        if (
+            view.Shape.TopLeft is -1
+            && view.Shape.TopRight is -1
+            && view.Shape.BottomLeft is -1
+            && view.Shape.BottomRight is -1
+        )
         {
             return Math.Min(width, height) / 2;
         }
@@ -20,10 +23,10 @@ internal static class DrawableExtensions
         var radius = view.GetShape(width, height);
         return new SKPoint[]
         {
-            new SKPoint((float)radius.TopLeft,(float)radius.TopLeft),
-            new SKPoint((float)radius.TopRight,(float)radius.TopRight),
-            new SKPoint((float)radius.BottomRight,(float)radius.BottomRight),
-            new SKPoint((float)radius.BottomLeft,(float)radius.BottomLeft),
+            new SKPoint((float)radius.TopLeft, (float)radius.TopLeft),
+            new SKPoint((float)radius.TopRight, (float)radius.TopRight),
+            new SKPoint((float)radius.BottomRight, (float)radius.BottomRight),
+            new SKPoint((float)radius.BottomLeft, (float)radius.BottomLeft),
         };
     }
 
@@ -31,10 +34,10 @@ internal static class DrawableExtensions
     {
         return new SKPoint[]
         {
-            new SKPoint((float)radius.TopLeft,(float)radius.TopLeft),
-            new SKPoint((float)radius.TopRight,(float)radius.TopRight),
-            new SKPoint((float)radius.BottomRight,(float)radius.BottomRight),
-            new SKPoint((float)radius.BottomLeft,(float)radius.BottomLeft),
+            new SKPoint((float)radius.TopLeft, (float)radius.TopLeft),
+            new SKPoint((float)radius.TopRight, (float)radius.TopRight),
+            new SKPoint((float)radius.BottomRight, (float)radius.BottomRight),
+            new SKPoint((float)radius.BottomLeft, (float)radius.BottomLeft),
         };
     }
 
@@ -43,19 +46,26 @@ internal static class DrawableExtensions
         return view.Elevation.Value * 0.05f;
     }
 
-    internal static void DrawBackground(this SKCanvas canvas, SKRect bounds, Color color, CornerRadius radius)
+    internal static void DrawBackground(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Color color,
+        CornerRadius radius
+    )
     {
         var radii = radius.GetRadii();
         canvas.DrawBackground(bounds, color, radii);
     }
 
-    internal static void DrawBackground(this SKCanvas canvas, SKRect bounds, Color color, SKPoint[] radii)
+    internal static void DrawBackground(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Color color,
+        SKPoint[] radii
+    )
     {
         canvas.Save();
-        var paint = new SKPaint
-        {
-            Color = color.ToSKColor(),
-        };
+        var paint = new SKPaint { Color = color.ToSKColor(), };
         var path = new SKPath();
         foreach (var point in radii)
         {
@@ -75,13 +85,15 @@ internal static class DrawableExtensions
         canvas.Restore();
     }
 
-    internal static void DrawStateLayer(this SKCanvas canvas, SKRect bounds, Color color, SKPoint[] radii)
+    internal static void DrawStateLayer(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Color color,
+        SKPoint[] radii
+    )
     {
         canvas.Save();
-        var paint = new SKPaint
-        {
-            Color = color.ToSKColor(),
-        };
+        var paint = new SKPaint { Color = color.ToSKColor(), };
         var path = new SKPath();
         foreach (var point in radii)
         {
@@ -101,15 +113,28 @@ internal static class DrawableExtensions
         canvas.Restore();
     }
 
-    internal static void DrawShadow(this SKCanvas canvas, SKRect bounds, Elevation elevation, Color color, CornerRadius radius)
+    internal static void DrawShadow(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Elevation elevation,
+        Color color,
+        CornerRadius radius
+    )
     {
         var radii = radius.GetRadii();
         canvas.DrawShadow(bounds, elevation, color, radii);
     }
 
-    internal static void DrawShadow(this SKCanvas canvas, SKRect bounds, Elevation elevation, Color color, SKPoint[] radii)
+    internal static void DrawShadow(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Elevation elevation,
+        Color color,
+        SKPoint[] radii
+    )
     {
-        if (elevation.Value is 0) return;
+        if (elevation.Value is 0)
+            return;
         canvas.Save();
         var left = bounds.Left;
         var top = bounds.Top;
@@ -132,21 +157,30 @@ internal static class DrawableExtensions
         canvas.Restore();
     }
 
-    internal static void DrawOverlayLayer(this SKCanvas canvas, SKRect bounds, Elevation elevation, CornerRadius radius, Color color = null)
+    internal static void DrawOverlayLayer(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Elevation elevation,
+        CornerRadius radius,
+        Color color = null
+    )
     {
         var radii = radius.GetRadii();
         canvas.DrawOverlayLayer(bounds, elevation, radii, color);
     }
 
-    internal static void DrawOverlayLayer(this SKCanvas canvas, SKRect bounds, Elevation elevation, SKPoint[] radii, Color color = null)
+    internal static void DrawOverlayLayer(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Elevation elevation,
+        SKPoint[] radii,
+        Color color = null
+    )
     {
         canvas.Save();
         color ??= MaterialColors.SurfaceTint;
         var opacity = elevation.Value * 0.05f;
-        var paint = new SKPaint
-        {
-            Color = color.MultiplyAlpha(opacity).ToSKColor(),
-        };
+        var paint = new SKPaint { Color = color.MultiplyAlpha(opacity).ToSKColor(), };
         var path = new SKPath();
         foreach (var point in radii)
         {
@@ -166,13 +200,25 @@ internal static class DrawableExtensions
         canvas.Restore();
     }
 
-    internal static void DrawOutline(this SKCanvas canvas, SKRect bounds, Color color, float width, CornerRadius radius)
+    internal static void DrawOutline(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Color color,
+        float width,
+        CornerRadius radius
+    )
     {
         var radii = radius.GetRadii();
         canvas.DrawOutline(bounds, color, width, radii);
     }
 
-    internal static void DrawOutline(this SKCanvas canvas, SKRect bounds, Color color, float width, SKPoint[] radii)
+    internal static void DrawOutline(
+        this SKCanvas canvas,
+        SKRect bounds,
+        Color color,
+        float width,
+        SKPoint[] radii
+    )
     {
         canvas.Save();
         var paint = new SKPaint
@@ -204,7 +250,10 @@ internal static class DrawableExtensions
         var maxSize = 0f;
         foreach (var point in points)
         {
-            var size = MathF.Pow(MathF.Pow(point.X - touchPoint.X, 2) + MathF.Pow(point.Y - touchPoint.Y, 2), 0.5f);
+            var size = MathF.Pow(
+                MathF.Pow(point.X - touchPoint.X, 2) + MathF.Pow(point.Y - touchPoint.Y, 2),
+                0.5f
+            );
             if (size > maxSize)
             {
                 maxSize = size;
@@ -223,7 +272,10 @@ internal static class DrawableExtensions
         var maxSize = 0f;
         foreach (var point in points)
         {
-            var size = MathF.Pow(MathF.Pow(point.X - touchPoint.X, 2f) + MathF.Pow(point.Y - touchPoint.Y, 2f), 0.5f);
+            var size = MathF.Pow(
+                MathF.Pow(point.X - touchPoint.X, 2f) + MathF.Pow(point.Y - touchPoint.Y, 2f),
+                0.5f
+            );
             if (size > maxSize)
             {
                 maxSize = size;
@@ -232,15 +284,34 @@ internal static class DrawableExtensions
         return maxSize;
     }
 
-    internal static void DrawRippleEffect(this SKCanvas canvas, SKRect bounds, CornerRadius radius, float rippleSize, SKPoint touchPoint, Color color, float percent, bool isClip = true)
+    internal static void DrawRippleEffect(
+        this SKCanvas canvas,
+        SKRect bounds,
+        CornerRadius radius,
+        float rippleSize,
+        SKPoint touchPoint,
+        Color color,
+        float percent,
+        bool isClip = true
+    )
     {
         var radii = radius.GetRadii();
         canvas.DrawRippleEffect(bounds, radii, rippleSize, touchPoint, color, percent, isClip);
     }
 
-    internal static void DrawRippleEffect(this SKCanvas canvas, SKRect bounds, SKPoint[] radii, float rippleSize, SKPoint touchPoint, Color color, float percent, bool isClip = true)
+    internal static void DrawRippleEffect(
+        this SKCanvas canvas,
+        SKRect bounds,
+        SKPoint[] radii,
+        float rippleSize,
+        SKPoint touchPoint,
+        Color color,
+        float percent,
+        bool isClip = true
+    )
     {
-        if (!bounds.Contains((int)touchPoint.X, touchPoint.Y)) return;
+        if (!bounds.Contains((int)touchPoint.X, touchPoint.Y))
+            return;
         canvas.Save();
         if (isClip)
         {

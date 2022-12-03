@@ -6,16 +6,15 @@ using System.Windows.Input;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class RadioButton : ContentView, IVisualTreeElement
+public partial class RadioButton : ContentView, IVisualTreeElement, ICommandElement
 {
-    private static readonly BindablePropertyKey ItemsPropertyKey =
-        BindableProperty.CreateReadOnly(
-            nameof(Items),
-            typeof(ItemCollection<RadioButtonItem>),
-            typeof(RadioButton),
-            null,
-            defaultValueCreator: bo =>
-                new ItemCollection<RadioButtonItem>());
+    private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
+        nameof(Items),
+        typeof(ItemCollection<RadioButtonItem>),
+        typeof(RadioButton),
+        null,
+        defaultValueCreator: bo => new ItemCollection<RadioButtonItem>()
+    );
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
 
@@ -39,6 +38,7 @@ public partial class RadioButton : ContentView, IVisualTreeElement
 
     [AutoBindable]
     private readonly ICommand command;
+
     [AutoBindable]
     private readonly object commandParameter;
 
@@ -78,7 +78,6 @@ public partial class RadioButton : ContentView, IVisualTreeElement
                         break;
                     }
                 }
-
             }
         }
         else if (e.Action is NotifyCollectionChangedAction.Replace)
@@ -153,7 +152,8 @@ public partial class RadioButton : ContentView, IVisualTreeElement
         var item = this.Items[index];
         this.PART_Content.Insert(index, item);
         item.IsSelected = e.Index == this.SelectedIndex;
-        item.Clicked += (sender, e) => this.SelectedIndex = this.Items.IndexOf(sender as RadioButtonItem);
+        item.Clicked += (sender, e) =>
+            this.SelectedIndex = this.Items.IndexOf(sender as RadioButtonItem);
     }
 
     private void OnItemsRemoved(object sender, ItemsChangedEventArgs<RadioButtonItem> e)
@@ -165,7 +165,6 @@ public partial class RadioButton : ContentView, IVisualTreeElement
     {
         this.PART_Content.Clear();
     }
-
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<View> { this.Content };
 
