@@ -2,9 +2,9 @@
 
 English | [中文](README_zh.md)
 
-Material3 Components for .NET MAUI, powered by SkiaSharp
+Material You Components for .NET MAUI
 
-![](assets/preview.gif)
+![](assets/preview.png)
 
 
 
@@ -79,11 +79,18 @@ public static class MauiProgram
 | CheckBox | 😄 | 😄 |🤔|
 | Chip | 😄 | 😄 |🤔|
 | ComboBox | 😄 | 😄 |😭|
+| ContextMenu | 😄 | 😄 |😭|
 | FAB | 😄 | 😄 |🤔|
 | Label | 😄 | 😄 |🤔|
-| NavigationBar | 😄 | 😄 |🤔|
+| NavigationBar | 😄 | 😄 |😭|
+| NavigationDrawer | 😄 | 😄 |😭|
+| Popup | 😄 | 😄 |😭|
+| ProgressIndicator | 😄 | 😄 |🤔|
 | RadioButton | 😄 | 😄 |🤔|
+| SplitView | 😄 | 😄 |😭|
 | Switch | 😄 | 😄 |🤔|
+| Tabs | 😄 | 😄 |😭|
+| WrapLayout | 😄 | 😄 |🤔|
 
 ## Contributing
 
