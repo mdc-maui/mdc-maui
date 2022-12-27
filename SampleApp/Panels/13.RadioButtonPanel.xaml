@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SampleApp.Panels.RadioButtonPanel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="{DynamicResource BackgroundColor}"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+
+    <ContentView.Resources>
+        <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style
+            x:Key="Title"
+            BasedOn="{StaticResource DefaultLabelStyle}"
+            TargetType="md:Label">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="600" />
+        </Style>
+    </ContentView.Resources>
+
+    <VerticalStackLayout
+        Padding="25"
+        HorizontalOptions="Center"
+        Spacing="30"
+        VerticalOptions="Center">
+        <md:Label Text="Vertical" />
+        <md:RadioButton SelectedIndex="0">
+            <md:RadioButtonItem Text="item 1" />
+            <md:RadioButtonItem Text="item 2" />
+            <md:RadioButtonItem Text="item 3" />
+        </md:RadioButton>
+        <md:Label Text="Horizontal" />
+        <md:RadioButton Orientation="Horizontal" SelectedIndex="2">
+            <md:RadioButtonItem Text="item 1" />
+            <md:RadioButtonItem Text="item 2" />
+            <md:RadioButtonItem Text="item 3" />
+        </md:RadioButton>
+    </VerticalStackLayout>
+</ContentView>

@@ -1,8 +1,6 @@
 ﻿using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
@@ -12,7 +10,7 @@ public partial class TabItem
     : SKTouchCanvasView,
         IView,
         ITextElement,
-        IImageElement,
+        IIconElement,
         IForegroundElement,
         IBackgroundElement,
         IStateLayerElement,
@@ -21,6 +19,7 @@ public partial class TabItem
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -36,6 +35,7 @@ public partial class TabItem
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
@@ -44,11 +44,18 @@ public partial class TabItem
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -61,6 +68,8 @@ public partial class TabItem
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -94,20 +103,20 @@ public partial class TabItem
     }
     #endregion
 
-    #region IImageElement
-    public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
-    public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
+    #region IIconElement
+    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
     public IconKind Icon
     {
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
 
-    [TypeConverter(typeof(ImageConverter))]
-    public SKPicture Image
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
     {
-        get => (SKPicture)this.GetValue(ImageProperty);
-        set => this.SetValue(ImageProperty, value);
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
     }
     #endregion
 
@@ -121,6 +130,8 @@ public partial class TabItem
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -138,6 +149,8 @@ public partial class TabItem
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -155,6 +168,8 @@ public partial class TabItem
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -182,7 +197,7 @@ public partial class TabItem
     #endregion
 
     [AutoBindable(OnChanged = nameof(OnContentChanged))]
-    private readonly Page content;
+    private readonly View content;
 
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnPropertyChanged))]
     private readonly bool hasLabel;
@@ -190,7 +205,7 @@ public partial class TabItem
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnPropertyChanged))]
     private readonly bool hasIcon;
 
-    [AutoBindable(OnChanged = nameof(OnIsActivedChanged))]
+    [AutoBindable(OnChanged = nameof(ChangeVisualState))]
     public bool isActived;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
@@ -202,7 +217,7 @@ public partial class TabItem
     [AutoBindable(DefaultValue = "1f", OnChanged = nameof(OnPropertyChanged))]
     private readonly float activeIndicatorOpacity;
 
-    public event EventHandler<Page> ContentChanged;
+    public event EventHandler<View> ContentChanged;
 
     private void OnContentChanged()
     {
@@ -212,28 +227,12 @@ public partial class TabItem
         }
     }
 
-    private void OnIsActivedChanged()
-    {
-        VisualStateManager.GoToState(
-            this,
-            this.ControlState switch
-            {
-                ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            }
-        );
-        this.InvalidateSurface();
-    }
-
     public float ChangingPercent { get; private set; } = 1f;
 
     private readonly TabItemDrawable drawable;
     private IAnimationManager animationManager;
 
-    public TabItem() : base()
+    public TabItem()
     {
         this.drawable = new TabItemDrawable(this);
     }
@@ -258,7 +257,7 @@ public partial class TabItem
                 easing: Easing.SinInOut,
                 finished: () =>
                 {
-                    if (this.controlState != ControlState.Pressed)
+                    if (this.ControlState != ControlState.Pressed)
                     {
                         this.RipplePercent = 0f;
                         this.InvalidateSurface();
@@ -274,6 +273,13 @@ public partial class TabItem
         this.drawable.Draw(e.Surface.Canvas, e.Info.Rect);
     }
 
+    protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
+    {
+        var width = this.WidthRequest != -1 ? this.WidthRequest : 96d;
+        var height = this.HasIcon && this.HasLabel ? 64d : 48d;
+        return this.DesiredSize = new Size(width, height);
+    }
+
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
@@ -283,7 +289,8 @@ public partial class TabItem
         }
     }
 
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<Page> { this.Content };
+    public new IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        new List<IVisualTreeElement> { this.Content };
 
-    public IVisualTreeElement GetVisualParent() => this.Window;
+    public new IVisualTreeElement GetVisualParent() => this.Window;
 }

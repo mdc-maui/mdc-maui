@@ -1,9 +1,7 @@
-﻿using Material.Components.Maui.Core;
-
-namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class ContextMenu : Card, IVisualTreeElement
+public partial class ContextMenu : ContentView, IVisualTreeElement
 {
     private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
         nameof(Items),
@@ -21,6 +19,12 @@ public partial class ContextMenu : Card, IVisualTreeElement
         set => this.SetValue(ItemsProperty, value);
     }
 
+    [AutoBindable]
+    private readonly Color backgroundColour;
+
+    [AutoBindable]
+    private readonly Color rippleColor;
+
     [AutoBindable(DefaultValue = "-1")]
     private readonly int visibleItemCount;
 
@@ -33,20 +37,26 @@ public partial class ContextMenu : Card, IVisualTreeElement
         this.Closed?.Invoke(this, this.Result ?? e);
     }
 
-    private readonly VerticalStackLayout PART_Container = new();
+    private Grid PART_Root;
+    private VerticalStackLayout PART_Container;
 
     public ContextMenu()
     {
         this.Items.OnAdded += this.OnItemsAdded;
         this.Items.OnRemoved += this.OnItemsRemoved;
         this.Items.OnCleared += this.OnItemsCleared;
-        this.Content = new ScrollView
+    }
+
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        this.PART_Root = (Grid)this.GetTemplateChild("PART_Root");
+        this.Content = this.PART_Container = new VerticalStackLayout
         {
-            Orientation = ScrollOrientation.Vertical,
-            HorizontalScrollBarVisibility = ScrollBarVisibility.Never,
-            VerticalScrollBarVisibility = ScrollBarVisibility.Never,
-            Content = PART_Container
+            Padding = new Thickness(0, 8)
         };
+        this.OnChildAdded(this.PART_Root);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Root);
     }
 
     private void OnItemsAdded(object sender, ItemsChangedEventArgs<MenuItem> e)
@@ -93,9 +103,12 @@ public partial class ContextMenu : Card, IVisualTreeElement
         this.PlatformShow(anchor);
     }
 
-    public new IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        this.PART_Root != null
+            ? new List<IVisualTreeElement> { this.PART_Root }
+            : Array.Empty<IVisualTreeElement>().ToList();
 
-    public new IVisualTreeElement GetVisualParent() => this.Window;
+    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
 
 #if !WINDOWS && !__ANDROID__
     private void PlatformShow(View anchor)

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SampleApp.Panels.ButtonPanel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    xmlns:views="clr-namespace:SampleApp.Views"
+    xmlns:vm="clr-namespace:SampleApp.ViewModels"
+    BackgroundColor="{DynamicResource BackgroundColor}">
+
+    <ContentView.BindingContext>
+        <vm:ButtonVM />
+    </ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style
+            x:Key="Title"
+            BasedOn="{StaticResource DefaultLabelStyle}"
+            TargetType="md:Label">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="600" />
+        </Style>
+    </ContentView.Resources>
+
+    <ScrollView Padding="30,20" VerticalScrollBarVisibility="Always">
+        <VerticalStackLayout Spacing="15">
+            <md:Label Style="{DynamicResource Title}" Text="Styles" />
+            <md:Label Text="There are 5 styles of icon buttons: 1. Filled,  2. Elevated,  3. FilledTonal,  4. Outlined 5. Text." />
+            <md:WrapLayout Padding="20" Spacing="50">
+                <md:Button
+                    Icon="Pencil"
+                    Style="{DynamicResource FilledButtonStyle}"
+                    Text="Filled" />
+                <md:Button Style="{DynamicResource FilledButtonStyle}" Text="Filled" />
+                <md:Button Style="{DynamicResource ElevatedButtonStyle}" Text="Elevated" />
+                <md:Button Style="{DynamicResource FilledTonalButtonStyle}" Text="FilledTonal" />
+                <md:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Outlined" />
+                <md:Button Style="{StaticResource TextButtonStyle}" Text="Text" />
+            </md:WrapLayout>
+
+            <md:Label Style="{DynamicResource Title}" Text="Properties" />
+
+            <views:PropertyDescribes BindableLayout.ItemsSource="{Binding Describes}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

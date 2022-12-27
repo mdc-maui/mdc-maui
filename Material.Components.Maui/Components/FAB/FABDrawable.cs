@@ -50,7 +50,7 @@ internal class FABDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Icon == IconKind.None)
+        if (this.view.IconSource != null || this.view.Icon == IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -83,7 +83,7 @@ internal class FABDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image == null || this.view.Image == null)
+        if (this.view.IconSource == null || this.view.IconSource == null)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -109,7 +109,7 @@ internal class FABDrawable
             TransY = offset,
             Persp2 = 1f
         };
-        canvas.DrawPicture(this.view.Image, ref matrix, paint);
+        canvas.DrawPicture(this.view.IconSource, ref matrix, paint);
         canvas.Restore();
     }
 

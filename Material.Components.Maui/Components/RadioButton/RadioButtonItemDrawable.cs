@@ -71,7 +71,7 @@ internal class RadioButtonItemDrawable
         this.view.TextStyle.TextColor = this.view.ForegroundColor
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
-        var x = bounds.Left + 46;
+        var x = bounds.Left + 40;
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
@@ -79,10 +79,13 @@ internal class RadioButtonItemDrawable
 
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.RipplePercent < 0)
+        if (this.view.RipplePercent == 0)
             return;
+
+        var _bounds = new SKRect(bounds.Left, bounds.Top, bounds.Left + 40, bounds.Bottom);
         var color = this.view.RippleColor;
-        var point = new SKPoint(bounds.Left + 20, bounds.Top + 20);
-        canvas.DrawRippleEffect(bounds, 0, 20, point, color, this.view.RipplePercent, false);
+        var point = new SKPoint(Math.Min(39, this.view.TouchPoint.X), this.view.TouchPoint.Y);
+        var size = _bounds.GetRippleSize(point);
+        canvas.DrawRippleEffect(_bounds, 20, size, point, color, this.view.RipplePercent, true);
     }
 }

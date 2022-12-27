@@ -1,8 +1,6 @@
 ﻿using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
@@ -10,7 +8,7 @@ namespace Material.Components.Maui;
 public partial class FAB
     : SKTouchCanvasView,
         IView,
-        IImageElement,
+        IIconElement,
         ITextElement,
         ITouchElement,
         IBackgroundElement,
@@ -21,6 +19,7 @@ public partial class FAB
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -36,6 +35,7 @@ public partial class FAB
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => "normal",
@@ -45,11 +45,18 @@ public partial class FAB
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -62,6 +69,8 @@ public partial class FAB
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -91,25 +100,29 @@ public partial class FAB
 
     void ITextElement.OnTextBlockChanged()
     {
-        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
-        this.InvalidateSurface();
+        var oldSize = this.DesiredSize;
+        this.SendInvalidateMeasure();
+        if (oldSize == this.DesiredSize)
+        {
+            this.OnPropertyChanged();
+        }
     }
     #endregion
 
-    #region IImageElement
-    public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
-    public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
+    #region IIconElement
+    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
     public IconKind Icon
     {
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
 
-    [TypeConverter(typeof(ImageConverter))]
-    public SKPicture Image
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
     {
-        get => (SKPicture)this.GetValue(ImageProperty);
-        set => this.SetValue(ImageProperty, value);
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
     }
     #endregion
 
@@ -123,6 +136,8 @@ public partial class FAB
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -140,6 +155,8 @@ public partial class FAB
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -164,6 +181,8 @@ public partial class FAB
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float OutlineOpacity
     {
         get => (float)this.GetValue(OutlineOpacityProperty);
@@ -199,6 +218,8 @@ public partial class FAB
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -228,22 +249,19 @@ public partial class FAB
     [AutoBindable]
     private readonly FABType fABType;
 
-    [AutoBindable(DefaultValue = "false", OnChanged = nameof(OnIsExtendedChanged))]
+    [AutoBindable(OnChanged = nameof(OnIsExtendedChanged))]
     private readonly bool isExtended;
 
     public event EventHandler ExtendedChanged;
 
     private void OnIsExtendedChanged()
     {
-        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
+        this.SendInvalidateMeasure();
         this.ExtendedChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private readonly FABDrawable drawable;
     private IAnimationManager animationManager;
-
-    private double widthConstraint = double.PositiveInfinity;
-    private double heightConstraint = double.PositiveInfinity;
 
     public FAB()
     {
@@ -330,13 +348,6 @@ public partial class FAB
         var result = new Size(width, height);
         this.DesiredSize = result;
         return result;
-    }
-
-    protected override Size ArrangeOverride(Rect bounds)
-    {
-        this.widthConstraint = bounds.Width;
-        this.heightConstraint = bounds.Height;
-        return base.ArrangeOverride(bounds);
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

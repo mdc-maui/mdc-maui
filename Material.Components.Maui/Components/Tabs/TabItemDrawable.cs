@@ -55,7 +55,7 @@ internal class TabItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image != null || this.view.Icon is IconKind.None)
+        if (!this.view.HasIcon || this.view.IconSource != null || this.view.Icon is IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -75,7 +75,7 @@ internal class TabItemDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image is null)
+        if (!this.view.HasIcon || this.view.IconSource is null)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -86,7 +86,7 @@ internal class TabItemDrawable
                 SKBlendMode.SrcIn
             )
         };
-        var scale = 24 / this.view.Image.CullRect.Width;
+        var scale = 24 / this.view.IconSource.CullRect.Width;
         var x = bounds.MidX - 12;
         var y = this.view.HasLabel ? 12 : bounds.MidY - 12;
         var matrix = new SKMatrix
@@ -97,7 +97,7 @@ internal class TabItemDrawable
             TransY = y,
             Persp2 = 1f
         };
-        canvas.DrawPicture(this.view.Image, ref matrix, paint);
+        canvas.DrawPicture(this.view.IconSource, ref matrix, paint);
         canvas.Restore();
     }
 
@@ -147,7 +147,7 @@ internal class TabItemDrawable
         if (this.view.RipplePercent < 0)
             return;
         var color = this.view.RippleColor;
-        var point = new SKPoint(bounds.MidX, bounds.MidY);
+        var point = this.view.TouchPoint;
         canvas.DrawRippleEffect(
             bounds,
             0,

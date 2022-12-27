@@ -5,77 +5,88 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SampleApp"
     xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    xmlns:mview="clr-namespace:SampleApp.Views"
+    xmlns:panels="clr-namespace:SampleApp.Panels"
     Title="Material You for .NET MAUI"
-    BackgroundColor="{DynamicResource BackgroundColor}">
+    BackgroundColor="{DynamicResource BackgroundColor}"
+    NavigationPage.HasNavigationBar="False">
 
-    <ContentPage.Resources>
-        <Style
-            x:Key="BtnStyle"
-            BaseResourceKey="TextButtonStyle"
-            TargetType="md:Button">
-            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Icon" Value="ViewDashboard" />
-            <Setter Property="Shape" Value="0" />
-            <Setter Property="FontFamily" Value="600" />
-            <Setter Property="HorizontalOptions" Value="Fill" />
-            <Setter Property="HorizontalTextAlignment" Value="Start" />
-        </Style>
-    </ContentPage.Resources>
-    <ScrollView>
-        <VerticalStackLayout IsEnabled="False">
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="Buttons" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="Cards" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="CheckBoxs" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="Chips" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="ComboBoxs" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="ContextMenus" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="FABs" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="NavigtionBar" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="Popup" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="ProgressIndicators" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="RadioButtons" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="Switchs" />
-            <md:Button
-                Clicked="Btn_Clicked"
-                Style="{StaticResource BtnStyle}"
-                Text="Tabs" />
-        </VerticalStackLayout>
-    </ScrollView>
+    <md:NavigationDrawer x:Name="Drawer" Title="Components" IsPaneOpen="{OnIdiom true, Phone=false}">
+        <md:NavigationDrawerItem
+            Title="Overview"
+            ContentType="{x:Type panels:OverviewPanel}"
+            Icon="LayersOutline"
+            Text="Overview" />
+        <md:NavigationDrawerItem
+            Title="Button"
+            ContentType="{x:Type panels:ButtonPanel}"
+            Icon="LayersOutline"
+            Text="Button" />
+        <md:NavigationDrawerItem
+            Title="IconButton"
+            ContentType="{x:Type panels:IconButtonPanel}"
+            Icon="LayersOutline"
+            Text="IconButton" />
+        <md:NavigationDrawerItem
+            Title="Card"
+            ContentType="{x:Type panels:CardPanel}"
+            Icon="LayersOutline"
+            Text="Card" />
+        <md:NavigationDrawerItem
+            Title="CheckBox"
+            ContentType="{x:Type panels:CheckBoxPanel}"
+            Icon="LayersOutline"
+            Text="CheckBox" />
+        <md:NavigationDrawerItem
+            Title="Chip"
+            ContentType="{x:Type panels:ChipPanel}"
+            Icon="LayersOutline"
+            Text="Chip" />
+        <md:NavigationDrawerItem
+            Title="ComboBox"
+            ContentType="{x:Type panels:ComboBoxPanel}"
+            Icon="LayersOutline"
+            Text="ComboBox" />
+        <md:NavigationDrawerItem
+            Title="ContextMenu"
+            ContentType="{x:Type panels:ContextMenuPanel}"
+            Icon="LayersOutline"
+            Text="ContextMenu" />
+        <md:NavigationDrawerItem
+            Title="FAB"
+            ContentType="{x:Type panels:FABPanel}"
+            Icon="LayersOutline"
+            Text="FAB" />
+        <md:NavigationDrawerItem
+            Title="NavigtionBar"
+            ContentType="{x:Type panels:NavigtionBarPanel}"
+            Icon="LayersOutline"
+            Text="NavigtionBar" />
+        <md:NavigationDrawerItem
+            Title="Popup"
+            ContentType="{x:Type panels:PopupPanel}"
+            Icon="LayersOutline"
+            Text="Popup" />
+        <md:NavigationDrawerItem
+            Title="ProgressIndicator"
+            ContentType="{x:Type panels:ProgressIndicatorPanel}"
+            Icon="LayersOutline"
+            Text="ProgressIndicator" />
+        <md:NavigationDrawerItem
+            Title="RadioButton"
+            ContentType="{x:Type panels:RadioButtonPanel}"
+            Icon="LayersOutline"
+            Text="RadioButton" />
+        <md:NavigationDrawerItem
+            Title="Switch"
+            ContentType="{x:Type panels:SwitchPanel}"
+            Icon="LayersOutline"
+            Text="Switch" />
+        <md:NavigationDrawerItem
+            Title="Tab"
+            ContentType="{x:Type panels:TabsPanel}"
+            Icon="LayersOutline"
+            Text="Tab" />
+    </md:NavigationDrawer>
+
 </ContentPage>

@@ -1,9 +1,7 @@
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Topten.RichTextKit;
 
@@ -11,7 +9,7 @@ namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
 public partial class ComboBox
-    : ContentView,
+    : TemplatedView,
         IView,
         ITextElement,
         IBackgroundElement,
@@ -23,6 +21,7 @@ public partial class ComboBox
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -38,6 +37,7 @@ public partial class ComboBox
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => this.IsDropDown ? "dropDown" : "normal",
@@ -46,11 +46,15 @@ public partial class ComboBox
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
     }
 
     public void OnPropertyChanged()
     {
-        this.PART_Content?.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.PART_Content?.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -63,6 +67,8 @@ public partial class ComboBox
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -106,6 +112,8 @@ public partial class ComboBox
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -123,6 +131,8 @@ public partial class ComboBox
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -147,6 +157,8 @@ public partial class ComboBox
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float OutlineOpacity
     {
         get => (float)this.GetValue(OutlineOpacityProperty);
@@ -173,6 +185,8 @@ public partial class ComboBox
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -315,12 +329,12 @@ public partial class ComboBox
 
     public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
 
-    internal bool IsDropDown { get; private set; } = false;
+    internal bool IsDropDown { get; set; } = false;
     internal TextBlock LabelTextBlock { get; private set; } = new();
     internal float PlaceholderAnimationPercent { get; private set; } = 1f;
 
-    private readonly ContextMenu PART_menu;
-    private readonly SKTouchCanvasView PART_Content;
+    private ContextMenu PART_Menu;
+    private SKTouchCanvasView PART_Content;
 
     private readonly ComboBoxDrawable drawable;
     private IAnimationManager animationManager;
@@ -331,57 +345,7 @@ public partial class ComboBox
         this.Items.OnRemoved += this.OnItemsRemoved;
         this.Items.OnCleared += this.OnItemsCleared;
 
-        this.PART_Content = new SKTouchCanvasView
-        {
-            EnableTouchEvents = true,
-            IgnorePixelScaling = true,
-        };
-
-        this.PART_Content.Clicked += (sender, e) =>
-        {
-            if (!this.IsDropDown)
-            {
-                this.IsDropDown = true;
-                this.ControlState = ControlState.Pressed;
-                this.PART_Content.InvalidateSurface();
-                this.StartLabelTextAnimation();
-                this.PART_menu.Show(this);
-            }
-            else
-            {
-                this.PART_menu?.Close();
-            }
-        };
-
-        this.PART_Content.PaintSurface += this.OnPaintSurface;
-        this.Content = this.PART_Content;
         this.drawable = new ComboBoxDrawable(this);
-
-        this.PART_menu = new ContextMenu { VisibleItemCount = 5 };
-        this.PART_menu.Closed += (sender, e) =>
-        {
-            if (this.PART_menu.Result is int result)
-            {
-                if (result != this.SelectedIndex)
-                {
-                    this.SelectedIndex = result;
-                    this.SelectedIndexChanged?.Invoke(
-                        this,
-                        new SelectedIndexChangedEventArgs(result)
-                    );
-                }
-            }
-            this.IsDropDown = false;
-            this.ControlState = ControlState.Normal;
-            if (this.SelectedIndex != -1)
-            {
-                this.PART_Content.InvalidateSurface();
-            }
-            else
-            {
-                this.StartLabelTextAnimation();
-            }
-        };
     }
 
     public void StartLabelTextAnimation()
@@ -421,17 +385,67 @@ public partial class ComboBox
     {
         var index = e.Index;
         var item = this.Items[index];
-        this.PART_menu.Items.Insert(index, item);
+        this.PART_Menu.Items.Insert(index, item);
     }
 
     private void OnItemsRemoved(object sender, ItemsChangedEventArgs<ComboBoxItem> e)
     {
-        this.PART_menu.Items.RemoveAt(e.Index);
+        this.PART_Menu.Items.RemoveAt(e.Index);
     }
 
     private void OnItemsCleared(object sender, EventArgs e)
     {
-        this.PART_menu.Items.Clear();
+        this.PART_Menu.Items.Clear();
+    }
+
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        this.PART_Content = (SKTouchCanvasView)this.GetTemplateChild("PART_Content");
+
+        this.PART_Content.Clicked += (sender, e) =>
+        {
+            if (!this.IsDropDown)
+            {
+                this.IsDropDown = true;
+                this.ControlState = ControlState.Pressed;
+                this.StartLabelTextAnimation();
+                this.PART_Menu.Show(this);
+            }
+            else
+            {
+                this.PART_Menu?.Close();
+            }
+        };
+
+        this.PART_Content.PaintSurface += this.OnPaintSurface;
+
+        this.PART_Menu = new ContextMenu { VisibleItemCount = 5 };
+        this.PART_Menu.Closed += (sender, e) =>
+        {
+            if (this.PART_Menu.Result is int result)
+            {
+                if (result != this.SelectedIndex)
+                {
+                    this.SelectedIndex = result;
+                    this.SelectedIndexChanged?.Invoke(
+                        this,
+                        new SelectedIndexChangedEventArgs(result)
+                    );
+                }
+            }
+            this.IsDropDown = false;
+            this.ControlState = ControlState.Normal;
+            if (this.SelectedIndex == -1)
+            {
+                this.StartLabelTextAnimation();
+            }
+        };
+
+        this.OnChildAdded(this.PART_Content);
+        this.OnChildAdded(this.PART_Menu);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Content);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Menu);
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -443,11 +457,14 @@ public partial class ComboBox
         }
         else if (propertyName == "Width")
         {
-            this.PART_menu.WidthRequest = this.Width;
+            this.PART_Menu.WidthRequest = this.Width;
         }
     }
 
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
+    IReadOnlyList<IVisualTreeElement> IVisualTreeElement.GetVisualChildren() =>
+        this.PART_Content is null
+            ? Enumerable.Empty<IVisualTreeElement>().ToList()
+            : new List<IVisualTreeElement> { this.PART_Content, this.PART_Menu };
 
-    public IVisualTreeElement GetVisualParent() => this.Window;
+    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
 }

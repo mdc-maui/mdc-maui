@@ -29,7 +29,7 @@ public partial class ViewPagerHandler : ViewHandler<MViewPager, WViewPager>
         handler.PlatformView.UseTouchAnimationsForAllNavigation = view.HasAnimation;
     }
 
-    internal static void AddItem(ViewPagerHandler handler, int index, Page item)
+    internal static void AddItem(ViewPagerHandler handler, int index, View item)
     {
         handler.PlatformView.Items.Insert(index, item.ToPlatform(handler.MauiContext));
     }

@@ -67,74 +67,77 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="1.1.1" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="2.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
+
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Material.Components.Maui\Material.Components.Maui.csproj" />
 	</ItemGroup>
 
+
 	<ItemGroup>
-	  <Compile Update="Pages\ButtonsPage.xaml.cs">
-	    <DependentUpon>ButtonsPage.xaml</DependentUpon>
+	  <Compile Update="Panels\02.ButtonPanel.xaml.cs">
+	    <DependentUpon>02.ButtonPanel.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Pages\NavigtionBarPage.xaml.cs">
-	    <DependentUpon>NavigtionBarPage.xaml</DependentUpon>
+	  <Compile Update="Panels\01.OverViewPanel.xaml.cs">
+	    <DependentUpon>01.OverviewPanel.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\Dialog.xaml.cs">
-	    <DependentUpon>Dialog.xaml</DependentUpon>
+	  <Compile Update="Panels\04.CardPanel.xaml.cs">
+	    <DependentUpon>04.CardPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\05.CheckBoxPanel.xaml.cs">
+	    <DependentUpon>05.CheckBoxPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\06.ChipPanel.xaml.cs">
+	    <DependentUpon>06.ChipPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\07.ComboBoxPanel.xaml.cs">
+	    <DependentUpon>07.ComboBoxPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\08.ContextMenuPanel.xaml.cs">
+	    <DependentUpon>08.ContextMenuPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\09.FABPanel.xaml.cs">
+	    <DependentUpon>09.FABPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\03.IconButtonPanel.xaml.cs">
+	    <DependentUpon>03.IconButtonPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\10.NavigtionBarPanel.xaml.cs">
+	    <DependentUpon>10.NavigtionBarPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\11.PopupPanel.xaml.cs">
+	    <DependentUpon>11.PopupPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\12.ProgressIndicatorPanel.xaml.cs">
+	    <DependentUpon>12.ProgressIndicatorPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\13.RadioButtonPanel.xaml.cs">
+	    <DependentUpon>13.RadioButtonPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\14.SwitchPanel.xaml.cs">
+	    <DependentUpon>14.SwitchPanel.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Panels\15.TabsPanel.xaml.cs">
+	    <DependentUpon>15.TabsPanel.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
+
 	<ItemGroup>
-	  <MauiXaml Update="FlyoutMenuPage.xaml">
+	  <MauiXaml Update="ContactsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\ButtonsPage.xaml">
+	  <MauiXaml Update="Panels\03.IconButtonPanel.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\CardsPage.xaml">
+	  <MauiXaml Update="Panels\01.OverviewPanel.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\CheckBoxsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\ChipsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\ComboBoxsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\ContextMenusPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\FABsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\NavigtionBarPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\PopupPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Dialog.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\ProgressIndicatorsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\RadioButtonsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\SwitchsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\TabsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="TodoListPage.xaml">
+	  <MauiXaml Update="Views\PropertyDescribes.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

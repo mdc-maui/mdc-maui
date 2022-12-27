@@ -25,7 +25,7 @@ internal class LabelDrawable
     internal void DrawBackground(SKCanvas canvas, SKRect bounds)
     {
         var color = this.view.BackgroundColour.MultiplyAlpha(this.view.BackgroundOpacity);
-        canvas.DrawBackground(bounds, color, 0);
+        canvas.DrawBackground(bounds, color, this.view.GetRadii(bounds.Width, bounds.Height));
     }
 
     private void DrawText(SKCanvas canvas, SKRect bounds)

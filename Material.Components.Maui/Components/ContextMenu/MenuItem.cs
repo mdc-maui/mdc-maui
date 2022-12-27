@@ -1,5 +1,4 @@
 ﻿using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
 using Topten.RichTextKit;
@@ -11,13 +10,14 @@ public partial class MenuItem
         IView,
         IBackgroundElement,
         IForegroundElement,
-        IImageElement,
+        IIconElement,
         ITextElement,
         IRippleElement,
         IStateLayerElement
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -26,24 +26,35 @@ public partial class MenuItem
         get => this.controlState;
         set
         {
-            VisualStateManager.GoToState(
-                this,
-                value switch
-                {
-                    ControlState.Normal => "normal",
-                    ControlState.Hovered => "hovered",
-                    ControlState.Pressed => "pressed",
-                    ControlState.Disabled => "disabled",
-                    _ => "normal",
-                }
-            );
             this.controlState = value;
+            this.ChangeVisualState();
         }
+    }
+
+    protected override void ChangeVisualState()
+    {
+        this.isVisualStateChanging = true;
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => "normal",
+            ControlState.Hovered => "hovered",
+            ControlState.Pressed => "pressed",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -56,6 +67,8 @@ public partial class MenuItem
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -89,9 +102,9 @@ public partial class MenuItem
     }
 
     #endregion
-    #region IImageElement
-    public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
-    public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
+    #region IIconElement
+    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
     public static readonly BindableProperty TrailIconProperty = BindableProperty.Create(
         nameof(TrailIcon),
         typeof(IconKind),
@@ -99,15 +112,15 @@ public partial class MenuItem
         IconKind.None,
         propertyChanged: OnTrailIconChanged
     );
-    public static readonly BindableProperty TrailImageProperty = BindableProperty.Create(
-        nameof(TrailImage),
+    public static readonly BindableProperty TrailIconSourceProperty = BindableProperty.Create(
+        nameof(TrailIconSource),
         typeof(SKPicture),
         typeof(MenuItem),
         null,
         propertyChanged: OnTrailIconChanged
     );
 
-    public static void OnTrailIconChanged(BindableObject bo, object oldValue, object newValue)
+    private static void OnTrailIconChanged(BindableObject bo, object oldValue, object newValue)
     {
         ((IView)bo).OnPropertyChanged();
     }
@@ -118,11 +131,11 @@ public partial class MenuItem
         set => this.SetValue(IconProperty, value);
     }
 
-    [TypeConverter(typeof(ImageConverter))]
-    public SKPicture Image
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
     {
-        get => (SKPicture)this.GetValue(ImageProperty);
-        set => this.SetValue(ImageProperty, value);
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
     }
     public IconKind TrailIcon
     {
@@ -130,11 +143,11 @@ public partial class MenuItem
         set => this.SetValue(TrailIconProperty, value);
     }
 
-    [TypeConverter(typeof(ImageConverter))]
-    public SKPicture TrailImage
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture TrailIconSource
     {
-        get => (SKPicture)this.GetValue(TrailImageProperty);
-        set => this.SetValue(TrailImageProperty, value);
+        get => (SKPicture)this.GetValue(TrailIconSourceProperty);
+        set => this.SetValue(TrailIconSourceProperty, value);
     }
     #endregion
 
@@ -148,6 +161,8 @@ public partial class MenuItem
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -165,6 +180,8 @@ public partial class MenuItem
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -181,6 +198,8 @@ public partial class MenuItem
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -212,10 +231,7 @@ public partial class MenuItem
 
     public MenuItem()
     {
-        this.Clicked += (sender, e) =>
-        {
-            this.Command?.Execute(this.CommandParameter ?? e);
-        };
+        this.Clicked += (sender, e) => this.Command?.Execute(this.CommandParameter ?? e);
         this.drawable = new MenuItemDrawable(this);
     }
 
@@ -262,13 +278,18 @@ public partial class MenuItem
         var minWidth = this.MinimumWidthRequest;
         var maxWidth = this.MaximumWidthRequest;
         var offsetWidth =
-            (this.Icon != IconKind.None || this.Image != null ? 48d : 12d)
-            + (this.TrailIcon != IconKind.None || this.TrailImage != null ? 48d : 12d);
+            (this.Icon != IconKind.None || this.IconSource != null ? 48d : 12d)
+            + (this.TrailIcon != IconKind.None || this.TrailIconSource != null ? 48d : 12d);
         this.TextBlock.MaxWidth = (float)(maxWidth - 24d - offsetWidth);
         this.TextBlock.MaxHeight = 48f;
         return Math.Max(
             minWidth,
             Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 24d + offsetWidth)
         );
+    }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
     }
 }

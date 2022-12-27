@@ -8,15 +8,24 @@
     <Style TargetType="views:ContextMenu">
         <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
         <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-        <Setter Property="Padding" Value="0,8,0,8" />
-        <Setter Property="Elevation" Value="Level2" />
-        <Setter Property="Shape" Value="ExtraSmall" />
-        <Setter Property="EnableTouchEvents" Value="False" />
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root">
+                    <views:CardContainer
+                        BackgroundColour="{TemplateBinding BackgroundColour}"
+                        Elevation="Level2"
+                        EnableTouchEvents="False"
+                        RippleColor="{TemplateBinding RippleColor}"
+                        Shape="ExtraSmall" />
+                    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never">
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </ScrollView>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
     </Style>
 
     <Style TargetType="views:MenuItem">
-        <Setter Property="EnableTouchEvents" Value="True" />
-        <Setter Property="IgnorePixelScaling" Value="True" />
         <Setter Property="MinimumWidthRequest" Value="112" />
         <Setter Property="MaximumWidthRequest" Value="280" />
         <Setter Property="HeightRequest" Value="48" />
@@ -29,14 +38,29 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal" />
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColour" Value="Transparent" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
+                            <Setter Property="BackgroundColour" Value="Transparent" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
+                            <Setter Property="BackgroundColour" Value="Transparent" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>

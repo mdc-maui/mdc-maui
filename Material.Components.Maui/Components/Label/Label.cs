@@ -1,21 +1,21 @@
-using Material.Components.Maui.Components.Core;
-using Material.Components.Maui.Core;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
 
+[ContentProperty(nameof(Text))]
 public partial class Label
     : SKTouchCanvasView,
         IView,
         ITextElement,
         IForegroundElement,
         IBackgroundElement,
-        IPaddingElement
+        IPaddingElement,
+        IShapeElement
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -31,6 +31,7 @@ public partial class Label
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => "normal",
@@ -38,11 +39,18 @@ public partial class Label
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -55,6 +63,8 @@ public partial class Label
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -84,8 +94,12 @@ public partial class Label
 
     void ITextElement.OnTextBlockChanged()
     {
-        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
-        this.InvalidateSurface();
+        var oldSize = this.DesiredSize;
+        this.SendInvalidateMeasure();
+        if (oldSize == this.DesiredSize)
+        {
+            this.OnPropertyChanged();
+        }
     }
     #endregion
 
@@ -99,6 +113,8 @@ public partial class Label
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -116,6 +132,8 @@ public partial class Label
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -129,6 +147,15 @@ public partial class Label
     {
         get => (Thickness)this.GetValue(PaddingProperty);
         set => this.SetValue(PaddingProperty, value);
+    }
+    #endregion
+
+    #region IShapeElement
+    public static readonly BindableProperty ShapeProperty = ShapeElement.ShapeProperty;
+    public Shape Shape
+    {
+        get => (Shape)this.GetValue(ShapeProperty);
+        set => this.SetValue(ShapeProperty, value);
     }
     #endregion
     #endregion

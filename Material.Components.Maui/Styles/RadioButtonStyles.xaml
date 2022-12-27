@@ -6,10 +6,8 @@
     xmlns:views="clr-namespace:Material.Components.Maui">
 
     <Style TargetType="views:RadioButtonItem">
-        <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="VerticalOptions" Value="Start" />
-        <Setter Property="EnableTouchEvents" Value="True" />
-        <Setter Property="IgnorePixelScaling" Value="True" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
@@ -18,14 +16,29 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal" />
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters>
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>

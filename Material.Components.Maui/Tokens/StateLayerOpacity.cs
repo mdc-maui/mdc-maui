@@ -1,6 +1,5 @@
 ﻿using Material.Components.Maui.Converters;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace Material.Components.Maui.Tokens;
 

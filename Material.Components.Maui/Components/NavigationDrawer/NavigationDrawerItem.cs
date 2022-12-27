@@ -1,27 +1,24 @@
 ﻿using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
 
-[ContentProperty(nameof(Content))]
 public partial class NavigationDrawerItem
     : SKTouchCanvasView,
         IView,
         ITextElement,
-        IImageElement,
+        IIconElement,
         IForegroundElement,
         IBackgroundElement,
         IStateLayerElement,
-        IRippleElement,
-        IContextMenu
+        IRippleElement
 {
     #region interface
 
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -37,6 +34,7 @@ public partial class NavigationDrawerItem
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
@@ -46,11 +44,18 @@ public partial class NavigationDrawerItem
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -98,20 +103,20 @@ public partial class NavigationDrawerItem
     }
     #endregion
 
-    #region IImageElement
-    public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
-    public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
+    #region IIconElement
+    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
     public IconKind Icon
     {
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
 
-    [TypeConverter(typeof(ImageConverter))]
-    public SKPicture Image
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
     {
-        get => (SKPicture)this.GetValue(ImageProperty);
-        set => this.SetValue(ImageProperty, value);
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
     }
     #endregion
 
@@ -125,6 +130,8 @@ public partial class NavigationDrawerItem
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -142,6 +149,8 @@ public partial class NavigationDrawerItem
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -192,12 +201,9 @@ public partial class NavigationDrawerItem
     private readonly string title;
 
     [AutoBindable]
-    private readonly Page content;
+    private readonly Type contentType;
 
-    [AutoBindable]
-    private readonly ContextMenu contextMenu;
-
-    [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
+    [AutoBindable(OnChanged = nameof(ChangeVisualState))]
     public bool isActived;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
@@ -207,6 +213,27 @@ public partial class NavigationDrawerItem
     private readonly Color activeIndicatorColor;
 
     public float ChangingPercent { get; private set; } = 1f;
+
+    public static readonly BindableProperty ContentProperty = BindableProperty.Create(
+        nameof(Content),
+        typeof(View),
+        typeof(NavigationDrawerItem),
+        null
+    );
+
+    public View Content
+    {
+        get
+        {
+            var result = (View)this.GetValue(ContentProperty);
+            if (result == null && this.ContentType != null)
+            {
+                result = (View)Activator.CreateInstance(this.ContentType);
+                this.SetValue(ContentProperty, result);
+            }
+            return result;
+        }
+    }
 
     private readonly NavigationDrawerItemDrawable drawable;
     private IAnimationManager animationManager;
@@ -261,8 +288,6 @@ public partial class NavigationDrawerItem
         if (propertyName == "IsEnabled")
         {
             this.ControlState = this.IsEnabled ? ControlState.Normal : ControlState.Disabled;
-            this.InvalidateSurface();
         }
-        this.InvalidateSurface();
     }
 }

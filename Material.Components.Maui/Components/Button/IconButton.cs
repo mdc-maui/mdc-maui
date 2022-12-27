@@ -1,8 +1,6 @@
 ﻿using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using IButton = Material.Components.Maui.Core.IButton;
 
 namespace Material.Components.Maui;
@@ -11,6 +9,7 @@ public partial class IconButton : SKTouchCanvasView, IButton
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -26,6 +25,7 @@ public partial class IconButton : SKTouchCanvasView, IButton
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => "normal",
@@ -35,28 +35,35 @@ public partial class IconButton : SKTouchCanvasView, IButton
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
-    #region IImageElement
-    public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
-    public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
+    #region IIconElement
+    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
     public IconKind Icon
     {
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
 
-    [TypeConverter(typeof(ImageConverter))]
-    public SKPicture Image
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
     {
-        get => (SKPicture)this.GetValue(ImageProperty);
-        set => this.SetValue(ImageProperty, value);
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
     }
     #endregion
 
@@ -70,6 +77,8 @@ public partial class IconButton : SKTouchCanvasView, IButton
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -87,6 +96,8 @@ public partial class IconButton : SKTouchCanvasView, IButton
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -111,6 +122,8 @@ public partial class IconButton : SKTouchCanvasView, IButton
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float OutlineOpacity
     {
         get => (float)this.GetValue(OutlineOpacityProperty);
@@ -146,6 +159,8 @@ public partial class IconButton : SKTouchCanvasView, IButton
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);

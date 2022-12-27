@@ -1,13 +1,11 @@
 ﻿using CommunityToolkit.Maui.Markup;
-using Material.Components.Maui.Core;
-using Material.Components.Maui.Core.Interfaces;
 using System.Runtime.Versioning;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class NavigationBar : ContentView, IVisualTreeElement, ICommandElement
+public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommandElement
 {
     private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
         nameof(Items),
@@ -28,34 +26,8 @@ public partial class NavigationBar : ContentView, IVisualTreeElement, ICommandEl
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnHasLabelChanged))]
     private readonly bool hasLabel;
 
-    [AutoBindable(OnChanged = nameof(OnSelectedIndexChanged))]
-    private readonly int selectedIndex;
-
-    [SupportedOSPlatform("android")]
-    public static readonly BindableProperty UserInputEnabledProperty = BindableProperty.Create(
-        nameof(UserInputEnabled),
-        typeof(bool),
-        typeof(NavigationBar),
-        false,
-        propertyChanged: OnUserInputEnabledChanged
-    );
-
-    [SupportedOSPlatform("android")]
-    public bool UserInputEnabled
-    {
-        get => (bool)this.GetValue(UserInputEnabledProperty);
-        set => this.SetValue(UserInputEnabledProperty, value);
-    }
-
-    [SupportedOSPlatform("android")]
-    private static void OnUserInputEnabledChanged(
-        BindableObject bo,
-        object oldValue,
-        object NewValue
-    )
-    {
-        ((NavigationBar)bo).PART_Content.UserInputEnabled = (bool)NewValue;
-    }
+    [AutoBindable(OnChanged = nameof(OnSelectedItemChanged))]
+    private readonly NavigationBarItem selectedItem;
 
     [AutoBindable]
     private readonly ICommand command;
@@ -63,17 +35,25 @@ public partial class NavigationBar : ContentView, IVisualTreeElement, ICommandEl
     [AutoBindable]
     private readonly object commandParameter;
 
-    public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
+    public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
 
-    private void OnSelectedIndexChanged()
+    private void OnSelectedItemChanged()
     {
-        for (int i = 0; i < this.Items.Count; i++)
+        foreach (var item in Items)
         {
-            this.Items[i].IsActived = i == this.SelectedIndex;
+            if (item is NavigationBarItem nbi)
+            {
+                nbi.IsActived = this.SelectedItem.Equals(nbi);
+            }
         }
-        this.PART_Content.SelectedIndex = this.SelectedIndex;
-        SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(this.SelectedIndex));
-        this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
+        this.SelectedItemChanged?.Invoke(
+            this,
+            new SelectedItemChangedEventArgs(
+                this.SelectedItem,
+                this.Items.IndexOf(this.SelectedItem)
+            )
+        );
+        this.Command?.Execute(this.CommandParameter ?? this.SelectedItem);
     }
 
     private void OnHasLabelChanged()
@@ -85,81 +65,55 @@ public partial class NavigationBar : ContentView, IVisualTreeElement, ICommandEl
         }
     }
 
-    private readonly ViewPager PART_Content;
-    private readonly Grid PART_Bar;
+    private Grid PART_Root;
+    private AutoFillLayout PART_Bar;
 
     public NavigationBar()
     {
         this.Items.OnAdded += this.OnItemsAdded;
         this.Items.OnRemoved += this.OnItemsRemoved;
         this.Items.OnCleared += this.OnItemsCleared;
-
-        this.PART_Content = new ViewPager();
-        this.PART_Content.SelectedItemChanged += (sender, e) =>
-        {
-            this.SetValue(SelectedIndexProperty, e.SelectedItemIndex);
-            for (int i = 0; i < this.Items.Count; i++)
-            {
-                this.Items[i].IsActived = i == e.SelectedItemIndex;
-            }
-        };
-        this.PART_Bar = new Grid { HeightRequest = 80, BackgroundColor = Colors.Green };
-
-        this.Content = new Grid
-        {
-            RowDefinitions =
-            {
-                new RowDefinition(GridLength.Star),
-                new RowDefinition(GridLength.Auto),
-            },
-            Children = { this.PART_Content, this.PART_Bar.Row(1) }
-        };
     }
 
     private void OnItemsAdded(object sender, ItemsChangedEventArgs<NavigationBarItem> e)
     {
         var index = e.Index;
         var item = this.Items[index];
-        item.IsActived = index == this.SelectedIndex;
-        this.PART_Bar.ColumnDefinitions.Insert(index, new ColumnDefinition(GridLength.Star));
-        item.Column(index);
+        this.SelectedItem ??= item;
         this.PART_Bar.Insert(index, item);
-        this.PART_Content.Items.Insert(index, item.Content);
         item.HasLabel = this.HasLabel;
         item.Clicked += (sender, e) =>
         {
-            this.SelectedIndex = this.Items.IndexOf((NavigationBarItem)sender);
+            var nbi = sender as NavigationBarItem;
+            this.SelectedItem = nbi;
         };
-
-        if (e.EventType is "Insert")
-        {
-            for (int i = index + 1; i < this.PART_Bar.ColumnDefinitions.Count; i++)
-            {
-                this.Items[i].Column(i);
-            }
-        }
     }
 
     private void OnItemsRemoved(object sender, ItemsChangedEventArgs<NavigationBarItem> e)
     {
         var item = this.Items[e.Index];
         this.PART_Bar.Remove(item);
-        this.PART_Content.Items.Remove(item.Content);
-        this.PART_Bar.ColumnDefinitions.Clear();
-        for (int i = 0; i < this.Items.Count; i++)
-        {
-            this.PART_Bar.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
-            this.Items[i].Column(i);
-        }
     }
 
     private void OnItemsCleared(object sender, EventArgs e)
     {
         this.PART_Bar.Clear();
-        this.PART_Content.Items.Clear();
     }
 
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        this.PART_Root = (Grid)this.GetTemplateChild("PART_Root");
+        this.PART_Bar = (AutoFillLayout)this.GetTemplateChild("PART_Bar");
 
-    public IVisualTreeElement GetVisualParent() => this.Window;
+        this.OnChildAdded(this.PART_Root);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Root, 0);
+    }
+
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        this.PART_Root != null
+            ? new List<IVisualTreeElement> { this.PART_Root }
+            : Array.Empty<IVisualTreeElement>().ToList();
+
+    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
 }

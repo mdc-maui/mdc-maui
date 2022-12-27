@@ -6,7 +6,7 @@ internal interface IButton
         IForegroundElement,
         IOutlineElement,
         IBackgroundElement,
-        IImageElement,
+        IIconElement,
         IElevationElement,
         IShapeElement,
         IStateLayerElement,

@@ -8,6 +8,7 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<PublishReadyToRun>false</PublishReadyToRun>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -22,12 +23,12 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui.Markup" Version="1.1.1" />
-	  <PackageReference Include="M.BindableProperty.Generator" Version="0.9.2" />
+	  <PackageReference Include="CommunityToolkit.Maui.Markup" Version="2.1.0" />
+	  <PackageReference Include="M.BindableProperty.Generator" Version="0.9.3" />
 	  <PackageReference Include="MaterialColorUtilities" Version="0.2.0" />
 	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
 	  <PackageReference Include="Svg.Skia" Version="0.5.18" />
-	  <PackageReference Include="Topten.RichTextKit" Version="0.4.163-preview" />
+	  <PackageReference Include="Topten.RichTextKit" Version="0.4.165" />
 	</ItemGroup>
 	
 	<ItemGroup>
@@ -64,6 +65,9 @@
 	  <MauiXaml Update="Styles\LabelStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Styles\NavigationBarItemStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Styles\NavigationBarStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -77,6 +81,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Styles\RadioButtonStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Styles\TabItemStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Styles\TabsStyles.xaml">

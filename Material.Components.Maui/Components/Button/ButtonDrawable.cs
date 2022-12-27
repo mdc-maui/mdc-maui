@@ -51,6 +51,9 @@ internal abstract class ButtonDrawable
 
     internal void DrawRippleEffect(SKCanvas canvas, SKRect bounds)
     {
+        if (this.view.RipplePercent == 0f)
+            return;
+
         var color = this.view.RippleColor;
         var radii = this.view.GetRadii(bounds.Width, bounds.Height);
         canvas.DrawRippleEffect(

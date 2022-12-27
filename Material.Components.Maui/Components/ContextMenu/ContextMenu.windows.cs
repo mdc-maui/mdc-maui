@@ -50,4 +50,6 @@ public partial class ContextMenu
         this.Result = result;
         this.container.Hide();
     }
+
+    public bool IsShowing() => this.container?.IsOpen ?? false;
 }

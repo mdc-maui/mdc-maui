@@ -5,64 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style TargetType="views:NavigationBarItem">
-        <Setter Property="EnableTouchEvents" Value="True" />
-        <Setter Property="IgnorePixelScaling" Value="True" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontWeight" Value="500" />
-        <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-        <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-        <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-        <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup>
-                    <VisualState x:Name="normal" />
-                    <VisualState x:Name="pressed">
-                        <VisualState.Setters>
-                            <Setter Property="StateLayerOpacity" Value="0.12" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="hovered">
-                        <VisualState.Setters>
-                            <Setter Property="StateLayerOpacity" Value="0.08" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="disabled">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="RippleColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="normal:actived">
-                        <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="hovered:actived">
-                        <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="StateLayerOpacity" Value="0.08" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="pressed:actived">
-                        <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="StateLayerOpacity" Value="0.12" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
+    <Style TargetType="views:NavigationBar">
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" RowDefinitions="*,auto">
+                    <views:ContentPresenter Grid.Row="0" Content="{TemplateBinding SelectedItem.Content}" />
+                    <views:AutoFillLayout
+                        x:Name="PART_Bar"
+                        Grid.Row="1"
+                        BackgroundColor="Transparent"
+                        HeightRequest="80" />
+                </Grid>
+            </ControlTemplate>
         </Setter>
     </Style>
 

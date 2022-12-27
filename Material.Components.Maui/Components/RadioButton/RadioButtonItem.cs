@@ -1,8 +1,5 @@
-﻿using Material.Components.Maui.Components.Core;
-using Material.Components.Maui.Core;
-using Microsoft.Maui.Animations;
+﻿using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
@@ -17,6 +14,7 @@ public partial class RadioButtonItem
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -32,6 +30,7 @@ public partial class RadioButtonItem
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => "normal",
@@ -41,11 +40,18 @@ public partial class RadioButtonItem
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -58,6 +64,8 @@ public partial class RadioButtonItem
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -87,8 +95,7 @@ public partial class RadioButtonItem
 
     void ITextElement.OnTextBlockChanged()
     {
-        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
-        this.InvalidateSurface();
+        this.SendInvalidateMeasure();
     }
     #endregion
 
@@ -102,6 +109,8 @@ public partial class RadioButtonItem
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -119,6 +128,8 @@ public partial class RadioButtonItem
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -228,10 +239,10 @@ public partial class RadioButtonItem
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
     {
         var bounds = new SKRect(
-            e.Info.Rect.Left + 4,
-            e.Info.Rect.Top + 4,
-            e.Info.Rect.Right - 4,
-            e.Info.Rect.Bottom - 4
+            e.Info.Rect.Left,
+            e.Info.Rect.Top,
+            e.Info.Rect.Right,
+            e.Info.Rect.Bottom
         );
         this.drawable.Draw(e.Surface.Canvas, bounds);
     }
@@ -247,8 +258,8 @@ public partial class RadioButtonItem
             this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
         );
 
-        this.TextBlock.MaxWidth = (float)(maxWidth - 70d);
-        this.TextBlock.MaxHeight = 48f;
+        this.TextBlock.MaxWidth = (float)(maxWidth - 50d);
+        this.TextBlock.MaxHeight = 40f;
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill
                 ? maxWidth
@@ -256,7 +267,7 @@ public partial class RadioButtonItem
                     + Math.Max(
                         this.MinimumWidthRequest,
                         this.WidthRequest == -1
-                            ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 70d)
+                            ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 50d)
                             : this.WidthRequest
                     );
         var height =
@@ -265,7 +276,7 @@ public partial class RadioButtonItem
                 : this.Margin.VerticalThickness
                     + Math.Max(
                         this.MinimumHeightRequest,
-                        this.HeightRequest == -1 ? Math.Min(maxHeight, 48d) : this.HeightRequest
+                        this.HeightRequest == -1 ? Math.Min(maxHeight, 40d) : this.HeightRequest
                     );
         var result = new Size(Math.Ceiling(width), Math.Ceiling(height));
         this.DesiredSize = result;

@@ -5,11 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:Material.Components.Maui.Converters"
     xmlns:views="clr-namespace:Material.Components.Maui">
-
+    <ResourceDictionary>
+        <converters:DisplayModeConverter x:Key="displayModeConverter" />
+    </ResourceDictionary>
 
     <Style TargetType="views:NavigationDrawer">
         <Setter Property="DisplayMode" Value="{OnIdiom Split, Phone=Popup}" />
-        <Setter Property="HasToolBar" Value="{OnIdiom false, Phone=true}" />
+        <Setter Property="HasToolBar" Value="{Binding Source={RelativeSource Self}, Path=DisplayMode}" />
         <Setter Property="IsPaneOpen" Value="False" />
         <Setter Property="PaneBackGroundColour" Value="{DynamicResource SurfaceColor}" />
         <Setter Property="PaneBackGroundColour" Value="{DynamicResource SurfaceColor}" />
@@ -21,16 +23,16 @@
                     DisplayMode="{TemplateBinding DisplayMode}"
                     IsPaneOpen="{TemplateBinding IsPaneOpen,
                                                  Mode=TwoWay}">
-                    <ContentPage BackgroundColor="Transparent">
+                    <views:SplitView.Pane>
                         <Grid x:Name="PART_Pane" HorizontalOptions="Start">
                             <views:Card
-                                BackgroundColour="{Binding PaneBackGroundColour}"
+                                BackgroundColour="{TemplateBinding PaneBackGroundColour}"
                                 EnableTouchEvents="False"
                                 Shape="0,16,0,16" />
                             <Grid
                                 Padding="12"
                                 RowDefinitions="auto,*,auto"
-                                WidthRequest="{Binding PaneWidth, FallbackValue=80}">
+                                WidthRequest="{TemplateBinding PaneWidth}">
                                 <Grid
                                     Grid.Row="0"
                                     Padding="8,0"
@@ -40,16 +42,17 @@
                                         FontSize="18"
                                         FontWeight="600"
                                         ForegroundColor="{DynamicResource PrimaryColor}"
-                                        IsVisible="{Binding IsPaneOpen}"
-                                        Text="{Binding Title}"
+                                        IsVisible="{TemplateBinding IsPaneOpen}"
+                                        Text="{TemplateBinding Title}"
                                         VerticalOptions="Center"
                                         VerticalTextAlignment="Center" />
                                     <views:IconButton
                                         Grid.Column="1"
                                         Clicked="MenuBtn_Clicked"
-                                        CommandParameter="{Binding IsPaneOpen, Mode=TwoWay}"
+                                        CommandParameter="{TemplateBinding IsPaneOpen,
+                                                                           Mode=TwoWay}"
                                         ForegroundColor="{DynamicResource OnSecondaryContainerColor}"
-                                        Icon="{Binding SwitchIcon}"
+                                        Icon="{TemplateBinding SwitchIcon}"
                                         Style="{DynamicResource StandardIconButtonStyle}" />
                                 </Grid>
                                 <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
@@ -58,51 +61,37 @@
                                 <VerticalStackLayout x:Name="PART_Footer" Grid.Row="2" />
                             </Grid>
                         </Grid>
-                    </ContentPage>
+                    </views:SplitView.Pane>
                     <views:SplitView.Content>
-                        <ContentPage>
-                            <Grid x:Name="PART_ContentContainer" RowDefinitions="auto,*">
-                                <Grid
-                                    Grid.Row="0"
-                                    Padding="16,0"
-                                    BackgroundColor="{Binding ToolBarBackGroundColour}"
-                                    ColumnDefinitions="auto,*,auto"
-                                    HeightRequest="56"
-                                    IsVisible="{Binding HasToolBar}">
-                                    <views:IconButton
-                                        Grid.Column="0"
-                                        Clicked="MenuBtn_Clicked"
-                                        CommandParameter="{Binding IsPaneOpen, Mode=TwoWay}"
-                                        ForegroundColor="{DynamicResource OnSecondaryContainerColor}"
-                                        Icon="Menu"
-                                        Style="{DynamicResource StandardIconButtonStyle}"
-                                        VerticalOptions="Center" />
-                                    <views:Label
-                                        Grid.Column="1"
-                                        FontSize="18"
-                                        ForegroundColor="{DynamicResource OnSurfaceColor}"
-                                        HorizontalOptions="Fill"
-                                        HorizontalTextAlignment="Center"
-                                        Text="{Binding SelectedItem.Title}"
-                                        VerticalOptions="Center"
-                                        VerticalTextAlignment="Center" />
-                                    <views:IconButton
-                                        Grid.Column="2"
-                                        Clicked="ToolBarContextMenuBtn_Clicked"
-                                        ContextMenu="{Binding SelectedItem.ContextMenu}"
-                                        ForegroundColor="{DynamicResource OnSecondaryContainerColor}"
-                                        Icon="MoreVert"
-                                        Style="{DynamicResource StandardIconButtonStyle}"
-                                        VerticalOptions="Center" />
-                                </Grid>
-                                <views:ViewPager
-                                    x:Name="PART_Content"
-                                    Grid.Row="1"
-                                    HasAnimation="false"
-                                    SelectedItem="{Binding SelectedItem.Content}"
-                                    UserInputEnabled="false" />
+                        <Grid x:Name="PART_ContentContainer" RowDefinitions="auto,*">
+                            <Grid
+                                Grid.Row="0"
+                                Padding="16,0"
+                                BackgroundColor="{TemplateBinding ToolBarBackGroundColour}"
+                                ColumnDefinitions="auto,*,auto"
+                                HeightRequest="56"
+                                IsVisible="{TemplateBinding HasToolBar}">
+                                <views:IconButton
+                                    Grid.Column="0"
+                                    Clicked="MenuBtn_Clicked"
+                                    ForegroundColor="{DynamicResource OnSecondaryContainerColor}"
+                                    Icon="Menu"
+                                    Style="{DynamicResource StandardIconButtonStyle}"
+                                    VerticalOptions="Center" />
+                                <views:Label
+                                    Grid.Column="1"
+                                    Padding="0,0,40,0"
+                                    FontSize="18"
+                                    ForegroundColor="{DynamicResource OnSurfaceColor}"
+                                    HorizontalOptions="Fill"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{TemplateBinding SelectedItem.Title,
+                                                           Mode=TwoWay}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
                             </Grid>
-                        </ContentPage>
+                            <views:ContentPresenter Grid.Row="1" Content="{TemplateBinding SelectedItem.Content}" />
+                        </Grid>
                     </views:SplitView.Content>
                 </views:SplitView>
             </ControlTemplate>

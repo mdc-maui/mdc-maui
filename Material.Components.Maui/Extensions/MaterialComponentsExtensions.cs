@@ -1,5 +1,4 @@
-﻿using Material.Components.Maui.Core;
-using MaterialColorUtilities.Schemes;
+﻿using MaterialColorUtilities.Schemes;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace Material.Components.Maui.Extensions;

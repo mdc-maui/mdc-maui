@@ -46,4 +46,9 @@ public class WViewPagerItem : FlipViewItem
         }
         base.OnKeyDown(e);
     }
+
+    protected override void OnPointerWheelChanged(PointerRoutedEventArgs e)
+    {
+        e.Handled = true;
+    }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SampleApp.Panels.FABPanel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    BackgroundColor="{DynamicResource BackgroundColor}"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+
+    <ContentView.Resources>
+        <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style
+            x:Key="Title"
+            BasedOn="{StaticResource DefaultLabelStyle}"
+            TargetType="md:Label">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="600" />
+        </Style>
+    </ContentView.Resources>
+
+    <ScrollView VerticalScrollBarVisibility="Always">
+        <VerticalStackLayout
+            Padding="25"
+            HorizontalOptions="Start"
+            Spacing="20"
+            VerticalOptions="Start">
+            <md:Label Text="Secondary" />
+            <HorizontalStackLayout Spacing="25" VerticalOptions="Center">
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource SmallSecondaryFABStyle}"
+                    VerticalOptions="Center" />
+                <md:FAB Icon="Add" VerticalOptions="Center" />
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource LargeSecondaryFABStyle}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <md:Label Text="Surface" />
+            <HorizontalStackLayout Spacing="25">
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource SmallSurfaceFABStyle}"
+                    VerticalOptions="Center" />
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource SurfaceFABStyle}"
+                    VerticalOptions="Center" />
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource LargeSurfaceFABStyle}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <md:Label Text="Tertiary" />
+            <HorizontalStackLayout Spacing="25">
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource SmallTertiaryFABStyle}"
+                    VerticalOptions="Center" />
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource TertiaryFABStyle}"
+                    VerticalOptions="Center" />
+                <md:FAB
+                    Icon="Add"
+                    Style="{DynamicResource LargeTertiaryFABStyle}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

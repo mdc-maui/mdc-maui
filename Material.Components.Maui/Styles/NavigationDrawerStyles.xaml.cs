@@ -9,13 +9,15 @@ public partial class NavigationDrawerStyles : ResourceDictionary
 
     private void MenuBtn_Clicked(object sender, SKTouchEventArgs e)
     {
-        var btn = sender as ITouchElement;
-        btn.CommandParameter = !(bool)btn.CommandParameter;
-    }
-
-    private void ToolBarContextMenuBtn_Clicked(object sender, SKTouchEventArgs e)
-    {
-        var element = sender as IContextMenu;
-        element.ContextMenu?.Show(sender as View);
+        var parent = sender as Element;
+        while (parent != null)
+        {
+            if (parent is NavigationDrawer nd)
+            {
+                nd.IsPaneOpen = !nd.IsPaneOpen;
+                break;
+            }
+            parent = parent.Parent;
+        }
     }
 }

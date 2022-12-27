@@ -35,7 +35,7 @@ internal class MenuItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Icon == IconKind.None)
+        if (this.view.IconSource != null || this.view.Icon == IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -55,7 +55,7 @@ internal class MenuItemDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image == null)
+        if (this.view.IconSource == null)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -66,7 +66,7 @@ internal class MenuItemDrawable
                 SKBlendMode.SrcIn
             )
         };
-        var scale = 24f / this.view.Image.CullRect.Width;
+        var scale = 24f / this.view.IconSource.CullRect.Width;
         var x = 12f;
         var y = 12f;
         var matrix = new SKMatrix
@@ -77,13 +77,13 @@ internal class MenuItemDrawable
             TransY = y,
             Persp2 = 1f
         };
-        canvas.DrawPicture(this.view.Image, ref matrix, paint);
+        canvas.DrawPicture(this.view.IconSource, ref matrix, paint);
         canvas.Restore();
     }
 
     private void DrawTrailPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.TrailImage != null || this.view.TrailIcon == IconKind.None)
+        if (this.view.TrailIconSource != null || this.view.TrailIcon == IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -103,7 +103,7 @@ internal class MenuItemDrawable
 
     private void DrawTrailImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.TrailImage == null)
+        if (this.view.TrailIconSource == null)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -114,7 +114,7 @@ internal class MenuItemDrawable
                 SKBlendMode.SrcIn
             )
         };
-        var scale = 24f / this.view.TrailImage.CullRect.Width;
+        var scale = 24f / this.view.TrailIconSource.CullRect.Width;
         var x = bounds.Right - 36f;
         var y = 12f;
         var matrix = new SKMatrix
@@ -125,7 +125,7 @@ internal class MenuItemDrawable
             TransY = y,
             Persp2 = 1f
         };
-        canvas.DrawPicture(this.view.Image, ref matrix, paint);
+        canvas.DrawPicture(this.view.IconSource, ref matrix, paint);
         canvas.Restore();
     }
 
@@ -135,7 +135,7 @@ internal class MenuItemDrawable
         this.view.TextStyle.TextColor = this.view.ForegroundColor
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
-        var x = this.view.Image != null || this.view.Icon != IconKind.None ? 48f : 12f;
+        var x = this.view.IconSource != null || this.view.Icon != IconKind.None ? 48f : 12f;
         var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2f);
         this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();

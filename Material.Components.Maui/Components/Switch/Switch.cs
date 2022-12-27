@@ -1,7 +1,5 @@
-﻿using Material.Components.Maui.Core;
-using Microsoft.Maui.Animations;
+﻿using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
@@ -17,7 +15,7 @@ public partial class Switch
     #region interface
 
     #region IView
-
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     public ControlState ControlState
@@ -32,6 +30,7 @@ public partial class Switch
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => this.IsChecked ? "normal:actived" : "normal",
@@ -41,11 +40,18 @@ public partial class Switch
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
 
     #endregion
@@ -71,6 +77,7 @@ public partial class Switch
         set => this.SetValue(OutlineWidthProperty, value);
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float OutlineOpacity
     {
         get => (float)this.GetValue(OutlineOpacityProperty);
@@ -104,6 +111,7 @@ public partial class Switch
         set => this.SetValue(StateLayerColorProperty, value);
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -202,7 +210,7 @@ public partial class Switch
                     this.ChangingPercent = start.Lerp(end, progress);
                     this.InvalidateSurface();
                 },
-                duration: 0.75f,
+                duration: 0.5f,
                 easing: Easing.CubicInOut
             )
         );

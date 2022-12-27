@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SampleApp.Panels.CheckBoxPanel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    xmlns:views="clr-namespace:SampleApp.Views"
+    xmlns:vm="clr-namespace:SampleApp.ViewModels"
+    BackgroundColor="{DynamicResource BackgroundColor}">
+
+    <ContentView.BindingContext>
+        <vm:CheckBoxVM />
+    </ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style
+            x:Key="Title"
+            BasedOn="{StaticResource DefaultLabelStyle}"
+            TargetType="md:Label">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="600" />
+        </Style>
+    </ContentView.Resources>
+
+    <ScrollView Padding="30,20">
+        <VerticalStackLayout Spacing="15">
+            <md:Label Style="{DynamicResource Title}">Styles</md:Label>
+            <md:Label>There are 1 styles of checkBoxs: 1. Default.</md:Label>
+
+            <md:WrapLayout Padding="20" HorizontalSpacing="20" VerticalSpacing="15">
+                <md:CheckBox Text="checkBox" />
+                <md:CheckBox IsChecked="True" Text="checkBox" />
+            </md:WrapLayout>
+
+            <md:Label Style="{DynamicResource Title}" Text="Properties" />
+
+            <views:PropertyDescribes BindableLayout.ItemsSource="{Binding Describes}" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentView>

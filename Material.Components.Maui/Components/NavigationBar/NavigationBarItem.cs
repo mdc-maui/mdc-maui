@@ -1,8 +1,6 @@
 ﻿using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 
 namespace Material.Components.Maui;
@@ -12,7 +10,7 @@ public partial class NavigationBarItem
     : SKTouchCanvasView,
         IView,
         ITextElement,
-        IImageElement,
+        IIconElement,
         IForegroundElement,
         IBackgroundElement,
         IStateLayerElement,
@@ -21,6 +19,7 @@ public partial class NavigationBarItem
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -36,6 +35,7 @@ public partial class NavigationBarItem
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
@@ -45,11 +45,18 @@ public partial class NavigationBarItem
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -62,6 +69,8 @@ public partial class NavigationBarItem
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -95,20 +104,20 @@ public partial class NavigationBarItem
     }
     #endregion
 
-    #region IImageElement
-    public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
-    public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
+    #region IIconElement
+    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
     public IconKind Icon
     {
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
 
-    [TypeConverter(typeof(ImageConverter))]
-    public SKPicture Image
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
     {
-        get => (SKPicture)this.GetValue(ImageProperty);
-        set => this.SetValue(ImageProperty, value);
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
     }
     #endregion
 
@@ -122,6 +131,8 @@ public partial class NavigationBarItem
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -139,6 +150,8 @@ public partial class NavigationBarItem
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -156,6 +169,8 @@ public partial class NavigationBarItem
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -183,7 +198,7 @@ public partial class NavigationBarItem
     #endregion
 
     [AutoBindable]
-    private readonly Page content;
+    private readonly View content;
 
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnPropertyChanged))]
     private readonly bool hasLabel;
@@ -267,6 +282,13 @@ public partial class NavigationBarItem
         this.drawable.Draw(e.Surface.Canvas, e.Info.Rect);
     }
 
+    protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
+    {
+        var width = 64d;
+        var height = this.HasLabel && !string.IsNullOrEmpty(this.Text) ? 80d : 56d;
+        return new Size(width, height);
+    }
+
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
@@ -276,7 +298,8 @@ public partial class NavigationBarItem
         }
     }
 
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<Page> { this.Content };
+    public new IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        new List<IVisualTreeElement> { this.Content };
 
-    public IVisualTreeElement GetVisualParent() => this.Window;
+    public new IVisualTreeElement GetVisualParent() => this.Window.Parent;
 }

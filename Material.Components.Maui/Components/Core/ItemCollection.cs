@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace Material.Components.Maui.Core;
 
@@ -8,74 +12,27 @@ public class ItemsChangedEventArgs<IView>
     public int Index;
 }
 
-public class ItemCollection<T> : IList<T>
+public class ItemCollection<T> : ObservableCollection<T>
 {
-    private readonly List<T> inner = new();
-
-    public T this[int index]
-    {
-        get => this.inner[index];
-        set => this.inner[index] = value;
-    }
-
-    public int Count => this.inner.Count;
-    public bool IsReadOnly => true;
-
     public event EventHandler<ItemsChangedEventArgs<T>> OnAdded;
     public event EventHandler<ItemsChangedEventArgs<T>> OnRemoved;
     public event EventHandler OnCleared;
 
-    public void Add(T item)
+    protected override void InsertItem(int index, T item)
     {
-        this.inner.Add(item);
-        this.OnAdded?.Invoke(
-            this,
-            new ItemsChangedEventArgs<T> { EventType = "Add", Index = this.inner.Count - 1 }
-        );
-    }
-
-    public void Insert(int index, T item)
-    {
-        this.inner.Insert(index, item);
+        base.InsertItem(index, item);
         OnAdded?.Invoke(this, new ItemsChangedEventArgs<T> { EventType = "Insert", Index = index });
     }
 
-    public bool Remove(T item)
+    protected override void RemoveItem(int index)
     {
-        var index = this.inner.IndexOf(item);
-        OnRemoved?.Invoke(
-            this,
-            new ItemsChangedEventArgs<T> { EventType = "Remove", Index = index }
-        );
-        return this.inner.Remove(item);
+        base.RemoveItem(index);
+        OnRemoved?.Invoke(this, new ItemsChangedEventArgs<T> { EventType = "Remove", Index = index });
     }
 
-    public void RemoveAt(int index)
+    protected override void ClearItems()
     {
-        var item = this.inner[index];
-        OnRemoved?.Invoke(
-            this,
-            new ItemsChangedEventArgs<T> { EventType = "Remove", Index = index }
-        );
-        this.inner.RemoveAt(index);
-    }
-
-    public void Clear()
-    {
-        this.inner.Clear();
+        base.ClearItems();
         OnCleared?.Invoke(this, default);
-    }
-
-    public bool Contains(T item) => this.inner.Contains(item);
-
-    public void CopyTo(T[] array, int arrayIndex) => this.inner.CopyTo(array as T[], arrayIndex);
-
-    public int IndexOf(T item) => this.inner.IndexOf(item);
-
-    IEnumerator IEnumerable.GetEnumerator() => this.inner.GetEnumerator();
-
-    public IEnumerator<T> GetEnumerator()
-    {
-        return this.inner.Cast<T>().GetEnumerator();
     }
 }

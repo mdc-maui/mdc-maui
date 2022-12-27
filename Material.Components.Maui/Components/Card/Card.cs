@@ -1,15 +1,13 @@
-﻿using Material.Components.Maui.Core;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Material.Components.Maui;
 
-[ContentProperty(nameof(Content))]
+//[ContentProperty(nameof(Inner))]
 public partial class Card
-    : TemplatedView,
+    : ContentView,
         IView,
         IShapeElement,
         IElevationElement,
-        IRippleElement,
         IBackgroundElement,
         IStateLayerElement,
         IOutlineElement,
@@ -17,33 +15,39 @@ public partial class Card
 {
     #region interface
     #region IView
-    private ControlState controlState = ControlState.Normal;
+    public static readonly BindableProperty ControlStateProperty = BindableProperty.Create(
+        nameof(IView.ControlState),
+        typeof(ControlState),
+        typeof(IView)
+    );
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ControlState ControlState
     {
-        get => this.controlState;
+        get => (ControlState)this.GetValue(ControlStateProperty);
         set
         {
-            VisualStateManager.GoToState(
-                this,
-                value switch
-                {
-                    ControlState.Normal => "normal",
-                    ControlState.Hovered => "hovered",
-                    ControlState.Pressed => "pressed",
-                    ControlState.Disabled => "disabled",
-                    _ => "normal",
-                }
-            );
-            this.controlState = value;
+            this.SetValue(ControlStateProperty, value);
+            this.ChangeVisualState();
         }
     }
 
-    public void OnPropertyChanged()
+    internal void ChangeVisualState(ControlState value) => this.ControlState = value;
+
+    protected override void ChangeVisualState()
     {
-        this.PART_Container?.InvalidateSurface();
+        var state = this.ControlState switch
+        {
+            ControlState.Normal => "normal",
+            ControlState.Hovered => "hovered",
+            ControlState.Pressed => "pressed",
+            ControlState.Disabled => "disabled",
+            _ => "normal",
+        };
+        VisualStateManager.GoToState(this, state);
     }
+
+    public void OnPropertyChanged() { }
     #endregion
 
     #region IBackgroundElement
@@ -56,6 +60,8 @@ public partial class Card
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -80,6 +86,8 @@ public partial class Card
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float OutlineOpacity
     {
         get => (float)this.GetValue(OutlineOpacityProperty);
@@ -115,6 +123,8 @@ public partial class Card
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -122,70 +132,40 @@ public partial class Card
     }
     #endregion
 
-    #region IRippleElement
-    public static readonly BindableProperty RippleColorProperty = RippleElement.RippleColorProperty;
+    public static readonly BindableProperty RippleColorProperty = BindableProperty.Create(
+        nameof(RippleColor),
+        typeof(Color),
+        typeof(Card),
+        null
+    );
     public Color RippleColor
     {
         get => (Color)this.GetValue(RippleColorProperty);
         set => this.SetValue(RippleColorProperty, value);
     }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float RippleSize { get; internal set; } = 0f;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float RipplePercent { get; set; } = 0f;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
-    #endregion
     #endregion
 
-    [AutoBindable(OnChanged = nameof(OnEnableTouchEventsChanged))]
+    [AutoBindable]
     private readonly bool enableTouchEvents;
 
-    private void OnEnableTouchEventsChanged()
+    //[AutoBindable]
+    //private readonly View inner;
+
+    private Grid PART_Root;
+
+    protected override void OnApplyTemplate()
     {
-        if (this.PART_Container != null)
-        {
-            this.PART_Container.EnableTouchEvents = this.EnableTouchEvents;
-        }
+        base.OnApplyTemplate();
+        this.PART_Root = (Grid)this.GetTemplateChild("PART_Root");
+        var PART_Container = (CardContainer)this.GetTemplateChild("PART_Container");
+        PART_Container.ParentCard = this;
+
+        this.OnChildAdded(this.PART_Root);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Root);
     }
 
-    [AutoBindable(OnChanged = nameof(OnContentChanged))]
-    private readonly View content;
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        new List<View> { this.PART_Root };
 
-    [AutoBindable(HidesUnderlyingProperty = true, OnChanged = nameof(OnPaddingChanged))]
-    private readonly Thickness padding;
-
-    private void OnContentChanged() => this.PART_Content.Content = this.Content;
-
-    private void OnPaddingChanged()
-    {
-        if (this.PART_Content != null)
-        {
-            this.PART_Content.Padding = this.Padding;
-        }
-    }
-
-    private readonly Grid PART_Root;
-    private readonly CardContainer PART_Container;
-    private readonly ContentPresenter PART_Content = new();
-
-    public Card()
-    {
-        this.PART_Container = new CardContainer(this)
-        {
-            EnableTouchEvents = this.EnableTouchEvents
-        };
-        this.PART_Root = new Grid { Children = { this.PART_Container, this.PART_Content } };
-        this.ControlTemplate = new ControlTemplate(() => this.PART_Root);
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void StartRippleEffect() { }
-
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<View> { this.Content };
-
-    public IVisualTreeElement GetVisualParent() => this.Window;
+    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
 }

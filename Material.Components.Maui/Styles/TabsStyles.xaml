@@ -3,57 +3,58 @@
     x:Class="Material.Components.Maui.Styles.TabsStyles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:view="clr-namespace:Material.Components.Maui">
+    xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style TargetType="view:TabItem">
-        <Setter Property="EnableTouchEvents" Value="True" />
-        <Setter Property="IgnorePixelScaling" Value="True" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontWeight" Value="500" />
-        <Setter Property="MinimumWidthRequest" Value="96" />
-        <Setter Property="ActiveIndicatorShape" Value="3,3,0,0" />
-        <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
-        <Setter Property="ForegroundColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-        <Setter Property="StateLayerColor" Value="{DynamicResource SurfaceColor}" />
-        <Setter Property="RippleColor" Value="{DynamicResource SurfaceTintColor}" />
-        <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup>
-                    <VisualState x:Name="normal" />
-                    <VisualState x:Name="hovered">
-                        <VisualState.Setters>
-                            <Setter Property="StateLayerOpacity" Value="0.08" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="pressed">
-                        <VisualState.Setters>
-                            <Setter Property="StateLayerOpacity" Value="0.12" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="normal:actived">
-                        <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerOpacity" Value="0" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="hovered:actived">
-                        <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerOpacity" Value="0.08" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="pressed:actived">
-                        <VisualState.Setters>
-                            <Setter Property="ForegroundColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
-                            <Setter Property="StateLayerOpacity" Value="0.12" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
+    <Style x:Key="FillTabsStyle" TargetType="views:Tabs">
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" RowDefinitions="auto,*">
+                    <views:AutoFillLayout
+                        x:Name="PART_Bar"
+                        Grid.Row="0"
+                        BindableLayout.ItemsSource="{TemplateBinding Items}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <ContentView Content="{Binding}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </views:AutoFillLayout>
+                    <views:ViewPager
+                        x:Name="PART_Content"
+                        Grid.Row="1"
+                        UserInputEnabled="{TemplateBinding UserInputEnabled}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style BaseResourceKey="FillTabsStyle" TargetType="views:Tabs" />
+
+    <Style x:Key="ScrollTabsStyle" TargetType="views:Tabs">
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" RowDefinitions="auto,*">
+                    <ScrollView
+                        x:Name="PART_Scroller"
+                        HorizontalScrollBarVisibility="Never"
+                        Orientation="Horizontal">
+                        <views:WrapLayout
+                            x:Name="PART_Bar"
+                            Grid.Row="0"
+                            BindableLayout.ItemsSource="{TemplateBinding Items}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentView Content="{Binding}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </views:WrapLayout>
+                    </ScrollView>
+                    <views:ViewPager
+                        x:Name="PART_Content"
+                        Grid.Row="1"
+                        UserInputEnabled="{TemplateBinding UserInputEnabled}" />
+                </Grid>
+            </ControlTemplate>
         </Setter>
     </Style>
 

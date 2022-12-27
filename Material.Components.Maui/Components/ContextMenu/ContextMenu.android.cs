@@ -29,4 +29,6 @@ public partial class ContextMenu
         this.Result = result;
         this.container.Dismiss();
     }
+
+    public bool IsShowing() => this.container?.IsShowing ?? false;
 }

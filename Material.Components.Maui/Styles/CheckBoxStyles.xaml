@@ -6,15 +6,13 @@
     xmlns:views="clr-namespace:Material.Components.Maui">
 
     <Style TargetType="views:CheckBox">
-        <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="VerticalOptions" Value="Start" />
-        <Setter Property="EnableTouchEvents" Value="True" />
-        <Setter Property="IgnorePixelScaling" Value="True" />
-        <Setter Property="MinimumWidthRequest" Value="52" />
-        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="MinimumWidthRequest" Value="40" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
         <Setter Property="MarkColor" Value="{DynamicResource OnPrimaryColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
@@ -22,14 +20,35 @@
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
-                    <VisualState x:Name="normal" />
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="MarkColor" Value="{DynamicResource OnPrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
                     <VisualState x:Name="hovered">
                         <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="MarkColor" Value="{DynamicResource OnPrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.08" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="pressed">
                         <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="MarkColor" Value="{DynamicResource OnPrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="RippleColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerOpacity" Value="0.12" />
                         </VisualState.Setters>
                     </VisualState>

@@ -1,24 +1,23 @@
-﻿using Material.Components.Maui.Core;
-using System.Runtime.Versioning;
+﻿using System.Runtime.Versioning;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class ViewPager : View, IVisualTreeElement, ICommandElement
+public partial class ViewPager : View, ICommandElement, IVisualTreeElement
 {
     private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
         nameof(Items),
-        typeof(ItemCollection<Page>),
+        typeof(ItemCollection<View>),
         typeof(ViewPager),
         null,
-        defaultValueCreator: bo => new ItemCollection<Page>()
+        defaultValueCreator: bo => new ItemCollection<View>()
     );
 
     public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
-    public ItemCollection<Page> Items
+    public ItemCollection<View> Items
     {
-        get => (ItemCollection<Page>)this.GetValue(ItemsProperty);
+        get => (ItemCollection<View>)this.GetValue(ItemsProperty);
         set => this.SetValue(ItemsProperty, value);
     }
 
@@ -26,7 +25,7 @@ public partial class ViewPager : View, IVisualTreeElement, ICommandElement
     private readonly int selectedIndex;
 
     [AutoBindable(OnChanged = nameof(OnSelectedItemChanged))]
-    private readonly Page selectedItem;
+    private readonly View selectedItem;
 
     [AutoBindable(DefaultValue = "true")]
     private readonly bool hasAnimation;
@@ -64,12 +63,25 @@ public partial class ViewPager : View, IVisualTreeElement, ICommandElement
         }
     }
 
-    private void OnSelectedItemChanged()
+    private void OnSelectedItemChanged(View oldValue, View newValue)
     {
+        if (oldValue != null)
+        {
+            this.OnChildRemoved(oldValue, 0);
+            VisualDiagnostics.OnChildRemoved(this, oldValue, 0);
+        }
+
+        if (newValue!=null)
+        {
+            this.OnChildAdded(this.SelectedItem);
+            VisualDiagnostics.OnChildAdded(this, this.SelectedItem);
+        }
+
         if (this.SelectedItem != this.Items[this.SelectedIndex])
         {
             this.SelectedIndex = this.Items.IndexOf(this.SelectedItem);
         }
+
         this.SelectedItemChanged?.Invoke(
             this,
             new SelectedItemChangedEventArgs(this.SelectedItem, this.SelectedIndex)
@@ -77,14 +89,14 @@ public partial class ViewPager : View, IVisualTreeElement, ICommandElement
         this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
     }
 
-    public ViewPager() : base()
+    public ViewPager()
     {
         this.Items.OnAdded += this.OnItemsChanged;
         this.Items.OnRemoved += this.OnItemsChanged;
         this.Items.OnCleared += this.OnItemsCleared;
     }
 
-    private void OnItemsChanged(object sender, ItemsChangedEventArgs<Page> e)
+    private void OnItemsChanged(object sender, ItemsChangedEventArgs<View> e)
     {
         if (this.Handler != null)
         {
@@ -119,7 +131,10 @@ public partial class ViewPager : View, IVisualTreeElement, ICommandElement
         }
     }
 
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        this.SelectedItem != null
+            ? new List<IVisualTreeElement> { this.SelectedItem }
+            : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window;
+    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
 }

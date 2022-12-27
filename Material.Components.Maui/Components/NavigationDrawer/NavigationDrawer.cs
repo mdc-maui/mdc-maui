@@ -1,15 +1,14 @@
-﻿using Material.Components.Maui.Core;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public partial class NavigationDrawer : ContentView, IVisualTreeElement, ICommandElement
+public partial class NavigationDrawer : TemplatedView, ICommandElement, IVisualTreeElement
 {
     private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
         nameof(Items),
         typeof(ItemCollection<View>),
-        typeof(NavigationBar),
+        typeof(NavigationDrawer),
         null,
         defaultValueCreator: bo => new ItemCollection<View>()
     );
@@ -26,7 +25,7 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
         BindableProperty.CreateReadOnly(
             nameof(FooterItems),
             typeof(ItemCollection<View>),
-            typeof(NavigationBar),
+            typeof(NavigationDrawer),
             null,
             defaultValueCreator: bo => new ItemCollection<View>()
         );
@@ -111,7 +110,7 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
         }
     }
 
-    private void OnSelectedItemChanged()
+    private void OnSelectedItemChanged(NavigationDrawerItem oldValue, NavigationDrawerItem newValue)
     {
         if (this.SelectedItem != null)
         {
@@ -135,22 +134,20 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
             this.IsPaneOpen = false;
         }
         this.SelectedItemChanged?.Invoke(
-                this,
-                new SelectedItemChangedEventArgs(
-                    this.SelectedItem,
-                    this.PART_Content.Items.IndexOf(this.SelectedItem.Content)
-                )
-            );
+            this,
+            new SelectedItemChangedEventArgs(
+                this.SelectedItem,
+                this.Items.IndexOf(this.SelectedItem)
+            )
+        );
         this.Command?.Execute(this.CommandParameter ?? this.SelectedItem);
     }
 
     private SplitView PART_Root;
-    private Card PART_Container;
     private Grid PART_Pane;
     private VerticalStackLayout PART_Items;
     private VerticalStackLayout PART_Footer;
     private Grid PART_ContentContainer;
-    private ViewPager PART_Content;
 
     public NavigationDrawer()
     {
@@ -168,7 +165,6 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
         this.PART_Items.Children.Insert(e.Index, view);
         if (view is NavigationDrawerItem item)
         {
-            this.PART_Content.Items.Insert(e.Index, item.Content);
             this.SelectedItem ??= item;
             item.IsExtended = this.IsPaneOpen;
             item.Clicked += (sender, e) =>
@@ -183,21 +179,10 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
     {
         var view = this.Items[e.Index];
         this.PART_Items.Children.Remove(view);
-        if (view is NavigationDrawerItem item)
-        {
-            this.PART_Content.Items.Remove(item.Content);
-        }
     }
 
     private void OnItemsCleared(object sender, EventArgs e)
     {
-        foreach (var item in this.Items)
-        {
-            if (item is NavigationDrawerItem ndi)
-            {
-                this.PART_Content.Items.Remove(ndi.Content);
-            }
-        }
         this.PART_Items.Children.Clear();
     }
 
@@ -207,6 +192,7 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
         this.PART_Footer.Children.Insert(e.Index, view);
         if (view is NavigationDrawerItem item)
         {
+            item.IsExtended = this.IsPaneOpen;
             item.Clicked += (sender, e) =>
             {
                 var ndi = sender as NavigationDrawerItem;
@@ -219,21 +205,10 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
     {
         var view = this.FooterItems[e.Index];
         this.PART_Footer.Children.Remove(view);
-        if (view is NavigationDrawerItem item)
-        {
-            this.PART_Content.Items.Remove(item.Content);
-        }
     }
 
     private void OnFooterItemsCleared(object sender, EventArgs e)
     {
-        foreach (var item in this.FooterItems)
-        {
-            if (item is NavigationDrawerItem ndi)
-            {
-                this.PART_Content.Items.Remove(ndi.Content);
-            }
-        }
         this.PART_Footer.Children.Clear();
     }
 
@@ -245,13 +220,15 @@ public partial class NavigationDrawer : ContentView, IVisualTreeElement, IComman
         this.PART_Items = (VerticalStackLayout)this.GetTemplateChild("PART_Items");
         this.PART_Footer = (VerticalStackLayout)this.GetTemplateChild("PART_Footer");
         this.PART_ContentContainer = (Grid)this.GetTemplateChild("PART_ContentContainer");
-        this.PART_Content = (ViewPager)this.GetTemplateChild("PART_Content");
-        this.PART_Pane.BindingContext = this;
-        this.PART_ContentContainer.BindingContext = this;
+
+        this.OnChildAdded(this.PART_Root);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Root);
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-        new List<IVisualTreeElement> { this.PART_Root };
+        this.PART_Root != null
+            ? new List<IVisualTreeElement> { this.PART_Root }
+            : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window;
+    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
 }

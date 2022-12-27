@@ -1,7 +1,5 @@
-﻿using Material.Components.Maui.Core;
-using Microsoft.Maui.Animations;
+﻿using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Topten.RichTextKit;
 
@@ -16,6 +14,7 @@ public partial class CheckBox
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -31,6 +30,7 @@ public partial class CheckBox
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => "normal",
@@ -40,11 +40,18 @@ public partial class CheckBox
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -57,6 +64,8 @@ public partial class CheckBox
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -86,8 +95,12 @@ public partial class CheckBox
 
     void ITextElement.OnTextBlockChanged()
     {
-        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
-        this.InvalidateSurface();
+        var oldSize = this.DesiredSize;
+        this.SendInvalidateMeasure();
+        if (oldSize == this.DesiredSize)
+        {
+            this.OnPropertyChanged();
+        }
     }
     #endregion
 
@@ -101,6 +114,8 @@ public partial class CheckBox
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -118,6 +133,8 @@ public partial class CheckBox
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -174,13 +191,10 @@ public partial class CheckBox
     [AutoBindable]
     private readonly object commandParameter;
 
-    internal float ChangingPercent { get; private set; } = 1f;
+    internal float ChangingPercent { get; private set; } = 0f;
 
     private readonly CheckBoxDrawable drawable;
     private IAnimationManager animationManager;
-
-    private double widthConstraint = double.PositiveInfinity;
-    private double heightConstraint = double.PositiveInfinity;
 
     public CheckBox()
     {
@@ -191,7 +205,10 @@ public partial class CheckBox
     private void StartChangingEffect()
     {
         if (this.Handler is null)
+        {
+            this.ChangingPercent = this.IsChecked ? 1f : 0f;
             return;
+        }
         this.animationManager ??=
             this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
         var start = 0f;
@@ -222,7 +239,7 @@ public partial class CheckBox
     {
         this.animationManager ??=
             this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
-        var start = -1f;
+        var start = 0f;
         var end = 1f;
 
         this.animationManager?.Add(
@@ -248,13 +265,7 @@ public partial class CheckBox
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
     {
-        var bounds = new SKRect(
-            e.Info.Rect.Left + 16,
-            e.Info.Rect.Top + 15,
-            e.Info.Rect.Right - 16,
-            e.Info.Rect.Bottom - 15
-        );
-        this.drawable.Draw(e.Surface.Canvas, bounds);
+        this.drawable.Draw(e.Surface.Canvas, e.Info.Rect);
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
@@ -267,7 +278,7 @@ public partial class CheckBox
             Math.Min(heightConstraint, this.MaximumHeightRequest),
             this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
         );
-        this.TextBlock.MaxWidth = (float)(maxWidth - 66d);
+        this.TextBlock.MaxWidth = (float)(maxWidth - 52d);
         this.TextBlock.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
         var width =
             this.HorizontalOptions.Alignment is LayoutAlignment.Fill
@@ -279,8 +290,8 @@ public partial class CheckBox
                             ? Math.Min(
                                 maxWidth,
                                 string.IsNullOrEmpty(this.Text)
-                                    ? 52d
-                                    : this.TextBlock.MeasuredWidth + 66d
+                                    ? 40d
+                                    : this.TextBlock.MeasuredWidth + 52d
                             )
                             : this.WidthRequest
                     );
@@ -290,18 +301,11 @@ public partial class CheckBox
                 : this.Margin.VerticalThickness
                     + Math.Max(
                         this.MinimumHeightRequest,
-                        this.HeightRequest is -1 ? Math.Min(maxHeight, 48d) : this.HeightRequest
+                        this.HeightRequest is -1 ? Math.Min(maxHeight, 40d) : this.HeightRequest
                     );
         var result = new Size(width, height);
         this.DesiredSize = result;
         return result;
-    }
-
-    protected override Size ArrangeOverride(Rect bounds)
-    {
-        this.widthConstraint = bounds.Width;
-        this.heightConstraint = bounds.Height;
-        return base.ArrangeOverride(bounds);
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -44,7 +44,7 @@ internal class NavigationDrawerItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Icon is IconKind.None)
+        if (this.view.IconSource != null || this.view.Icon is IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -65,7 +65,7 @@ internal class NavigationDrawerItemDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is null || this.view.Image is null)
+        if (this.view.IconSource is null || this.view.IconSource is null)
             return;
         canvas.Save();
 
@@ -77,7 +77,7 @@ internal class NavigationDrawerItemDrawable
                 SKBlendMode.SrcIn
             )
         };
-        var scale = 24f / this.view.Image.CullRect.Width;
+        var scale = 24f / this.view.IconSource.CullRect.Width;
         var x = 16f;
         var y = 12f;
         var matrix = new SKMatrix
@@ -88,7 +88,7 @@ internal class NavigationDrawerItemDrawable
             TransY = y,
             Persp2 = 1f
         };
-        canvas.DrawPicture(this.view.Image, ref matrix, paint);
+        canvas.DrawPicture(this.view.IconSource, ref matrix, paint);
         canvas.Restore();
     }
 

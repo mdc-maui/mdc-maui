@@ -1,9 +1,6 @@
-using Material.Components.Maui.Components.Core;
 using Material.Components.Maui.Converters;
-using Material.Components.Maui.Core;
 using Microsoft.Maui.Animations;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Topten.RichTextKit;
 using IButton = Material.Components.Maui.Core.IButton;
 
@@ -13,6 +10,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
 {
     #region interface
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -28,6 +26,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             ControlState.Normal => "normal",
@@ -37,11 +36,18 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -54,6 +60,8 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextBlock TextBlock { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
     public string Text
     {
@@ -83,25 +91,57 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
 
     void ITextElement.OnTextBlockChanged()
     {
-        this.AllocateSize(this.MeasureOverride(this.widthConstraint, this.heightConstraint));
-        this.InvalidateSurface();
+        var oldSize = this.DesiredSize;
+        this.SendInvalidateMeasure();
+        if (oldSize == this.DesiredSize)
+        {
+            this.OnPropertyChanged();
+        }
     }
 
     #endregion
-    #region IImageElement
-    public static readonly BindableProperty IconProperty = ImageElement.IconProperty;
-    public static readonly BindableProperty ImageProperty = ImageElement.ImageProperty;
+    #region IIconElement
+    public static readonly BindableProperty IconProperty = BindableProperty.Create(
+        nameof(IIconElement.Icon),
+        typeof(IconKind),
+        typeof(IIconElement),
+        IconKind.None,
+        propertyChanged: OnIconChanged
+    );
+    public static readonly BindableProperty IconSourceProperty = BindableProperty.Create(
+        nameof(IIconElement.IconSource),
+        typeof(SKPicture),
+        typeof(IIconElement),
+        null,
+        propertyChanged: OnIconChanged
+    );
     public IconKind Icon
     {
         get => (IconKind)this.GetValue(IconProperty);
         set => this.SetValue(IconProperty, value);
     }
 
-    [System.ComponentModel.TypeConverter(typeof(ImageConverter))]
-    public SKPicture Image
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
     {
-        get => (SKPicture)this.GetValue(ImageProperty);
-        set => this.SetValue(ImageProperty, value);
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
+    }
+
+    private static void OnIconChanged(BindableObject bo, object oldValue, object newValue)
+    {
+        var btn = bo as Button;
+        if (
+            (newValue is IconKind && (oldValue is IconKind.None || newValue is IconKind.None))
+            || (newValue is SKPicture && (oldValue is null || newValue is null))
+        )
+        {
+            btn.SendInvalidateMeasure();
+        }
+        else
+        {
+            (bo as Button).OnPropertyChanged();
+        }
     }
     #endregion
 
@@ -115,6 +155,8 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
         get => (Color)this.GetValue(ForegroundColorProperty);
         set => this.SetValue(ForegroundColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float ForegroundOpacity
     {
         get => (float)this.GetValue(ForegroundOpacityProperty);
@@ -132,6 +174,8 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
@@ -156,6 +200,8 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float OutlineOpacity
     {
         get => (float)this.GetValue(OutlineOpacityProperty);
@@ -191,6 +237,8 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float StateLayerOpacity
     {
         get => (float)this.GetValue(StateLayerOpacityProperty);
@@ -226,28 +274,11 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
     #endregion
     #endregion
 
-    [AutoBindable(
-        DefaultValue = "Microsoft.Maui.TextAlignment.Center",
-        OnChanged = nameof(OnPropertyChanged)
-    )]
-    private readonly TextAlignment horizontalTextAlignment;
-
-    [AutoBindable(
-        DefaultValue = "Microsoft.Maui.TextAlignment.Center",
-        OnChanged = nameof(OnPropertyChanged)
-    )]
-    private readonly TextAlignment verticalTextAlignment;
-
     private readonly MixedButtonDrawable drawable;
     private IAnimationManager animationManager;
 
-    private double widthConstraint = double.PositiveInfinity;
-    private double heightConstraint = double.PositiveInfinity;
-
     public Button()
     {
-        this.EnableTouchEvents = true;
-        this.IgnorePixelScaling = true;
         this.Clicked += (sender, e) => this.Command?.Execute(this.CommandParameter ?? e);
         this.drawable = new MixedButtonDrawable(this);
     }
@@ -268,7 +299,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
                     this.InvalidateSurface();
                 },
                 duration: 0.35f,
-                easing: Easing.SinInOut,
+                easing: Easing.Linear,
                 finished: () =>
                 {
                     if (this.ControlState != ControlState.Pressed)
@@ -300,7 +331,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
                 this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
             ) - this.Padding.VerticalThickness;
         var textScale = this.FontSize / 14f;
-        var iconSize = this.Icon != IconKind.None || this.Image != null ? 18d * textScale : 0d;
+        var iconSize = this.Icon != IconKind.None || this.IconSource != null ? 18d * textScale : 0d;
         this.TextBlock.MaxWidth = (float)(maxWidth - 48d * textScale - iconSize);
         this.TextBlock.MaxHeight = (float)maxHeight;
         var width =
@@ -328,16 +359,8 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
                             ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight + 22d * textScale)
                             : this.HeightRequest
                     );
-        var result = new Size(Math.Ceiling(width), Math.Ceiling(height));
-        this.DesiredSize = result;
-        return result;
-    }
-
-    protected override Size ArrangeOverride(Rect bounds)
-    {
-        this.widthConstraint = bounds.Width;
-        this.heightConstraint = bounds.Height;
-        return base.ArrangeOverride(bounds);
+        this.DesiredSize = new Size(Math.Ceiling(width), Math.Ceiling(height));
+        return this.DesiredSize;
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -5,13 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
     <md:Card
-        Padding="24"
         BackgroundColour="{DynamicResource SurfaceColor}"
         Elevation="3"
         EnableTouchEvents="False"
         Shape="28"
         WidthRequest="350">
-        <Grid RowDefinitions="auto,auto,auto">
+        <Grid RowDefinitions="auto,auto,auto" 
+        Padding="24">
             <md:Label FontSize="24" Text="Base dialog title" />
             <md:Label
                 Grid.Row="1"

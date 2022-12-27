@@ -13,6 +13,7 @@ public partial class Dialog : Popup
     {
         this.Close("Cancel");
     }
+
     private void Confirm_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
     {
         this.Close("Confirm");

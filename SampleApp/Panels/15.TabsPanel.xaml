@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SampleApp.Panels.TabsPanel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    BackgroundColor="{DynamicResource BackgroundColor}">
+
+    <Grid RowDefinitions="*,*" RowSpacing="30">
+        <md:Tabs Grid.Row="0">
+            <md:TabItem Icon="Add" Text="item 1">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 1" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 2">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 2" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 3">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 3" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 4">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 4" />
+                </md:FillGrid>
+            </md:TabItem>
+        </md:Tabs>
+
+        <md:Tabs Grid.Row="1" Style="{DynamicResource ScrollTabsStyle}">
+            <md:TabItem Icon="Add" Text="item 1">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 1" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 2">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 2" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 3">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 3" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 4">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 4" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 5">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 5" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 6">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 6" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 7">
+                <md:FillGrid>
+                    <md:Label FontSize="32" Text="Item 7" />
+                </md:FillGrid>
+            </md:TabItem>
+            <md:TabItem Icon="Add" Text="item 8">
+                <md:FillGrid>
+                    <md:Button Clicked="Button_Clicked" Text="111"/>
+                </md:FillGrid>
+            </md:TabItem>
+        </md:Tabs>
+    </Grid>
+</ContentView>

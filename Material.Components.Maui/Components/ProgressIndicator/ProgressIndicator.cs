@@ -1,5 +1,5 @@
-﻿using Material.Components.Maui.Core;
-using Microsoft.Maui.Animations;
+﻿using Microsoft.Maui.Animations;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;
@@ -7,6 +7,7 @@ namespace Material.Components.Maui;
 public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
 {
     #region IView
+    private bool isVisualStateChanging;
     private ControlState controlState = ControlState.Normal;
     public ControlState ControlState
     {
@@ -20,16 +21,21 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
 
     protected override void ChangeVisualState()
     {
+        this.isVisualStateChanging = true;
         var state = this.ControlState switch
         {
             _ => "normal",
         };
         VisualStateManager.GoToState(this, state);
+        this.isVisualStateChanging = false;
     }
 
     public void OnPropertyChanged()
     {
-        this.InvalidateSurface();
+        if (this.Handler != null && !this.isVisualStateChanging)
+        {
+            this.InvalidateSurface();
+        }
     }
     #endregion
 
@@ -43,6 +49,8 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
         get => (Color)this.GetValue(BackgroundColourProperty);
         set => this.SetValue(BackgroundColourProperty, value);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public float BackgroundOpacity
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);

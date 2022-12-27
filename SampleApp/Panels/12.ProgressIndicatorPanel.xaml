@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SampleApp.Panels.ProgressIndicatorPanel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="{DynamicResource BackgroundColor}"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+
+    <ContentView.Resources>
+        <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style
+            x:Key="Title"
+            BasedOn="{StaticResource DefaultLabelStyle}"
+            TargetType="md:Label">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="600" />
+        </Style>
+    </ContentView.Resources>
+
+    <VerticalStackLayout
+        Padding="25"
+        HorizontalOptions="Start"
+        Spacing="30">
+        <md:Label Text="Circular" />
+        <HorizontalStackLayout Spacing="20">
+            <md:ProgressIndicator />
+            <md:ProgressIndicator Percent="33" />
+            <md:ProgressIndicator Percent="66" />
+            <md:ProgressIndicator Percent="100" />
+        </HorizontalStackLayout>
+        <md:Label Text="Linear" />
+        <VerticalStackLayout Spacing="35">
+            <md:ProgressIndicator Style="{DynamicResource LinearProgressIndicatorStyle}" />
+            <md:ProgressIndicator Percent="33" Style="{DynamicResource LinearProgressIndicatorStyle}" />
+            <md:ProgressIndicator Percent="66" Style="{DynamicResource LinearProgressIndicatorStyle}" />
+            <md:ProgressIndicator Percent="100" Style="{DynamicResource LinearProgressIndicatorStyle}" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

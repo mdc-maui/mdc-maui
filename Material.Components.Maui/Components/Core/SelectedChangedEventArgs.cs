@@ -1,4 +1,4 @@
-﻿namespace Material.Components.Maui.Components.Core;
+﻿namespace Material.Components.Maui.Core;
 
 public class SelectedChangedEventArgs : EventArgs
 {

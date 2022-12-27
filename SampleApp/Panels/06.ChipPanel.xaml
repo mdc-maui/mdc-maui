@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="SampleApp.Panels.ChipPanel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    xmlns:views="clr-namespace:SampleApp.Views"
+    xmlns:vm="clr-namespace:SampleApp.ViewModels"
+    BackgroundColor="{DynamicResource BackgroundColor}">
+
+    <ContentView.BindingContext>
+        <vm:ChipVM />
+    </ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style
+            x:Key="Title"
+            BasedOn="{StaticResource DefaultLabelStyle}"
+            TargetType="md:Label">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="600" />
+        </Style>
+    </ContentView.Resources>
+
+    <ScrollView Padding="30,20">
+        <VerticalStackLayout x:Name="Stack" Spacing="15">
+            <md:Label Style="{DynamicResource Title}" Text="Styles" />
+            <md:Label Text="There are 7 styles of chips: 1. Assist,  2. AssistElevated,  3. Filter,  4. FilterElevated 5. Input,  6. Suggestion,  7. SuggestionElevated." />
+            <md:WrapLayout Padding="20" HorizontalSpacing="20">
+                <md:Chip
+                    Icon="Add"
+                    Style="{DynamicResource AssistChipStyle}"
+                    Text="chip" />
+                <md:Chip
+                    Icon="Add"
+                    Style="{DynamicResource AssistElevatedChipStyle}"
+                    Text="chip" />
+                <md:Chip
+                    Clicked="Chip_Clicked"
+                    Style="{DynamicResource FilterChipStyle}"
+                    Text="chip" />
+                <md:Chip
+                    Clicked="Chip_Clicked"
+                    Style="{DynamicResource FilterElevatedChipStyle}"
+                    Text="chip" />
+                <md:Chip
+                    Icon="Add"
+                    Style="{DynamicResource InputChipStyle}"
+                    Text="chip" />
+                <md:Chip
+                    Icon="Add"
+                    Style="{DynamicResource SuggestionChipStyle}"
+                    Text="chip" />
+                <md:Chip
+                    Icon="Add"
+                    Style="{DynamicResource SuggestionElevatedChipStyle}"
+                    Text="chip" />
+            </md:WrapLayout>
+
+            <md:Label Style="{DynamicResource Title}" Text="Properties" />
+            <views:PropertyDescribes BindableLayout.ItemsSource="{Binding Describes}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

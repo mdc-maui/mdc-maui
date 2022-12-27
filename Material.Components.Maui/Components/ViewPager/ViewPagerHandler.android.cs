@@ -1,5 +1,4 @@
-﻿using AndroidX.Fragment.App;
-using Material.Components.Maui.Components.Core;
+﻿using Material.Components.Maui.Components.Core;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using static Android.Views.ViewGroup;
@@ -10,26 +9,25 @@ namespace Material.Components.Maui.Core;
 
 public partial class ViewPagerHandler : ViewHandler<MViewPager, AViewPager>
 {
-    private readonly List<Android.Views.View> items = new();
+    private PageAdapter adapter;
     private bool hasAnimation;
 
     protected override AViewPager CreatePlatformView()
     {
+        this.adapter = new PageAdapter(this.Context.GetFragmentManager(), this.MauiContext);
         var platformView = new AViewPager(this.Context)
         {
             LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent),
             UserInputEnabled = true,
             Orientation = AViewPager.OrientationHorizontal,
-            Adapter = new PageAdapter(this.Context.GetActivity() as FragmentActivity, this.items),
+            Adapter = adapter,
         };
 
         platformView.RegisterOnPageChangeCallback(
-            new OnPageChangeCallback(
-                (positon) =>
-                {
-                    this.VirtualView.SelectedIndex = positon;
-                }
-            )
+            new OnPageChangeCallback(positon =>
+            {
+                this.VirtualView.SelectedIndex = positon;
+            })
         );
         return platformView;
     }
@@ -49,19 +47,19 @@ public partial class ViewPagerHandler : ViewHandler<MViewPager, AViewPager>
         handler.hasAnimation = view.HasAnimation;
     }
 
-    internal static void AddItem(ViewPagerHandler handler, int index, Page item)
+    internal static void AddItem(ViewPagerHandler handler, int index, View item)
     {
-        handler.items.Insert(index, item.ToPlatform(handler.MauiContext));
+        handler.adapter.AddItem(index, item);
     }
 
     internal static void RemoveItem(ViewPagerHandler handler, int index)
     {
-        handler.items.RemoveAt(index);
+        handler.adapter.RemoveItem(index);
     }
 
     internal static void ClearItems(ViewPagerHandler handler)
     {
-        handler.items.Clear();
+        handler.adapter.ClearItems();
     }
 }
 

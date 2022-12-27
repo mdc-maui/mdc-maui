@@ -32,4 +32,64 @@
     <Color x:Key="InverseSurfaceColor" />
     <Color x:Key="InverseOnSurfaceColor" />
     <Color x:Key="InversePrimaryColor" />
+
+
+    <!--<Color x:Key="LightPrimaryColor" />
+    <Color x:Key="LightPrimaryContainerColor" />
+    <Color x:Key="LightSecondaryColor" />
+    <Color x:Key="LightSecondaryContainerColor" />
+    <Color x:Key="LightTertiaryColor" />
+    <Color x:Key="LightTertiaryContainerColor" />
+    <Color x:Key="LightSurfaceColor" />
+    <Color x:Key="LightSurfaceVariantColor" />
+    <Color x:Key="LightBackgroundColor" />
+    <Color x:Key="LightErrorColorColor" />
+    <Color x:Key="LightErrorContainerColor" />
+    <Color x:Key="LightOnPrimaryColor" />
+    <Color x:Key="LightOnPrimaryContainerColor" />
+    <Color x:Key="LightOnSecondaryColor" />
+    <Color x:Key="LightOnSecondaryContainerColor" />
+    <Color x:Key="LightOnTertiaryColor" />
+    <Color x:Key="LightOnTertiaryContainerColor" />
+    <Color x:Key="LightOnSurfaceColor" />
+    <Color x:Key="LightOnSurfaceVariantColor" />
+    <Color x:Key="LightOnErrorColor" />
+    <Color x:Key="LightOnErrorContainerColor" />
+    <Color x:Key="LightOnBackgroundColor" />
+    <Color x:Key="LightOutlineColor" />
+    <Color x:Key="LightShadowColor" />
+    <Color x:Key="LightSurfaceTintColor" />
+    <Color x:Key="LightInverseSurfaceColor" />
+    <Color x:Key="LightInverseOnSurfaceColor" />
+    <Color x:Key="LightInversePrimaryColor" />
+
+
+    <Color x:Key="DarkPrimaryColor" />
+    <Color x:Key="DarkPrimaryContainerColor" />
+    <Color x:Key="DarkSecondaryColor" />
+    <Color x:Key="DarkSecondaryContainerColor" />
+    <Color x:Key="DarkTertiaryColor" />
+    <Color x:Key="DarkTertiaryContainerColor" />
+    <Color x:Key="DarkSurfaceColor" />
+    <Color x:Key="DarkSurfaceVariantColor" />
+    <Color x:Key="DarkBackgroundColor" />
+    <Color x:Key="DarkErrorColorColor" />
+    <Color x:Key="DarkErrorContainerColor" />
+    <Color x:Key="DarkOnPrimaryColor" />
+    <Color x:Key="DarkOnPrimaryContainerColor" />
+    <Color x:Key="DarkOnSecondaryColor" />
+    <Color x:Key="DarkOnSecondaryContainerColor" />
+    <Color x:Key="DarkOnTertiaryColor" />
+    <Color x:Key="DarkOnTertiaryContainerColor" />
+    <Color x:Key="DarkOnSurfaceColor" />
+    <Color x:Key="DarkOnSurfaceVariantColor" />
+    <Color x:Key="DarkOnErrorColor" />
+    <Color x:Key="DarkOnErrorContainerColor" />
+    <Color x:Key="DarkOnBackgroundColor" />
+    <Color x:Key="DarkOutlineColor" />
+    <Color x:Key="DarkShadowColor" />
+    <Color x:Key="DarkSurfaceTintColor" />
+    <Color x:Key="DarkInverseSurfaceColor" />
+    <Color x:Key="DarkInverseOnSurfaceColor" />
+    <Color x:Key="DarkInversePrimaryColor" />-->
 </ResourceDictionary>

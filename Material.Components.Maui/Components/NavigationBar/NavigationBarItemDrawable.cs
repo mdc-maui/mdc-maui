@@ -51,10 +51,10 @@ internal class NavigationBarItemDrawable
     {
         var radii = new CornerRadius(0).GetRadii();
         var _bounds = new SKRect(
-            bounds.Left - 1,
-            bounds.Top - 1,
-            bounds.Right + 1,
-            bounds.Bottom + 1
+            bounds.Left,
+            bounds.Top,
+            bounds.Right ,
+            bounds.Bottom
         );
         canvas.DrawOverlayLayer(_bounds, Elevation.Level2, radii);
     }
@@ -76,7 +76,7 @@ internal class NavigationBarItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image != null || this.view.Icon is IconKind.None)
+        if (this.view.IconSource != null || this.view.Icon is IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -100,7 +100,7 @@ internal class NavigationBarItemDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.Image is null)
+        if (this.view.IconSource is null)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -111,7 +111,7 @@ internal class NavigationBarItemDrawable
                 SKBlendMode.SrcIn
             )
         };
-        var scale = 24 / this.view.Image.CullRect.Width;
+        var scale = 24 / this.view.IconSource.CullRect.Width;
         var x = (bounds.Width / 2) - 12;
         var y = this.view.HasLabel ? 16 : bounds.MidY - 12;
         var matrix = new SKMatrix
@@ -128,7 +128,7 @@ internal class NavigationBarItemDrawable
         }
         else
         {
-            canvas.DrawPicture(this.view.Image, ref matrix, paint);
+            canvas.DrawPicture(this.view.IconSource, ref matrix, paint);
         }
         canvas.Restore();
     }

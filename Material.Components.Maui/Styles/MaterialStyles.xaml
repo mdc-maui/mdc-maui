@@ -14,12 +14,14 @@
         <local:CardStyles />
         <local:ComboBoxStyles />
         <local:NavigationBarStyles />
+        <local:NavigationBarItemStyles />
         <local:FABStyles />
         <local:RadioButtonStyles />
         <local:ChipStyles />
         <local:LabelStyles />
         <local:ProgressIndicatorStyles />
         <local:TabsStyles />
+        <local:TabItemStyles />
         <local:ContextMenuStyles />
         <local:NavigationDrawerStyles />
         <local:NavigationDrawerItemStyles />

@@ -63,7 +63,7 @@ internal class ChipDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image != null || this.view.Icon == IconKind.None)
+        if (this.view.IconSource != null || this.view.Icon == IconKind.None)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -90,7 +90,7 @@ internal class ChipDrawable
 
     private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.Image == null)
+        if (this.view.IconSource == null)
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -101,7 +101,7 @@ internal class ChipDrawable
                 SKBlendMode.SrcIn
             )
         };
-        var svgBounds = this.view.Image.CullRect;
+        var svgBounds = this.view.IconSource.CullRect;
         var scale = 18 / svgBounds.Width;
         var x = bounds.Left + 8;
         var y = bounds.MidY - 9;
@@ -113,7 +113,7 @@ internal class ChipDrawable
             TransY = y,
             Persp2 = 1f
         };
-        canvas.DrawPicture(this.view.Image, ref matrix, paint);
+        canvas.DrawPicture(this.view.IconSource, ref matrix, paint);
         canvas.Restore();
     }
 
@@ -151,9 +151,7 @@ internal class ChipDrawable
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
         var leftPadding =
-            this.view.HasIcon && (this.view.Icon != IconKind.None || this.view.Image != null)
-                ? 34f
-                : 16f;
+            this.view.Icon != IconKind.None || this.view.IconSource != null ? 34f : 16f;
         var rightPadding = this.view.HasCloseIcon ? 34f : 16f;
         var x =
             leftPadding
