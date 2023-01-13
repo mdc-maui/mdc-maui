@@ -15,12 +15,4 @@ public partial class SplitViewHandler
     public SplitViewHandler(PropertyMapper mapper) : base(mapper) { }
 
     public SplitViewHandler() : base(Mapper) { }
-
-#if !ANDROID && !WINDOWS
-    private static void MapPane(ViewPagerHandler handler, SplitView view) { }
-
-    private static void MapContent(ViewPagerHandler handler, SplitView view) { }
-
-    private static void MapIsPaneOpen(SplitViewHandler handler, SplitView view) { }
-#endif
 }

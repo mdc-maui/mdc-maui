@@ -9,25 +9,15 @@ public partial class ViewPagerHandler
         new(ViewHandler.ViewMapper)
         {
             [nameof(MViewPager.SelectedIndex)] = MapSelectedIndex,
-            [nameof(MViewPager.UserInputEnabled)] = MapUserInputEnabled,
             [nameof(MViewPager.HasAnimation)] = MapHasAnimation,
+#if ANDROID
+            [nameof(MViewPager.UserInputEnabled)] = MapUserInputEnabled,
+#endif
         };
 
     public ViewPagerHandler(PropertyMapper mapper) : base(mapper) { }
 
     public ViewPagerHandler() : base(Mapper) { }
 
-#if !WINDOWS && !ANDROID
-    private static void MapSelectedIndex(ViewPagerHandler handler, MViewPager view) { }
 
-    private static void MapUserInputEnabled(ViewPagerHandler handler, MViewPager view) { }
-
-    private static void MapHasAnimation(ViewPagerHandler handler, MViewPager view) { }
-
-    internal static void AddItem(ViewPagerHandler handler, int index, Page item) { }
-
-    internal static void RemoveItem(ViewPagerHandler handler, int index) { }
-
-    internal static void ClearItems(ViewPagerHandler handler) { }
-#endif
 }
