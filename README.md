@@ -1,8 +1,9 @@
+
 # Material.Components.Maui
+[![version](https://img.shields.io/nuget/vpre/Material.Components.Maui?style=for-the-badge)](https://www.nuget.org/packages/Material.Components.Maui/0.1.0-beta) 
+[![downloads](https://img.shields.io/nuget/dt/Material.Components.Maui?style=for-the-badge)](https://www.nuget.org/packages/Material.Components.Maui/0.1.0-beta) 
 
 English | [中文](README_zh.md)
-
-Material You Components for .NET MAUI
 
 ![](assets/preview.png)
 
@@ -10,8 +11,7 @@ Material You Components for .NET MAUI
 
 ## Getting Started
 
-- Clone this repo and ref it to your maui project
-- Add UseMaterialComponents in your "MauiProgram.cs"
+- Add UseMaterialComponents in MauiProgram.cs
 
 ```C#
 using Material.Components.Maui.Extensions;
@@ -39,7 +39,7 @@ public static class MauiProgram
 }
 ```
 
-- Add Material colors&styles in  your "App.xaml"
+- Add Material colors & styles in App.xaml
 
 ```xaml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -90,7 +90,10 @@ public static class MauiProgram
 | SplitView | 😄 | 😄 |😭|
 | Switch | 😄 | 😄 |🤔|
 | Tabs | 😄 | 😄 |😭|
+| TextField | 😄 | 😄 |😭|
 | WrapLayout | 😄 | 😄 |🤔|
+
+
 
 ## Contributing
 
