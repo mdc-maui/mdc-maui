@@ -59,7 +59,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -89,7 +89,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
         var oldSize = this.DesiredSize;
         this.SendInvalidateMeasure();
@@ -332,8 +332,8 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
             ) - this.Padding.VerticalThickness;
         var textScale = this.FontSize / 14f;
         var iconSize = this.Icon != IconKind.None || this.IconSource != null ? 18d * textScale : 0d;
-        this.TextBlock.MaxWidth = (float)(maxWidth - 48d * textScale - iconSize);
-        this.TextBlock.MaxHeight = (float)maxHeight;
+        this.InternalText.MaxWidth = (float)(maxWidth - 48d * textScale - iconSize);
+        this.InternalText.MaxHeight = (float)maxHeight;
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill
                 ? maxWidth
@@ -344,7 +344,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
                         this.WidthRequest == -1
                             ? Math.Min(
                                 maxWidth,
-                                this.TextBlock.MeasuredWidth + 48d * textScale + iconSize
+                                this.InternalText.MeasuredWidth + 48d * textScale + iconSize
                             )
                             : this.WidthRequest
                     );
@@ -356,7 +356,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
                     + Math.Max(
                         this.MinimumHeightRequest,
                         this.HeightRequest == -1
-                            ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight + 22d * textScale)
+                            ? Math.Min(maxHeight, this.InternalText.MeasuredHeight + 22d * textScale)
                             : this.HeightRequest
                     );
         this.DesiredSize = new Size(Math.Ceiling(width), Math.Ceiling(height));

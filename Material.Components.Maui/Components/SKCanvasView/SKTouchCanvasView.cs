@@ -61,7 +61,8 @@ public partial class SKTouchCanvasView
     public event EventHandler<SKTouchEventArgs> Entered;
     public event EventHandler<SKTouchEventArgs> Exited;
 
-    private bool isPressing;
+    protected bool isPressing;
+    protected SKPoint PressLocation;
 
     private readonly IDispatcherTimer touchTimer;
     private SKTouchEventArgs touchEventArgs;
@@ -107,6 +108,7 @@ public partial class SKTouchCanvasView
                 this.touchTimer.Start();
                 this.Pressed?.Invoke(this, e);
             }
+            this.PressLocation = e.Location;
             this.isPressing = true;
             e.Handled = true;
             return;
@@ -136,9 +138,9 @@ public partial class SKTouchCanvasView
                         this.ContextMenu?.Show(this);
                     }
                 }
-                this.isPressing = false;
                 e.Handled = true;
             }
+            this.isPressing = false;
         }
         else if (e.ActionType == SKTouchAction.Moved)
         {
@@ -152,6 +154,7 @@ public partial class SKTouchCanvasView
         }
         else if (e.ActionType == SKTouchAction.Exited)
         {
+            //this.isPressing = false;
             this.Exited?.Invoke(this, e);
             e.Handled = true;
         }

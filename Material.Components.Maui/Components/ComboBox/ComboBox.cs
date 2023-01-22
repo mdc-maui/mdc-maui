@@ -1,3 +1,4 @@
+using Material.Components.Maui.Converters;
 using Microsoft.Maui.Animations;
 using System.Collections;
 using System.Collections.Specialized;
@@ -9,11 +10,11 @@ namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
 public partial class ComboBox
-    : TemplatedView,
+    : SKTouchCanvasView,
         IView,
         ITextElement,
+        ILabelTextElement,
         IBackgroundElement,
-        IForegroundElement,
         IShapeElement,
         IOutlineElement,
         IVisualTreeElement,
@@ -47,13 +48,16 @@ public partial class ComboBox
         };
         VisualStateManager.GoToState(this, state);
         this.isVisualStateChanging = false;
+
+        if (!this.IsFocused)
+            this.InvalidateSurface();
     }
 
     public void OnPropertyChanged()
     {
         if (this.Handler != null && !this.isVisualStateChanging)
         {
-            this.PART_Content?.InvalidateSurface();
+            this.InvalidateSurface();
         }
     }
     #endregion
@@ -66,10 +70,12 @@ public partial class ComboBox
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
+
+    [TypeConverter(typeof(RichStringConverter))]
     public string Text
     {
         get => (string)this.GetValue(TextProperty);
@@ -96,28 +102,19 @@ public partial class ComboBox
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
-        this.UpdateLabelTextBounds();
-    }
-    #endregion
+        if (this.LabelTextStyle.FontFamily != this.TextStyle.FontFamily)
+            this.LabelTextStyle.FontFamily = this.TextStyle.FontFamily;
+        if (this.LabelTextStyle.FontItalic != this.TextStyle.FontItalic)
+            this.LabelTextStyle.FontItalic = this.TextStyle.FontItalic;
 
-    #region IForegroundElement
-    public static readonly BindableProperty ForegroundColorProperty =
-        ForegroundElement.ForegroundColorProperty;
-    public static readonly BindableProperty ForegroundOpacityProperty =
-        ForegroundElement.ForegroundOpacityProperty;
-    public Color ForegroundColor
-    {
-        get => (Color)this.GetValue(ForegroundColorProperty);
-        set => this.SetValue(ForegroundColorProperty, value);
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float ForegroundOpacity
-    {
-        get => (float)this.GetValue(ForegroundOpacityProperty);
-        set => this.SetValue(ForegroundOpacityProperty, value);
+        var oldSize = this.DesiredSize;
+        this.SendInvalidateMeasure();
+        if (oldSize == this.DesiredSize)
+        {
+            this.OnPropertyChanged();
+        }
     }
     #endregion
 
@@ -137,6 +134,25 @@ public partial class ComboBox
     {
         get => (float)this.GetValue(BackgroundOpacityProperty);
         set => this.SetValue(BackgroundOpacityProperty, value);
+    }
+    #endregion
+
+    #region IForegroundElement
+    public static readonly BindableProperty ForegroundColorProperty =
+        ForegroundElement.ForegroundColorProperty;
+    public static readonly BindableProperty ForegroundOpacityProperty =
+        ForegroundElement.ForegroundOpacityProperty;
+    public Color ForegroundColor
+    {
+        get => (Color)this.GetValue(ForegroundColorProperty);
+        set => this.SetValue(ForegroundColorProperty, value);
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public float ForegroundOpacity
+    {
+        get => (float)this.GetValue(ForegroundOpacityProperty);
+        set => this.SetValue(ForegroundOpacityProperty, value);
     }
     #endregion
 
@@ -193,6 +209,36 @@ public partial class ComboBox
         set => this.SetValue(StateLayerOpacityProperty, value);
     }
     #endregion
+
+    #region ILabelTextElement
+    public static readonly BindableProperty LabelTextProperty = LabelTextElement.LabelTextProperty;
+    public static readonly BindableProperty LabelTextColorProperty =
+        LabelTextElement.LabelTextColorProperty;
+    public static readonly BindableProperty LabelTextOpacityProperty =
+        LabelTextElement.LabelTextOpacityProperty;
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public TextBlock InternalLabelText { get; set; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public TextStyle LabelTextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
+
+    public string LabelText
+    {
+        get => (string)this.GetValue(LabelTextProperty);
+        set => this.SetValue(LabelTextProperty, value);
+    }
+    public Color LabelTextColor
+    {
+        get => (Color)this.GetValue(LabelTextColorProperty);
+        set => this.SetValue(LabelTextColorProperty, value);
+    }
+    public float LabelTextOpacity
+    {
+        get => (float)this.GetValue(LabelTextOpacityProperty);
+        set => this.SetValue(LabelTextOpacityProperty, value);
+    }
+    #endregion
     #endregion
 
     private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
@@ -216,17 +262,8 @@ public partial class ComboBox
     [AutoBindable(DefaultValue = "-1", OnChanged = nameof(OnSelectedIndexChanged))]
     private readonly int selectedIndex;
 
-    [AutoBindable(DefaultValue = "TextFieldStyle.Filled", OnChanged = nameof(OnPropertyChanged))]
-    private readonly TextFieldStyle textFieldStyle;
-
-    [AutoBindable(DefaultValue = "Label text", OnChanged = nameof(UpdateLabelTextBounds))]
-    private readonly string labelText;
-
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
-    private readonly Color labelTextColor;
-
-    [AutoBindable(DefaultValue = "1f", OnChanged = nameof(OnPropertyChanged))]
-    private readonly float labelTextOpacity;
+    private readonly bool isOutline;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
     private readonly int activeIndicatorHeight;
@@ -262,7 +299,7 @@ public partial class ComboBox
             {
                 for (int i = e.OldStartingIndex; i < this.Items.Count; i++)
                 {
-                    if (this.Items[i].Text == item.ToString())
+                    if (this.Items[i].Text.ToString() == item.ToString())
                     {
                         this.Items.RemoveAt(i);
                         break;
@@ -276,7 +313,7 @@ public partial class ComboBox
             {
                 for (int i = e.OldStartingIndex; i < this.Items.Count; i++)
                 {
-                    if (this.Items[i].Text == e.OldItems[j].ToString())
+                    if (this.Items[i].Text.ToString() == e.OldItems[j].ToString())
                     {
                         this.Items[i] = new ComboBoxItem { Text = e.NewItems[j].ToString() };
                         break;
@@ -313,14 +350,6 @@ public partial class ComboBox
         }
     }
 
-    private void UpdateLabelTextBounds()
-    {
-        var style = this.TextStyle.Modify(fontSize: this.TextStyle.FontSize - 4);
-        this.LabelTextBlock.Clear();
-        this.LabelTextBlock.AddText(this.LabelText, style);
-        this.PART_Content?.InvalidateSurface();
-    }
-
     [AutoBindable]
     private readonly ICommand command;
 
@@ -330,17 +359,17 @@ public partial class ComboBox
     public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
 
     internal bool IsDropDown { get; set; } = false;
-    internal TextBlock LabelTextBlock { get; private set; } = new();
-    internal float PlaceholderAnimationPercent { get; private set; } = 1f;
-
-    private ContextMenu PART_Menu;
-    private SKTouchCanvasView PART_Content;
+    internal float LabelTextAnimationPercent { get; private set; } = 1f;
 
     private readonly ComboBoxDrawable drawable;
     private IAnimationManager animationManager;
 
     public ComboBox()
     {
+        this.Clicked += this.OnClicked;
+        this.ContextMenu = new ContextMenu { VisibleItemCount = 5 };
+        this.ContextMenu.Closed += this.OnMenuClosed;
+
         this.Items.OnAdded += this.OnItemsAdded;
         this.Items.OnRemoved += this.OnItemsRemoved;
         this.Items.OnCleared += this.OnItemsCleared;
@@ -361,16 +390,16 @@ public partial class ComboBox
             new Microsoft.Maui.Animations.Animation(
                 callback: (progress) =>
                 {
-                    this.PlaceholderAnimationPercent = start.Lerp(end, progress);
-                    this.PART_Content.InvalidateSurface();
+                    this.LabelTextAnimationPercent = start.Lerp(end, progress);
+                    this.InvalidateSurface();
                 },
-                duration: 0.25f,
+                duration: 0.5f,
                 easing: Easing.SinInOut
             )
         );
     }
 
-    private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
+    protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
     {
         var bounds = new SKRect(
             e.Info.Rect.Left,
@@ -381,71 +410,63 @@ public partial class ComboBox
         this.drawable.Draw(e.Surface.Canvas, bounds);
     }
 
+    private void OnClicked(object sender, SKTouchEventArgs e)
+    {
+        if (!this.IsDropDown)
+        {
+            this.IsDropDown = true;
+            if (this.SelectedIndex == -1)
+            {
+                this.LabelTextAnimationPercent = 0f;
+                this.ControlState = ControlState.Pressed;
+                this.StartLabelTextAnimation();
+            }
+            else
+                this.ControlState = ControlState.Pressed;
+            this.ContextMenu.Show(this);
+        }
+        else
+        {
+            this.ContextMenu.Close();
+        }
+    }
+
+    private void OnMenuClosed(object sender, object e)
+    {
+        if (this.ContextMenu.Result is int result)
+        {
+            if (result != this.SelectedIndex)
+            {
+                this.SelectedIndex = result;
+                this.SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(result));
+            }
+        }
+        this.IsDropDown = false;
+        if (this.SelectedIndex == -1)
+        {
+            this.LabelTextAnimationPercent = 0f;
+            this.ControlState = ControlState.Normal;
+            this.StartLabelTextAnimation();
+        }
+        else
+            this.ControlState = ControlState.Normal;
+    }
+
     private void OnItemsAdded(object sender, ItemsChangedEventArgs<ComboBoxItem> e)
     {
         var index = e.Index;
         var item = this.Items[index];
-        this.PART_Menu.Items.Insert(index, item);
+        this.ContextMenu.Items.Insert(index, item);
     }
 
     private void OnItemsRemoved(object sender, ItemsChangedEventArgs<ComboBoxItem> e)
     {
-        this.PART_Menu.Items.RemoveAt(e.Index);
+        this.ContextMenu.Items.RemoveAt(e.Index);
     }
 
     private void OnItemsCleared(object sender, EventArgs e)
     {
-        this.PART_Menu.Items.Clear();
-    }
-
-    protected override void OnApplyTemplate()
-    {
-        base.OnApplyTemplate();
-        this.PART_Content = (SKTouchCanvasView)this.GetTemplateChild("PART_Content");
-
-        this.PART_Content.Clicked += (sender, e) =>
-        {
-            if (!this.IsDropDown)
-            {
-                this.IsDropDown = true;
-                this.ControlState = ControlState.Pressed;
-                this.StartLabelTextAnimation();
-                this.PART_Menu.Show(this);
-            }
-            else
-            {
-                this.PART_Menu?.Close();
-            }
-        };
-
-        this.PART_Content.PaintSurface += this.OnPaintSurface;
-
-        this.PART_Menu = new ContextMenu { VisibleItemCount = 5 };
-        this.PART_Menu.Closed += (sender, e) =>
-        {
-            if (this.PART_Menu.Result is int result)
-            {
-                if (result != this.SelectedIndex)
-                {
-                    this.SelectedIndex = result;
-                    this.SelectedIndexChanged?.Invoke(
-                        this,
-                        new SelectedIndexChangedEventArgs(result)
-                    );
-                }
-            }
-            this.IsDropDown = false;
-            this.ControlState = ControlState.Normal;
-            if (this.SelectedIndex == -1)
-            {
-                this.StartLabelTextAnimation();
-            }
-        };
-
-        this.OnChildAdded(this.PART_Content);
-        this.OnChildAdded(this.PART_Menu);
-        VisualDiagnostics.OnChildAdded(this, this.PART_Content);
-        VisualDiagnostics.OnChildAdded(this, this.PART_Menu);
+        this.ContextMenu.Items.Clear();
     }
 
     protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -457,14 +478,7 @@ public partial class ComboBox
         }
         else if (propertyName == "Width")
         {
-            this.PART_Menu.WidthRequest = this.Width;
+            this.ContextMenu.WidthRequest = this.Width;
         }
     }
-
-    IReadOnlyList<IVisualTreeElement> IVisualTreeElement.GetVisualChildren() =>
-        this.PART_Content is null
-            ? Enumerable.Empty<IVisualTreeElement>().ToList()
-            : new List<IVisualTreeElement> { this.PART_Content, this.PART_Menu };
-
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
 }

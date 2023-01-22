@@ -72,8 +72,8 @@ internal class RadioButtonItemDrawable
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
         var x = bounds.Left + 40;
-        var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+        var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2);
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 

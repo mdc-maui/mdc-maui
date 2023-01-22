@@ -141,9 +141,9 @@ internal class NavigationBarItemDrawable
         this.view.TextStyle.TextColor = this.view.ForegroundColor
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
-        var x = bounds.MidX - (this.view.TextBlock.MeasuredWidth / 2);
-        var y = 48 + ((16 - this.view.TextBlock.MeasuredHeight) / 2);
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+        var x = bounds.MidX - (this.view.InternalText.MeasuredWidth / 2);
+        var y = 48 + ((16 - this.view.InternalText.MeasuredHeight) / 2);
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 

@@ -1,6 +1,4 @@
-﻿using Topten.RichTextKit;
-
-namespace Material.Components.Maui.Core;
+﻿namespace Material.Components.Maui.Core;
 
 internal class ComboBoxDrawable
 {
@@ -17,9 +15,9 @@ internal class ComboBoxDrawable
         this.DrawBackground(canvas, bounds);
         this.DrawOutline(canvas, bounds);
         this.DrawLabelText(canvas, bounds);
-        this.DrawIcon(canvas, bounds);
+        this.DrawDrapIcon(canvas, bounds);
         this.DrawActiveIndicator(canvas, bounds);
-        this.DrawSelectedItem(canvas, bounds);
+        this.DrawText(canvas, bounds);
     }
 
     private void DrawBackground(SKCanvas canvas, SKRect bounds)
@@ -31,7 +29,7 @@ internal class ComboBoxDrawable
 
     private void DrawOutline(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.OutlineWidth is 0)
+        if (this.view.OutlineWidth == 0)
             return;
         canvas.Save();
         var color = this.view.OutlineColor.MultiplyAlpha(this.view.OutlineOpacity);
@@ -40,16 +38,20 @@ internal class ComboBoxDrawable
         canvas.DrawOutline(bounds, color, width, radii);
         canvas.Restore();
 
-        if (this.view.TextFieldStyle is TextFieldStyle.Outlined)
+        if (this.view.IsOutline)
         {
-            if (this.view.SelectedIndex != -1 || this.view.IsDropDown)
+            if (
+                (this.view.IsDropDown && this.view.LabelTextAnimationPercent > 0.5f)
+                || (!this.view.IsDropDown && this.view.LabelTextAnimationPercent < 0.5f)
+                || (this.view.SelectedIndex != -1)
+            )
             {
                 canvas.Save();
                 canvas.ClipRect(
                     new SKRect(
                         bounds.Left + 12,
                         bounds.Top,
-                        bounds.Left + this.view.LabelTextBlock.MeasuredWidth + 20,
+                        bounds.Left + this.view.InternalLabelText.MeasuredWidth + 20,
                         bounds.Top + width
                     )
                 );
@@ -59,7 +61,7 @@ internal class ComboBoxDrawable
         }
     }
 
-    private void DrawIcon(SKCanvas canvas, SKRect bounds)
+    private void DrawDrapIcon(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
         var paint = new SKPaint
@@ -94,25 +96,24 @@ internal class ComboBoxDrawable
     private void DrawLabelText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        var percent = this.view.PlaceholderAnimationPercent;
-        if (this.view.SelectedIndex != -1 || this.view.IsDropDown)
-        {
-            percent = 1 - this.view.PlaceholderAnimationPercent;
-        }
-        var style = this.view.TextStyle.Modify(
-            fontSize: this.view.TextStyle.FontSize - ((1 - percent) * 4),
-            textColor: this.view.LabelTextColor
-                .MultiplyAlpha(this.view.LabelTextOpacity)
-                .ToSKColor()
-        );
-        var tb = new TextBlock();
-        tb.AddText(this.view.LabelText, style);
-        var y =
-            this.view.TextFieldStyle is TextFieldStyle.Outlined
-                ? ((16 - this.view.LabelTextBlock.MeasuredHeight) / 2)
-                : bounds.Top + 8;
-        var offsetY = (bounds.MidY - (tb.MeasuredHeight / 2) - y) * percent;
-        tb.Paint(canvas, new SKPoint(bounds.Left + 16, y + offsetY));
+        var percent =
+            this.view.SelectedIndex != -1 || this.view.IsDropDown
+                ? 1 - this.view.LabelTextAnimationPercent
+                : this.view.LabelTextAnimationPercent;
+
+        this.view.LabelTextStyle.FontSize =
+            this.view.TextStyle.FontSize - ((1f - percent) * this.view.TextStyle.FontSize * 0.25f);
+        this.view.LabelTextStyle.TextColor = this.view.LabelTextColor
+            .MultiplyAlpha(this.view.LabelTextOpacity)
+            .ToSKColor();
+        this.view.InternalLabelText.Clear();
+        this.view.InternalLabelText.AddText(this.view.LabelText, this.view.LabelTextStyle);
+        var y = this.view.IsOutline
+            ? ((16 - this.view.InternalLabelText.MeasuredHeight) / 2 + 1)
+            : bounds.Top + 8;
+        var offsetY =
+            (bounds.MidY - (this.view.InternalLabelText.MeasuredHeight / 2) - y) * percent;
+        this.view.InternalLabelText.Paint(canvas, new SKPoint(bounds.Left + 16, y + offsetY));
         canvas.Restore();
     }
 
@@ -134,19 +135,15 @@ internal class ComboBoxDrawable
         canvas.Restore();
     }
 
-    private void DrawSelectedItem(SKCanvas canvas, SKRect bounds)
+    private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         if (this.view.SelectedIndex is -1)
             return;
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
-        var y =
-            this.view.TextFieldStyle is TextFieldStyle.Outlined
-                ? bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2)
-                : bounds.Bottom - 8 - this.view.TextBlock.MeasuredHeight;
-        this.view.TextBlock.Paint(canvas, new SKPoint(bounds.Left + 16, y));
+        var y = this.view.IsOutline
+            ? bounds.MidY - (this.view.InternalText.MeasuredHeight / 2)
+            : bounds.Bottom - 8 - this.view.InternalText.MeasuredHeight;
+        this.view.InternalText.Paint(canvas, new SKPoint(bounds.Left + 16, y));
         canvas.Restore();
     }
 }

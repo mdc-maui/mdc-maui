@@ -70,7 +70,7 @@ public partial class Chip
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -100,7 +100,7 @@ public partial class Chip
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
         var oldSize = this.DesiredSize;
         this.SendInvalidateMeasure();
@@ -382,14 +382,14 @@ public partial class Chip
         var iconWidth =
             (this.HasCloseIcon ? 18d : 0d)
             + (this.Icon != IconKind.None || this.IconSource != null ? 18d : 0d);
-        this.TextBlock.MaxWidth = (float)(maxWidth - 32d - iconWidth);
-        this.TextBlock.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
+        this.InternalText.MaxWidth = (float)(maxWidth - 32d - iconWidth);
+        this.InternalText.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
         var width =
             this.Margin.HorizontalThickness
             + Math.Max(
                 this.MinimumWidthRequest,
                 this.WidthRequest is -1
-                    ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 32d + iconWidth)
+                    ? Math.Min(maxWidth, this.InternalText.MeasuredWidth + 32d + iconWidth)
                     : this.WidthRequest
             );
         var height =

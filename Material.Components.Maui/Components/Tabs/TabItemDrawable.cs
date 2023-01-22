@@ -109,11 +109,11 @@ internal class TabItemDrawable
         this.view.TextStyle.TextColor = this.view.ForegroundColor
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
-        var x = bounds.MidX - (this.view.TextBlock.MeasuredWidth / 2);
+        var x = bounds.MidX - (this.view.InternalText.MeasuredWidth / 2);
         var y = this.view.HasIcon
-            ? 36 + ((25 - this.view.TextBlock.MeasuredHeight) / 2)
-            : bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+            ? 36 + ((25 - this.view.InternalText.MeasuredHeight) / 2)
+            : bounds.MidY - (this.view.InternalText.MeasuredHeight / 2);
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 

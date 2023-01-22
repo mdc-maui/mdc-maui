@@ -2,15 +2,15 @@
 
 namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface ITextElement
+internal interface ITextElement : IForegroundElement
 {
     string Text { get; set; }
-    TextBlock TextBlock { get; set; }
+    TextBlock InternalText { get; set; }
     TextStyle TextStyle { get; set; }
     string FontFamily { get; set; }
     float FontSize { get; set; }
     int FontWeight { get; set; }
     bool FontItalic { get; set; }
 
-    void OnTextBlockChanged();
+    void OnChanged();
 }

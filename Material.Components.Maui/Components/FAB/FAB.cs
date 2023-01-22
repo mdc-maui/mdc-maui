@@ -68,7 +68,7 @@ public partial class FAB
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -98,7 +98,7 @@ public partial class FAB
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
         var oldSize = this.DesiredSize;
         this.SendInvalidateMeasure();
@@ -325,8 +325,8 @@ public partial class FAB
                 : this.FABType is FABType.Small
                     ? 8d
                     : 30d;
-        this.TextBlock.MaxWidth = (float)(maxWidth - blankWidth - defaultSize);
-        this.TextBlock.MaxHeight = (float)defaultSize;
+        this.InternalText.MaxWidth = (float)(maxWidth - blankWidth - defaultSize);
+        this.InternalText.MaxHeight = (float)defaultSize;
         var width =
             this.Margin.HorizontalThickness
             + Math.Max(
@@ -335,7 +335,7 @@ public partial class FAB
                     ? Math.Min(
                         maxWidth,
                         defaultSize
-                            + (this.IsExtended ? this.TextBlock.MeasuredWidth + blankWidth : 0d)
+                            + (this.IsExtended ? this.InternalText.MeasuredWidth + blankWidth : 0d)
                     )
                     : this.WidthRequest
             );

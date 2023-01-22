@@ -48,7 +48,7 @@ internal class MixedButtonDrawable : ButtonDrawable
         var iconScale = 18f / 24f * textScale;
         var x =
             bounds.MidX
-            - (this.view.TextBlock.MeasuredWidth + (18f + 48f) * textScale) / 2f
+            - (this.view.InternalText.MeasuredWidth + (18f + 48f) * textScale) / 2f
             + 16f * textScale;
         var y = bounds.MidY - 9f * textScale;
         var matrix = new SKMatrix
@@ -81,7 +81,7 @@ internal class MixedButtonDrawable : ButtonDrawable
         var iconScale = 18f / svgBounds.Width * textScale;
         var x =
             bounds.MidX
-            - (this.view.TextBlock.MeasuredWidth + (18f + 48f) * textScale) / 2f
+            - (this.view.InternalText.MeasuredWidth + (18f + 48f) * textScale) / 2f
             + 16f * textScale;
         var y = bounds.MidY - 9f * textScale;
         var matrix = new SKMatrix
@@ -106,11 +106,11 @@ internal class MixedButtonDrawable : ButtonDrawable
             this.view.Icon != IconKind.None || this.view.IconSource != null ? 18f * textScale : 0f;
         var x =
             bounds.MidX
-            - (this.view.TextBlock.MeasuredWidth + iconSize + 48f * textScale) / 2f
+            - (this.view.InternalText.MeasuredWidth + iconSize + 48f * textScale) / 2f
             + iconSize
             + 24f * textScale;
-        var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2f);
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+        var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2f);
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 }

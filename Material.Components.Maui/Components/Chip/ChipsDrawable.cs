@@ -155,10 +155,10 @@ internal class ChipDrawable
         var rightPadding = this.view.HasCloseIcon ? 34f : 16f;
         var x =
             leftPadding
-            + (bounds.Width - leftPadding - rightPadding - this.view.TextBlock.MeasuredWidth) / 2;
+            + (bounds.Width - leftPadding - rightPadding - this.view.InternalText.MeasuredWidth) / 2;
         //var x = leftPadding + ((bounds.Right - leftPadding - rightPadding) / 2) - (this.view.TextBlock.MeasuredWidth / 2);
-        var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+        var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2);
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 

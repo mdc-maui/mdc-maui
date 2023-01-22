@@ -170,8 +170,8 @@ internal class CheckBoxDrawable
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
         var x = 40;
-        var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2);
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+        var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2);
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
 
         canvas.Restore();
     }

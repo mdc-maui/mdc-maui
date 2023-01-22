@@ -24,7 +24,7 @@ public partial class CheckBox
         set
         {
             this.controlState = value;
-            ChangeVisualState();
+            this.ChangeVisualState();
         }
     }
 
@@ -63,7 +63,7 @@ public partial class CheckBox
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -93,7 +93,7 @@ public partial class CheckBox
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
         var oldSize = this.DesiredSize;
         this.SendInvalidateMeasure();
@@ -278,8 +278,8 @@ public partial class CheckBox
             Math.Min(heightConstraint, this.MaximumHeightRequest),
             this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
         );
-        this.TextBlock.MaxWidth = (float)(maxWidth - 52d);
-        this.TextBlock.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
+        this.InternalText.MaxWidth = (float)(maxWidth - 52d);
+        this.InternalText.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
         var width =
             this.HorizontalOptions.Alignment is LayoutAlignment.Fill
                 ? maxWidth
@@ -291,7 +291,7 @@ public partial class CheckBox
                                 maxWidth,
                                 string.IsNullOrEmpty(this.Text)
                                     ? 40d
-                                    : this.TextBlock.MeasuredWidth + 52d
+                                    : this.InternalText.MeasuredWidth + 52d
                             )
                             : this.WidthRequest
                     );

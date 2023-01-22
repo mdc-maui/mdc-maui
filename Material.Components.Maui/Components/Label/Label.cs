@@ -62,7 +62,7 @@ public partial class Label
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -92,7 +92,7 @@ public partial class Label
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
         var oldSize = this.DesiredSize;
         this.SendInvalidateMeasure();
@@ -204,8 +204,8 @@ public partial class Label
                 Math.Min(heightConstraint, this.MaximumHeightRequest),
                 this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
             ) - this.Padding.VerticalThickness;
-        this.TextBlock.MaxWidth = (float)maxWidth;
-        this.TextBlock.MaxHeight = (float)maxHeight;
+        this.InternalText.MaxWidth = (float)maxWidth;
+        this.InternalText.MaxHeight = (float)maxHeight;
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill
                 ? maxWidth
@@ -214,7 +214,7 @@ public partial class Label
                     + Math.Max(
                         this.MinimumWidthRequest,
                         this.WidthRequest == -1
-                            ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth)
+                            ? Math.Min(maxWidth, this.InternalText.MeasuredWidth)
                             : this.WidthRequest
                     );
         var height =
@@ -225,7 +225,7 @@ public partial class Label
                     + Math.Max(
                         this.MinimumHeightRequest,
                         this.HeightRequest == -1
-                            ? Math.Min(maxHeight, this.TextBlock.MeasuredHeight)
+                            ? Math.Min(maxHeight, this.InternalText.MeasuredHeight)
                             : this.HeightRequest
                     );
         var result = new Size(Math.Ceiling(width), Math.Ceiling(height));

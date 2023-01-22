@@ -45,44 +45,44 @@ internal static class TextElement
     private static void OnTextChanged(BindableObject bo, object oldValue, object newValue)
     {
         var element = (ITextElement)bo;
-        element.TextBlock.Clear();
-        element.TextBlock.AddText(element.Text, element.TextStyle);
-        ((ITextElement)bo).OnTextBlockChanged();
+        element.InternalText.Clear();
+        element.InternalText.AddText(element.Text, element.TextStyle);
+        element.OnChanged();
     }
 
     private static void OnFontFamilyChanged(BindableObject bo, object oldValue, object newValue)
     {
         var element = (ITextElement)bo;
         element.TextStyle.FontFamily = (string)newValue;
-        element.TextBlock.Clear();
-        element.TextBlock.AddText(element.Text, element.TextStyle);
-        element.OnTextBlockChanged();
+        element.InternalText.Clear();
+        element.InternalText.AddText(element.Text, element.TextStyle);
+        element.OnChanged();
     }
 
     private static void OnFontSizeChanged(BindableObject bo, object oldValue, object newValue)
     {
         var element = (ITextElement)bo;
         element.TextStyle.FontSize = (float)newValue;
-        element.TextBlock.Clear();
-        element.TextBlock.AddText(element.Text, element.TextStyle);
-        element.OnTextBlockChanged();
+        element.InternalText.Clear();
+        element.InternalText.AddText(element.Text, element.TextStyle);
+        element.OnChanged();
     }
 
     private static void OnFontWeightChanged(BindableObject bo, object oldValue, object newValue)
     {
         var element = (ITextElement)bo;
         element.TextStyle.FontWeight = (int)newValue;
-        element.TextBlock.Clear();
-        element.TextBlock.AddText(element.Text, element.TextStyle);
-        element.OnTextBlockChanged();
+        element.InternalText.Clear();
+        element.InternalText.AddText(element.Text, element.TextStyle);
+        element.OnChanged();
     }
 
     private static void OnFontItalicChanged(BindableObject bo, object oldValue, object newValue)
     {
         var element = (ITextElement)bo;
         element.TextStyle.FontItalic = (bool)newValue;
-        element.TextBlock.Clear();
-        element.TextBlock.AddText(element.Text, element.TextStyle);
-        element.OnTextBlockChanged();
+        element.InternalText.Clear();
+        element.InternalText.AddText(element.Text, element.TextStyle);
+        element.OnChanged();
     }
 }

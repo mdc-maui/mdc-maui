@@ -36,17 +36,17 @@ internal class LabelDrawable
             .ToSKColor();
         var x = this.view.HorizontalTextAlignment switch
         {
-            TextAlignment.Center => bounds.MidX - (this.view.TextBlock.MeasuredWidth / 2),
-            TextAlignment.End => bounds.Right - this.view.TextBlock.MeasuredWidth - 1,
+            TextAlignment.Center => bounds.MidX - (this.view.InternalText.MeasuredWidth / 2),
+            TextAlignment.End => bounds.Right - this.view.InternalText.MeasuredWidth - 1,
             _ => bounds.Left,
         };
         var y = this.view.VerticalTextAlignment switch
         {
-            TextAlignment.Center => bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2),
-            TextAlignment.End => bounds.Bottom - this.view.TextBlock.MeasuredHeight - 1,
+            TextAlignment.Center => bounds.MidY - (this.view.InternalText.MeasuredHeight / 2),
+            TextAlignment.End => bounds.Bottom - this.view.InternalText.MeasuredHeight - 1,
             _ => bounds.Top,
         };
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 }

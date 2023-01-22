@@ -136,8 +136,8 @@ internal class MenuItemDrawable
             .MultiplyAlpha(this.view.ForegroundOpacity)
             .ToSKColor();
         var x = this.view.IconSource != null || this.view.Icon != IconKind.None ? 48f : 12f;
-        var y = bounds.MidY - (this.view.TextBlock.MeasuredHeight / 2f);
-        this.view.TextBlock.Paint(canvas, new SKPoint(x, y));
+        var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2f);
+        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();
     }
 

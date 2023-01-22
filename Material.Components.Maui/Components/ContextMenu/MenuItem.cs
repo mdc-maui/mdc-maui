@@ -66,7 +66,7 @@ public partial class MenuItem
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -96,7 +96,7 @@ public partial class MenuItem
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
         this.OnPropertyChanged();
     }
@@ -280,11 +280,11 @@ public partial class MenuItem
         var offsetWidth =
             (this.Icon != IconKind.None || this.IconSource != null ? 48d : 12d)
             + (this.TrailIcon != IconKind.None || this.TrailIconSource != null ? 48d : 12d);
-        this.TextBlock.MaxWidth = (float)(maxWidth - 24d - offsetWidth);
-        this.TextBlock.MaxHeight = 48f;
+        this.InternalText.MaxWidth = (float)(maxWidth - 24d - offsetWidth);
+        this.InternalText.MaxHeight = 48f;
         return Math.Max(
             minWidth,
-            Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 24d + offsetWidth)
+            Math.Min(maxWidth, this.InternalText.MeasuredWidth + 24d + offsetWidth)
         );
     }
 

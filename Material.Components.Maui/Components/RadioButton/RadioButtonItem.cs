@@ -63,7 +63,7 @@ public partial class RadioButtonItem
     public static readonly BindableProperty FontItalicProperty = TextElement.FontItalicProperty;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public TextBlock TextBlock { get; set; } = new();
+    public TextBlock InternalText { get; set; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
@@ -93,7 +93,7 @@ public partial class RadioButtonItem
         set => this.SetValue(FontItalicProperty, value);
     }
 
-    void ITextElement.OnTextBlockChanged()
+    void ITextElement.OnChanged()
     {
         this.SendInvalidateMeasure();
     }
@@ -258,8 +258,8 @@ public partial class RadioButtonItem
             this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
         );
 
-        this.TextBlock.MaxWidth = (float)(maxWidth - 50d);
-        this.TextBlock.MaxHeight = 40f;
+        this.InternalText.MaxWidth = (float)(maxWidth - 50d);
+        this.InternalText.MaxHeight = 40f;
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill
                 ? maxWidth
@@ -267,7 +267,7 @@ public partial class RadioButtonItem
                     + Math.Max(
                         this.MinimumWidthRequest,
                         this.WidthRequest == -1
-                            ? Math.Min(maxWidth, this.TextBlock.MeasuredWidth + 50d)
+                            ? Math.Min(maxWidth, this.InternalText.MeasuredWidth + 50d)
                             : this.WidthRequest
                     );
         var height =
