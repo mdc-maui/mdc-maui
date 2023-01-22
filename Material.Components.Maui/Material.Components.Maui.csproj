@@ -12,7 +12,7 @@
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
@@ -20,6 +20,7 @@
 
 	<PropertyGroup>
 	  <NoWarn>1701;1702;0169;0067;IDE0051</NoWarn>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -29,6 +30,10 @@
 	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
 	  <PackageReference Include="Svg.Skia" Version="0.5.18" />
 	  <PackageReference Include="Topten.RichTextKit" Version="0.4.165" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) == true">
+		<PackageReference Include="ImeSharp" Version="1.2.5" />
 	</ItemGroup>
 	
 	<ItemGroup>
@@ -89,8 +94,10 @@
 	  <MauiXaml Update="Styles\TabsStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Styles\TextFieldStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
-
 	<ItemGroup Condition="$(TargetFramework.Contains('-maccatalyst')) != true AND $(TargetFramework.Contains('-ios')) != true">
 		<Compile Remove="**\*.macios.cs" />
 		<None Include="**\*.macios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
@@ -116,4 +123,5 @@
 		<Compile Remove="**\net\**\*.cs" />
 		<None Include="**\net\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
+	
 </Project>

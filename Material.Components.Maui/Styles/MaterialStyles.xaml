@@ -25,6 +25,7 @@
         <local:ContextMenuStyles />
         <local:NavigationDrawerStyles />
         <local:NavigationDrawerItemStyles />
+        <local:TextFieldStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

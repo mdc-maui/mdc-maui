@@ -1,4 +1,3 @@
-using Material.Components.Maui.Converters;
 using Microsoft.Maui.Animations;
 using System.Collections;
 using System.Collections.Specialized;
@@ -74,8 +73,6 @@ public partial class ComboBox
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public TextStyle TextStyle { get; set; } = FontMapper.DefaultStyle.Modify();
-
-    [TypeConverter(typeof(RichStringConverter))]
     public string Text
     {
         get => (string)this.GetValue(TextProperty);

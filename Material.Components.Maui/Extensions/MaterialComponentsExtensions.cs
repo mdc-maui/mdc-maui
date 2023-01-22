@@ -51,6 +51,7 @@ public static class MaterialComponentsExtensions
                 {
                     handlers.AddHandler(typeof(ViewPager), typeof(ViewPagerHandler));
                     handlers.AddHandler(typeof(SplitView), typeof(SplitViewHandler));
+                    handlers.AddHandler(typeof(TextField), typeof(TextFieldHandler));
                 }
             )
             .UseSkiaSharp();
@@ -69,7 +70,7 @@ public static class MaterialComponentsExtensions
         ColorRes["SurfaceColor"] = scheme.Surface;
         ColorRes["SurfaceVariantColor"] = scheme.SurfaceVariant;
         ColorRes["BackgroundColor"] = scheme.Background;
-        ColorRes["ErrorColorColor"] = scheme.Error;
+        ColorRes["ErrorColor"] = scheme.Error;
         ColorRes["ErrorContainerColor"] = scheme.ErrorContainer;
         ColorRes["OnPrimaryColor"] = scheme.OnPrimary;
         ColorRes["OnPrimaryContainerColor"] = scheme.OnPrimaryContainer;

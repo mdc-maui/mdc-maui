@@ -6,6 +6,7 @@
     xmlns:views="clr-namespace:Material.Components.Maui">
 
     <Style TargetType="views:ProgressIndicator">
+        <Setter Property="IgnorePixelScaling" Value="True" />
         <Setter Property="IndicatorType" Value="Circular" />
         <Setter Property="WidthRequest" Value="48" />
         <Setter Property="HeightRequest" Value="48" />
