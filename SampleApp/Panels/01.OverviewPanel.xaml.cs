@@ -4,7 +4,7 @@ public partial class OverviewPanel : ContentView
 {
     public OverviewPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     private void Button_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)

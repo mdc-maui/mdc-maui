@@ -87,6 +87,11 @@
             ContentType="{x:Type panels:TabsPanel}"
             Icon="LayersOutline"
             Text="Tab" />
+        <md:NavigationDrawerItem
+            Title="textField"
+            ContentType="{x:Type panels:TextFieldPanel}"
+            Icon="LayersOutline"
+            Text="textField" />
     </md:NavigationDrawer>
 
 </ContentPage>

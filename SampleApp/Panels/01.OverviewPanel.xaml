@@ -23,6 +23,7 @@
                     Clicked="Button_Clicked"
                     Icon="ThemeOutline"
                     Text="SwitchTheme" />
+                <md:Button Icon="ThemeOutline" Text="Enabled" />
                 <md:Button Style="{DynamicResource ElevatedButtonStyle}" Text="Enabled" />
                 <md:Button Style="{DynamicResource FilledTonalButtonStyle}" Text="Enabled" />
                 <md:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Enabled" />
@@ -67,7 +68,14 @@
                     Text="chip" />
             </md:WrapLayout>
             <md:WrapLayout>
-                <md:ComboBox>
+                <md:TextField WidthRequest="250" />
+                <md:TextField
+                    Icon="Search"
+                    Style="{DynamicResource OutlinedTextFieldStyle}"
+                    WidthRequest="250" />
+            </md:WrapLayout>
+            <md:WrapLayout>
+                <md:ComboBox WidthRequest="250">
                     <md:ComboBoxItem Text="item 1" />
                     <md:ComboBoxItem Text="item 2" />
                     <md:ComboBoxItem Text="item 3" />
@@ -77,7 +85,7 @@
                     <md:ComboBoxItem Text="item 7" />
                     <md:ComboBoxItem Text="item 8" />
                 </md:ComboBox>
-                <md:ComboBox Style="{DynamicResource OutlinedComboBoxStyle}">
+                <md:ComboBox Style="{DynamicResource OutlinedComboBoxStyle}" WidthRequest="250">
                     <md:ComboBoxItem Text="item 1" />
                     <md:ComboBoxItem Text="item 2" />
                     <md:ComboBoxItem Text="item 3" />

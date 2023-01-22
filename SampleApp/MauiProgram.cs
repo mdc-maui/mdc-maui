@@ -33,24 +33,24 @@ public static class MauiProgram
 
         FontMapper.AddFont("OpenSans-Regular.ttf", "OpenSans");
 
-#if WINDOWS
-        builder.ConfigureLifecycleEvents(events =>
-        {
-            events.AddWindows(wndLifeCycleBuilder =>
-            {
-                wndLifeCycleBuilder.OnWindowCreated(window =>
-                {
-                    var nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                    var win32WindowsId = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
-                    var winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);
+        //#if WINDOWS
+        //        builder.ConfigureLifecycleEvents(events =>
+        //        {
+        //            events.AddWindows(wndLifeCycleBuilder =>
+        //            {
+        //                wndLifeCycleBuilder.OnWindowCreated(window =>
+        //                {
+        //                    var nativeWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+        //                    var win32WindowsId = Win32Interop.GetWindowIdFromWindow(nativeWindowHandle);
+        //                    var winuiAppWindow = AppWindow.GetFromWindowId(win32WindowsId);
 
-                    var width = 1150;
-                    var height = 750;
-                    winuiAppWindow.MoveAndResize(new RectInt32((1920 / 2) - (width / 2), (1080 / 2) - (height / 2), width, height));
-                });
-            });
-        });
-#endif
+        //                    var width = 1150;
+        //                    var height = 750;
+        //                    winuiAppWindow.MoveAndResize(new RectInt32((1920 / 2) - (width / 2), (1080 / 2) - (height / 2), width, height));
+        //                });
+        //            });
+        //        });
+        //#endif
 
 
 #if DEBUG

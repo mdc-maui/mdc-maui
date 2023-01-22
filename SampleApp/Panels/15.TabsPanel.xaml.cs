@@ -4,7 +4,7 @@ public partial class TabsPanel : ContentView
 {
     public TabsPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     private void Button_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)

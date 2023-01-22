@@ -137,6 +137,9 @@
 	  <MauiXaml Update="Panels\01.OverviewPanel.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Panels\TextFieldPanel.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PropertyDescribes.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

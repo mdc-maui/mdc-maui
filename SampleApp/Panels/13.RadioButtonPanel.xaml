@@ -3,8 +3,8 @@
     x:Class="SampleApp.Panels.RadioButtonPanel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="{DynamicResource BackgroundColor}"
-    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    BackgroundColor="{DynamicResource BackgroundColor}">
 
     <ContentView.Resources>
         <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
@@ -27,7 +27,7 @@
         Spacing="30"
         VerticalOptions="Center">
         <md:Label Text="Vertical" />
-        <md:RadioButton SelectedIndex="0">
+        <md:RadioButton Orientation="Vertical" SelectedIndex="0">
             <md:RadioButtonItem Text="item 1" />
             <md:RadioButtonItem Text="item 2" />
             <md:RadioButtonItem Text="item 3" />

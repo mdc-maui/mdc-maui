@@ -6,7 +6,7 @@ public partial class PopupPanel : ContentView
 {
     public PopupPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     private async void Button_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
