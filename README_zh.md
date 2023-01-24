@@ -72,25 +72,25 @@ public static class MauiProgram
 
 | control   | android    | windows   |  ios&mac   |
 | ---- | ---- | ---- |----|
-| button    | 😄 | 😄 | 🤔 |
-| IconButton | 😄 | 😄 |🤔|
+| button    | 😄 | 😄 | 😄 |
+| IconButton | 😄 | 😄 |😄|
 | Card | 😄 | 😄 |🤔|
-| CheckBox | 😄 | 😄 |🤔|
+| CheckBox | 😄 | 😄 |😄|
 | Chip | 😄 | 😄 |🤔|
 | ComboBox | 😄 | 😄 |😭|
 | ContextMenu | 😄 | 😄 |😭|
-| FAB | 😄 | 😄 |🤔|
-| Label | 😄 | 😄 |🤔|
+| FAB | 😄 | 😄 |😄|
+| Label | 😄 | 😄 |😄|
 | NavigationBar | 😄 | 😄 |😭|
 | NavigationDrawer | 😄 | 😄 |😭|
 | Popup | 😄 | 😄 |😭|
-| ProgressIndicator | 😄 | 😄 |🤔|
-| RadioButton | 😄 | 😄 |🤔|
+| ProgressIndicator | 😄 | 😄 |😄|
+| RadioButton | 😄 | 😄 |😄|
 | SplitView | 😄 | 😄 |😭|
-| Switch | 😄 | 😄 |🤔|
+| Switch | 😄 | 😄 |😄|
 | Tabs | 😄 | 😄 |😭|
 | TextField | 😄 | 😄 |😭|
-| WrapLayout | 😄 | 😄 |🤔|
+| WrapLayout | 😄 | 😄 |😄|
 
 ## 贡献
 
