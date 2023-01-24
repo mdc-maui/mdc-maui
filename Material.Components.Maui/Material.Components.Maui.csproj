@@ -19,84 +19,94 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-	  <NoWarn>1701;1702;0169;0067;IDE0051</NoWarn>
-	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<NoWarn>1701;1702;0169;0067;IDE0051</NoWarn>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
-	
+
+	<PropertyGroup>
+		<Authors>yiszza</Authors>
+		<Description>Material You Components for .NET MAUI</Description>
+		<RepositoryUrl>https://github.com/yiszza/Material.Components.Maui</RepositoryUrl>
+		<PackageTags>material</PackageTags>
+		<AssemblyVersion></AssemblyVersion>
+		<FileVersion></FileVersion>
+		<Version>0.1.0-beta</Version>
+	</PropertyGroup>
+
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui.Markup" Version="2.1.0" />
-	  <PackageReference Include="M.BindableProperty.Generator" Version="0.9.3" />
-	  <PackageReference Include="MaterialColorUtilities" Version="0.2.0" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
-	  <PackageReference Include="Svg.Skia" Version="0.5.18" />
-	  <PackageReference Include="Topten.RichTextKit" Version="0.4.165" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="2.1.0" />
+		<PackageReference Include="M.BindableProperty.Generator" Version="0.9.3" />
+		<PackageReference Include="MaterialColorUtilities" Version="0.2.0" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />
+		<PackageReference Include="Svg.Skia" Version="0.5.18" />
+		<PackageReference Include="Topten.RichTextKit" Version="0.4.165" />
 	</ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) == true">
 		<PackageReference Include="ImeSharp" Version="1.2.5" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <Compile Update="Styles\MaterialStyles.xaml.cs">
-	    <DependentUpon>MaterialStyles.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Styles\NavigationBarStyles.xaml.cs">
-	    <DependentUpon>NavigationBarStyles.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Styles\NavigationDrawerItemStyles.xaml.cs">
-	    <DependentUpon>NavigationDrawerItemStyles.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Styles\NavigationDrawerStyles.xaml.cs">
-	    <DependentUpon>NavigationDrawerStyles.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Styles\ProgressIndicatorStyles.xaml.cs">
-	    <DependentUpon>ProgressIndicatorStyles.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Styles\RadioButtonStyles.xaml.cs">
-	    <DependentUpon>RadioButtonStyles.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="Styles\MaterialStyles.xaml.cs">
+			<DependentUpon>MaterialStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\NavigationBarStyles.xaml.cs">
+			<DependentUpon>NavigationBarStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\NavigationDrawerItemStyles.xaml.cs">
+			<DependentUpon>NavigationDrawerItemStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\NavigationDrawerStyles.xaml.cs">
+			<DependentUpon>NavigationDrawerStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\ProgressIndicatorStyles.xaml.cs">
+			<DependentUpon>ProgressIndicatorStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\RadioButtonStyles.xaml.cs">
+			<DependentUpon>RadioButtonStyles.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Styles\ChipStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\ContextMenuStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\FABStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\LabelStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\NavigationBarItemStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\NavigationBarStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\NavigationDrawerItemStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\NavigationDrawerStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\ProgressIndicatorStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\RadioButtonStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\TabItemStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\TabsStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Styles\TextFieldStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="Styles\ChipStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\ContextMenuStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\FABStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\LabelStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationBarItemStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationBarStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationDrawerItemStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationDrawerStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\ProgressIndicatorStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\RadioButtonStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\TabItemStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\TabsStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\TextFieldStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 	<ItemGroup Condition="$(TargetFramework.Contains('-maccatalyst')) != true AND $(TargetFramework.Contains('-ios')) != true">
 		<Compile Remove="**\*.macios.cs" />
@@ -123,5 +133,5 @@
 		<Compile Remove="**\net\**\*.cs" />
 		<None Include="**\net\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	
+
 </Project>
