@@ -14,7 +14,13 @@
                         x:Name="PART_Bar"
                         Grid.Row="1"
                         BackgroundColor="Transparent"
-                        HeightRequest="80" />
+                        BindableLayout.ItemsSource="{TemplateBinding Items}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <ContentView Content="{Binding}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </views:AutoFillLayout>
                 </Grid>
             </ControlTemplate>
         </Setter>

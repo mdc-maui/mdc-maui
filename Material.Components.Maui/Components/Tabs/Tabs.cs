@@ -1,5 +1,4 @@
-﻿using System.Runtime.Versioning;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
@@ -31,26 +30,14 @@ public partial class Tabs : TemplatedView, IVisualTreeElement, ICommandElement
     [AutoBindable(OnChanged = nameof(OnSelectedIndexChanged))]
     private readonly int selectedIndex;
 
+    [AutoBindable(OnChanged = nameof(OnSelectedItemChanged))]
+    private readonly TabItem selectedItem;
+
     [AutoBindable(OnChanged = nameof(OnIndicatorShapeChanged))]
     private readonly Shape activeIndicatorShape;
 
     [AutoBindable(OnChanged = nameof(OnIndicatorColorChanged))]
     private readonly Color activeIndicatorColor;
-
-    [SupportedOSPlatform("android")]
-    public static readonly BindableProperty UserInputEnabledProperty = BindableProperty.Create(
-        nameof(UserInputEnabled),
-        typeof(bool),
-        typeof(Tabs),
-        true
-    );
-
-    [SupportedOSPlatform("android")]
-    public bool UserInputEnabled
-    {
-        get => (bool)this.GetValue(UserInputEnabledProperty);
-        set => this.SetValue(UserInputEnabledProperty, value);
-    }
 
     [AutoBindable]
     private readonly ICommand command;
@@ -58,26 +45,29 @@ public partial class Tabs : TemplatedView, IVisualTreeElement, ICommandElement
     [AutoBindable]
     private readonly object commandParameter;
 
-    public event EventHandler<SelectedIndexChangedEventArgs> SelectedIndexChanged;
+    public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
 
     private void OnSelectedIndexChanged()
     {
-        for (int i = 0; i < this.Items.Count; i++)
-        {
-            this.Items[i].IsActived = i == this.SelectedIndex;
-        }
-        if (this.PART_Content.SelectedIndex != this.SelectedIndex)
-        {
-            this.PART_Content.SelectedIndex = this.SelectedIndex;
-        }
-        SelectedIndexChanged?.Invoke(this, new SelectedIndexChangedEventArgs(this.SelectedIndex));
-        this.Command?.Execute(this.CommandParameter ?? this.SelectedIndex);
+        this.SelectedItem = this.Items[this.SelectedIndex];
+    }
 
-        this.PART_Scroller?.ScrollToAsync(
-           this.Items[this.SelectedIndex],
-           ScrollToPosition.Center,
-           true
-       );
+    private void OnSelectedItemChanged()
+    {
+        this.SelectedIndex = this.Items.IndexOf(this.SelectedItem);
+
+        foreach (var item in this.Items)
+        {
+            if (item is TabItem ti)
+            {
+                ti.IsActived = this.SelectedItem.Equals(ti);
+            }
+        }
+        this.SelectedItemChanged?.Invoke(
+            this,
+            new SelectedItemChangedEventArgs(this.SelectedItem, this.SelectedIndex)
+        );
+        this.Command?.Execute(this.CommandParameter ?? this.SelectedItem);
     }
 
     private void OnBarPropertyChanged()
@@ -107,14 +97,11 @@ public partial class Tabs : TemplatedView, IVisualTreeElement, ICommandElement
 
     private Grid PART_Root;
     private Layout PART_Bar;
-    private ViewPager PART_Content;
     private ScrollView PART_Scroller;
 
     public Tabs()
     {
         this.Items.OnAdded += this.OnItemsAdded;
-        this.Items.OnRemoved += this.OnItemsRemoved;
-        this.Items.OnCleared += this.OnItemsCleared;
     }
 
     protected override void OnApplyTemplate()
@@ -123,23 +110,15 @@ public partial class Tabs : TemplatedView, IVisualTreeElement, ICommandElement
         this.PART_Root = (Grid)this.GetTemplateChild("PART_Root");
         this.PART_Bar = (Layout)this.GetTemplateChild("PART_Bar");
         this.PART_Scroller = this.GetTemplateChild("PART_Scroller") as ScrollView;
-        this.PART_Content = (ViewPager)this.GetTemplateChild("PART_Content");
-        this.PART_Content.SelectedItemChanged += (sender, e) =>
-        {
-            this.SelectedIndex = e.SelectedItemIndex;
-            for (int i = 0; i < this.Items.Count; i++)
-            {
-                this.Items[i].IsActived = i == e.SelectedItemIndex;
-            }
-        };
-        this.OnChildAdded(PART_Root);
-        VisualDiagnostics.OnChildAdded(this, PART_Root);
+        this.OnChildAdded(this.PART_Root);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Root);
     }
 
     private void OnItemsAdded(object sender, ItemsChangedEventArgs<TabItem> e)
     {
         var index = e.Index;
         var item = this.Items[index];
+        this.SelectedItem ??= item;
         item.IsActived = index == this.SelectedIndex;
         item.HasIcon = this.HasIcon;
         item.HasLabel = this.HasLabel;
@@ -147,30 +126,8 @@ public partial class Tabs : TemplatedView, IVisualTreeElement, ICommandElement
             item.ActiveIndicatorShape = this.ActiveIndicatorShape;
         if (this.ActiveIndicatorColor != null)
             item.ActiveIndicatorColor = this.ActiveIndicatorColor;
-      
-        if (item.Content != null)
-        {
-            this.PART_Content.Items.Insert(index, item.Content);
-        }
-        else
-        {
-            item.ContentChanged += (s, e) =>
-            {
-                this.PART_Content.Items.Insert(index, e);
-            };
-        }
-        item.Clicked += (sender, e) => this.SelectedIndex = this.Items.IndexOf(sender as TabItem);
-    }
 
-    private void OnItemsRemoved(object sender, ItemsChangedEventArgs<TabItem> e)
-    {
-        var item = this.Items[e.Index];
-        this.PART_Content.Items.Remove(item.Content);
-    }
-
-    private void OnItemsCleared(object sender, EventArgs e)
-    {
-        this.PART_Content.Items.Clear();
+        item.Clicked += (sender, e) => this.SelectedItem = sender as TabItem;
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>

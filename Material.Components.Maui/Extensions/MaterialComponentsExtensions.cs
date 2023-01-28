@@ -49,7 +49,6 @@ public static class MaterialComponentsExtensions
             .ConfigureMauiHandlers(
                 (handlers) =>
                 {
-                    handlers.AddHandler(typeof(ViewPager), typeof(ViewPagerHandler));
                     handlers.AddHandler(typeof(SplitView), typeof(SplitViewHandler));
                     handlers.AddHandler(typeof(TextField), typeof(TextFieldHandler));
                 }

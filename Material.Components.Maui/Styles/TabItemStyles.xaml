@@ -6,6 +6,8 @@
     xmlns:views="clr-namespace:Material.Components.Maui">
 
     <Style TargetType="views:TabItem">
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Fill" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="500" />
         <Setter Property="MinimumWidthRequest" Value="96" />

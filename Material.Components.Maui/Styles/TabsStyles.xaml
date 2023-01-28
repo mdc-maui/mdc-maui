@@ -19,10 +19,7 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </views:AutoFillLayout>
-                    <views:ViewPager
-                        x:Name="PART_Content"
-                        Grid.Row="1"
-                        UserInputEnabled="{TemplateBinding UserInputEnabled}" />
+                    <views:ContentPresenter Grid.Row="1" Content="{TemplateBinding SelectedItem.Content}" />
                 </Grid>
             </ControlTemplate>
         </Setter>
@@ -49,10 +46,7 @@
                             </BindableLayout.ItemTemplate>
                         </views:WrapLayout>
                     </ScrollView>
-                    <views:ViewPager
-                        x:Name="PART_Content"
-                        Grid.Row="1"
-                        UserInputEnabled="{TemplateBinding UserInputEnabled}" />
+                    <views:ContentPresenter Grid.Row="1" Content="{TemplateBinding SelectedItem.Content}" />
                 </Grid>
             </ControlTemplate>
         </Setter>

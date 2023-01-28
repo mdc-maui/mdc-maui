@@ -196,7 +196,7 @@ public partial class TabItem
     #endregion
     #endregion
 
-    [AutoBindable(OnChanged = nameof(OnContentChanged))]
+    [AutoBindable]
     private readonly View content;
 
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnPropertyChanged))]
@@ -216,16 +216,6 @@ public partial class TabItem
 
     [AutoBindable(DefaultValue = "1f", OnChanged = nameof(OnPropertyChanged))]
     private readonly float activeIndicatorOpacity;
-
-    public event EventHandler<View> ContentChanged;
-
-    private void OnContentChanged()
-    {
-        if (this.Content != null)
-        {
-            ContentChanged?.Invoke(this, this.Content);
-        }
-    }
 
     public float ChangingPercent { get; private set; } = 1f;
 

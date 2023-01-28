@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Markup;
-using System.Runtime.Versioning;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
@@ -26,6 +24,9 @@ public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommand
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnHasLabelChanged))]
     private readonly bool hasLabel;
 
+    [AutoBindable(OnChanged = nameof(OnSelectedIndexChanged))]
+    private readonly int selectedIndex;
+
     [AutoBindable(OnChanged = nameof(OnSelectedItemChanged))]
     private readonly NavigationBarItem selectedItem;
 
@@ -37,9 +38,14 @@ public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommand
 
     public event EventHandler<SelectedItemChangedEventArgs> SelectedItemChanged;
 
+    private void OnSelectedIndexChanged()
+    {
+        this.SelectedItem = this.Items[this.SelectedIndex];
+    }
+
     private void OnSelectedItemChanged()
     {
-        foreach (var item in Items)
+        foreach (var item in this.Items)
         {
             if (item is NavigationBarItem nbi)
             {
@@ -71,8 +77,6 @@ public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommand
     public NavigationBar()
     {
         this.Items.OnAdded += this.OnItemsAdded;
-        this.Items.OnRemoved += this.OnItemsRemoved;
-        this.Items.OnCleared += this.OnItemsCleared;
     }
 
     private void OnItemsAdded(object sender, ItemsChangedEventArgs<NavigationBarItem> e)
@@ -80,24 +84,12 @@ public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommand
         var index = e.Index;
         var item = this.Items[index];
         this.SelectedItem ??= item;
-        this.PART_Bar.Insert(index, item);
         item.HasLabel = this.HasLabel;
         item.Clicked += (sender, e) =>
         {
             var nbi = sender as NavigationBarItem;
             this.SelectedItem = nbi;
         };
-    }
-
-    private void OnItemsRemoved(object sender, ItemsChangedEventArgs<NavigationBarItem> e)
-    {
-        var item = this.Items[e.Index];
-        this.PART_Bar.Remove(item);
-    }
-
-    private void OnItemsCleared(object sender, EventArgs e)
-    {
-        this.PART_Bar.Clear();
     }
 
     protected override void OnApplyTemplate()
@@ -107,7 +99,7 @@ public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommand
         this.PART_Bar = (AutoFillLayout)this.GetTemplateChild("PART_Bar");
 
         this.OnChildAdded(this.PART_Root);
-        VisualDiagnostics.OnChildAdded(this, this.PART_Root, 0);
+        VisualDiagnostics.OnChildAdded(this, this.PART_Root);
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
