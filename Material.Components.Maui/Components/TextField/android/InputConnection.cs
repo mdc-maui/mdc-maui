@@ -1,8 +1,8 @@
-﻿using Android.OS;
-using Android.Runtime;
+﻿using Android.Runtime;
 using Android.Views;
 using Android.Views.InputMethods;
 using Java.Lang;
+using System.Diagnostics;
 using Topten.RichTextKit;
 using Topten.RichTextKit.Editor;
 using Math = System.Math;
@@ -31,6 +31,7 @@ internal class InputConnection : BaseInputConnection
 
     public override bool CommitText(ICharSequence charSequence, int newCursorPosition)
     {
+        Debug.WriteLine(charSequence.ToString());
         this.editTextManager.CommitText(charSequence.ToString());
         return true;
     }
@@ -56,7 +57,6 @@ internal class InputConnection : BaseInputConnection
                 case Keycode.Enter:
                     this.editTextManager.CommitText("\n");
                     return true;
-                case Keycode.SoftLeft:
                 case Keycode.DpadLeft:
                     if (this.isShiftPressed)
                     {
@@ -132,6 +132,7 @@ internal class InputConnection : BaseInputConnection
             if (e.KeyCode is Keycode.ShiftLeft or Keycode.ShiftRight)
             {
                 this.isShiftPressed = false;
+                return true;
             }
         }
         return false;
@@ -176,26 +177,6 @@ internal class InputConnection : BaseInputConnection
         return new Java.Lang.String(
             this.editTextManager.Document.GetText(this.editTextManager.Range).ToString()
         );
-    }
-
-    public override bool SetComposingRegion(int start, int end)
-    {
-        return base.SetComposingRegion(start, end);
-    }
-
-    public override bool PerformEditorAction([GeneratedEnum] ImeAction actionCode)
-    {
-        return base.PerformEditorAction(actionCode);
-    }
-
-    public override bool PerformPrivateCommand(string action, Bundle data)
-    {
-        return base.PerformPrivateCommand(action, data);
-    }
-
-    public override bool RequestCursorUpdates(int cursorUpdateMode)
-    {
-        return base.RequestCursorUpdates(cursorUpdateMode);
     }
 
     public override ExtractedText GetExtractedText(

@@ -26,6 +26,7 @@ internal class TextFieldDrawable
         this.DrawSupportingText(canvas, bounds);
         this.DrawActiveIndicator(canvas, bounds);
         this.DrawText(canvas);
+        this.DrawCursor(canvas);
     }
 
     private void DrawBackground(SKCanvas canvas, SKRect bounds)
@@ -253,11 +254,53 @@ internal class TextFieldDrawable
         if (range.IsRange)
         {
             options.Selection = range;
-            options.SelectionColor = caretColor;
+            options.SelectionColor = caretColor.WithAlpha(200);
         }
         this.view.TextDocument.Paint(canvas, 0f, this.view.TextDocument.MeasuredHeight, options);
+        canvas.Restore();
+    }
+
+    private void DrawCursor(SKCanvas canvas)
+    {
+#if ANDROID || IOS
+        var range = this.view.SelectionTextRange;
+        if (!range.IsRange) return;
+
+        canvas.Save();
+
+        var leftCaretInfo = this.view.TextDocument.GetCaretInfo(
+                new CaretPosition(range.Start, false)
+            );
+        var rightCaretInfo = this.view.TextDocument.GetCaretInfo(
+                new CaretPosition(range.End, false)
+            );
+
+        {
+            var paint = new SKPaint
+            {
+                Color = this.view.CaretColor.ToSKColor(),
+                IsAntialias = true,
+            };
+            var x = leftCaretInfo.CaretRectangle.Left - 24;
+            var y = leftCaretInfo.CaretRectangle.Bottom;
+            canvas.DrawRect(x + 12, y, 12, 12, paint);
+            canvas.DrawCircle(x + 12, y + 12, 12, paint);
+        }
+
+        {
+            var paint = new SKPaint
+            {
+                Color = this.view.CaretColor.ToSKColor(),
+                IsAntialias = true,
+            };
+            var x = rightCaretInfo.CaretRectangle.Right;
+            var y = rightCaretInfo.CaretRectangle.Bottom;
+            canvas.DrawRect(x, y, 12, 12, paint);
+            canvas.DrawCircle(x + 12, y + 12, 12, paint);
+        }
 
         canvas.Restore();
+#endif
     }
 
     internal void DrawCaret(SKCanvas canvas)

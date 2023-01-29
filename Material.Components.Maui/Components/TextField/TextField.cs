@@ -417,19 +417,20 @@ public partial class TextField
     private IAnimationManager animationManager;
 
     private bool isDrawCaret;
+    private int movingCursor;
+    private TextRange rangeCache;
 
     public TextField()
     {
         this.TextDocument.DefaultStyle = this.TextStyle;
-        this.TextDocument.PlainTextMode = false;
+        this.TextDocument.PlainTextMode = true;
         this.Pressed += this.OnPressed;
         this.Clicked += this.OnClicked;
-
-#if WINDOWS || MACCATALYST
-        this.Pressed += this.OnPressed;
         this.Moved += this.OnMoved;
-#elif ANDROID || IOS
+
+#if ANDROID || IOS
         this.LongPressed += this.OnLongPressed;
+        this.Released += this.OnReleased;
 #endif
 
         this.drawable = new TextFieldDrawable(this);
@@ -437,6 +438,41 @@ public partial class TextField
 
     private void OnPressed(object sender, SKTouchEventArgs e)
     {
+#if ANDROID || IOS
+        if (this.SelectionTextRange.IsRange)
+        {
+            var leftCaretInfo = this.TextDocument.GetCaretInfo(
+                new CaretPosition(this.SelectionTextRange.Start, false)
+            );
+            var rightCaretInfo = this.TextDocument.GetCaretInfo(
+                new CaretPosition(this.SelectionTextRange.End, false)
+            );
+
+            if (
+                e.Location.X > leftCaretInfo.CaretRectangle.Left - 36
+                && e.Location.X < leftCaretInfo.CaretRectangle.Left + 12
+                && e.Location.Y > leftCaretInfo.CaretRectangle.Bottom - 12
+                && e.Location.Y < leftCaretInfo.CaretRectangle.Bottom + 36
+            )
+            {
+                this.rangeCache = this.SelectionTextRange;
+                this.movingCursor = 1;
+                return;
+            }
+            else if (
+                e.Location.X > rightCaretInfo.CaretRectangle.Right - 12
+                && e.Location.X < rightCaretInfo.CaretRectangle.Right + 36
+                && e.Location.Y > rightCaretInfo.CaretRectangle.Bottom - 12
+                && e.Location.Y < rightCaretInfo.CaretRectangle.Bottom + 36
+            )
+            {
+                this.rangeCache = this.SelectionTextRange;
+                this.movingCursor = 2;
+                return;
+            }
+        }
+#endif
+
         if (
             e.Location.X > this.TextDocument.MarginLeft
             && e.Location.X < this.CanvasSize.Width - this.TextDocument.MarginRight
@@ -460,29 +496,45 @@ public partial class TextField
         }
     }
 
-    protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
-    {
-        var scale = this.FontSize / 16f;
-        var bounds = new SKRect(
-            e.Info.Rect.Left,
-            e.Info.Rect.Top + 8 * scale,
-            e.Info.Rect.Right,
-            e.Info.Rect.Bottom - this.InternalSupportingText.MeasuredHeight - 4f * scale
-        );
-        this.drawable.Draw(e.Surface.Canvas, bounds);
-        if (this.InternalFocus && this.isDrawCaret)
-        {
-            this.drawable.DrawCaret(e.Surface.Canvas);
-        }
-    }
-
     private void OnLongPressed(object sender, SKTouchEventArgs e)
     {
-        // throw new NotImplementedException();
+        if (
+            e.Location.X > this.TextDocument.MarginLeft
+            && e.Location.X < this.CanvasSize.Width - this.TextDocument.MarginRight
+            && e.Location.Y > this.TextDocument.MarginTop / 2
+            && e.Location.Y < this.CanvasSize.Height - this.TextDocument.MarginBottom / 2
+        )
+        {
+            var htr = this.TextDocument.HitTest(e.Location.X, e.Location.Y);
+            this.SelectionTextRange = new TextRange(
+                Math.Max(0, htr.CaretPosition.CodePointIndex - 2),
+                Math.Min(htr.CaretPosition.CodePointIndex + 2, this.TextDocument.Length - 1)
+            );
+        }
     }
 
     private void OnMoved(object sender, SKTouchEventArgs e)
     {
+#if ANDROID || IOS
+        if (this.movingCursor == 1)
+        {
+            var htr = this.TextDocument.HitTest(e.Location.X, e.Location.Y);
+            this.SelectionTextRange = new TextRange(
+                htr.CaretPosition.CodePointIndex,
+                this.rangeCache.End
+            ).Normalized;
+        }
+        else if (this.movingCursor == 2)
+        {
+            var htr = this.TextDocument.HitTest(e.Location.X, e.Location.Y);
+            this.SelectionTextRange = new TextRange(
+                this.rangeCache.Start,
+                htr.CaretPosition.CodePointIndex
+            ).Normalized;
+        }
+#endif
+
+#if WINDOWS
         if (this.isPressing)
         {
             var position = Math.Min(
@@ -495,7 +547,6 @@ public partial class TextField
                 this.SelectionTextRange = new TextRange(position, this.CaretPosition);
         }
 
-#if WINDOWS
         if (
             e.Location.X > this.TextDocument.MarginLeft
             && e.Location.X < this.CanvasSize.Width - this.TextDocument.MarginRight
@@ -506,6 +557,11 @@ public partial class TextField
         else
             this.SetCursor(isArrow: true);
 #endif
+    }
+
+    private void OnReleased(object sender, SKTouchEventArgs e)
+    {
+        this.movingCursor = 0;
     }
 
     public void StartLabelTextAnimation()
@@ -526,6 +582,22 @@ public partial class TextField
                 easing: Easing.SinInOut
             )
         );
+    }
+
+    protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
+    {
+        var scale = this.FontSize / 16f;
+        var bounds = new SKRect(
+            e.Info.Rect.Left,
+            e.Info.Rect.Top + 8 * scale,
+            e.Info.Rect.Right,
+            e.Info.Rect.Bottom - this.InternalSupportingText.MeasuredHeight - 4f * scale
+        );
+        this.drawable.Draw(e.Surface.Canvas, bounds);
+        if (this.InternalFocus && this.isDrawCaret)
+        {
+            this.drawable.DrawCaret(e.Surface.Canvas);
+        }
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
