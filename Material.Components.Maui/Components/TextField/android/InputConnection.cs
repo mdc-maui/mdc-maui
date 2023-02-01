@@ -2,7 +2,6 @@
 using Android.Views;
 using Android.Views.InputMethods;
 using Java.Lang;
-using System.Diagnostics;
 using Topten.RichTextKit;
 using Topten.RichTextKit.Editor;
 using Math = System.Math;
@@ -13,6 +12,7 @@ internal class InputConnection : BaseInputConnection
 {
     private readonly EditTextManager editTextManager;
     private bool isShiftPressed;
+    private bool isCtrlPressed;
 
     internal InputConnection(ATextField view, EditTextManager editTextManager) : base(view, true)
     {
@@ -31,7 +31,6 @@ internal class InputConnection : BaseInputConnection
 
     public override bool CommitText(ICharSequence charSequence, int newCursorPosition)
     {
-        Debug.WriteLine(charSequence.ToString());
         this.editTextManager.CommitText(charSequence.ToString());
         return true;
     }
@@ -50,6 +49,10 @@ internal class InputConnection : BaseInputConnection
                 case Keycode.ShiftLeft:
                 case Keycode.ShiftRight:
                     this.isShiftPressed = true;
+                    return true;
+                case Keycode.CtrlLeft:
+                case Keycode.CtrlRight:
+                    this.isCtrlPressed = true;
                     return true;
                 case Keycode.Del:
                     this.editTextManager.DeleteRangeText();
@@ -125,6 +128,22 @@ internal class InputConnection : BaseInputConnection
                     else
                         this.editTextManager.Navigate(NavigationKind.LineDown);
                     return true;
+                case Keycode.A:
+                    if (this.isCtrlPressed)
+                        this.editTextManager.SelectAll();
+                    return true;
+                case Keycode.X:
+                    if (this.isCtrlPressed)
+                        this.editTextManager.CutRangeTextToClipboard();
+                    return true;
+                case Keycode.C:
+                    if (this.isCtrlPressed)
+                        this.editTextManager.CopyRangeTextToClipboard();
+                    return true;
+                case Keycode.V:
+                    if (this.isCtrlPressed)
+                        this.editTextManager.CopyRangeTextFromClipboard();
+                    return true;
             }
         }
         else if (e.Action == KeyEventActions.Up)
@@ -132,6 +151,11 @@ internal class InputConnection : BaseInputConnection
             if (e.KeyCode is Keycode.ShiftLeft or Keycode.ShiftRight)
             {
                 this.isShiftPressed = false;
+                return true;
+            }
+            else if (e.KeyCode is Keycode.CtrlLeft or Keycode.CtrlRight)
+            {
+                this.isCtrlPressed = false;
                 return true;
             }
         }

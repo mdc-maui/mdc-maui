@@ -107,6 +107,7 @@ public partial class TextField
     void IEditTextElement.OnTextChanged(string oldValue, string newValue)
     {
         this.TextChanged?.Invoke(this, new TextChangedEventArgs(oldValue, newValue));
+        this.Command?.Execute(this.CommandParameter ?? newValue);
     }
 
     void IEditTextElement.OnChanged()

@@ -205,7 +205,7 @@ public partial class TabItem
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnPropertyChanged))]
     private readonly bool hasIcon;
 
-    [AutoBindable(OnChanged = nameof(ChangeVisualState))]
+    [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
     public bool isActived;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]

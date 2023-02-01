@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
@@ -11,6 +12,7 @@ public partial class Card
         IBackgroundElement,
         IStateLayerElement,
         IOutlineElement,
+        ICommandElement,
         IVisualTreeElement
 {
     #region interface
@@ -148,8 +150,19 @@ public partial class Card
     [AutoBindable]
     private readonly bool enableTouchEvents;
 
-    //[AutoBindable]
-    //private readonly View inner;
+    [AutoBindable]
+    private readonly ICommand command;
+    [AutoBindable]
+    private readonly object commandParameter;
+
+    public event EventHandler<SKTouchEventArgs> Pressed;
+    public event EventHandler<SKTouchEventArgs> Moved;
+    public event EventHandler<SKTouchEventArgs> Released;
+    public event EventHandler<SKTouchEventArgs> LongPressed;
+    public event EventHandler<SKTouchEventArgs> Clicked;
+    public event EventHandler<SKTouchEventArgs> Entered;
+    public event EventHandler<SKTouchEventArgs> Exited;
+
 
     private Grid PART_Root;
 
@@ -159,6 +172,19 @@ public partial class Card
         this.PART_Root = (Grid)this.GetTemplateChild("PART_Root");
         var PART_Container = (CardContainer)this.GetTemplateChild("PART_Container");
         PART_Container.ParentCard = this;
+
+        PART_Container.Clicked += (s, e) =>
+        {
+            this.Clicked?.Invoke(this, e);
+            this.Command?.Execute(this.CommandParameter ?? e);
+        };
+        PART_Container.Pressed += (s, e) => this.Pressed?.Invoke(this, e);
+        PART_Container.Moved += (s, e) => this.Moved?.Invoke(this, e);
+        PART_Container.Released += (s, e) => this.Released?.Invoke(this, e);
+        PART_Container.LongPressed += (s, e) => this.LongPressed?.Invoke(this, e);
+        PART_Container.Clicked += (s, e) => this.Clicked?.Invoke(this, e);
+        PART_Container.Entered += (s, e) => this.Entered?.Invoke(this, e);
+        PART_Container.Exited += (s, e) => this.Exited?.Invoke(this, e);
 
         this.OnChildAdded(this.PART_Root);
         VisualDiagnostics.OnChildAdded(this, this.PART_Root);

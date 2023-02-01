@@ -293,8 +293,6 @@ public partial class Chip
     [AutoBindable]
     private readonly object commandParameter;
 
-    public event EventHandler<CheckedChangedEventArgs> ChangedChanged;
-
     private void OnIsCheckedChanged()
     {
         this.ChangeVisualState();

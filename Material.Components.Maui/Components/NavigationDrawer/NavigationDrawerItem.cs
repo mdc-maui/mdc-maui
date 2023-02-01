@@ -28,7 +28,7 @@ public partial class NavigationDrawerItem
         set
         {
             this.controlState = value;
-            ChangeVisualState();
+            this.ChangeVisualState();
         }
     }
 
@@ -203,7 +203,7 @@ public partial class NavigationDrawerItem
     [AutoBindable]
     private readonly Type contentType;
 
-    [AutoBindable(OnChanged = nameof(ChangeVisualState))]
+    [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
     public bool isActived;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]

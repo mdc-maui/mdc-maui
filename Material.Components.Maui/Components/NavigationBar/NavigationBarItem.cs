@@ -213,7 +213,7 @@ public partial class NavigationBarItem
     private readonly IconKind activedIcon;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
-    private readonly SKPicture activedImage;
+    private readonly SKPicture activedIconSource;
 
     [AutoBindable]
     private readonly Color activeIndicatorColor;
