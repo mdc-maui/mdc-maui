@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
     // shared properties and other top-level stuff...
+    base:'/docs/',
     title: 'MDC-MAUI',
     description: 'Material design components for maui',
     cleanUrls: true,
