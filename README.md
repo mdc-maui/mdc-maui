@@ -1,69 +1,14 @@
 
 # Material.Components.Maui
-[![version](https://img.shields.io/nuget/vpre/Material.Components.Maui?style=for-the-badge)](https://www.nuget.org/packages/Material.Components.Maui/0.1.0-beta) 
-[![downloads](https://img.shields.io/nuget/dt/Material.Components.Maui?style=for-the-badge)](https://www.nuget.org/packages/Material.Components.Maui/0.1.0-beta) 
+[![nuget](https://img.shields.io/nuget/vpre/Material.Components.Maui?style=for-the-badge)](https://www.nuget.org/packages/Material.Components.Maui) 
 
-English | [中文](README_zh.md)
+![](docs/assets/preview.png)
 
-![](assets/preview.png)
+## Documentation
+
+[mdc-maui.github.io/](https://mdc-maui.github.io/)
 
 
-
-## Getting Started
-
-- Add UseMaterialComponents in MauiProgram.cs
-
-```C#
-using Material.Components.Maui.Extensions;
-
-namespace SampleApp;
-public static class MauiProgram
-{
-    public static MauiApp CreateMauiApp()
-    {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .UseMaterialComponents(new List<string>
-            {
-                //generally, we needs add 6 types of font families
-                "xxx-Regular.ttf",
-                "xxx-Italic.ttf",
-                "xxx-Medium.ttf",
-                "xxx-MediumItalic.ttf",
-                "xxx-Bold.ttf",
-                "xxx-BoldItalic.ttf",
-            });
-        return builder.Build();
-    }
-}
-```
-
-- Add Material colors & styles in App.xaml
-
-```xaml
-<?xml version="1.0" encoding="UTF-8" ?>
-<Application
-    x:Class="SampleApp.App"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:SampleApp"
-    xmlns:mds="clr-namespace:Material.Components.Maui.Styles;assembly=Material.Components.Maui">
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                <mds:MaterialStyles />
-                <!--or use seendColor
-                <mds:MaterialStyles Dark="DarkBlue" Light="Green" />-->
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
-</Application>
-```
-
-- Let's go
 
 
 
@@ -82,16 +27,18 @@ public static class MauiProgram
 | ContextMenu | 😄 | 😄 |😭|
 | FAB | 😄 | 😄 |😄|
 | Label | 😄 | 😄 |😄|
-| NavigationBar | 😄 | 😄 |😭|
+| NavigationBar | 😄 | 😄 |🤔|
 | NavigationDrawer | 😄 | 😄 |😭|
 | Popup | 😄 | 😄 |😭|
 | ProgressIndicator | 😄 | 😄 |😄|
 | RadioButton | 😄 | 😄 |😄|
 | SplitView | 😄 | 😄 |😭|
 | Switch | 😄 | 😄 |😄|
-| Tabs | 😄 | 😄 |😭|
+| Tabs | 😄 | 😄 |🤔|
 | TextField | 😄 | 😄 |😭|
 | WrapLayout | 😄 | 😄 |😄|
+
+
 
 
 
@@ -101,17 +48,17 @@ Plan on contributing to the repository? We're glad to have you
 
 
 
-## License
-
-MIT
 
 
+## Sponsor this project
 
-## Documentation
-
-TODO
+If you like this project and want to support it, thanks!
 
 
+
+<div align="left">
+<a href="https://www.buymeacoffee.com/yiszza"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=yiszza&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" /></a>
+</div>
 
 
 
