@@ -122,9 +122,9 @@ internal class NavigationBarItemDrawable
             TransY = y,
             Persp2 = 1f
         };
-        if (this.view.IsActived && this.view.ActivedImage != null)
+        if (this.view.IsActived && this.view.ActivedIconSource != null)
         {
-            canvas.DrawPicture(this.view.ActivedImage, ref matrix, paint);
+            canvas.DrawPicture(this.view.ActivedIconSource, ref matrix, paint);
         }
         else
         {

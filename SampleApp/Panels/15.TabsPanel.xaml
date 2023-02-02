@@ -9,67 +9,67 @@
     <Grid RowDefinitions="*,*" RowSpacing="30">
         <md:Tabs Grid.Row="0">
             <md:TabItem Icon="Add" Text="item 1">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 1" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 2">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 2" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 3">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 3" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 4">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 4" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
         </md:Tabs>
 
         <md:Tabs Grid.Row="1" Style="{DynamicResource ScrollTabsStyle}">
             <md:TabItem Icon="Add" Text="item 1">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 1" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 2">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 2" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 3">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 3" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 4">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 4" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 5">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 5" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 6">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 6" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 7">
-                <md:FillGrid>
+                <Grid>
                     <md:Label FontSize="32" Text="Item 7" />
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
             <md:TabItem Icon="Add" Text="item 8">
-                <md:FillGrid>
+                <Grid>
                     <md:Button Clicked="Button_Clicked" Text="111"/>
-                </md:FillGrid>
+                </Grid>
             </md:TabItem>
         </md:Tabs>
     </Grid>
