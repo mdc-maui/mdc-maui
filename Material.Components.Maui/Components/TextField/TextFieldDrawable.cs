@@ -73,7 +73,7 @@ internal class TextFieldDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon is IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -83,7 +83,7 @@ internal class TextFieldDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
         var x = bounds.Left + 16f * this.scale;
         var y = bounds.MidY - 12f * this.scale;
         var matrix = new SKMatrix
@@ -129,7 +129,7 @@ internal class TextFieldDrawable
 
     private void DrawPathTrailingIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.TrailingIconSource != null || this.view.TrailingIcon is IconKind.None)
+        if (this.view.TrailingIconSource != null || string.IsNullOrEmpty(this.view.TrailingIconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -139,7 +139,7 @@ internal class TextFieldDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.TrailingIcon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.TrailingIconData);
         var x = bounds.Right - (12f + 24f) * this.scale;
         var y = bounds.MidY - 12f * this.scale;
         var matrix = new SKMatrix
@@ -170,7 +170,7 @@ internal class TextFieldDrawable
                 SKBlendMode.SrcIn
             )
         };
-        var iconScale = 24 / this.view.TrailingIconSource.CullRect.Width * this.scale;
+        var iconScale = 24f / this.view.TrailingIconSource.CullRect.Width * this.scale;
         var x = bounds.Right - (12f + 24f) * this.scale;
         var y = bounds.MidY - 12f * this.scale;
         var matrix = new SKMatrix
@@ -245,9 +245,6 @@ internal class TextFieldDrawable
     private void DrawText(SKCanvas canvas)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var caretColor = this.view.CaretColor.ToSKColor();
         var options = new TextPaintOptions();
         var range = this.view.SelectionTextRange;

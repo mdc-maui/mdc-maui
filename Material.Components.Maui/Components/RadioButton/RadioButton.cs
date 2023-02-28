@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Specialized;
 using System.Windows.Input;
 
 namespace Material.Components.Maui;

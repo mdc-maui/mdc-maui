@@ -35,7 +35,7 @@ internal class MenuItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon == IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -45,7 +45,7 @@ internal class MenuItemDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
         var x = 12f;
         var y = 12f;
         path.Offset(x, y);
@@ -83,7 +83,7 @@ internal class MenuItemDrawable
 
     private void DrawTrailPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.TrailIconSource != null || this.view.TrailIcon == IconKind.None)
+        if (this.view.TrailIconSource != null || string.IsNullOrEmpty(this.view.TrailIconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -93,7 +93,7 @@ internal class MenuItemDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.TrailIcon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.TrailIconData);
         var x = bounds.Right - 36f;
         var y = 12f;
         path.Offset(x, y);
@@ -132,10 +132,7 @@ internal class MenuItemDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
-        var x = this.view.IconSource != null || this.view.Icon != IconKind.None ? 48f : 12f;
+        var x = this.view.IconSource != null || !string.IsNullOrEmpty(this.view.IconData) ? 48f : 12f;
         var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2f);
         this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();

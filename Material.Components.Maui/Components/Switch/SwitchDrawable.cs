@@ -68,7 +68,7 @@ internal class SwitchDrawable
             IsAntialias = true,
         };
 
-        var radius = GetThumbRadius(8, 12, 14);
+        var radius = this.GetThumbRadius(8, 12, 14);
         canvas.DrawCircle(cx, cy, radius, paint);
         canvas.Restore();
     }

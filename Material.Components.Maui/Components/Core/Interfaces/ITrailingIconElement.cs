@@ -1,11 +1,11 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface ITrailingIconElement
+public interface ITrailingIconElement
 {
-    IconKind TrailingIcon { get; set; }
+    IconKind TrailingIconKind { get; set; }
+    string TrailingIconData { get; set; }
     SKPicture TrailingIconSource { get; set; }
     Color TrailingIconColor { get; set; }
-
     SKRect TrailingIconBounds { get; set; }
 
     event EventHandler<SKTouchEventArgs> TrailingIconClicked;

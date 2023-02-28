@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface ITouchElement : ICommandElement
+public interface ITouchElement : ICommandElement
 {
     event EventHandler<SKTouchEventArgs> Pressed;
     event EventHandler<SKTouchEventArgs> Moved;

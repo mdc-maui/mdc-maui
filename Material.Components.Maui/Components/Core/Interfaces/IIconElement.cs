@@ -1,7 +1,8 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface IIconElement
+public interface IIconElement
 {
-    IconKind Icon { get; set; }
+    IconKind IconKind { get; set; }
+    string IconData { get; set; }
     SKPicture IconSource { get; set; }
 }

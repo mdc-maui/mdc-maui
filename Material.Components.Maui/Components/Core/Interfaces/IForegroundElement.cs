@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface IForegroundElement
+public interface IForegroundElement
 {
     Color ForegroundColor { get; }
     float ForegroundOpacity { get; }

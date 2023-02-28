@@ -101,24 +101,19 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
 
     #endregion
     #region IIconElement
-    public static readonly BindableProperty IconProperty = BindableProperty.Create(
-        nameof(IIconElement.Icon),
-        typeof(IconKind),
-        typeof(IIconElement),
-        IconKind.None,
-        propertyChanged: OnIconChanged
-    );
-    public static readonly BindableProperty IconSourceProperty = BindableProperty.Create(
-        nameof(IIconElement.IconSource),
-        typeof(SKPicture),
-        typeof(IIconElement),
-        null,
-        propertyChanged: OnIconChanged
-    );
-    public IconKind Icon
+    public static readonly BindableProperty IconKindProperty = IconElement.IconKindProperty;
+    public static readonly BindableProperty IconDataProperty = IconElement.IconDataProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
+    public IconKind IconKind
     {
-        get => (IconKind)this.GetValue(IconProperty);
-        set => this.SetValue(IconProperty, value);
+        get => (IconKind)this.GetValue(IconKindProperty);
+        set => this.SetValue(IconKindProperty, value);
+    }
+
+    public string IconData
+    {
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]
@@ -126,22 +121,6 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
     {
         get => (SKPicture)this.GetValue(IconSourceProperty);
         set => this.SetValue(IconSourceProperty, value);
-    }
-
-    private static void OnIconChanged(BindableObject bo, object oldValue, object newValue)
-    {
-        var btn = bo as Button;
-        if (
-            (newValue is IconKind && (oldValue is IconKind.None || newValue is IconKind.None))
-            || (newValue is SKPicture && (oldValue is null || newValue is null))
-        )
-        {
-            btn.SendInvalidateMeasure();
-        }
-        else
-        {
-            (bo as Button).OnPropertyChanged();
-        }
     }
     #endregion
 
@@ -331,7 +310,7 @@ public partial class Button : SKTouchCanvasView, IButton, ITextElement, IPadding
                 this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
             ) - this.Padding.VerticalThickness;
         var textScale = this.FontSize / 14f;
-        var iconSize = this.Icon != IconKind.None || this.IconSource != null ? 18d * textScale : 0d;
+        var iconSize = !string.IsNullOrEmpty(this.IconData) || this.IconSource != null ? 18d * textScale : 0d;
         this.InternalText.MaxWidth = (float)(maxWidth - 48d * textScale - iconSize);
         this.InternalText.MaxHeight = (float)maxHeight;
         var width =

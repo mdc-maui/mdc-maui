@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface IShapeElement
+public interface IShapeElement
 {
     Shape Shape { get; set; }
 }

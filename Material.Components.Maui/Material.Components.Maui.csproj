@@ -25,16 +25,16 @@
 
 	<PropertyGroup>
 		<Authors>yiszza</Authors>
-		<Description>Material You Components for .NET MAUI</Description>
+		<Description>Material design Components for .NET MAUI</Description>
 		<RepositoryUrl>https://github.com/yiszza/Material.Components.Maui</RepositoryUrl>
 		<PackageTags>material</PackageTags>
 		<AssemblyVersion></AssemblyVersion>
 		<FileVersion></FileVersion>
-		<Version>0.1.0-beta</Version>
+		<Version>0.1.1-beta</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="2.1.0" />
+		<PackageReference Include="IconPacks.Material" Version="1.0.8457.2-build" />
 		<PackageReference Include="M.BindableProperty.Generator" Version="0.9.3" />
 		<PackageReference Include="MaterialColorUtilities" Version="0.2.0" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.3" />

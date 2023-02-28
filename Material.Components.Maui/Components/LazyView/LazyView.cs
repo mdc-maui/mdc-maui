@@ -17,9 +17,9 @@ public class LazyView<TView> : BaseLazyView where TView : View, new()
     {
         View view = new TView { BindingContext = BindingContext };
 
-        Content = view;
+        this.Content = view;
 
-        SetIsLoaded(true);
+        this.SetIsLoaded(true);
         return new ValueTask(Task.FromResult(true));
     }
 }
@@ -43,13 +43,13 @@ public abstract class BaseLazyView : ContentView, IDisposable
     /// <summary>
     /// This is a read-only property that indicates when the view is loaded.
     /// </summary>
-    public new bool IsLoaded => (bool)GetValue(IsLoadedProperty);
+    public new bool IsLoaded => (bool)this.GetValue(IsLoadedProperty);
 
     /// <summary>
     /// This method change the value of the <see cref="IsLoaded"/> property.
     /// </summary>
     /// <param name="isLoaded"></param>
-    protected void SetIsLoaded(bool isLoaded) => SetValue(IsLoadedPropertyKey, isLoaded);
+    protected void SetIsLoaded(bool isLoaded) => this.SetValue(IsLoadedPropertyKey, isLoaded);
 
     /// <summary>
     /// Use this method to do the initialization of the <see cref="View"/> and change the status IsLoaded value here.
@@ -62,13 +62,13 @@ public abstract class BaseLazyView : ContentView, IDisposable
     /// </summary>
     public void Dispose()
     {
-        if (Content is IDisposable disposable)
+        if (this.Content is IDisposable disposable)
             disposable.Dispose();
     }
 
     protected override void OnBindingContextChanged()
     {
-        if (Content != null)
-            Content.BindingContext = BindingContext;
+        if (this.Content != null)
+            this.Content.BindingContext = this.BindingContext;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Layouts;
-using System.Diagnostics;
 using MIView = Microsoft.Maui.IView;
 
 namespace Material.Components.Maui;
@@ -35,7 +34,7 @@ public partial class WrapLayout : Layout, IItemsLayout
 
     private void OnPropertyChanged()
     {
-        if (!isOnSpacingChanging && this.Handler != null)
+        if (!this.isOnSpacingChanging && this.Handler != null)
             this.InvalidateMeasure();
     }
 
@@ -62,7 +61,7 @@ file class WrapLayoutManager : LayoutManager
 
         widthConstraint =
             Math.Min(
-                Math.Min(widthConstraint, layout.MaximumWidthRequest),
+                Math.Min(widthConstraint, this.layout.MaximumWidthRequest),
                 this.layout.WidthRequest != -1 ? this.layout.WidthRequest : double.PositiveInfinity
             ) - this.layout.Padding.HorizontalThickness;
         heightConstraint =
@@ -75,9 +74,9 @@ file class WrapLayoutManager : LayoutManager
 
         Size result;
         if (this.layout.Orientation == StackOrientation.Horizontal)
-            result = HorizontalMeasure(widthConstraint, heightConstraint);
+            result = this.HorizontalMeasure(widthConstraint, heightConstraint);
         else
-            result = VerticalMeasure(widthConstraint, heightConstraint);
+            result = this.VerticalMeasure(widthConstraint, heightConstraint);
         result.Width += this.layout.Padding.HorizontalThickness;
         result.Height += this.layout.Padding.VerticalThickness;
         return result;
@@ -96,7 +95,7 @@ file class WrapLayoutManager : LayoutManager
             var size = item.Measure(widthConstraint, heightConstraint);
             if (rowWidth + size.Width > widthConstraint)
             {
-                UpdateHorizontalChildrenBounds(height, rowHeight, rowViews);
+                this.UpdateHorizontalChildrenBounds(height, rowHeight, rowViews);
                 rowViews.Clear();
 
                 width = Math.Max(width, rowWidth);
@@ -111,7 +110,7 @@ file class WrapLayoutManager : LayoutManager
             rowViews.Add(item);
         }
 
-        UpdateHorizontalChildrenBounds(height, rowHeight, rowViews);
+        this.UpdateHorizontalChildrenBounds(height, rowHeight, rowViews);
         width = Math.Max(rowWidth, width) - this.layout.HorizontalSpacing;
         height = Math.Min(heightConstraint, height + rowHeight);
         return new Size(width, height);
@@ -136,12 +135,12 @@ file class WrapLayoutManager : LayoutManager
         var columnHeight = 0d;
         var columnViews = new List<MIView>();
 
-        foreach (var item in layout.Children)
+        foreach (var item in this.layout.Children)
         {
             var size = item.Measure(widthConstraint, heightConstraint);
             if (size.Height + columnHeight - this.layout.VerticalSpacing > heightConstraint)
             {
-                UpdateVerticalChildrenBounds(width, columnWidth, columnViews);
+                this.UpdateVerticalChildrenBounds(width, columnWidth, columnViews);
                 columnViews.Clear();
 
                 width += columnWidth + this.layout.HorizontalSpacing;
@@ -153,7 +152,7 @@ file class WrapLayoutManager : LayoutManager
             columnHeight += size.Height + this.layout.VerticalSpacing;
             columnViews.Add(item);
         }
-        UpdateVerticalChildrenBounds(height, columnWidth, columnViews);
+        this.UpdateVerticalChildrenBounds(height, columnWidth, columnViews);
 
         width = Math.Min(widthConstraint, width + columnWidth);
         height = Math.Max(columnHeight, height) - this.layout.VerticalSpacing;
@@ -174,9 +173,9 @@ file class WrapLayoutManager : LayoutManager
     public override Size ArrangeChildren(Rect bounds)
     {
         if (this.layout.Orientation == StackOrientation.Horizontal)
-            HorizontalArrangeChildren();
+            this.HorizontalArrangeChildren();
         else
-            VerticalArrangeChildren();
+            this.VerticalArrangeChildren();
 
         return new Size(bounds.Width, bounds.Height);
     }

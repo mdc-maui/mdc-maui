@@ -12,8 +12,8 @@ internal class NavigationDrawerItemDrawable
     internal void Draw(SKCanvas canvas, SKRect bounds)
     {
         canvas.Clear();
-        DrawBackground(canvas, bounds);
-        DrawActiveIndicator(canvas, bounds);
+        this.DrawBackground(canvas, bounds);
+        this.DrawActiveIndicator(canvas, bounds);
         this.DrawStateLayer(canvas, bounds);
         this.DrawPathIcon(canvas, bounds);
         this.DrawImageIcon(canvas, bounds);
@@ -44,7 +44,7 @@ internal class NavigationDrawerItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon is IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -54,7 +54,7 @@ internal class NavigationDrawerItemDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
         var x = 16f;
         var y = 12f;
         path.Offset(x, y);
@@ -97,9 +97,6 @@ internal class NavigationDrawerItemDrawable
         if (!this.view.IsExtended)
             return;
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var x = 52f;
         var y = bounds.MidY - this.view.InternalText.MeasuredHeight / 2;
         this.view.InternalText.Paint(canvas, new SKPoint(x, y));

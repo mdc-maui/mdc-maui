@@ -55,7 +55,7 @@ internal class TabItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (!this.view.HasIcon || this.view.IconSource != null || this.view.Icon is IconKind.None)
+        if (!this.view.HasIcon || this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -65,7 +65,7 @@ internal class TabItemDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
         var x = bounds.MidX - 12;
         var y = this.view.HasLabel ? 12 : bounds.MidY - 12;
         path.Offset(x, y);
@@ -106,9 +106,6 @@ internal class TabItemDrawable
         if (!this.view.HasLabel)
             return;
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var x = bounds.MidX - (this.view.InternalText.MeasuredWidth / 2);
         var y = this.view.HasIcon
             ? 36 + ((25 - this.view.InternalText.MeasuredHeight) / 2)

@@ -10,4 +10,5 @@ internal interface IButton
         IElevationElement,
         IShapeElement,
         IStateLayerElement,
-        IRippleElement { }
+        IRippleElement
+{ }

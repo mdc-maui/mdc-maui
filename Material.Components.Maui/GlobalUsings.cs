@@ -1,4 +1,5 @@
-﻿global using Material.Components.Maui.Core;
+﻿global using IconPacks.Material;
+global using Material.Components.Maui.Core;
 global using Material.Components.Maui.Core.Interfaces;
 global using Material.Components.Maui.Extensions;
 global using Material.Components.Maui.Tokens;
@@ -7,9 +8,10 @@ global using SkiaSharp;
 global using SkiaSharp.Views.Maui;
 global using SkiaSharp.Views.Maui.Controls;
 global using System.Runtime.CompilerServices;
+global using IconKind = IconPacks.Material.IconKind;
 global using IBackgroundElement = Material.Components.Maui.Core.Interfaces.IBackgroundElement;
 global using ICommandElement = Material.Components.Maui.Core.Interfaces.ICommandElement;
-global using IContextMenu = Material.Components.Maui.Core.Interfaces.IContextMenu;
+global using IContextMenu = Material.Components.Maui.Components.Core.Interfaces.IContextMenu;
 global using IEditTextElement = Material.Components.Maui.Core.Interfaces.IEditTextElement;
 global using IElevationElement = Material.Components.Maui.Core.Interfaces.IElevationElement;
 global using IForegroundElement = Material.Components.Maui.Core.Interfaces.IForegroundElement;
@@ -28,3 +30,4 @@ global using ValueChangedEventArgs = Material.Components.Maui.Core.ValueChangedE
 global using FontMapper = Material.Components.Maui.Tokens.FontMapper;
 global using TextAlignment = Microsoft.Maui.TextAlignment;
 global using TextStyle = Topten.RichTextKit.Style;
+

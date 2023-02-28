@@ -181,12 +181,20 @@ public partial class TextField
     #endregion
 
     #region IIconElement
-    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconKindProperty = IconElement.IconKindProperty;
+    public static readonly BindableProperty IconDataProperty = IconElement.IconDataProperty;
     public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
-    public IconKind Icon
+
+    public IconKind IconKind
     {
-        get => (IconKind)this.GetValue(IconProperty);
-        set => this.SetValue(IconProperty, value);
+        get => (IconKind)this.GetValue(IconKindProperty);
+        set => this.SetValue(IconKindProperty, value);
+    }
+
+    public string IconData
+    {
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]
@@ -198,16 +206,25 @@ public partial class TextField
     #endregion
 
     #region ITrailingIconElement
-    public static readonly BindableProperty TrailingIconProperty =
-        TrailingIconElement.TrailingIconProperty;
+    public static readonly BindableProperty TrailingIconKindProperty =
+        TrailingIconElement.TrailingIconKindProperty;
+    public static readonly BindableProperty TrailingIconDataProperty =
+        TrailingIconElement.TrailingIconDataProperty;
     public static readonly BindableProperty TrailingIconSourceProperty =
         TrailingIconElement.TrailingIconSourceProperty;
     public static readonly BindableProperty TrailingIconColorProperty =
         TrailingIconElement.TrailingIconColorProperty;
-    public IconKind TrailingIcon
+
+    public IconKind TrailingIconKind
     {
-        get => (IconKind)this.GetValue(TrailingIconProperty);
-        set => this.SetValue(TrailingIconProperty, value);
+        get => (IconKind)this.GetValue(TrailingIconKindProperty);
+        set => this.SetValue(TrailingIconKindProperty, value);
+    }
+
+    public string TrailingIconData
+    {
+        get => (string)this.GetValue(TrailingIconDataProperty);
+        set => this.SetValue(TrailingIconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]
@@ -289,8 +306,6 @@ public partial class TextField
         set => this.SetValue(SupportingTextOpacityProperty, value);
     }
     #endregion
-
-
 
     #region IOutlineElement
     public static readonly BindableProperty OutlineColorProperty =
@@ -614,12 +629,12 @@ public partial class TextField
         var scale = this.FontSize / 16f;
 
         var leftWidth =
-            ((this.Icon != IconKind.None || this.IconSource != null ? 24f + 12f : 0f) + 16f)
+            ((!string.IsNullOrEmpty(this.IconData) || this.IconSource != null ? 24f + 12f : 0f) + 16f)
             * scale;
         var rightWidth =
             (
                 (
-                    this.TrailingIcon != IconKind.None || this.TrailingIconSource != null
+                    !string.IsNullOrEmpty(this.TrailingIconData) || this.TrailingIconSource != null
                         ? 24f + 12f
                         : 0f
                 ) + 16f

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Animations;
-
 namespace Material.Components.Maui.Extensions;
 
 internal static class DrawableExtensions
@@ -330,5 +329,10 @@ internal static class DrawableExtensions
         var rippleEffectSize = minimumRippleEffectSize.Lerp(rippleSize, percent);
         canvas.DrawCircle(touchPoint, rippleEffectSize, paint);
         canvas.Restore();
+    }
+
+    internal static SKPoint ToSKPoint(this System.Drawing.PointF point)
+    {
+        return new SKPoint(point.X, point.Y);
     }
 }

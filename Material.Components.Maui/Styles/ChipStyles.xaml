@@ -185,7 +185,7 @@
                     </VisualState>
                     <VisualState x:Name="normal:actived">
                         <VisualState.Setters>
-                            <Setter Property="Icon" Value="Check" />
+                            <Setter Property="IconKind" Value="Check" />
                             <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -196,7 +196,7 @@
                     </VisualState>
                     <VisualState x:Name="hovered:actived">
                         <VisualState.Setters>
-                            <Setter Property="Icon" Value="Check" />
+                            <Setter Property="IconKind" Value="Check" />
                             <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -209,7 +209,7 @@
                     </VisualState>
                     <VisualState x:Name="pressed:actived">
                         <VisualState.Setters>
-                            <Setter Property="Icon" Value="Check" />
+                            <Setter Property="IconKind" Value="Check" />
                             <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -276,7 +276,7 @@
                     </VisualState>
                     <VisualState x:Name="normal:actived">
                         <VisualState.Setters>
-                            <Setter Property="Icon" Value="Check" />
+                            <Setter Property="IconKind" Value="Check" />
                             <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -287,7 +287,7 @@
                     </VisualState>
                     <VisualState x:Name="hovered:actived">
                         <VisualState.Setters>
-                            <Setter Property="Icon" Value="Check" />
+                            <Setter Property="IconKind" Value="Check" />
                             <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -300,7 +300,7 @@
                     </VisualState>
                     <VisualState x:Name="pressed:actived">
                         <VisualState.Setters>
-                            <Setter Property="Icon" Value="Check" />
+                            <Setter Property="IconKind" Value="Check" />
                             <Setter Property="BackgroundColour" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />

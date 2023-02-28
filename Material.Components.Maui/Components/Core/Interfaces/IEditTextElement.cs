@@ -1,7 +1,7 @@
 ﻿using Topten.RichTextKit.Editor;
 
 namespace Material.Components.Maui.Core.Interfaces;
-internal interface IEditTextElement
+public interface IEditTextElement
 {
     string Text { get; set; }
     TextDocument TextDocument { get; set; }

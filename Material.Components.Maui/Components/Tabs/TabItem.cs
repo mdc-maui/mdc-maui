@@ -104,12 +104,20 @@ public partial class TabItem
     #endregion
 
     #region IIconElement
-    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconKindProperty = IconElement.IconKindProperty;
+    public static readonly BindableProperty IconDataProperty = IconElement.IconDataProperty;
     public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
-    public IconKind Icon
+
+    public IconKind IconKind
     {
-        get => (IconKind)this.GetValue(IconProperty);
-        set => this.SetValue(IconProperty, value);
+        get => (IconKind)this.GetValue(IconKindProperty);
+        set => this.SetValue(IconKindProperty, value);
+    }
+
+    public string IconData
+    {
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]
@@ -205,7 +213,7 @@ public partial class TabItem
     [AutoBindable(DefaultValue = "true", OnChanged = nameof(OnPropertyChanged))]
     private readonly bool hasIcon;
 
-    [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
+    [AutoBindable(OnChanged = nameof(OnIsActivedChanged))]
     public bool isActived;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
@@ -216,6 +224,11 @@ public partial class TabItem
 
     [AutoBindable(DefaultValue = "1f", OnChanged = nameof(OnPropertyChanged))]
     private readonly float activeIndicatorOpacity;
+
+    private void OnIsActivedChanged()
+    {
+        this.ChangeVisualState();
+    }
 
     public float ChangingPercent { get; private set; } = 1f;
 

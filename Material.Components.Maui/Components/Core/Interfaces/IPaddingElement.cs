@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface IPaddingElement
+public interface IPaddingElement
 {
     Thickness Padding { get; set; }
 }

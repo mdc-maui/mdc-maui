@@ -89,14 +89,14 @@ public partial class NavigationDrawer : TemplatedView, ICommandElement, IVisualT
 
     private void OnIsPaneOpenChanged()
     {
-        foreach (var item in Items)
+        foreach (var item in this.Items)
         {
             if (item is NavigationDrawerItem ndi)
             {
                 ndi.IsExtended = this.IsPaneOpen;
             }
         }
-        foreach (var item in FooterItems)
+        foreach (var item in this.FooterItems)
         {
             if (item is NavigationDrawerItem ndi)
             {
@@ -114,14 +114,14 @@ public partial class NavigationDrawer : TemplatedView, ICommandElement, IVisualT
     {
         if (this.SelectedItem != null)
         {
-            foreach (var item in Items)
+            foreach (var item in this.Items)
             {
                 if (item is NavigationDrawerItem ndi)
                 {
                     ndi.IsActived = this.SelectedItem.Equals(ndi);
                 }
             }
-            foreach (var item in FooterItems)
+            foreach (var item in this.FooterItems)
             {
                 if (item is NavigationDrawerItem ndi)
                 {

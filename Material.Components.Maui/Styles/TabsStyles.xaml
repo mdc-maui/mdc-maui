@@ -25,7 +25,7 @@
         </Setter>
     </Style>
 
-    <Style BaseResourceKey="FillTabsStyle" TargetType="views:Tabs" />
+    <Style BaseResourceKey="FilledTabsStyle" TargetType="views:Tabs" />
 
     <Style x:Key="ScrolledTabsStyle" TargetType="views:Tabs">
         <Setter Property="ControlTemplate">

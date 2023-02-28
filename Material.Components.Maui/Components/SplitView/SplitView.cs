@@ -27,7 +27,7 @@ public partial class SplitView : View, ICommandElement, IVisualTreeElement
 
     private void OnPaneChanged()
     {
-        OnChildAdded(this.Pane);
+        this.OnChildAdded(this.Pane);
     }
 
     private void OnContentChanged(View oldValue, View newValue)
@@ -44,7 +44,7 @@ public partial class SplitView : View, ICommandElement, IVisualTreeElement
             VisualDiagnostics.OnChildAdded(this, newValue);
         }
 
-        OnChildAdded(this.Content);
+        this.OnChildAdded(this.Content);
         this.ContentChanged?.Invoke(this, new ValueChangedEventArgs(this.Content));
         this.Command?.Execute(this.CommandParameter ?? this.Content);
     }

@@ -4,6 +4,6 @@ public partial class NavigationDrawerItemStyles : ResourceDictionary
 {
     public NavigationDrawerItemStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

@@ -5,6 +5,7 @@ namespace Material.Components.Maui.Core;
 internal class MixedButtonDrawable : ButtonDrawable
 {
     private readonly Button view;
+    private float scale;
 
     public MixedButtonDrawable(Button button) : base(button)
     {
@@ -25,16 +26,16 @@ internal class MixedButtonDrawable : ButtonDrawable
             (int)(bounds.Right - this.view.Padding.Right),
             (int)(bounds.Bottom - this.view.Padding.Bottom)
         );
-        var textScale = this.view.FontSize / 14f;
-        this.DrawPathIcon(canvas, paddingBounds, textScale);
-        this.DrawImageIcon(canvas, paddingBounds, textScale);
-        this.DrawText(canvas, paddingBounds, textScale);
+        this.scale = this.view.FontSize / 14f;
+        this.DrawPathIcon(canvas, paddingBounds);
+        this.DrawImageIcon(canvas, paddingBounds);
+        this.DrawText(canvas, paddingBounds);
         this.DrawRippleEffect(canvas, bounds);
     }
 
-    private void DrawPathIcon(SKCanvas canvas, SKRect bounds, float textScale)
+    private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon is IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -44,13 +45,15 @@ internal class MixedButtonDrawable : ButtonDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
-        var iconScale = 18f / 24f * textScale;
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
+        path.GetTightBounds(out var tb);
+        var size = Math.Max(tb.MidX, tb.MidY) * 2;
+        var iconScale = 18f / size * this.scale;
         var x =
             bounds.MidX
-            - (this.view.InternalText.MeasuredWidth + (18f + 48f) * textScale) / 2f
-            + 16f * textScale;
-        var y = bounds.MidY - 9f * textScale;
+            - (this.view.InternalText.MeasuredWidth + (18f + 48f) * this.scale) / 2f
+            + 16f * this.scale;
+        var y = bounds.MidY - 9f * this.scale;
         var matrix = new SKMatrix
         {
             ScaleX = iconScale,
@@ -64,7 +67,7 @@ internal class MixedButtonDrawable : ButtonDrawable
         canvas.Restore();
     }
 
-    private void DrawImageIcon(SKCanvas canvas, SKRect bounds, float textScale)
+    private void DrawImageIcon(SKCanvas canvas, SKRect bounds)
     {
         if (this.view.IconSource is null)
             return;
@@ -78,12 +81,13 @@ internal class MixedButtonDrawable : ButtonDrawable
             )
         };
         var svgBounds = this.view.IconSource.CullRect;
-        var iconScale = 18f / svgBounds.Width * textScale;
+        var size = Math.Max(svgBounds.Width, svgBounds.Height);
+        var iconScale = 18f / size * this.scale;
         var x =
             bounds.MidX
-            - (this.view.InternalText.MeasuredWidth + (18f + 48f) * textScale) / 2f
-            + 16f * textScale;
-        var y = bounds.MidY - 9f * textScale;
+            - (this.view.InternalText.MeasuredWidth + (18f + 48f) * this.scale) / 2f
+            + 16f * this.scale;
+        var y = bounds.MidY - 9f * this.scale;
         var matrix = new SKMatrix
         {
             ScaleX = iconScale,
@@ -96,19 +100,18 @@ internal class MixedButtonDrawable : ButtonDrawable
         canvas.Restore();
     }
 
-    internal void DrawText(SKCanvas canvas, SKRect bounds, float textScale)
+    internal void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var iconSize =
-            this.view.Icon != IconKind.None || this.view.IconSource != null ? 18f * textScale : 0f;
+            !string.IsNullOrEmpty(this.view.IconData) || this.view.IconSource != null
+                ? 18f * this.scale
+                : 0f;
         var x =
             bounds.MidX
-            - (this.view.InternalText.MeasuredWidth + iconSize + 48f * textScale) / 2f
+            - (this.view.InternalText.MeasuredWidth + iconSize + 48f * this.scale) / 2f
             + iconSize
-            + 24f * textScale;
+            + 24f * this.scale;
         var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2f);
         this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();

@@ -20,6 +20,24 @@ internal static class ForegroundElement
 
     public static void OnChanged(BindableObject bo, object oldValue, object newValue)
     {
+        var fe = bo as IForegroundElement;
+
+        if (fe.ForegroundColor != null)
+        {
+            if (bo is ITextElement te)
+            {
+                te.TextStyle.TextColor = fe.ForegroundColor
+                .MultiplyAlpha(fe.ForegroundOpacity)
+                .ToSKColor();
+            }
+            else if (bo is IEditTextElement ete)
+            {
+                ete.TextStyle.TextColor = fe.ForegroundColor
+                 .MultiplyAlpha(fe.ForegroundOpacity)
+                 .ToSKColor();
+            }
+        }
+
         ((IView)bo).OnPropertyChanged();
     }
 }

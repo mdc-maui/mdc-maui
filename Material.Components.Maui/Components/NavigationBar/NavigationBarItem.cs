@@ -105,12 +105,19 @@ public partial class NavigationBarItem
     #endregion
 
     #region IIconElement
-    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconKindProperty = IconElement.IconKindProperty;
+    public static readonly BindableProperty IconDataProperty = IconElement.IconDataProperty;
     public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
-    public IconKind Icon
+    public IconKind IconKind
     {
-        get => (IconKind)this.GetValue(IconProperty);
-        set => this.SetValue(IconProperty, value);
+        get => (IconKind)this.GetValue(IconKindProperty);
+        set => this.SetValue(IconKindProperty, value);
+    }
+
+    public string IconData
+    {
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]
@@ -206,11 +213,11 @@ public partial class NavigationBarItem
     [AutoBindable(OnChanged = nameof(OnIsActivedChanged))]
     public bool isActived;
 
-    [AutoBindable(
-        DefaultValue = "Material.Components.Maui.Tokens.IconKind.None",
-        OnChanged = nameof(OnPropertyChanged)
-    )]
-    private readonly IconKind activedIcon;
+    [AutoBindable(OnChanged = nameof(OnActivedIconKindChanged))]
+    private readonly IconKind activedIconKind;
+
+    [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
+    private readonly string activedIconData;
 
     [AutoBindable(OnChanged = nameof(OnPropertyChanged))]
     private readonly SKPicture activedIconSource;
@@ -220,19 +227,13 @@ public partial class NavigationBarItem
 
     private void OnIsActivedChanged()
     {
-        VisualStateManager.GoToState(
-            this,
-            this.ControlState switch
-            {
-                ControlState.Normal => this.IsActived ? "normal:actived" : "normal",
-                ControlState.Hovered => this.IsActived ? "hovered:actived" : "hovered",
-                ControlState.Pressed => this.IsActived ? "pressed:actived" : "pressed",
-                ControlState.Disabled => "disabled",
-                _ => "normal",
-            }
-        );
-        this.InvalidateSurface();
+        this.ChangeVisualState();
         IsActivedChanged?.Invoke(this, new ValueChangedEventArgs(this.IsActived));
+    }
+
+    private void OnActivedIconKindChanged()
+    {
+        this.ActivedIconData = this.ActivedIconKind.GetData();
     }
 
     public event EventHandler<ValueChangedEventArgs> IsActivedChanged;

@@ -51,12 +51,19 @@ public partial class IconButton : SKTouchCanvasView, IButton
     #endregion
 
     #region IIconElement
-    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconKindProperty = IconElement.IconKindProperty;
+    public static readonly BindableProperty IconDataProperty = IconElement.IconDataProperty;
     public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
-    public IconKind Icon
+    public IconKind IconKind
     {
-        get => (IconKind)this.GetValue(IconProperty);
-        set => this.SetValue(IconProperty, value);
+        get => (IconKind)this.GetValue(IconKindProperty);
+        set => this.SetValue(IconKindProperty, value);
+    }
+
+    public string IconData
+    {
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]

@@ -2,8 +2,8 @@ namespace Material.Components.Maui.Styles;
 
 public partial class TextFieldStyles : ResourceDictionary
 {
-	public TextFieldStyles()
-	{
-		InitializeComponent();
-	}
+    public TextFieldStyles()
+    {
+        this.InitializeComponent();
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface IView
+public interface IView
 {
     ControlState ControlState { get; set; }
     void OnPropertyChanged();

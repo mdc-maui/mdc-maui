@@ -50,7 +50,7 @@ internal class FABDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon == IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -67,7 +67,7 @@ internal class FABDrawable
                     ? 8f
                     : 30f;
         var scale = this.view.FABType == FABType.Large ? 1.5f : 1f;
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
         var matrix = new SKMatrix
         {
             ScaleX = scale,
@@ -118,9 +118,6 @@ internal class FABDrawable
         if (!this.view.IsExtended)
             return;
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var x =
             this.view.FABType == FABType.Default
                 ? 52f

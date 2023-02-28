@@ -72,7 +72,7 @@ internal class ComboBoxDrawable
                 .ToSKColor(),
         };
         var path = SKPath.ParseSvgPathData(IconKind.ArrowDropDown.GetData());
-        var degrees = this.view.IsDropDown ? 180 : 0;
+        var degrees = this.view.IsDropDown ? 180f : 0f;
         var radians = degrees * (MathF.PI / 180f);
         var sin = (float)Math.Sin(radians);
         var cos = (float)Math.Cos(radians);

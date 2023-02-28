@@ -4,6 +4,6 @@ public partial class NavigationBarItemStyles : ResourceDictionary
 {
     public NavigationBarItemStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

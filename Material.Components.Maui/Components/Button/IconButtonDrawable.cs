@@ -25,7 +25,7 @@ internal class IconButtonDrawable : ButtonDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon == IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -35,10 +35,22 @@ internal class IconButtonDrawable : ButtonDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
+
+        path.GetTightBounds(out var tb);
+        var size = Math.Max(tb.MidX, tb.MidY) * 2;
+        var scale = 24 / size;
         var x = bounds.MidX - 12;
         var y = bounds.MidY - 12;
-        path.Offset(x, y);
+        var matrix = new SKMatrix
+        {
+            ScaleX = scale,
+            ScaleY = scale,
+            TransX = x,
+            TransY = y,
+            Persp2 = 1f
+        };
+        path.Transform(matrix);
         canvas.DrawPath(path, paint);
         canvas.Restore();
     }

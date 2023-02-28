@@ -1,7 +1,7 @@
 ﻿using Topten.RichTextKit;
 
 namespace Material.Components.Maui.Core.Interfaces;
-internal interface ISupportingTextElement
+public interface ISupportingTextElement
 {
     public string SupportingText { get; set; }
     TextBlock InternalSupportingText { get; set; }

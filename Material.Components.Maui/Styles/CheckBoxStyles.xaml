@@ -10,7 +10,6 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="MinimumWidthRequest" Value="40" />
         <Setter Property="MinimumHeightRequest" Value="40" />
-        <Setter Property="FontSize" Value="14" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="OnColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="ForegroundColor" Value="{DynamicResource OnSecondaryContainerColor}" />

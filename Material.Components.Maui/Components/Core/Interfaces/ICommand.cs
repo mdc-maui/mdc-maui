@@ -2,7 +2,7 @@
 
 namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface ICommandElement
+public interface ICommandElement
 {
     ICommand Command { get; set; }
     object CommandParameter { get; set; }

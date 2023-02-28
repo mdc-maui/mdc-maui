@@ -68,9 +68,6 @@ internal class RadioButtonItemDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var x = bounds.Left + 40;
         var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2);
         this.view.InternalText.Paint(canvas, new SKPoint(x, y));

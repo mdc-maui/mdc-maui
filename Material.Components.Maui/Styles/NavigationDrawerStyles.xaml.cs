@@ -4,7 +4,7 @@ public partial class NavigationDrawerStyles : ResourceDictionary
 {
     public NavigationDrawerStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     private void MenuBtn_Clicked(object sender, SKTouchEventArgs e)

@@ -3,6 +3,7 @@
 internal class ChipDrawable
 {
     private readonly Chip view;
+    private float scale;
 
     public ChipDrawable(Chip view)
     {
@@ -16,6 +17,8 @@ internal class ChipDrawable
         this.DrawOutline(canvas, bounds);
         this.DrawOverlayLayer(canvas, bounds);
         this.DrawStateLayer(canvas, bounds);
+
+        this.scale = this.view.FontSize / 14f;
         this.DrawPathIcon(canvas, bounds);
         this.DrawImageIcon(canvas, bounds);
         this.DrawCloseIcon(canvas, bounds);
@@ -63,7 +66,7 @@ internal class ChipDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon == IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -71,14 +74,15 @@ internal class ChipDrawable
             Color = this.view.IconColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
-        var scale = 18 / 24f;
-        var x = bounds.Left + 8;
-        var y = bounds.MidY - 9;
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
+        var size = Math.Max(path.Bounds.MidX, path.Bounds.MidY) * 2;
+        var iconScale = 18f / size * this.scale;
+        var x = bounds.Left + 8f * this.scale;
+        var y = bounds.MidY - 9f * this.scale;
         var matrix = new SKMatrix
         {
-            ScaleX = scale,
-            ScaleY = scale,
+            ScaleX = iconScale,
+            ScaleY = iconScale,
             TransX = x,
             TransY = y,
             Persp2 = 1f
@@ -102,13 +106,14 @@ internal class ChipDrawable
             )
         };
         var svgBounds = this.view.IconSource.CullRect;
-        var scale = 18 / svgBounds.Width;
-        var x = bounds.Left + 8;
-        var y = bounds.MidY - 9;
+        var size = Math.Max(svgBounds.Width, svgBounds.Height);
+        var iconScale = 18f / size * this.scale;
+        var x = bounds.Left + 8f;
+        var y = bounds.MidY - 9f;
         var matrix = new SKMatrix
         {
-            ScaleX = scale,
-            ScaleY = scale,
+            ScaleX = iconScale,
+            ScaleY = iconScale,
             TransX = x,
             TransY = y,
             Persp2 = 1f
@@ -128,13 +133,14 @@ internal class ChipDrawable
             IsAntialias = true,
         };
         var path = SKPath.ParseSvgPathData(IconKind.Close.GetData());
-        var scale = 18 / 24f;
-        var x = bounds.Right - 26;
-        var y = bounds.MidY - 9;
+        var size = Math.Max(path.Bounds.MidX, path.Bounds.MidY) * 2;
+        var iconScale = 18f / size * this.scale;
+        var x = bounds.Right - 26 * this.scale;
+        var y = bounds.MidY - 9 * this.scale;
         var matrix = new SKMatrix
         {
-            ScaleX = scale,
-            ScaleY = scale,
+            ScaleX = iconScale,
+            ScaleY = iconScale,
             TransX = x,
             TransY = y,
             Persp2 = 1f
@@ -147,16 +153,12 @@ internal class ChipDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var leftPadding =
-            this.view.Icon != IconKind.None || this.view.IconSource != null ? 34f : 16f;
-        var rightPadding = this.view.HasCloseIcon ? 34f : 16f;
+            (!string.IsNullOrEmpty(this.view.IconData) || this.view.IconSource != null ? 34f : 16f) * this.scale;
+        var rightPadding = (this.view.HasCloseIcon ? 34f : 16f) * this.scale;
         var x =
             leftPadding
             + (bounds.Width - leftPadding - rightPadding - this.view.InternalText.MeasuredWidth) / 2;
-        //var x = leftPadding + ((bounds.Right - leftPadding - rightPadding) / 2) - (this.view.TextBlock.MeasuredWidth / 2);
         var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2);
         this.view.InternalText.Paint(canvas, new SKPoint(x, y));
         canvas.Restore();

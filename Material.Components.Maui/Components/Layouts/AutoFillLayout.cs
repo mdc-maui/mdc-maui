@@ -1,6 +1,4 @@
 ﻿using Microsoft.Maui.Layouts;
-using System.Collections;
-using System.Collections.Specialized;
 
 namespace Material.Components.Maui;
 
@@ -27,7 +25,7 @@ file class UniformStackLayoutManager : LayoutManager
 
     public override Size Measure(double widthConstraint, double heightConstraint)
     {
-        childrenSizes.Clear();
+        this.childrenSizes.Clear();
 
         var maxWidth = 0d;
         var maxHeight = 64d;
@@ -37,7 +35,7 @@ file class UniformStackLayoutManager : LayoutManager
             var size = item.Measure(widthConstraint, heightConstraint);
             maxWidth += size.Width;
             maxHeight = Math.Max(maxHeight, size.Height);
-            childrenSizes.Add(size);
+            this.childrenSizes.Add(size);
         }
 
         maxWidth =
@@ -45,9 +43,9 @@ file class UniformStackLayoutManager : LayoutManager
                 ? Math.Max(maxWidth, widthConstraint)
                 : maxWidth;
         var childrenWidth = Math.Ceiling(maxWidth / this.layout.Children.Count);
-        for (var i = 0; i < childrenSizes.Count; i++)
+        for (var i = 0; i < this.childrenSizes.Count; i++)
         {
-            childrenSizes[i] = new Size(childrenWidth, maxHeight);
+            this.childrenSizes[i] = new Size(childrenWidth, maxHeight);
         }
 
         return new Size(maxWidth, maxHeight);

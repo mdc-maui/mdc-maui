@@ -31,9 +31,6 @@ internal class LabelDrawable
     private void DrawText(SKCanvas canvas, SKRect bounds)
     {
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var x = this.view.HorizontalTextAlignment switch
         {
             TextAlignment.Center => bounds.MidX - (this.view.InternalText.MeasuredWidth / 2),

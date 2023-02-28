@@ -149,6 +149,30 @@ public partial class Chip
     }
     #endregion
 
+    #region IIconElement
+    public static readonly BindableProperty IconKindProperty = IconElement.IconKindProperty;
+    public static readonly BindableProperty IconDataProperty = IconElement.IconDataProperty;
+    public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
+
+    public IconKind IconKind
+    {
+        get => (IconKind)this.GetValue(IconKindProperty);
+        set => this.SetValue(IconKindProperty, value);
+    }
+    public string IconData
+    {
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
+    }
+
+    [TypeConverter(typeof(IconSourceConverter))]
+    public SKPicture IconSource
+    {
+        get => (SKPicture)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
+    }
+    #endregion
+
     #region IOutlineElement
     public static readonly BindableProperty OutlineColorProperty =
         OutlineElement.OutlineColorProperty;
@@ -230,53 +254,6 @@ public partial class Chip
     public SKPoint TouchPoint { get; set; } = new SKPoint(-1, -1);
     #endregion
     #endregion
-
-    public static readonly BindableProperty IconProperty = BindableProperty.Create(
-        nameof(IIconElement.Icon),
-        typeof(IconKind),
-        typeof(IIconElement),
-        IconKind.None,
-        propertyChanged: OnIconChanged
-    );
-
-    public static readonly BindableProperty IconSourceProperty = BindableProperty.Create(
-        nameof(IIconElement.IconSource),
-        typeof(SKPicture),
-        typeof(IIconElement),
-        null,
-        propertyChanged: OnIconChanged
-    );
-
-    private static void OnIconChanged(BindableObject bo, object oldValue, object newValue)
-    {
-        var chip = bo as Chip;
-        if (
-            oldValue is IconKind.None
-            || newValue is IconKind.None
-            || oldValue is null
-            || newValue is null
-        )
-        {
-            chip.SendInvalidateMeasure();
-        }
-        else
-        {
-            chip.InvalidateSurface();
-        }
-    }
-
-    public IconKind Icon
-    {
-        get => (IconKind)this.GetValue(IconProperty);
-        set => this.SetValue(IconProperty, value);
-    }
-
-    [TypeConverter(typeof(IconSourceConverter))]
-    public SKPicture IconSource
-    {
-        get => (SKPicture)this.GetValue(IconSourceProperty);
-        set => this.SetValue(IconSourceProperty, value);
-    }
 
     [AutoBindable(OnChanged = nameof(OnIsCheckedChanged))]
     private readonly bool isChecked;
@@ -377,24 +354,30 @@ public partial class Chip
             Math.Min(heightConstraint, this.MaximumHeightRequest),
             this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
         );
-        var iconWidth =
-            (this.HasCloseIcon ? 18d : 0d)
-            + (this.Icon != IconKind.None || this.IconSource != null ? 18d : 0d);
-        this.InternalText.MaxWidth = (float)(maxWidth - 32d - iconWidth);
+        var textScale = this.FontSize / 14f;
+        var iconSize =
+            (
+                (this.HasCloseIcon ? 18d : 0d)
+                + (!string.IsNullOrEmpty(this.IconData) || this.IconSource != null ? 18d : 0d)
+            ) * textScale;
+        this.InternalText.MaxWidth = (float)(maxWidth - 32d * textScale - iconSize);
         this.InternalText.MaxHeight = (float)(maxHeight - this.Margin.VerticalThickness);
         var width =
             this.Margin.HorizontalThickness
             + Math.Max(
                 this.MinimumWidthRequest,
                 this.WidthRequest is -1
-                    ? Math.Min(maxWidth, this.InternalText.MeasuredWidth + 32d + iconWidth)
+                    ? Math.Min(
+                        maxWidth,
+                        this.InternalText.MeasuredWidth + 32d * textScale + iconSize
+                    )
                     : this.WidthRequest
             );
         var height =
             this.Margin.VerticalThickness
             + Math.Max(
                 this.MinimumHeightRequest,
-                this.HeightRequest != -1 ? Math.Min(maxHeight, 32d) : this.HeightRequest
+                this.HeightRequest != -1 ? Math.Min(maxHeight, 32d * textScale) : this.HeightRequest
             );
         var result = new Size(width, height);
         this.DesiredSize = result;

@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface IRippleElement
+public interface IRippleElement
 {
     SKPoint TouchPoint { get; set; }
     Color RippleColor { get; }

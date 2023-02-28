@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-
-namespace Material.Components.Maui.Core;
+﻿namespace Material.Components.Maui.Core;
 
 internal class CheckBoxDrawable
 {
     private readonly CheckBox view;
+    private float scale;
 
     public CheckBoxDrawable(CheckBox checkBox)
     {
@@ -25,7 +24,6 @@ internal class CheckBoxDrawable
             this.DrawMarkIcon(canvas, bounds);
         }
         this.DrawStateLayer(canvas, bounds);
-        this.DrawText(canvas, bounds);
         this.DrawRippleEffect(canvas, bounds);
     }
 
@@ -38,14 +36,15 @@ internal class CheckBoxDrawable
                 .MultiplyAlpha(this.view.ForegroundOpacity)
                 .ToSKColor(),
             IsStroke = true,
-            StrokeWidth = 1,
+            StrokeWidth = this.view.OutlineWidth,
             IsAntialias = true,
         };
         var radii = new CornerRadius(2).GetRadii();
         var path = new SKPath();
         var rect = new SKRoundRect();
         rect.SetRectRadii(
-            new SKRect(bounds.Left + 11, bounds.Top + 11, bounds.Left + 29, bounds.Bottom - 11),
+            new SKRect(bounds.Left + 11, bounds.Top + 11, bounds.Right - 11
+            , bounds.Bottom - 11),
             radii
         );
         path.AddRoundRect(rect);
@@ -119,7 +118,7 @@ internal class CheckBoxDrawable
         var path = new SKPath();
         var rect = new SKRoundRect();
         rect.SetRectRadii(
-            new SKRect(bounds.Left + 11, bounds.Top + 11, bounds.Left + 29, bounds.Bottom - 11),
+            new SKRect(bounds.Left + 11, bounds.Top + 11, bounds.Right - 11, bounds.Bottom - 11),
             radii
         );
         path.AddRoundRect(rect);
@@ -160,20 +159,6 @@ internal class CheckBoxDrawable
             );
         }
 #endif
-    }
-
-    private void DrawText(SKCanvas canvas, SKRect bounds)
-    {
-        canvas.Save();
-
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
-        var x = 40;
-        var y = bounds.MidY - (this.view.InternalText.MeasuredHeight / 2);
-        this.view.InternalText.Paint(canvas, new SKPoint(x, y));
-
-        canvas.Restore();
     }
 
     private void DrawRippleEffect(SKCanvas canvas, SKRect bounds)

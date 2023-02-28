@@ -52,7 +52,7 @@
                                         CommandParameter="{TemplateBinding IsPaneOpen,
                                                                            Mode=TwoWay}"
                                         ForegroundColor="{DynamicResource OnSecondaryContainerColor}"
-                                        Icon="{TemplateBinding SwitchIcon}"
+                                        IconKind="{TemplateBinding SwitchIcon}"
                                         Style="{DynamicResource StandardIconButtonStyle}" />
                                 </Grid>
                                 <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
@@ -75,7 +75,7 @@
                                     Grid.Column="0"
                                     Clicked="MenuBtn_Clicked"
                                     ForegroundColor="{DynamicResource OnSecondaryContainerColor}"
-                                    Icon="Menu"
+                                    IconKind="Menu"
                                     Style="{DynamicResource StandardIconButtonStyle}"
                                     VerticalOptions="Center" />
                                 <views:Label

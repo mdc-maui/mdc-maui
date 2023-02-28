@@ -103,32 +103,20 @@ public partial class MenuItem
 
     #endregion
     #region IIconElement
-    public static readonly BindableProperty IconProperty = IconElement.IconProperty;
+    public static readonly BindableProperty IconKindProperty = IconElement.IconKindProperty;
+    public static readonly BindableProperty IconDataProperty = IconElement.IconDataProperty;
     public static readonly BindableProperty IconSourceProperty = IconElement.IconSourceProperty;
-    public static readonly BindableProperty TrailIconProperty = BindableProperty.Create(
-        nameof(TrailIcon),
-        typeof(IconKind),
-        typeof(MenuItem),
-        IconKind.None,
-        propertyChanged: OnTrailIconChanged
-    );
-    public static readonly BindableProperty TrailIconSourceProperty = BindableProperty.Create(
-        nameof(TrailIconSource),
-        typeof(SKPicture),
-        typeof(MenuItem),
-        null,
-        propertyChanged: OnTrailIconChanged
-    );
 
-    private static void OnTrailIconChanged(BindableObject bo, object oldValue, object newValue)
+    public IconKind IconKind
     {
-        ((IView)bo).OnPropertyChanged();
+        get => (IconKind)this.GetValue(IconKindProperty);
+        set => this.SetValue(IconKindProperty, value);
     }
 
-    public IconKind Icon
+    public string IconData
     {
-        get => (IconKind)this.GetValue(IconProperty);
-        set => this.SetValue(IconProperty, value);
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]
@@ -137,17 +125,30 @@ public partial class MenuItem
         get => (SKPicture)this.GetValue(IconSourceProperty);
         set => this.SetValue(IconSourceProperty, value);
     }
-    public IconKind TrailIcon
+    #endregion
+
+    #region ITrailingIconElement
+    public static readonly BindableProperty TrailingIconKindProperty = TrailingIconElement.TrailingIconKindProperty;
+    public static readonly BindableProperty TrailingIconDataProperty = TrailingIconElement.TrailingIconDataProperty;
+    public static readonly BindableProperty TrailingIconSourceProperty = TrailingIconElement.TrailingIconSourceProperty;
+
+    public IconKind TrailIconKind
     {
-        get => (IconKind)this.GetValue(TrailIconProperty);
-        set => this.SetValue(TrailIconProperty, value);
+        get => (IconKind)this.GetValue(TrailingIconKindProperty);
+        set => this.SetValue(TrailingIconKindProperty, value);
+    }
+
+    public string TrailIconData
+    {
+        get => (string)this.GetValue(TrailingIconDataProperty);
+        set => this.SetValue(TrailingIconDataProperty, value);
     }
 
     [TypeConverter(typeof(IconSourceConverter))]
     public SKPicture TrailIconSource
     {
-        get => (SKPicture)this.GetValue(TrailIconSourceProperty);
-        set => this.SetValue(TrailIconSourceProperty, value);
+        get => (SKPicture)this.GetValue(TrailingIconSourceProperty);
+        set => this.SetValue(TrailingIconSourceProperty, value);
     }
     #endregion
 
@@ -278,8 +279,8 @@ public partial class MenuItem
         var minWidth = this.MinimumWidthRequest;
         var maxWidth = this.MaximumWidthRequest;
         var offsetWidth =
-            (this.Icon != IconKind.None || this.IconSource != null ? 48d : 12d)
-            + (this.TrailIcon != IconKind.None || this.TrailIconSource != null ? 48d : 12d);
+            (!string.IsNullOrEmpty(this.IconData) || this.IconSource != null ? 48d : 12d)
+            + (string.IsNullOrEmpty(this.TrailIconData) || this.TrailIconSource != null ? 48d : 12d);
         this.InternalText.MaxWidth = (float)(maxWidth - 24d - offsetWidth);
         this.InternalText.MaxHeight = 48f;
         return Math.Max(

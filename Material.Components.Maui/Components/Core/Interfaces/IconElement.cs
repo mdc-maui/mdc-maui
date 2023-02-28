@@ -1,13 +1,21 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal static class IconElement
+public static class IconElement
 {
-    public static readonly BindableProperty IconProperty = BindableProperty.Create(
-        nameof(IIconElement.Icon),
+    public static readonly BindableProperty IconKindProperty = BindableProperty.Create(
+        nameof(IIconElement.IconKind),
         typeof(IconKind),
         typeof(IIconElement),
         IconKind.None,
-        propertyChanged: OnChanged
+        propertyChanged: OnIconKindChanged
+    );
+
+    public static readonly BindableProperty IconDataProperty = BindableProperty.Create(
+        nameof(IIconElement.IconData),
+        typeof(string),
+        typeof(IIconElement),
+        default,
+        propertyChanged: OnIconDataChanged
     );
 
     public static readonly BindableProperty IconSourceProperty = BindableProperty.Create(
@@ -15,11 +23,36 @@ internal static class IconElement
         typeof(SKPicture),
         typeof(IIconElement),
         null,
-        propertyChanged: OnChanged
+        propertyChanged: OnIconSourceChanged
     );
 
-    public static void OnChanged(BindableObject bo, object oldValue, object newValue)
+    public static void OnIconKindChanged(BindableObject bo, object oldValue, object newValue)
     {
-        ((IView)bo).OnPropertyChanged();
+        var iconElement = bo as IIconElement;
+        iconElement.IconData = ((IconKind)newValue).GetData();
+    }
+
+    public static void OnIconDataChanged(BindableObject bo, object oldValue, object newValue)
+    {
+        if (string.IsNullOrEmpty(oldValue as string) || string.IsNullOrEmpty(newValue as string))
+        {
+            (bo as View)?.SendInvalidateMeasure();
+        }
+        else
+        {
+            ((IView)bo).OnPropertyChanged();
+        }
+    }
+
+    public static void OnIconSourceChanged(BindableObject bo, object oldValue, object newValue)
+    {
+        if (oldValue is null || newValue is null)
+        {
+            (bo as View)?.SendInvalidateMeasure();
+        }
+        else
+        {
+            ((IView)bo).OnPropertyChanged();
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface IElevationElement
+public interface IElevationElement
 {
     Elevation Elevation { get; set; }
 }

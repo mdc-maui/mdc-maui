@@ -1,7 +1,6 @@
-﻿namespace Material.Components.Maui.Core.Interfaces
+﻿namespace Material.Components.Maui.Components.Core.Interfaces;
+
+public interface IContextMenu
 {
-    public interface IContextMenu
-    {
-        ContextMenu ContextMenu { get; set; }
-    }
+    ContextMenu ContextMenu { get; set; }
 }

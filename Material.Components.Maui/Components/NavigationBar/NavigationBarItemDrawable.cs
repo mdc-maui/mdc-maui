@@ -53,7 +53,7 @@ internal class NavigationBarItemDrawable
         var _bounds = new SKRect(
             bounds.Left,
             bounds.Top,
-            bounds.Right ,
+            bounds.Right,
             bounds.Bottom
         );
         canvas.DrawOverlayLayer(_bounds, Elevation.Level2, radii);
@@ -76,7 +76,7 @@ internal class NavigationBarItemDrawable
 
     private void DrawPathIcon(SKCanvas canvas, SKRect bounds)
     {
-        if (this.view.IconSource != null || this.view.Icon is IconKind.None)
+        if (this.view.IconSource != null || string.IsNullOrEmpty(this.view.IconData))
             return;
         canvas.Save();
         var paint = new SKPaint
@@ -86,10 +86,10 @@ internal class NavigationBarItemDrawable
                 .ToSKColor(),
             IsAntialias = true,
         };
-        var path = SKPath.ParseSvgPathData(this.view.Icon.GetData());
-        if (this.view.IsActived && this.view.ActivedIcon != IconKind.None)
+        var path = SKPath.ParseSvgPathData(this.view.IconData);
+        if (this.view.IsActived && !string.IsNullOrEmpty(this.view.ActivedIconData))
         {
-            path = SKPath.ParseSvgPathData(this.view.ActivedIcon.GetData());
+            path = SKPath.ParseSvgPathData(this.view.ActivedIconData);
         }
         var x = (bounds.Width / 2) - 12;
         var y = this.view.HasLabel ? 16 : bounds.MidY - 12;
@@ -122,9 +122,9 @@ internal class NavigationBarItemDrawable
             TransY = y,
             Persp2 = 1f
         };
-        if (this.view.IsActived && this.view.ActivedImage != null)
+        if (this.view.IsActived && this.view.ActivedIconSource != null)
         {
-            canvas.DrawPicture(this.view.ActivedImage, ref matrix, paint);
+            canvas.DrawPicture(this.view.ActivedIconSource, ref matrix, paint);
         }
         else
         {
@@ -138,9 +138,6 @@ internal class NavigationBarItemDrawable
         if (!this.view.HasLabel)
             return;
         canvas.Save();
-        this.view.TextStyle.TextColor = this.view.ForegroundColor
-            .MultiplyAlpha(this.view.ForegroundOpacity)
-            .ToSKColor();
         var x = bounds.MidX - (this.view.InternalText.MeasuredWidth / 2);
         var y = 48 + ((16 - this.view.InternalText.MeasuredHeight) / 2);
         this.view.InternalText.Paint(canvas, new SKPoint(x, y));

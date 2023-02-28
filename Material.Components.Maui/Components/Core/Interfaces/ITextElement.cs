@@ -2,7 +2,7 @@
 
 namespace Material.Components.Maui.Core.Interfaces;
 
-internal interface ITextElement : IForegroundElement
+public interface ITextElement : IForegroundElement
 {
     string Text { get; set; }
     TextBlock InternalText { get; set; }

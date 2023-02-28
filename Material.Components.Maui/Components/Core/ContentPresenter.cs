@@ -13,8 +13,8 @@ internal class ContentPresenter : Microsoft.Maui.Controls.ContentPresenter, IVis
 
     public new View Content
     {
-        get => (View)GetValue(ContentProperty);
-        set => SetValue(ContentProperty, value);
+        get => (View)this.GetValue(ContentProperty);
+        set => this.SetValue(ContentProperty, value);
     }
 
     private void OnContentChanged(View oldValue, View newValue)
