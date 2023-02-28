@@ -25,8 +25,9 @@ There are 4 Styles of icon buttons: 1. Filled, 2. FilledTonal , 3. Outlined, 4. 
 
 | name             | type        | defalut | describes                             |
 | ---------------- | ----------- | ------- | ------------------------------------- |
-| Icon             | IconKind    | none    | button's icon                         |
-| IconSource       | SkPicture   |         | button's icon                         |
+| IconKind         | IconKind    | none    | button's icon from iconkind.          |
+| IconSource       | SkPicture   |         | button's icon from file.              |
+| IconData         | string      | empty   | button's icon from path data.         |
 | BackgroundColour | Color       | style   | button's background color.            |
 | ForegroundColor  | Color       | style   | button's foreground color.            |
 | Shape            | Shape       | style   | corner radius of the button's border. |

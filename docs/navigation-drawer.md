@@ -44,19 +44,22 @@ Navigation drawers provide ergonomic access to destinations in an app.
 
 ## NavigationDrawerItem Properties
 
-| name                 | type   | default                 | describes                                              |
-| -------------------- | ------ | ----------------------- | ------------------------------------------------------ |
-| Title                | string | empty                   | NavigationDrawerItem's title.                          |
-| Text                 | string | empty                   | NavigationDrawerItem's Text.                           |
-| ContentType          | Type   |                         | NavigationDrawerItem's contain content type.           |
-| ActiveIndicatorColor |        | SecondaryContainerColor | NavigationDrawerItem's activeIndicator color.          |
-| BackgroundColour     | Color  | Transparent             | NavigationDrawerItem's background color.               |
-| ForegroundColor      | Color  | OnSurfaceVariantColor   | NavigationDrawerItem's foreground color.               |
-| FontFamily           | string |                         | font family of the NavigationDrawerItem's text.        |
-| FontSize             | float  | 14                      | font size of the NavigationDrawerItem's text.          |
-| FontWeight           | int    | 500                     | font weight of the NavigationDrawerItem's text.        |
-| FontItalic           | bool   | false                   | enable font italic of the NavigationDrawerItem's text. |
-| RippleColor          | Color  | SurfaceTintColor        | NavigationDrawerItem's ripple color.                   |
+| name                 | type      | default                 | describes                                              |
+| -------------------- | --------- | ----------------------- | ------------------------------------------------------ |
+| Title                | string    | empty                   | NavigationDrawerItem's title.                          |
+| Text                 | string    | empty                   | NavigationDrawerItem's Text.                           |
+| ContentType          | Type      |                         | NavigationDrawerItem's contain content type.           |
+| IconKind             | IconKind  | none                    | NavigationDrawerItem's icon from iconkind.             |
+| IconSource           | SkPicture |                         | NavigationDrawerItem's icon from file.                 |
+| IconData             | string    | empty                   | NavigationDrawerItem's icon from path data.            |
+| ActiveIndicatorColor |           | SecondaryContainerColor | NavigationDrawerItem's activeIndicator color.          |
+| BackgroundColour     | Color     | Transparent             | NavigationDrawerItem's background color.               |
+| ForegroundColor      | Color     | OnSurfaceVariantColor   | NavigationDrawerItem's foreground color.               |
+| FontFamily           | string    |                         | font family of the NavigationDrawerItem's text.        |
+| FontSize             | float     | 14                      | font size of the NavigationDrawerItem's text.          |
+| FontWeight           | int       | 500                     | font weight of the NavigationDrawerItem's text.        |
+| FontItalic           | bool      | false                   | enable font italic of the NavigationDrawerItem's text. |
+| RippleColor          | Color     | SurfaceTintColor        | NavigationDrawerItem's ripple color.                   |
 
 
 

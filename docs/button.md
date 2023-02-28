@@ -26,9 +26,10 @@ There are 5 Styles of buttons: 1. Elevated, 2. Filled,  3. FilledTonal , 4. Outl
 
 | name             | type        | defalut | describes                                |
 | ---------------- | ----------- | ------- | ---------------------------------------- |
-| Text             | string      | empty   | button's text                            |
-| Icon             | IconKind    | none    | button's icon                            |
-| IconSource       | SkPicture   |         | button's icon                            |
+| Text             | string      | empty   | button's text.                           |
+| IconKind         | IconKind    | none    | button's icon from iconkind.             |
+| IconSource       | SkPicture   |         | button's icon from file.                 |
+| IconData         | string      | empty   | button's icon from path data.            |
 | BackgroundColour | Color       | style   | button's background color.               |
 | ForegroundColor  | Color       | style   | button's foreground color.               |
 | FontFamily       | string      |         | font family of the button's text.        |

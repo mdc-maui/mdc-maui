@@ -33,10 +33,12 @@ There are 2 Styles of text fields: 1. Filled,  2. Outlined.
 | IsError               | bool      |                 | TextField's verified state.                   |
 | CaretPosition         | int       |                 | TextField's caret position.                   |
 | CaretColor            | Color     | style           | TextField's caret and cursor color.           |
-| Icon                  | IconKind  | none            | TextField's icon.                             |
-| IconSource            | SkPicture |                 | TextField's icon.                             |
-| TrailingIcon          | IconKind  | none            | TextField's trailing icon.                    |
-| TrailingIconSource    | SkPicture |                 | TextField's trailing icon.                    |
+| IconKind              | IconKind  | none            | TextField's icon from iconkind.               |
+| IconSource            | SkPicture |                 | TextField's icon from file.                   |
+| IconData              | string    | empty           | TextField's icon from path data.              |
+| TrailingIcon          | IconKind  | none            | TextField's trailing icon from iconkind.      |
+| TrailingIconSource    | SkPicture |                 | TextField's trailing icon from file.          |
+| TrailingIconData      | string    | empty           | TextField's trailing icon from path data.     |
 | LabelText             | string    | Label text      | TextField's label text.                       |
 | LabelTextColor        | Color     | style           | TextField's label text color.                 |
 | SupportingText        | string    | Supporting text | TextField's supporting text.                  |

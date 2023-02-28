@@ -33,8 +33,9 @@ There are 7 styles of chips: 1. Assist,  2. AssistElevated,  3. Filter,  4. Filt
 | IsChecked        | bool      | false   | chip's selected state(only support Filter and FilterElevated style). |
 | HasCloseIcon     | bool      | false   | show or hide close-icon of the chip.                         |
 | Text             | string    | empty   | chip's text.                                                 |
-| Icon             | IconKind  | none    | chip's icon                                                  |
-| IconSource       | SkPicture |         | chip's icon                                                  |
+| IconKind         | IconKind  | none    | chip's icon from iconkind.                                   |
+| IconSource       | SkPicture |         | chip's icon from file.                                       |
+| IconData         | string    | empty   | chip's icon from path data.                                  |
 | IconColor        | Color     | style   | chip's icon color                                            |
 | BackgroundColour | Color     | style   | chip's background color                                      |
 | ForegroundColor  | Color     | style   | chip's foreground color                                      |

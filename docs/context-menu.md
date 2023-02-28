@@ -39,8 +39,9 @@ ContextMenu display a list of choices on a temporary surface, It can be included
 | name             | type      | default | describes                                  |
 | ---------------- | --------- | ------- | ------------------------------------------ |
 | Text             | string    | empty   | MenuItem's text.                           |
-| Icon             | IconKind  | none    | MenuItem's Icon.                           |
-| IconSource       | SkPicture |         | MenuItem's icon                            |
+| IconKind         | IconKind  | none    | MenuItem's icon from iconkind.             |
+| IconSource       | SkPicture |         | MenuItem's icon from file.                 |
+| IconData         | string    | empty   | MenuItem's icon from path data.            |
 | BackgroundColour | Color     | style   | MenuItem's background color.               |
 | ForegroundColor  | Color     | style   | MenuItem's foreground color.               |
 | FontFamily       | string    |         | font family of the MenuItem's text.        |

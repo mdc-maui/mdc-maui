@@ -68,8 +68,9 @@ There are 2 Styles of : 1. Filled, 2. Scrolled.
 | Content              | View      |         | TabItem's contain content.                |
 | IsActived            | bool      | false   | TabItem's selected state.                 |
 | Text                 | string    | empty   | TabItem's Text.                           |
-| Icon                 | IconKind  | none    | TabItem's icon.                           |
-| IconSource           | SkPicture |         | TabItem's icon.                           |
+| IconKind             | IconKind  | none    | TabItem's icon from iconkind.             |
+| IconSource           | SkPicture |         | TabItem's icon from file.                 |
+| IconData             | string    | empty   | TabItem's icon from path data.            |
 | ActiveIndicatorColor | Color     | style   | TabItem's activeIndicator color.          |
 | BackgroundColour     | Color     | style   | TabItem's background color.               |
 | ForegroundColor      | Color     | style   | TabItem's foreground color.               |
