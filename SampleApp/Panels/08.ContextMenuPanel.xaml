@@ -12,34 +12,20 @@
         <vm:ContextMenuVM />
     </ContentView.BindingContext>
 
-    <ContentView.Resources>
-        <Style BaseResourceKey="DefaultLabelStyle" TargetType="md:Label">
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="18" />
-        </Style>
-        <Style
-            x:Key="Title"
-            BasedOn="{StaticResource DefaultLabelStyle}"
-            TargetType="md:Label">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="FontWeight" Value="600" />
-        </Style>
-    </ContentView.Resources>
-
     <ScrollView Padding="30,20">
         <VerticalStackLayout Spacing="15">
-            <md:Label Style="{DynamicResource Title}">Styles</md:Label>
-            <md:Label>There are 1 styles of contextMenus: 1. Default</md:Label>
-
-            <md:Label Text="{OnIdiom Default=long press button  ↓↓↓, Desktop=right click button ↓↓↓}" />
+            <md:Label
+                FontSize="18"
+                HorizontalOptions="Start"
+                Text="{OnIdiom Default=long press button  ↓↓↓,
+                               Desktop=right click button ↓↓↓}" />
 
             <md:WrapLayout
                 Padding="20"
                 HorizontalSpacing="50"
                 VerticalSpacing="15">
                 <md:Button
-                    Icon="Menu"
+                    IconKind="Menu"
                     Text="button"
                     VerticalOptions="Center">
                     <md:Button.ContextMenu>
@@ -47,77 +33,69 @@
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="Menu"
+                                IconKind="Menu"
                                 Text="item 1" />
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="Menu"
+                                IconKind="Menu"
                                 Text="item 2" />
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="Menu"
+                                IconKind="Menu"
                                 Text="item 3" />
                         </md:ContextMenu>
                     </md:Button.ContextMenu>
                 </md:Button>
-                <md:IconButton Icon="Menu" VerticalOptions="Center">
+                <md:IconButton IconKind="Menu" VerticalOptions="Center">
                     <md:IconButton.ContextMenu>
                         <md:ContextMenu>
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="One"
+                                IconKind="Star"
                                 Text="one" />
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="Two"
+                                IconKind="Star"
                                 Text="two" />
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="Three"
+                                IconKind="Star"
                                 Text="three" />
                         </md:ContextMenu>
                     </md:IconButton.ContextMenu>
                 </md:IconButton>
-                <md:FAB Icon="Settings" VerticalOptions="Center">
+                <md:FAB IconKind="Settings" VerticalOptions="Center">
                     <md:FAB.ContextMenu>
                         <md:ContextMenu>
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="About"
+                                IconKind="Park"
                                 Text="item 1" />
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="About"
+                                IconKind="Park"
                                 Text="item 2" />
                             <md:MenuItem
                                 Command="{Binding MenuItemClickedCommand}"
                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=Text}"
-                                Icon="About"
+                                IconKind="Park"
                                 Text="item 3" />
                         </md:ContextMenu>
                     </md:FAB.ContextMenu>
                 </md:FAB>
             </md:WrapLayout>
 
-            <md:Card>
-                <md:Button Text="{Binding TestString}" />
-            </md:Card>
-
-            <md:Label Text="{Binding TestString, Mode=TwoWay}" />
-
             <md:Label
-                Margin="0,25,0,0"
-                Style="{DynamicResource Title}"
-                Text="Properties" />
-
-            <views:PropertyDescribes BindableLayout.ItemsSource="{Binding Describes}" />
+                FontSize="18"
+                HorizontalOptions="Start"
+                Text="{Binding TestString, Mode=TwoWay}" />
         </VerticalStackLayout>
     </ScrollView>
 

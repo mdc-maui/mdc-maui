@@ -4,6 +4,6 @@ public partial class ContextMenuPanel : ContentView
 {
     public ContextMenuPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

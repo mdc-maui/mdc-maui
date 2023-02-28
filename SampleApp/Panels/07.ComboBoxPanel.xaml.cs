@@ -4,6 +4,6 @@ public partial class ComboBoxPanel : ContentView
 {
     public ComboBoxPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

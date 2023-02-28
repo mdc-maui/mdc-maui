@@ -1,7 +1,5 @@
-﻿using CommunityToolkit.Maui.Markup;
-using Material.Components.Maui.Extensions;
+﻿using Material.Components.Maui.Extensions;
 using Material.Components.Maui.Tokens;
-using Microsoft.Extensions.Logging;
 #if WINDOWS
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.UI;
@@ -28,8 +26,7 @@ public static class MauiProgram
                     "Roboto-Bold.ttf",
                     "Roboto-BoldItalic.ttf",
                 }
-            )
-            .UseMauiCommunityToolkitMarkup();
+            );
 
         FontMapper.AddFont("OpenSans-Regular.ttf", "OpenSans");
 
@@ -52,10 +49,6 @@ public static class MauiProgram
         //        });
         //#endif
 
-
-#if DEBUG
-        builder.Logging.AddDebug();
-#endif
 
         return builder.Build();
     }

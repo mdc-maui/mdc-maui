@@ -4,6 +4,6 @@ public partial class NavigtionBarPanel : ContentView
 {
     public NavigtionBarPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

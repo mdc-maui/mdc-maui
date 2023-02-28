@@ -4,6 +4,6 @@ public partial class CheckBoxPanel : ContentView
 {
     public CheckBoxPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

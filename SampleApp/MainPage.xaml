@@ -11,87 +11,99 @@
     BackgroundColor="{DynamicResource BackgroundColor}"
     NavigationPage.HasNavigationBar="False">
 
-    <md:NavigationDrawer x:Name="Drawer" Title="Components" IsPaneOpen="{OnIdiom true, Phone=false}">
+    <md:NavigationDrawer
+        x:Name="Drawer"
+        Title="Components"
+        IsPaneOpen="{OnIdiom true,
+                             Phone=false}">
         <md:NavigationDrawerItem
             Title="Overview"
             ContentType="{x:Type panels:OverviewPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="Overview" />
         <md:NavigationDrawerItem
             Title="Button"
             ContentType="{x:Type panels:ButtonPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="Button" />
         <md:NavigationDrawerItem
             Title="IconButton"
             ContentType="{x:Type panels:IconButtonPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="IconButton" />
         <md:NavigationDrawerItem
             Title="Card"
             ContentType="{x:Type panels:CardPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="Card" />
         <md:NavigationDrawerItem
             Title="CheckBox"
             ContentType="{x:Type panels:CheckBoxPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="CheckBox" />
         <md:NavigationDrawerItem
             Title="Chip"
             ContentType="{x:Type panels:ChipPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="Chip" />
         <md:NavigationDrawerItem
             Title="ComboBox"
             ContentType="{x:Type panels:ComboBoxPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="ComboBox" />
         <md:NavigationDrawerItem
             Title="ContextMenu"
             ContentType="{x:Type panels:ContextMenuPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="ContextMenu" />
         <md:NavigationDrawerItem
             Title="FAB"
             ContentType="{x:Type panels:FABPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="FAB" />
         <md:NavigationDrawerItem
             Title="NavigtionBar"
             ContentType="{x:Type panels:NavigtionBarPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="NavigtionBar" />
         <md:NavigationDrawerItem
             Title="Popup"
             ContentType="{x:Type panels:PopupPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="Popup" />
         <md:NavigationDrawerItem
             Title="ProgressIndicator"
             ContentType="{x:Type panels:ProgressIndicatorPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="ProgressIndicator" />
         <md:NavigationDrawerItem
             Title="RadioButton"
             ContentType="{x:Type panels:RadioButtonPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="RadioButton" />
         <md:NavigationDrawerItem
             Title="Switch"
             ContentType="{x:Type panels:SwitchPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="Switch" />
         <md:NavigationDrawerItem
             Title="Tab"
             ContentType="{x:Type panels:TabsPanel}"
-            Icon="LayersOutline"
+            IconKind="AutoAwesome"
             Text="Tab" />
         <md:NavigationDrawerItem
-            Title="textField"
+            Title="TextField"
             ContentType="{x:Type panels:TextFieldPanel}"
-            Icon="LayersOutline"
-            Text="textField" />
+            IconKind="AutoAwesome"
+            Text="TextField" />
+
+        <md:NavigationDrawer.FooterItems>
+            <md:IconButton
+                x:Name="ThemeSwitch"
+                Clicked="ThemeSwitch_Clicked"
+                IconKind="LightMode"
+                Style="{DynamicResource StandardIconButtonStyle}" />
+        </md:NavigationDrawer.FooterItems>
     </md:NavigationDrawer>
 
 </ContentPage>

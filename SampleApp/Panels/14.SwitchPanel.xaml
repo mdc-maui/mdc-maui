@@ -3,14 +3,17 @@
     x:Class="SampleApp.Panels.SwitchPanel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="{DynamicResource BackgroundColor}"
-    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
-    
-    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    BackgroundColor="{DynamicResource BackgroundColor}">
+
+    <md:WrapLayout
+        HorizontalOptions="Center"
+        Orientation="Horizontal"
+        Spacing="30"
+        VerticalOptions="Center">
         <md:Switch />
         <md:Switch HasIcon="False" />
-        <md:Switch IsEnabled="False" />
-        <md:Switch IsChecked="True" IsEnabled="False" />
+        <md:Switch IsChecked="True" />
 
-    </VerticalStackLayout>
+    </md:WrapLayout>
 </ContentView>

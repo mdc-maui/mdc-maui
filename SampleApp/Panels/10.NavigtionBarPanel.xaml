@@ -3,49 +3,57 @@
     x:Class="SampleApp.Panels.NavigtionBarPanel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="{DynamicResource BackgroundColor}"
-    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    BackgroundColor="{DynamicResource BackgroundColor}">
 
     <md:NavigationBar>
         <md:NavigationBarItem
-            ActivedIcon="Star"
-            Icon="Globe"
+            ActivedIconKind="Star"
+            IconKind="StarRate"
             Text="label">
-            <md:Label
+            <Grid>
+                <md:Label
                     FontSize="36"
                     HorizontalOptions="Center"
                     Text="Page 1"
                     VerticalOptions="Center" />
+            </Grid>
         </md:NavigationBarItem>
         <md:NavigationBarItem
-            ActivedIcon="Star"
-            Icon="Globe"
+            ActivedIconKind="Star"
+            IconKind="StarRate"
             Text="label">
-            <md:Label
+            <Grid>
+                <md:Label
                     FontSize="36"
                     HorizontalOptions="Center"
                     Text="Page 2"
                     VerticalOptions="Center" />
+            </Grid>
         </md:NavigationBarItem>
         <md:NavigationBarItem
-            ActivedIcon="Star"
-            Icon="Globe"
+            ActivedIconKind="Star"
+            IconKind="StarRate"
             Text="label">
-            <md:Label
+            <Grid>
+                <md:Label
                     FontSize="36"
                     HorizontalOptions="Center"
                     Text="Page 3"
                     VerticalOptions="Center" />
+            </Grid>
         </md:NavigationBarItem>
         <md:NavigationBarItem
-            ActivedIcon="Star"
-            Icon="Globe"
+            ActivedIconKind="Star"
+            IconKind="StarRate"
             Text="label">
-            <md:Label
+            <Grid>
+                <md:Label
                     FontSize="36"
                     HorizontalOptions="Center"
                     Text="Page 4"
                     VerticalOptions="Center" />
+            </Grid>
         </md:NavigationBarItem>
     </md:NavigationBar>
 </ContentView>

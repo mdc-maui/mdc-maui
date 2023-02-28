@@ -4,6 +4,6 @@ public partial class SwitchPanel : ContentView
 {
     public SwitchPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

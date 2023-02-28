@@ -4,7 +4,7 @@ public partial class ChipPanel : ContentView
 {
     public ChipPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     private void Chip_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)

@@ -67,11 +67,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="2.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview1" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
-
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Material.Components.Maui\Material.Components.Maui.csproj" />
@@ -138,9 +135,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Panels\TextFieldPanel.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\PropertyDescribes.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

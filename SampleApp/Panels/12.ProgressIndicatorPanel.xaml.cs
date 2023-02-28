@@ -4,6 +4,6 @@ public partial class ProgressIndicatorPanel : ContentView
 {
     public ProgressIndicatorPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

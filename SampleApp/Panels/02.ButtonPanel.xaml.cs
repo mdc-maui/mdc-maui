@@ -4,6 +4,6 @@ public partial class ButtonPanel : ContentView
 {
     public ButtonPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

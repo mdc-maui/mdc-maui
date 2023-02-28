@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
-    BackgroundColor="{DynamicResource BackgroundColor}"
+    BackgroundColor="{DynamicResource SurfaceColor}"
     HorizontalOptions="FillAndExpand"
     VerticalOptions="FillAndExpand">
 
@@ -19,31 +19,27 @@
     <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout Padding="20" HorizontalOptions="Fill">
             <md:WrapLayout>
-                <md:Button
-                    Clicked="Button_Clicked"
-                    Icon="ThemeOutline"
-                    Text="SwitchTheme" />
-                <md:Button Icon="ThemeOutline" Text="Enabled" />
+                <md:Button IconKind="TapAndPlay" Text="Enabled" />
                 <md:Button Style="{DynamicResource ElevatedButtonStyle}" Text="Enabled" />
                 <md:Button Style="{DynamicResource FilledTonalButtonStyle}" Text="Enabled" />
                 <md:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Enabled" />
                 <md:Button Style="{DynamicResource TextButtonStyle}" Text="Enabled" />
             </md:WrapLayout>
             <md:WrapLayout>
-                <md:IconButton Icon="Add" />
-                <md:IconButton Icon="Add" Style="{DynamicResource FilledTonalIconButtonStyle}" />
+                <md:IconButton IconKind="Grade" />
+                <md:IconButton IconKind="Grade" Style="{DynamicResource FilledTonalIconButtonStyle}" />
                 <md:IconButton IconSource="aiming.svg" Style="{DynamicResource OutlinedIconButtonStyle}" />
                 <md:IconButton IconSource="aiming.svg" Style="{DynamicResource StandardIconButtonStyle}" />
-                <md:CheckBox Text="checkBox" />
-                <md:CheckBox IsChecked="True" Text="checkBox" />
+                <md:CheckBox />
+                <md:CheckBox IsChecked="True" />
             </md:WrapLayout>
-            <md:WrapLayout>
+            <md:WrapLayout Orientation="Horizontal">
                 <md:Chip
-                    Icon="Add"
+                    IconKind="Add"
                     Style="{DynamicResource AssistChipStyle}"
                     Text="chip" />
                 <md:Chip
-                    Icon="Add"
+                    IconKind="Add"
                     Style="{DynamicResource AssistElevatedChipStyle}"
                     Text="chip" />
                 <md:Chip
@@ -55,22 +51,22 @@
                     Style="{DynamicResource FilterElevatedChipStyle}"
                     Text="chip" />
                 <md:Chip
-                    Icon="Add"
+                    IconKind="Add"
                     Style="{DynamicResource InputChipStyle}"
                     Text="chip" />
                 <md:Chip
-                    Icon="Add"
+                    IconKind="Add"
                     Style="{DynamicResource SuggestionChipStyle}"
                     Text="chip" />
                 <md:Chip
-                    Icon="Add"
+                    IconKind="Add"
                     Style="{DynamicResource SuggestionElevatedChipStyle}"
                     Text="chip" />
             </md:WrapLayout>
             <md:WrapLayout>
                 <md:TextField WidthRequest="250" />
                 <md:TextField
-                    Icon="Search"
+                    IconKind="Search"
                     Style="{DynamicResource OutlinedTextFieldStyle}"
                     WidthRequest="250" />
             </md:WrapLayout>
@@ -97,24 +93,24 @@
                 </md:ComboBox>
             </md:WrapLayout>
             <md:WrapLayout>
-                <md:FAB Icon="Home" Style="{DynamicResource SecondaryFABStyle}" />
-                <md:FAB Icon="Home" Style="{DynamicResource SurfaceFABStyle}" />
-                <md:FAB Icon="Home" Style="{DynamicResource TertiaryFABStyle}" />
+                <md:FAB IconKind="Home" Style="{DynamicResource SecondaryFABStyle}" />
+                <md:FAB IconKind="Home" Style="{DynamicResource SurfaceFABStyle}" />
+                <md:FAB IconKind="Home" Style="{DynamicResource TertiaryFABStyle}" />
                 <md:FAB
                     Clicked="FAB_Clicked"
-                    Icon="Home"
+                    IconKind="Home"
                     IsExtended="True"
                     Style="{DynamicResource SecondaryFABStyle}"
                     Text="Extended" />
                 <md:FAB
                     Clicked="FAB_Clicked"
-                    Icon="Home"
+                    IconKind="Home"
                     IsExtended="True"
                     Style="{DynamicResource SurfaceFABStyle}"
                     Text="Extended" />
                 <md:FAB
                     Clicked="FAB_Clicked"
-                    Icon="Home"
+                    IconKind="Home"
                     IsExtended="True"
                     Style="{DynamicResource TertiaryFABStyle}"
                     Text="Extended" />

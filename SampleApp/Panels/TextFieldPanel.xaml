@@ -6,40 +6,44 @@
     xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
     BackgroundColor="{DynamicResource BackgroundColor}">
 
-    <VerticalStackLayout
-        Padding="50,20"
-        HorizontalOptions="Start"
-        Spacing="25">
-        <md:TextField HorizontalOptions="Start" WidthRequest="250" />
-        <md:TextField
+    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Never">
+        <md:WrapLayout
+            Padding="100"
             HorizontalOptions="Start"
-            Icon="Search"
-            WidthRequest="250" />
-        <md:TextField
-            HorizontalOptions="Start"
-            Icon="Password"
-            IsError="True"
-            SupportingText="Incorrect password"
-            TextChanged="TextField_TextChanged"
-            TrailingIcon="Remove"
-            WidthRequest="350" />
-        <md:TextField
-            HorizontalOptions="Start"
-            Style="{DynamicResource OutlinedTextFieldStyle}"
-            WidthRequest="250" />
-        <md:TextField
-            HorizontalOptions="Start"
-            Icon="Search"
-            Style="{DynamicResource OutlinedTextFieldStyle}"
-            WidthRequest="250" />
-        <md:TextField
-            HorizontalOptions="Start"
-            Icon="Password"
-            IsError="True"
-            Style="{DynamicResource OutlinedTextFieldStyle}"
-            SupportingText="Incorrect password"
-            TextChanged="TextField_TextChanged"
-            TrailingIcon="Remove"
-            WidthRequest="350" />
-    </VerticalStackLayout>
+            Spacing="25">
+            <md:TextField HorizontalOptions="Start" WidthRequest="250" />
+            <md:TextField
+                HorizontalOptions="Start"
+                IconKind="Search"
+                WidthRequest="250" />
+            <md:TextField
+                HorizontalOptions="Start"
+                IconKind="Password"
+                IsError="True"
+                SupportingText="Incorrect password"
+                TextChanged="TextField_TextChanged"
+                TrailingIconClicked="TextField_TrailingIconClicked"
+                TrailingIconKind="Close"
+                WidthRequest="300" />
+            <md:TextField
+                HorizontalOptions="Start"
+                Style="{DynamicResource OutlinedTextFieldStyle}"
+                WidthRequest="250" />
+            <md:TextField
+                HorizontalOptions="Start"
+                IconKind="Search"
+                Style="{DynamicResource OutlinedTextFieldStyle}"
+                WidthRequest="250" />
+            <md:TextField
+                HorizontalOptions="Start"
+                IconKind="Password"
+                IsError="True"
+                Style="{DynamicResource OutlinedTextFieldStyle}"
+                SupportingText="Incorrect password"
+                TextChanged="TextField_TextChanged"
+                TrailingIconClicked="TextField_TrailingIconClicked"
+                TrailingIconKind="Close"
+                WidthRequest="300" />
+        </md:WrapLayout>
+    </ScrollView>
 </ContentView>

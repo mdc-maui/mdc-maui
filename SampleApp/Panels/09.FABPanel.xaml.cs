@@ -4,6 +4,6 @@ public partial class FABPanel : ContentView
 {
     public FABPanel()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

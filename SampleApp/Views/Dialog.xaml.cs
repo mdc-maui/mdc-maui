@@ -6,7 +6,7 @@ public partial class Dialog : Popup
 {
     public Dialog()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 
     private void Cancel_Clicked(object sender, SkiaSharp.Views.Maui.SKTouchEventArgs e)
