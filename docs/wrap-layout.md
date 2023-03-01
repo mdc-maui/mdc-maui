@@ -10,14 +10,14 @@ WrapLayout is a layout container that lets you position items in rows or columns
 
 ```xml
 <mdc:WrapLayout Orientation="Horizontal">
-	<mdc:Chip Text="chip" Icon="Add" />
-	<mdc:Chip Text="chip" Icon="Add" />
-	<mdc:Chip Text="chip" Icon="Add" />
-	<mdc:Chip Text="chip" Icon="Add" />
-	<mdc:Chip Text="chip" Icon="Add" />
-	<mdc:Chip Text="chip" Icon="Add" />
-	<mdc:Chip Text="chip" Icon="Add" />
-	<mdc:Chip Text="chip" Icon="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
+	<mdc:Chip Text="chip" IconKind="Add" />
 </mdc:WrapLayout>
 ```
 

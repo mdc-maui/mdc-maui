@@ -9,8 +9,8 @@ Navigation drawers provide ergonomic access to destinations in an app.
 
 ```xml
 <mdc:NavigationDrawer Title="Components">
-    <mdc:NavigationDrawerItem Title="Overview" Icon="LayersOutline" ContentType="{x:Type panels:OverviewPanel}" />
-	<mdc:NavigationDrawerItem Title="Button" Icon="LayersOutline" ContentType="{x:Type panels:ButtonPanel}" />
+    <mdc:NavigationDrawerItem Title="Overview" IconKind="AutoAwesome" ContentType="{x:Type panels:OverviewPanel}" />
+	<mdc:NavigationDrawerItem Title="Button" IconKind="AutoAwesome" ContentType="{x:Type panels:ButtonPanel}" />
 </mdc:NavigationDrawer>
 ```
 

@@ -13,10 +13,10 @@ There are 4 Styles of icon buttons: 1. Filled, 2. FilledTonal , 3. Outlined, 4. 
 ## Examples
 
 ```xml
-<mdc:IconButton Icon="Pencil" Style="{DynamicResource FilledIconButtonStyle}" />
-<mdc:IconButton Icon="Pencil" Style="{DynamicResource FilledTonalIconButtonStyle}" />
-<mdc:IconButton Icon="Pencil" Style="{DynamicResource OutlinedIconButtonStyle}" />
-<mdc:IconButton Icon="Pencil" Style="{DynamicResource StandardIconButtonStyle}" />
+<mdc:IconButton IconKind="Star" Style="{DynamicResource FilledIconButtonStyle}" />
+<mdc:IconButton IconKind="Star" Style="{DynamicResource FilledTonalIconButtonStyle}" />
+<mdc:IconButton IconKind="Star" Style="{DynamicResource OutlinedIconButtonStyle}" />
+<mdc:IconButton IconKind="Star" Style="{DynamicResource StandardIconButtonStyle}" />
 ```
 
 

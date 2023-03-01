@@ -10,12 +10,12 @@ ContextMenu display a list of choices on a temporary surface, It can be included
 ## Examples
 
 ```xml
-<mdc:FAB Icon="Settings">
+<mdc:FAB IconKind="Settings">
 	<mdc:FAB.ContextMenu>
         <mdc:ContextMenu>
-            <mdc:MenuItem Icon="About" Text="item 1" />
-            <mdc:MenuItem Icon="About" Text="item 2" />
-            <mdc:MenuItem Icon="About" Text="item 3" />
+            <mdc:MenuItem IconKind="Menu" Text="item 1" />
+            <mdc:MenuItem IconKind="Menu" Text="item 2" />
+            <mdc:MenuItem IconKind="Menu" Text="item 3" />
     	</mdc:ContextMenu>
 	</mdc:FAB.ContextMenu>
 </mdc:FAB>

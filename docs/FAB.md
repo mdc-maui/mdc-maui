@@ -13,11 +13,11 @@ There are 9 Styles of FABs: 1. Secondary,  2. Surface,  3. Tertiary,  4. SmallSe
 ## Examples
 
 ```xml
-<mdc:FAB Icon="Add" Style="{DynamicResource SecondaryFABStyle}" />
-<mdc:FAB Icon="Add" Style="{DynamicResource SurfaceFABStyle}" />
-<mdc:FAB Icon="Add" Style="{DynamicResource TertiaryFABStyle}" />
-<mdc:FAB Icon="Add" Text="Extended" IsExtended="True" Style="{DynamicResource SecondaryFABStyle}" />
-<mdc:FAB Icon="Add" Style="{DynamicResource LargeSecondaryFABStyle}" />
+<mdc:FAB IconKind="Add" Style="{DynamicResource SecondaryFABStyle}" />
+<mdc:FAB IconKind="Add" Style="{DynamicResource SurfaceFABStyle}" />
+<mdc:FAB IconKind="Add" Style="{DynamicResource TertiaryFABStyle}" />
+<mdc:FAB IconKind="Add" Text="Extended" IsExtended="True" Style="{DynamicResource SecondaryFABStyle}" />
+<mdc:FAB IconKind="Add" Style="{DynamicResource LargeSecondaryFABStyle}" />
 ```
 
 

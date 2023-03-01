@@ -17,8 +17,8 @@ There are 2 Styles of text fields: 1. Filled,  2. Outlined.
 ## Examples
 
 ```xml
-<mdc:TextField Icon="Search" WidthRequest="250" Style="{DynamicResource FilledTextFieldStyle}"/>
-<mdc:TextField Icon="Password" IsError="True" WidthRequest="300" SupportingText="Incorrect password" TextChanged="OnTextChanged" TrailingIcon="Remove" TrailingIconClicked="OnTrailingIconClicked" Style="{DynamicResource OutlinedTextFieldStyle}" />
+<mdc:TextField IconKind="Search" WidthRequest="250" Style="{DynamicResource FilledTextFieldStyle}"/>
+<mdc:TextField IconKind="Password" IsError="True" WidthRequest="300" SupportingText="Incorrect password" TextChanged="OnTextChanged" TrailingIconKind="Close" TrailingIconClicked="OnTrailingIconClicked" Style="{DynamicResource OutlinedTextFieldStyle}" />
 ```
 
 

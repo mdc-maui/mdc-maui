@@ -18,16 +18,16 @@ There are 2 Styles of : 1. Filled, 2. Scrolled.
 
 ```xml
 <mdc:Tabs Style="{DynamicResource FilledTabsStyle}">
-	<md:TabItem Icon="Add" Text="Item 1">
+	<md:TabItem IconKind="Add" Text="Item 1">
     	...
     </md:TabItem>
-	<md:TabItem Icon="Add" Text="Item 2">
+	<md:TabItem IconKind="Add" Text="Item 2">
     	...
     </md:TabItem>
-	<md:TabItem Icon="Add" Text="Item 3">
+	<md:TabItem IconKind="Add" Text="Item 3">
     	...
     </md:TabItem>
-	<md:TabItem Icon="Add" Text="Item 4">
+	<md:TabItem IconKind="Add" Text="Item 4">
     	...
     </md:TabItem>
 </mdc:Tabs>

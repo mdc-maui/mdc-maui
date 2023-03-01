@@ -9,10 +9,10 @@ Navigation bars offer a persistent and convenient way to switch between primary 
 
 ```xml
 <mdc:NavigationBar>
-    <mdc:NavigationBarItem ActivedIcon="Star" Icon="Globe" Text="label 1">
+    <mdc:NavigationBarItem ActivedIconKind="StarRate" IconKind="Star" Text="label 1">
 		...
 	</mdc:NavigationBarItem>
-        <mdc:NavigationBarItem ActivedIcon="Star" Icon="Globe" Text="label 2">
+        <mdc:NavigationBarItem ActivedIconKind="StarRate" IconKind="Star" Text="label 2">
 		...
 	</mdc:NavigationBarItem>
 </mdc:NavigationBar>
