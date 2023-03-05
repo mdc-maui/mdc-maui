@@ -97,14 +97,15 @@ internal class ChipDrawable
         if (this.view.IconSource == null)
             return;
         canvas.Save();
-        var paint = new SKPaint
+        var paint = new SKPaint { IsAntialias = true, };
+        if (this.view.ForegroundOpacity != 1)
         {
-            IsAntialias = true,
-            ColorFilter = SKColorFilter.CreateBlendMode(
-                this.view.IconColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
+            paint.ColorFilter = SKColorFilter.CreateBlendMode(
+                this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
                 SKBlendMode.SrcIn
-            )
-        };
+            );
+        }
+
         var svgBounds = this.view.IconSource.CullRect;
         var size = Math.Max(svgBounds.Width, svgBounds.Height);
         var iconScale = 18f / size * this.scale;

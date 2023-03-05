@@ -86,14 +86,15 @@ internal class FABDrawable
         if (this.view.IconSource == null || this.view.IconSource == null)
             return;
         canvas.Save();
-        var paint = new SKPaint
+        var paint = new SKPaint { IsAntialias = true, };
+        if (this.view.ForegroundOpacity != 1)
         {
-            IsAntialias = true,
-            ColorFilter = SKColorFilter.CreateBlendMode(
+            paint.ColorFilter = SKColorFilter.CreateBlendMode(
                 this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
                 SKBlendMode.SrcIn
-            )
-        };
+            );
+        }
+
         var offset =
             this.view.FABType == FABType.Default
                 ? 16f

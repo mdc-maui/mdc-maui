@@ -68,15 +68,15 @@ internal class NavigationDrawerItemDrawable
         if (this.view.IconSource is null || this.view.IconSource is null)
             return;
         canvas.Save();
-
-        var paint = new SKPaint
+        var paint = new SKPaint { IsAntialias = true, };
+        if (this.view.ForegroundOpacity != 1)
         {
-            IsAntialias = true,
-            ColorFilter = SKColorFilter.CreateBlendMode(
+            paint.ColorFilter = SKColorFilter.CreateBlendMode(
                 this.view.ForegroundColor.MultiplyAlpha(this.view.ForegroundOpacity).ToSKColor(),
                 SKBlendMode.SrcIn
-            )
-        };
+            );
+        }
+
         var scale = 24f / this.view.IconSource.CullRect.Width;
         var x = 16f;
         var y = 12f;
