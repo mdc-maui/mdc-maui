@@ -30,7 +30,8 @@
 		<PackageTags>material</PackageTags>
 		<AssemblyVersion></AssemblyVersion>
 		<FileVersion></FileVersion>
-		<Version>0.1.1-beta</Version>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>0.1.3-beta</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
