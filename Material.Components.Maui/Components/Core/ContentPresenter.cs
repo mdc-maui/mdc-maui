@@ -28,8 +28,16 @@ internal class ContentPresenter : Microsoft.Maui.Controls.ContentPresenter, IVis
         {
             this.OnChildAdded(newValue);
             VisualDiagnostics.OnChildAdded(this, newValue);
+            base.Content = newValue;
+            SetInheritedBindingContext(base.Content, this.BindingContext);
         }
-        base.Content = newValue;
+    }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+
+        SetInheritedBindingContext(base.Content, this.BindingContext);
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>

@@ -28,6 +28,12 @@ public partial class SplitView : View, ICommandElement, IVisualTreeElement
     private void OnPaneChanged()
     {
         this.OnChildAdded(this.Pane);
+        VisualDiagnostics.OnChildAdded(this, this.Pane, 0);
+
+        if (this.BindingContext != null)
+        {
+            SetInheritedBindingContext(this.Pane, this.BindingContext);
+        }
     }
 
     private void OnContentChanged(View oldValue, View newValue)
@@ -41,10 +47,13 @@ public partial class SplitView : View, ICommandElement, IVisualTreeElement
         if (newValue != null)
         {
             this.OnChildAdded(newValue);
-            VisualDiagnostics.OnChildAdded(this, newValue);
+            VisualDiagnostics.OnChildAdded(this, newValue, 1);
+            if (this.BindingContext != null)
+            {
+                SetInheritedBindingContext(newValue, this.BindingContext);
+            }
         }
 
-        this.OnChildAdded(this.Content);
         this.ContentChanged?.Invoke(this, new ValueChangedEventArgs(this.Content));
         this.Command?.Execute(this.CommandParameter ?? this.Content);
     }
@@ -59,5 +68,13 @@ public partial class SplitView : View, ICommandElement, IVisualTreeElement
         return result;
     }
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+
+        SetInheritedBindingContext(this.Pane, this.BindingContext);
+        SetInheritedBindingContext(this.Content, this.BindingContext);
+    }
+
+    public IVisualTreeElement GetVisualParent() => null;
 }

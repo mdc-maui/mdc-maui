@@ -102,6 +102,13 @@ public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommand
         VisualDiagnostics.OnChildAdded(this, this.PART_Root);
     }
 
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+
+        SetInheritedBindingContext(this.PART_Root, this.BindingContext);
+    }
+
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         this.PART_Root != null
             ? new List<IVisualTreeElement> { this.PART_Root }
