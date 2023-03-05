@@ -1,6 +1,6 @@
 ﻿namespace SampleApp;
 
-public partial class MainPage : ContentPage
+public partial class MainPage : ContentPage, IVisualTreeElement
 {
     public MainPage()
     {
@@ -29,4 +29,11 @@ public partial class MainPage : ContentPage
         Application.Current.UserAppTheme =
             Application.Current.RequestedTheme == AppTheme.Light ? AppTheme.Dark : AppTheme.Light;
     }
+
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        this.Content != null
+            ? new List<IVisualTreeElement> { this.Content }
+            : Array.Empty<IVisualTreeElement>().ToList();
+
+    public IVisualTreeElement GetVisualParent() => null;
 }

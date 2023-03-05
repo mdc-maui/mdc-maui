@@ -100,7 +100,9 @@
         <md:NavigationDrawer.FooterItems>
             <md:IconButton
                 x:Name="ThemeSwitch"
+                Margin="8,0,0,0"
                 Clicked="ThemeSwitch_Clicked"
+                HorizontalOptions="Start"
                 IconKind="LightMode"
                 Style="{DynamicResource StandardIconButtonStyle}" />
         </md:NavigationDrawer.FooterItems>
