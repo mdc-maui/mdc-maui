@@ -193,5 +193,5 @@ public partial class Card
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         new List<View> { this.PART_Root };
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 }

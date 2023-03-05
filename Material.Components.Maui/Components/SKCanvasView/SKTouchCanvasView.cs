@@ -223,5 +223,5 @@ public partial class SKTouchCanvasView
             ? new List<IVisualTreeElement> { this.ContextMenu }
             : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 }

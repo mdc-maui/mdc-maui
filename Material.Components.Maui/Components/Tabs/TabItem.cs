@@ -295,5 +295,5 @@ public partial class TabItem
     public new IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         new List<IVisualTreeElement> { this.Content };
 
-    public new IVisualTreeElement GetVisualParent() => this.Window;
+    public new IVisualTreeElement GetVisualParent() => null;
 }

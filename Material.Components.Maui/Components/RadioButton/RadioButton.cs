@@ -76,5 +76,5 @@ public partial class RadioButton : WrapLayout, IVisualTreeElement, ICommandEleme
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items?.ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 }

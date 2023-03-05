@@ -108,7 +108,7 @@ public partial class ContextMenu : ContentView, IVisualTreeElement
             ? new List<IVisualTreeElement> { this.PART_Root }
             : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 
 #if !WINDOWS && !__ANDROID__
     private void PlatformShow(View anchor)

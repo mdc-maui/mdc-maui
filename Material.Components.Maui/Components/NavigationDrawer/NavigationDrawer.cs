@@ -237,5 +237,5 @@ public partial class NavigationDrawer : TemplatedView, ICommandElement, IVisualT
             ? new List<IVisualTreeElement> { this.PART_Root }
             : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 }

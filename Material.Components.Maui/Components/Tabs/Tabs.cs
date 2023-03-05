@@ -135,5 +135,5 @@ public partial class Tabs : TemplatedView, IVisualTreeElement, ICommandElement
             ? new List<IVisualTreeElement> { this.PART_Root }
             : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 }

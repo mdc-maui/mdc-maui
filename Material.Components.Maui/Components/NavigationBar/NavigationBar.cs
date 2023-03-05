@@ -114,5 +114,5 @@ public partial class NavigationBar : TemplatedView, IVisualTreeElement, ICommand
             ? new List<IVisualTreeElement> { this.PART_Root }
             : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 }

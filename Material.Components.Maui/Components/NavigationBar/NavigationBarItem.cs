@@ -302,5 +302,5 @@ public partial class NavigationBarItem
     public new IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         new List<IVisualTreeElement> { this.Content };
 
-    public new IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public new IVisualTreeElement GetVisualParent() => null;
 }

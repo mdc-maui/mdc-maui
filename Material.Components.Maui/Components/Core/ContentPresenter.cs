@@ -45,5 +45,5 @@ internal class ContentPresenter : Microsoft.Maui.Controls.ContentPresenter, IVis
             ? new List<IVisualTreeElement> { this.Content }
             : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => this.Window.Parent;
+    public IVisualTreeElement GetVisualParent() => null;
 }
