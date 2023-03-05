@@ -6,8 +6,6 @@ using IconPacks.Material;
 namespace SampleApp.ViewModels;
 public partial class MainPageViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string title = "astator1";
 
     [ObservableProperty]
     private IconKind themeIcon;
@@ -15,14 +13,14 @@ public partial class MainPageViewModel : ObservableObject
     public MainPageViewModel()
     {
         this.ThemeIcon = Application.Current.RequestedTheme is AppTheme.Dark
-                ? IconKind.LightMode
-                : IconKind.DarkMode;
+                ? IconKind.DarkMode
+                : IconKind.LightMode;
 
         Application.Current.RequestedThemeChanged += (s, e) =>
         {
             this.ThemeIcon = Application.Current.RequestedTheme is AppTheme.Dark
-                 ? IconKind.LightMode
-                 : IconKind.DarkMode;
+                 ? IconKind.DarkMode
+                 : IconKind.LightMode;
         };
     }
 

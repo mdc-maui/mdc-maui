@@ -5,11 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SampleApp"
     xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
-    xmlns:mview="clr-namespace:SampleApp.Views"
     xmlns:panels="clr-namespace:SampleApp.Panels"
+    xmlns:vm="clr-namespace:SampleApp.ViewModels"
     Title="Material You for .NET MAUI"
     BackgroundColor="{DynamicResource BackgroundColor}"
     NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel />
+    </ContentPage.BindingContext>
 
     <md:NavigationDrawer
         x:Name="Drawer"
@@ -99,11 +103,10 @@
 
         <md:NavigationDrawer.FooterItems>
             <md:IconButton
-                x:Name="ThemeSwitch"
                 Margin="8,0,0,0"
-                Clicked="ThemeSwitch_Clicked"
+                Command="{Binding ThemeChangedCommand}"
                 HorizontalOptions="Start"
-                IconKind="LightMode"
+                IconKind="{Binding ThemeIcon}"
                 Style="{DynamicResource StandardIconButtonStyle}" />
         </md:NavigationDrawer.FooterItems>
     </md:NavigationDrawer>
