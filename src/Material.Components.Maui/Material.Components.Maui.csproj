@@ -73,6 +73,9 @@
 		  <MauiXaml Update="Styles\Button.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
+		  <MauiXaml Update="Styles\Card.xaml">
+		    <Generator>MSBuild:Compile</Generator>
+		  </MauiXaml>
 		  <MauiXaml Update="Styles\MaterialColors.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>

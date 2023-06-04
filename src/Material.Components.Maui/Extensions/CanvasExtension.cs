@@ -48,7 +48,7 @@ internal static class CanvasExtension
 
     internal static void DrawBackground(this ICanvas canvas, IBackgroundElement element, RectF rect)
     {
-        canvas.FillColor = element.BackgroundColour.MultiplyAlpha(element.BackgroundOpacity);
+        canvas.FillColor = element.BackgroundColour.WithAlpha(element.BackgroundOpacity);
         canvas.FillRectangle(rect);
     }
 
@@ -63,7 +63,7 @@ internal static class CanvasExtension
         if (element.IconPath == null)
             return;
 
-        canvas.FillColor = element.IconColor.MultiplyAlpha(element.IconOpacity);
+        canvas.FillColor = element.IconColor.WithAlpha(element.IconOpacity);
         var path = element.IconPath.AsScaledPath(defaultSize / 24f * scale);
         var sx = rect.Center.X - defaultSize / 2 * scale;
         var sy = rect.Center.Y - defaultSize / 2 * scale;
@@ -76,7 +76,7 @@ internal static class CanvasExtension
         if (element.OutlineWidth == 0)
             return;
 
-        canvas.StrokeColor = element.OutlineColor.MultiplyAlpha(element.OutlineOpacity);
+        canvas.StrokeColor = element.OutlineColor.WithAlpha(element.OutlineOpacity);
         canvas.StrokeSize = element.OutlineWidth;
         var radii = element.GetRadii(rect.Width, rect.Height);
 
@@ -100,9 +100,7 @@ internal static class CanvasExtension
     {
         if (element.Elevation != 0)
         {
-            canvas.FillColor = MaterialColors.SurfaceTint.MultiplyAlpha(
-                element.Elevation.GetOpacity()
-            );
+            canvas.FillColor = MaterialColors.SurfaceTint.WithAlpha(element.Elevation.GetOpacity());
             canvas.FillRectangle(rect);
         }
     }
@@ -132,7 +130,7 @@ internal static class CanvasExtension
         float percent
     )
     {
-        canvas.FillColor = element.StateLayerColor.MultiplyAlpha(StateLayerOpacity.Pressed);
+        canvas.FillColor = element.StateLayerColor.WithAlpha(StateLayerOpacity.Pressed);
         canvas.FillCircle(point, 0f.Lerp(size, percent));
     }
 

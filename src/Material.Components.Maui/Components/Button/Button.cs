@@ -140,15 +140,6 @@ public class Button
         this.Drawable = new ButtonDrawable(this);
     }
 
-    public override SizeRequest Measure(
-        double widthConstraint,
-        double heightConstraint,
-        MeasureFlags flags = MeasureFlags.None
-    )
-    {
-        return base.Measure(widthConstraint, heightConstraint, flags);
-    }
-
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
     {
         var maxWidth = Math.Min(

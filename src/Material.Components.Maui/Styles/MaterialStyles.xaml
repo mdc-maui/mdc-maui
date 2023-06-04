@@ -9,6 +9,7 @@
         <Styles:MaterialColors />
         <Styles:Button />
         <Styles:IconButton />
+        <Styles:Card />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

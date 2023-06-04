@@ -2,7 +2,7 @@ namespace Material.Components.Maui.Interfaces;
 
 public interface IElement
 {
-    ViewState ViewState { get; set; }
+    ViewState ViewState { get; }
 
     void OnPropertyChanged();
 }

@@ -1,17 +1,6 @@
 ﻿using Material.Components.Maui.Extensions;
 using RectF = Microsoft.Maui.Graphics.RectF;
 
-#if !WINDOWS
-
-using Microsoft.Maui.Graphics.Platform;
-#endif
-
-#if ANDROID
-using Android.Graphics;
-using Android.Text;
-using Microsoft.Maui.Graphics;
-#endif
-
 namespace Material.Components.Maui;
 
 internal class ButtonDrawable : IDrawable
