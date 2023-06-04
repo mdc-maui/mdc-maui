@@ -2,13 +2,18 @@ using System.ComponentModel;
 
 namespace Material.Components.Maui;
 
-public sealed class IconButton
+public class IconButton
     : TouchGraphicView,
         IElement,
-        IIconElement,
         IBackgroundElement,
+        IShapeElement,
+        IStateLayerElement,
+        IRippleElement,
+        IContextMenuElement,
+        IIconElement,
         IOutlineElement,
-        IElevationElement
+        IElevationElement,
+        IVisualTreeElement
 {
     protected override void ChangeVisualState()
     {
@@ -38,7 +43,13 @@ public sealed class IconButton
         IOutlineElement.OutlineColorProperty;
     public static readonly BindableProperty OutlineOpacityProperty =
         IOutlineElement.OutlineOpacityProperty;
-    public static readonly BindableProperty ElevationProperty = IElevationElement.ElevationProperty;
+    public static readonly BindableProperty ElevationProperty = BindableProperty.Create(
+        nameof(Elevation),
+        typeof(Elevation),
+        typeof(IconButton),
+        Elevation.Level0,
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+    );
 
     public string IconData
     {
@@ -46,8 +57,7 @@ public sealed class IconButton
         set => this.SetValue(IconDataroperty, value);
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public PathF IconPath { get; set; }
+    PathF IIconElement.IconPath { get; set; }
 
     public Color IconColor
     {
@@ -80,7 +90,7 @@ public sealed class IconButton
         set => this.SetValue(OutlineOpacityProperty, value);
     }
 
-    [TypeConverter(typeof(ElevationConverter))]
+    //[TypeConverter(typeof(ElevationConverter))]
     public Elevation Elevation
     {
         get => (Elevation)this.GetValue(ElevationProperty);
@@ -90,11 +100,5 @@ public sealed class IconButton
     public IconButton()
     {
         this.Drawable = new IconButtonDrawable(this);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing) { }
-        base.Dispose(disposing);
     }
 }

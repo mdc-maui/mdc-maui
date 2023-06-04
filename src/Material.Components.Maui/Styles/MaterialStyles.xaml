@@ -7,6 +7,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <Styles:MaterialColors />
+        <Styles:Button />
         <Styles:IconButton />
     </ResourceDictionary.MergedDictionaries>
 

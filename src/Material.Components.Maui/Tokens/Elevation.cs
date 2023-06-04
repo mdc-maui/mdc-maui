@@ -1,49 +1,30 @@
-using System.ComponentModel;
-
 namespace Material.Components.Maui.Tokens;
 
-[TypeConverter(typeof(ElevationConverter))]
-public readonly struct Elevation
+public enum Elevation
 {
-    public static readonly Elevation Level0 = 0;
-    public static readonly Elevation Level1 = 1;
-    public static readonly Elevation Level2 = 2;
-    public static readonly Elevation Level3 = 3;
-    public static readonly Elevation Level4 = 4;
-    public static readonly Elevation Level5 = 5;
+    Level0,
+    Level1,
+    Level2,
+    Level3,
+    Level4,
+    Level5,
+}
 
-    public int Value { get; init; }
-
-    public Elevation(int value)
+internal static class ElevationExtension
+{
+    internal static float GetOpacity(this Elevation elevation)
     {
-        this.Value = value;
-    }
-
-    public static implicit operator Elevation(int value)
-    {
-        return new Elevation(value);
-    }
-
-    public int ToInt()
-    {
-        return this.Value;
-    }
-
-    public override string ToString()
-    {
-        return this.Value.ToString();
-    }
-
-    public new bool Equals(object obj)
-    {
-        if (obj is int i32)
+        return elevation switch
         {
-            return this.Value == i32;
-        }
-        else if (obj is Elevation elevation)
-        {
-            return this.Value == elevation.Value;
-        }
-        return false;
+            //https://github.com/flutter/flutter/blob/master/packages/flutter/lib/src/material/elevation_overlay.dart#L165
+            Elevation.Level0
+                => 0f,
+            Elevation.Level1 => 0.05f,
+            Elevation.Level2 => 0.08f,
+            Elevation.Level3 => 0.11f,
+            Elevation.Level4 => 0.12f,
+            Elevation.Level5 => 0.14f,
+            _ => 0f,
+        };
     }
 }

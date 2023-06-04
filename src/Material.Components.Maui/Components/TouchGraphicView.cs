@@ -52,14 +52,14 @@ public class TouchGraphicView
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(
         nameof(Command),
         typeof(ICommand),
-        typeof(IViewCommand),
+        typeof(TouchGraphicView),
         default
     );
 
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(
         nameof(CommandParameter),
         typeof(object),
-        typeof(IViewCommand),
+        typeof(TouchGraphicView),
         default
     );
 
@@ -76,6 +76,7 @@ public class TouchGraphicView
         set => this.SetValue(BackgroundOpacityProperty, value);
     }
 
+    [TypeConverter(typeof(ShapeConverter))]
     public Shape Shape
     {
         get => (Shape)this.GetValue(ShapeProperty);
@@ -137,6 +138,7 @@ public class TouchGraphicView
 
     void OnEndInteraction(object sender, TouchEventArgs e)
     {
+        this.ResetRipplePercent();
 #if __MOBILE__
         this.ViewState = ViewState.Normal;
 #else
@@ -145,7 +147,6 @@ public class TouchGraphicView
             this.ViewState = e.IsInsideBounds ? ViewState.Hovered : ViewState.Normal;
         }
 #endif
-        this.ResetRipplePercent();
     }
 
     void OnStartHoverInteraction(object sender, TouchEventArgs e)

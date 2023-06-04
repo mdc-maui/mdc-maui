@@ -1,12 +1,27 @@
 ﻿using Material.Components.Maui.Extensions;
+using RectF = Microsoft.Maui.Graphics.RectF;
+
+#if !WINDOWS
+
+using Microsoft.Maui.Graphics.Platform;
+#endif
+
+#if ANDROID
+using Android.Graphics;
+using Android.Text;
+using Microsoft.Maui.Graphics;
+#endif
 
 namespace Material.Components.Maui;
 
-class IconButtonDrawable : IDrawable
+internal class ButtonDrawable : IDrawable
 {
-    readonly IconButton view;
+    readonly Button view;
 
-    public IconButtonDrawable(IconButton view) => this.view = view;
+    public ButtonDrawable(Button view)
+    {
+        this.view = view;
+    }
 
     public void Draw(ICanvas canvas, RectF rect)
     {
@@ -16,9 +31,6 @@ class IconButtonDrawable : IDrawable
 
         canvas.DrawBackground(this.view, rect);
         canvas.DrawOutline(this.view, rect);
-
-        var scale = rect.Height / 40;
-        canvas.DrawIcon(this.view, rect, 24, scale);
         canvas.DrawOverlayLayer(this.view, rect);
         canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
 
@@ -30,6 +42,16 @@ class IconButtonDrawable : IDrawable
                 this.view.RipplePercent
             );
 
+        var scale = rect.Height / 40;
+        canvas.DrawIcon(
+            this.view,
+            new RectF(16 * scale, 11 * scale, 18 * scale, 18 * scale),
+            18,
+            scale
+        );
+
+        var iconSize = (!string.IsNullOrEmpty(this.view.IconData) ? 18 : 0) * scale;
+        canvas.DrawText(this.view, new RectF(iconSize, 0, rect.Width - iconSize, rect.Height));
         canvas.ResetState();
     }
 }
