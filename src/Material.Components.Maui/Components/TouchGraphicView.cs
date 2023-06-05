@@ -37,10 +37,9 @@ public class TouchGraphicView
         }
     }
 
-    public static readonly BindableProperty BackgroundColourProperty =
-        IBackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty =
-        IBackgroundElement.BackgroundOpacityProperty;
+    public static readonly new BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
+    public static new readonly BindableProperty BackgroundColorProperty =
+        IBackgroundElement.BackgroundColorProperty;
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
     public static readonly BindableProperty StateLayerColorProperty =
         IStateLayerElement.StateLayerColorProperty;
@@ -63,17 +62,16 @@ public class TouchGraphicView
         default
     );
 
-    public Color BackgroundColour
+    public new bool IsEnabled
     {
-        get => (Color)this.GetValue(BackgroundColourProperty);
-        set => this.SetValue(BackgroundColourProperty, value);
+        get => (bool)this.GetValue(TouchGraphicView.IsEnabledProperty);
+        set => this.SetValue(TouchGraphicView.IsEnabledProperty, value);
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float BackgroundOpacity
+    public new Color BackgroundColor
     {
-        get => (float)this.GetValue(BackgroundOpacityProperty);
-        set => this.SetValue(BackgroundOpacityProperty, value);
+        get => (Color)this.GetValue(BackgroundColorProperty);
+        set => this.SetValue(BackgroundColorProperty, value);
     }
 
     [TypeConverter(typeof(ShapeConverter))]
@@ -124,12 +122,15 @@ public class TouchGraphicView
     {
         this.StartInteraction += this.OnStartInteraction;
         this.EndInteraction += this.OnEndInteraction;
+        this.CancelInteraction += this.OnCancelInteraction;
         this.StartHoverInteraction += this.OnStartHoverInteraction;
         this.EndHoverInteraction += this.OnEndHoverInteraction;
     }
 
     void OnStartInteraction(object sender, TouchEventArgs e)
     {
+        if (!this.IsEnabled)
+            return;
         this.ViewState = ViewState.Pressed;
         this.LastTouchPoint = e.Touches[0];
         this.RippleSize = this.GetRippleSize();
@@ -138,6 +139,8 @@ public class TouchGraphicView
 
     void OnEndInteraction(object sender, TouchEventArgs e)
     {
+        if (!this.IsEnabled)
+            return;
         this.ResetRipplePercent();
 #if __MOBILE__
         this.ViewState = ViewState.Normal;
@@ -149,13 +152,26 @@ public class TouchGraphicView
 #endif
     }
 
+    private void OnCancelInteraction(object sender, EventArgs e)
+    {
+        if (!this.IsEnabled)
+            return;
+
+        this.ResetRipplePercent();
+        this.ViewState = ViewState.Normal;
+    }
+
     void OnStartHoverInteraction(object sender, TouchEventArgs e)
     {
+        if (!this.IsEnabled)
+            return;
         this.ViewState = ViewState.Hovered;
     }
 
     void OnEndHoverInteraction(object sender, EventArgs e)
     {
+        if (!this.IsEnabled)
+            return;
         this.ViewState = ViewState.Normal;
     }
 
@@ -215,6 +231,16 @@ public class TouchGraphicView
         }
         return maxSize;
     }
+
+    //protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    //{
+    //    if (propertyName == "IsEnabled")
+    //    {
+    //        this.ViewState = ViewState.Disabled;
+    //    }
+    //    else
+    //        base.OnPropertyChanged(propertyName);
+    //}
 
     protected virtual void Dispose(bool disposing)
     {

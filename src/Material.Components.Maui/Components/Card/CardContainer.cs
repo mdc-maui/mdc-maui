@@ -17,30 +17,19 @@ public class CardContainer
             this.Invalidate();
     }
 
-    public static readonly BindableProperty BackgroundColourProperty =
-        IBackgroundElement.BackgroundColourProperty;
-    public static readonly BindableProperty BackgroundOpacityProperty =
-        IBackgroundElement.BackgroundOpacityProperty;
+    public static new readonly BindableProperty BackgroundColorProperty =
+        IBackgroundElement.BackgroundColorProperty;
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty OutlineOpacityProperty =
-        IOutlineElement.OutlineOpacityProperty;
     public static readonly BindableProperty ElevationProperty = IElevationElement.ElevationProperty;
 
-    public Color BackgroundColour
+    public new Color BackgroundColor
     {
-        get => (Color)this.GetValue(BackgroundColourProperty);
-        set => this.SetValue(BackgroundColourProperty, value);
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float BackgroundOpacity
-    {
-        get => (float)this.GetValue(BackgroundOpacityProperty);
-        set => this.SetValue(BackgroundOpacityProperty, value);
+        get => (Color)this.GetValue(BackgroundColorProperty);
+        set => this.SetValue(BackgroundColorProperty, value);
     }
 
     [TypeConverter(typeof(ShapeConverter))]
@@ -59,13 +48,6 @@ public class CardContainer
     {
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float OutlineOpacity
-    {
-        get => (float)this.GetValue(OutlineOpacityProperty);
-        set => this.SetValue(OutlineOpacityProperty, value);
     }
     public Elevation Elevation
     {

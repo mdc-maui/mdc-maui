@@ -48,8 +48,13 @@ internal static class CanvasExtension
 
     internal static void DrawBackground(this ICanvas canvas, IBackgroundElement element, RectF rect)
     {
-        canvas.FillColor = element.BackgroundColour.WithAlpha(element.BackgroundOpacity);
-        canvas.FillRectangle(rect);
+        if (element.BackgroundColor != Colors.Transparent)
+        {
+            canvas.FillColor = element.BackgroundColor.MultiplyAlpha(
+                element.ViewState is ViewState.Disabled ? 0.12f : 1f
+            );
+            canvas.FillRectangle(rect);
+        }
     }
 
     internal static void DrawIcon(
@@ -63,7 +68,10 @@ internal static class CanvasExtension
         if (element.IconPath == null)
             return;
 
-        canvas.FillColor = element.IconColor.WithAlpha(element.IconOpacity);
+        canvas.FillColor = element.IconColor.WithAlpha(
+            element.ViewState is ViewState.Disabled ? 0.38f : 1f
+        );
+
         var path = element.IconPath.AsScaledPath(defaultSize / 24f * scale);
         var sx = rect.Center.X - defaultSize / 2 * scale;
         var sy = rect.Center.Y - defaultSize / 2 * scale;
@@ -76,7 +84,9 @@ internal static class CanvasExtension
         if (element.OutlineWidth == 0)
             return;
 
-        canvas.StrokeColor = element.OutlineColor.WithAlpha(element.OutlineOpacity);
+        canvas.StrokeColor = element.OutlineColor.WithAlpha(
+            element.ViewState is ViewState.Disabled ? 0.12f : 1f
+        );
         canvas.StrokeSize = element.OutlineWidth;
         var radii = element.GetRadii(rect.Width, rect.Height);
 
@@ -112,14 +122,11 @@ internal static class CanvasExtension
         ViewState viewState
     )
     {
-#if !__MOBILE__
         if (viewState is ViewState.Hovered)
         {
             canvas.FillColor = element.StateLayerColor.WithAlpha(StateLayerOpacity.Hovered);
             canvas.FillRectangle(rect);
         }
-
-#endif
     }
 
     internal static void DrawRipple(
@@ -134,18 +141,20 @@ internal static class CanvasExtension
         canvas.FillCircle(point, 0f.Lerp(size, percent));
     }
 
-    internal static void DrawText(this ICanvas canvas, ITextElement view, RectF rect)
+    internal static void DrawText(this ICanvas canvas, ITextElement element, RectF rect)
     {
-        var font = string.IsNullOrEmpty(view.FontFamily)
+        var font = string.IsNullOrEmpty(element.FontFamily)
             ? Microsoft.Maui.Graphics.Font.Default
             : new Microsoft.Maui.Graphics.Font(
-                view.FontFamily,
-                (int)view.FontWeight,
-                (FontStyleType)view.FontSlant
+                element.FontFamily,
+                (int)element.FontWeight,
+                (FontStyleType)element.FontSlant
             );
         canvas.Font = font;
-        canvas.FontColor = view.TextColor;
-        canvas.FontSize = view.FontSize;
-        canvas.DrawString(view.Text, rect, HorizontalAlignment.Center, VerticalAlignment.Center);
+        canvas.FontColor = element.TextColor.WithAlpha(
+            element.ViewState is ViewState.Disabled ? 0.38f : 1f
+        );
+        canvas.FontSize = element.FontSize;
+        canvas.DrawString(element.Text, rect, HorizontalAlignment.Center, VerticalAlignment.Center);
     }
 }

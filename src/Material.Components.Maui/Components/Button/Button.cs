@@ -1,5 +1,4 @@
 ﻿using Material.Components.Maui.Extensions;
-using System.ComponentModel;
 
 namespace Material.Components.Maui;
 
@@ -27,6 +26,9 @@ public class Button
             ViewState.Disabled => "disabled",
             _ => "normal",
         };
+        if (!base.IsEnabled)
+            state = "disabled";
+
         VisualStateManager.GoToState(this, state);
         this.IsVisualStateChanging = false;
 
@@ -44,14 +46,11 @@ public class Button
 
     public static readonly BindableProperty IconDataroperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
-    public static readonly BindableProperty IconOpacityProperty = IIconElement.IconOpacityProperty;
 
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty OutlineOpacityProperty =
-        IOutlineElement.OutlineOpacityProperty;
     public static readonly BindableProperty ElevationProperty = IElevationElement.ElevationProperty;
 
     public string Text
@@ -103,12 +102,6 @@ public class Button
         get => (Color)this.GetValue(IconColorProperty);
         set => this.SetValue(IconColorProperty, value);
     }
-
-    public float IconOpacity
-    {
-        get => (float)this.GetValue(IconOpacityProperty);
-        set => this.SetValue(IconOpacityProperty, value);
-    }
     public Color OutlineColor
     {
         get => (Color)this.GetValue(OutlineColorProperty);
@@ -119,13 +112,6 @@ public class Button
     {
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float OutlineOpacity
-    {
-        get => (float)this.GetValue(OutlineOpacityProperty);
-        set => this.SetValue(OutlineOpacityProperty, value);
     }
     public Elevation Elevation
     {

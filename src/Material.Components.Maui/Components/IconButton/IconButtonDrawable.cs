@@ -17,10 +17,12 @@ class IconButtonDrawable : IDrawable
         canvas.DrawBackground(this.view, rect);
         canvas.DrawOutline(this.view, rect);
 
-        var scale = rect.Height / 40;
+        var scale = rect.Height / 40f;
         canvas.DrawIcon(this.view, rect, 24, scale);
         canvas.DrawOverlayLayer(this.view, rect);
-        canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
+
+        if (this.view.RipplePercent == 0f)
+            canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
 
         if (this.view.RipplePercent != 0f)
             canvas.DrawRipple(

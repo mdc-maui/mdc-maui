@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.ButtonStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style x:Key="FilledButtonStyle" TargetType="views:Button">
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontWeight" Value="Semibold" />
+        <Setter Property="Shape" Value="Full" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource OnPrimaryColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource OnPrimaryColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnPrimaryColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="Elevation" Value="Level1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style BaseResourceKey="FilledButtonStyle" TargetType="views:Button" />
+
+    <Style x:Key="ElevatedButtonStyle" TargetType="views:Button">
+        <Setter Property="Elevation" Value="Level1" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="Elevation" Value="Level2" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="Elevation" Value="Level0" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="FilledTonalButtonStyle" TargetType="views:Button">
+        <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="Elevation" Value="Level1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="OutlinedButtonStyle" TargetType="views:Button">
+        <Setter Property="OutlineWidth" Value="1" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TextButtonStyle" TargetType="views:Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

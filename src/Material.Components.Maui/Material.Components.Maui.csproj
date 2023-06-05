@@ -65,21 +65,33 @@
 		  <PackageReference Include="MaterialColorUtilities" Version="0.3.0" />
 		</ItemGroup>
 		<ItemGroup>
+		  <Compile Update="Styles\ButtonStyles.xaml.cs">
+		    <DependentUpon>ButtonStyles.xaml</DependentUpon>
+		  </Compile>
+		  <Compile Update="Styles\CardStyles.xaml.cs">
+		    <DependentUpon>CardStyles.xaml</DependentUpon>
+		  </Compile>
+		  <Compile Update="Styles\IconButtonStyles.xaml.cs">
+		    <DependentUpon>IconButtonStyles.xaml</DependentUpon>
+		  </Compile>
 		  <Compile Update="Styles\MaterialColors.xaml.cs">
 		    <DependentUpon>MaterialColors.xaml</DependentUpon>
 		  </Compile>
 		</ItemGroup>
 		<ItemGroup>
-		  <MauiXaml Update="Styles\Button.xaml">
+		  <MauiXaml Update="Styles\ButtonStyles.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
-		  <MauiXaml Update="Styles\Card.xaml">
+		  <MauiXaml Update="Styles\CardStyles.xaml">
+		    <Generator>MSBuild:Compile</Generator>
+		  </MauiXaml>
+		  <MauiXaml Update="Styles\CheckBoxStyles.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
 		  <MauiXaml Update="Styles\MaterialColors.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
-		  <MauiXaml Update="Styles\IconButton.xaml">
+		  <MauiXaml Update="Styles\IconButtonStyles.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
 		  <MauiXaml Update="Styles\MaterialStyles.xaml">

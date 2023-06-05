@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace Material.Components.Maui;
 
 public class IconButton
@@ -35,14 +33,11 @@ public class IconButton
 
     public static readonly BindableProperty IconDataroperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
-    public static readonly BindableProperty IconOpacityProperty = IIconElement.IconOpacityProperty;
 
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty OutlineOpacityProperty =
-        IOutlineElement.OutlineOpacityProperty;
     public static readonly BindableProperty ElevationProperty = BindableProperty.Create(
         nameof(Elevation),
         typeof(Elevation),
@@ -65,12 +60,6 @@ public class IconButton
         set => this.SetValue(IconColorProperty, value);
     }
 
-    public float IconOpacity
-    {
-        get => (float)this.GetValue(IconOpacityProperty);
-        set => this.SetValue(IconOpacityProperty, value);
-    }
-
     public Color OutlineColor
     {
         get => (Color)this.GetValue(OutlineColorProperty);
@@ -81,13 +70,6 @@ public class IconButton
     {
         get => (int)this.GetValue(OutlineWidthProperty);
         set => this.SetValue(OutlineWidthProperty, value);
-    }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public float OutlineOpacity
-    {
-        get => (float)this.GetValue(OutlineOpacityProperty);
-        set => this.SetValue(OutlineOpacityProperty, value);
     }
 
     //[TypeConverter(typeof(ElevationConverter))]

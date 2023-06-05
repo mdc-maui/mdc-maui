@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
-    x:Class="Material.Components.Maui.Styles.Card"
+    x:Class="Material.Components.Maui.Styles.CardStyles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
@@ -10,28 +10,24 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Shape" Value="Medium" />
         <Setter Property="Padding" Value="16" />
-        <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceVariantColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceVariantColor}" />
         <Setter Property="ControlTemplate">
             <ControlTemplate>
-                <Grid x:Name="PART_Root" >
+                <Grid x:Name="PART_Root">
                     <views:CardContainer
                         x:Name="PART_Container"
-                        BackgroundColour="{TemplateBinding BackgroundColour,
+                        BackgroundColor="{TemplateBinding BackgroundColor,
                                                            Mode=TwoWay}"
-                        BackgroundOpacity="{TemplateBinding BackgroundOpacity,
-                                                            Mode=TwoWay}"
                         Elevation="{TemplateBinding Elevation,
                                                     Mode=TwoWay}"
                         OutlineColor="{TemplateBinding OutlineColor,
                                                        Mode=TwoWay}"
-                        OutlineOpacity="{TemplateBinding OutlineOpacity,
-                                                         Mode=TwoWay}"
                         OutlineWidth="{TemplateBinding OutlineWidth,
                                                        Mode=TwoWay}"
                         Shape="{TemplateBinding Shape,
                                                 Mode=TwoWay}" />
 
-                    <ContentPresenter Content="{TemplateBinding Content}" Padding="{TemplateBinding Padding}"/>
+                    <ContentPresenter Padding="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
                 </Grid>
             </ControlTemplate>
         </Setter>
@@ -40,12 +36,12 @@
     <Style x:Key="FilledCardStyle" TargetType="views:Card" />
 
     <Style x:Key="ElevatedCardStyle" TargetType="views:Card">
-        <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
         <Setter Property="Elevation" Value="Level1" />
     </Style>
 
     <Style x:Key="OutlinedCardStyle" TargetType="views:Card">
-        <Setter Property="BackgroundColour" Value="{DynamicResource SurfaceColor}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
         <Setter Property="OutlineWidth" Value="1" />
     </Style>
