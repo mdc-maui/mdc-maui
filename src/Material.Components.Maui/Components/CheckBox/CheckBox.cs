@@ -82,4 +82,13 @@ public class CheckBox : TouchGraphicView, IOutlineElement, IIconElement
     {
         this.IsChecked = !this.IsChecked;
     }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            this.EndInteraction -= this.OnCheckChanged;
+        }
+        base.Dispose(disposing);
+    }
 }

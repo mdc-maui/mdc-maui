@@ -232,16 +232,6 @@ public class TouchGraphicView
         return maxSize;
     }
 
-    //protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    //{
-    //    if (propertyName == "IsEnabled")
-    //    {
-    //        this.ViewState = ViewState.Disabled;
-    //    }
-    //    else
-    //        base.OnPropertyChanged(propertyName);
-    //}
-
     protected virtual void Dispose(bool disposing)
     {
         if (!this.disposedValue)
@@ -250,6 +240,7 @@ public class TouchGraphicView
             {
                 this.StartInteraction -= this.OnStartInteraction;
                 this.EndInteraction -= this.OnEndInteraction;
+                this.CancelInteraction -= this.OnCancelInteraction;
                 this.StartHoverInteraction -= this.OnStartHoverInteraction;
                 this.EndHoverInteraction -= this.OnEndHoverInteraction;
             }
