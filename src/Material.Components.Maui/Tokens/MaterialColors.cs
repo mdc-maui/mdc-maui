@@ -27,28 +27,27 @@ public static class SchemeExtensions
             result.OnTertiary = Color.Parse("#FFFFFF");
             result.OnTertiaryContainer = Color.Parse("#370B1E");
 
-            result.Surface = Color.Parse("#FFFBFE");
+            result.Surface = Color.Parse("#FEF7FF");
             result.SurfaceDim = Color.Parse("#DED8E1");
             result.SurfaceBright = Color.Parse("#FEF7FF");
             result.SurfaceContainerLowest = Color.Parse("#FFFFFF");
             result.SurfaceContainerLow = Color.Parse("#F7F2FA");
-            result.SurfaceContainerLow = Color.Parse("#F7F2FA");
             result.SurfaceContainer = Color.Parse("#F3EDF7");
             result.SurfaceContainerHigh = Color.Parse("#ECE6F0");
             result.SurfaceContainerHighest = Color.Parse("#E6E0E9");
-            result.SurfaceVariant = Color.Parse("#E6E0E9");
+            result.SurfaceVariant = Color.Parse("#E7E0EC");
             result.OnSurface = Color.Parse("#1C1B1F");
             result.OnSurfaceVariant = Color.Parse("#49454E");
             result.InverseSurface = Color.Parse("#313033");
             result.InverseOnSurface = Color.Parse("#F4EFF4");
 
-            result.Background = Color.Parse("#FFFBFE");
+            result.Background = Color.Parse("#FEF7FF");
             result.OnBackground = Color.Parse("#1C1B1F");
 
             result.Error = Color.Parse("#B3261E");
             result.ErrorContainer = Color.Parse("#F9DEDC");
             result.OnError = Color.Parse("#FFFFFF");
-            result.OnErrorContainer = Color.Parse("#370B1E");
+            result.OnErrorContainer = Color.Parse("#410E0B");
 
             result.Outline = Color.Parse("#79747E");
             result.OutlineVariant = Color.Parse("#C4C7C5");
@@ -60,31 +59,47 @@ public static class SchemeExtensions
         {
             result.Primary = Color.Parse("#D0BCFF");
             result.PrimaryContainer = Color.Parse("#4F378B");
-            result.Secondary = Color.Parse("#CCC2DC");
-            result.SecondaryContainer = Color.Parse("#4A4458");
-            result.Tertiary = Color.Parse("#EFB8C8");
-            result.TertiaryContainer = Color.Parse("#633B48");
-            result.Surface = Color.Parse("#1C1B1F");
-            result.SurfaceVariant = Color.Parse("#49454F");
-            result.Background = Color.Parse("#1C1B1F");
-            result.Error = Color.Parse("#F2B8B5");
-            result.ErrorContainer = Color.Parse("#8C1D18");
             result.OnPrimary = Color.Parse("#371E73");
             result.OnPrimaryContainer = Color.Parse("#EADDFF");
+            result.InversePrimary = Color.Parse("#6750A4");
+
+            result.Secondary = Color.Parse("#CCC2DC");
+            result.SecondaryContainer = Color.Parse("#4A4458");
             result.OnSecondary = Color.Parse("#332D41");
             result.OnSecondaryContainer = Color.Parse("#E8DEF8");
+
+            result.Tertiary = Color.Parse("#EFB8C8");
+            result.TertiaryContainer = Color.Parse("#633B48");
             result.OnTertiary = Color.Parse("#492532");
             result.OnTertiaryContainer = Color.Parse("#FFD8E4");
+
+            result.Surface = Color.Parse("#141218");
+            result.SurfaceDim = Color.Parse("#141218");
+            result.SurfaceBright = Color.Parse("#3B383E");
+            result.SurfaceContainerLowest = Color.Parse("#0F0D13");
+            result.SurfaceContainerLow = Color.Parse("#1D1B20");
+            result.SurfaceContainer = Color.Parse("#211F26");
+            result.SurfaceContainerHigh = Color.Parse("#2B2930");
+            result.SurfaceContainerHighest = Color.Parse("#36343B");
+            result.SurfaceVariant = Color.Parse("#49454F");
             result.OnSurface = Color.Parse("#E6E1E5");
             result.OnSurfaceVariant = Color.Parse("#CAC4D0");
-            result.OnError = Color.Parse("#601410");
-            result.OnErrorContainer = Color.Parse("#F9DEDC");
-            result.OnBackground = Color.Parse("#E6E1E5");
-            result.Outline = Color.Parse("#938F99");
-            result.Shadow = Color.Parse("#000000");
             result.InverseSurface = Color.Parse("#E6E1E5");
             result.InverseOnSurface = Color.Parse("#313033");
-            result.InversePrimary = Color.Parse("#6750A4");
+
+            result.Background = Color.Parse("#141218");
+            result.OnBackground = Color.Parse("#E6E1E5");
+
+            result.Error = Color.Parse("#F2B8B5");
+            result.ErrorContainer = Color.Parse("#8C1D18");
+            result.OnError = Color.Parse("#601410");
+            result.OnErrorContainer = Color.Parse("#F9DEDC");
+
+            result.Outline = Color.Parse("#938F99");
+            result.OutlineVariant = Color.Parse("#444746");
+
+            result.Shadow = Color.Parse("#000000");
+            //result.SurfaceTint = Color.Parse("#6750A4");
         }
         return result;
     }
