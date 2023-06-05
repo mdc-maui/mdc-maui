@@ -4,7 +4,7 @@ namespace Material.Components.Maui.Extensions;
 
 internal static class ResourceExtension
 {
-    public static ResourceDictionary ColorRes { get; set; }
+    public static ICollection<ResourceDictionary> MaterialDictionaries { get; set; }
 
     private static Scheme<Color> lightScheme = SchemeExtensions.GetDefaultScheme(AppTheme.Light);
     public static Scheme<Color> LightScheme
@@ -38,48 +38,53 @@ internal static class ResourceExtension
     {
         var scheme =
             Application.Current.RequestedTheme is AppTheme.Light ? LightScheme : DarkScheme;
-        ColorRes["PrimaryColor"] = scheme.Primary;
-        ColorRes["PrimaryContainerColor"] = scheme.PrimaryContainer;
-        ColorRes["OnPrimaryColor"] = scheme.OnPrimary;
-        ColorRes["OnPrimaryContainerColor"] = scheme.OnPrimaryContainer;
-        ColorRes["InversePrimaryColor"] = scheme.InversePrimary;
 
-        ColorRes["SecondaryColor"] = scheme.Secondary;
-        ColorRes["SecondaryContainerColor"] = scheme.SecondaryContainer;
-        ColorRes["OnSecondaryColor"] = scheme.OnSecondary;
-        ColorRes["OnSecondaryContainerColor"] = scheme.OnSecondaryContainer;
+        var colorRes = MaterialDictionaries.First(
+            x => x.GetType() == typeof(Styles.MaterialColors)
+        );
 
-        ColorRes["TertiaryColor"] = scheme.Tertiary;
-        ColorRes["TertiaryContainerColor"] = scheme.TertiaryContainer;
-        ColorRes["OnTertiaryColor"] = scheme.OnTertiary;
-        ColorRes["OnTertiaryContainerColor"] = scheme.OnTertiaryContainer;
+        colorRes["PrimaryColor"] = scheme.Primary;
+        colorRes["PrimaryContainerColor"] = scheme.PrimaryContainer;
+        colorRes["OnPrimaryColor"] = scheme.OnPrimary;
+        colorRes["OnPrimaryContainerColor"] = scheme.OnPrimaryContainer;
+        colorRes["InversePrimaryColor"] = scheme.InversePrimary;
 
-        ColorRes["SurfaceColor"] = scheme.Surface;
-        ColorRes["SurfaceDimColor"] = scheme.SurfaceDim;
-        ColorRes["SurfaceBrightColor"] = scheme.SurfaceBright;
-        ColorRes["SurfaceContainerLowestColor"] = scheme.SurfaceContainerLowest;
-        ColorRes["SurfaceContainerLowColor"] = scheme.SurfaceContainerLow;
-        ColorRes["SurfaceContainerColor"] = scheme.SurfaceContainer;
-        ColorRes["SurfaceContainerHighColor"] = scheme.SurfaceContainerHigh;
-        ColorRes["SurfaceContainerHighestColor"] = scheme.SurfaceContainerHighest;
-        ColorRes["SurfaceVariantColor"] = scheme.SurfaceVariant;
-        ColorRes["OnSurfaceColor"] = scheme.OnSurface;
-        ColorRes["OnSurfaceVariantColor"] = scheme.OnSurfaceVariant;
-        ColorRes["InverseSurfaceColor"] = scheme.InverseSurface;
-        ColorRes["InverseOnSurfaceColor"] = scheme.InverseOnSurface;
+        colorRes["SecondaryColor"] = scheme.Secondary;
+        colorRes["SecondaryContainerColor"] = scheme.SecondaryContainer;
+        colorRes["OnSecondaryColor"] = scheme.OnSecondary;
+        colorRes["OnSecondaryContainerColor"] = scheme.OnSecondaryContainer;
 
-        ColorRes["BackgroundColor"] = scheme.Background;
-        ColorRes["OnBackgroundColor"] = scheme.OnBackground;
+        colorRes["TertiaryColor"] = scheme.Tertiary;
+        colorRes["TertiaryContainerColor"] = scheme.TertiaryContainer;
+        colorRes["OnTertiaryColor"] = scheme.OnTertiary;
+        colorRes["OnTertiaryContainerColor"] = scheme.OnTertiaryContainer;
 
-        ColorRes["ErrorColor"] = scheme.Error;
-        ColorRes["ErrorContainerColor"] = scheme.ErrorContainer;
-        ColorRes["OnErrorColor"] = scheme.OnError;
-        ColorRes["OnErrorContainerColor"] = scheme.OnErrorContainer;
+        colorRes["SurfaceColor"] = scheme.Surface;
+        colorRes["SurfaceDimColor"] = scheme.SurfaceDim;
+        colorRes["SurfaceBrightColor"] = scheme.SurfaceBright;
+        colorRes["SurfaceContainerLowestColor"] = scheme.SurfaceContainerLowest;
+        colorRes["SurfaceContainerLowColor"] = scheme.SurfaceContainerLow;
+        colorRes["SurfaceContainerColor"] = scheme.SurfaceContainer;
+        colorRes["SurfaceContainerHighColor"] = scheme.SurfaceContainerHigh;
+        colorRes["SurfaceContainerHighestColor"] = scheme.SurfaceContainerHighest;
+        colorRes["SurfaceVariantColor"] = scheme.SurfaceVariant;
+        colorRes["OnSurfaceColor"] = scheme.OnSurface;
+        colorRes["OnSurfaceVariantColor"] = scheme.OnSurfaceVariant;
+        colorRes["InverseSurfaceColor"] = scheme.InverseSurface;
+        colorRes["InverseOnSurfaceColor"] = scheme.InverseOnSurface;
 
-        ColorRes["OutlineColor"] = scheme.Outline;
-        ColorRes["OutlineVariantColor"] = scheme.OutlineVariant;
+        colorRes["BackgroundColor"] = scheme.Background;
+        colorRes["OnBackgroundColor"] = scheme.OnBackground;
 
-        ColorRes["ShadowColor"] = scheme.Shadow;
+        colorRes["ErrorColor"] = scheme.Error;
+        colorRes["ErrorContainerColor"] = scheme.ErrorContainer;
+        colorRes["OnErrorColor"] = scheme.OnError;
+        colorRes["OnErrorContainerColor"] = scheme.OnErrorContainer;
+
+        colorRes["OutlineColor"] = scheme.Outline;
+        colorRes["OutlineVariantColor"] = scheme.OutlineVariant;
+
+        colorRes["ShadowColor"] = scheme.Shadow;
     }
 
     internal static Style FindStyle(this ResourceDictionary resources, string key)

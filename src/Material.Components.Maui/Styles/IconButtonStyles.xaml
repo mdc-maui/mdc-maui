@@ -32,14 +32,139 @@
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
+
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
     </Style>
 
-    <Style BaseResourceKey="FilledIconButtonStyle" TargetType="views:IconButton" />
+    <Style Class="FilledIconButtonStyle" TargetType="views:IconButton">
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Full" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource OnPrimaryColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnPrimaryColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
 
     <Style x:Key="FilledTonalIconButtonStyle" TargetType="views:IconButton">
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -61,12 +186,62 @@
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
+
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
     </Style>
 
     <Style x:Key="OutlinedIconButtonStyle" TargetType="views:IconButton">
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Full" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
@@ -86,19 +261,75 @@
                     </VisualState>
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
+
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource InverseSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource InverseOnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource InverseSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource InverseOnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource InverseSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource InverseOnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
     </Style>
 
     <Style x:Key="StandardIconButtonStyle" TargetType="views:IconButton">
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
-        <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>
@@ -113,10 +344,49 @@
                     </VisualState>
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="Transparent" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
+
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>

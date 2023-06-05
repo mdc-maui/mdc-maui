@@ -117,7 +117,10 @@ public static class SchemeExtensions
 
 public static class MaterialColors
 {
-    public static ResourceDictionary Colors => ResourceExtension.ColorRes;
+    public static ResourceDictionary Colors =>
+        ResourceExtension.MaterialDictionaries.First(
+            x => x.GetType() == typeof(Styles.MaterialColors)
+        );
 
     public static Color Primary => (Color)Colors["PrimaryColor"];
     public static Color PrimaryContainer => (Color)Colors["PrimaryContainerColor"];

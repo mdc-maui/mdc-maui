@@ -4,6 +4,6 @@ public partial class IconButtonStyles : ResourceDictionary
 {
     public IconButtonStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

@@ -28,9 +28,7 @@ public partial class MaterialStyles : ResourceDictionary
     public MaterialStyles()
     {
         this.InitializeComponent();
-        ResourceExtension.ColorRes = this.MergedDictionaries.First(
-            x => x.GetType() == typeof(MaterialColors)
-        );
+        ResourceExtension.MaterialDictionaries = this.MergedDictionaries;
         ResourceExtension.UpdateMaterialColors();
 
         Application.Current.RequestedThemeChanged += (sender, e) =>
