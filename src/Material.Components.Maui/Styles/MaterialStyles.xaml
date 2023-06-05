@@ -7,9 +7,10 @@
 
     <ResourceDictionary.MergedDictionaries>
         <Styles:MaterialColors />
-        <Styles:Button />
-        <Styles:IconButton />
-        <Styles:Card />
+        <Styles:ButtonStyles />
+        <Styles:IconButtonStyles />
+        <Styles:CardStyles />
+        <Styles:CheckBoxStyles/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

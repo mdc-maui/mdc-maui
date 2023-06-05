@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.CheckBoxStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style TargetType="views:CheckBox">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="MinimumWidthRequest" Value="40" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="Shape" Value="2" />
+        <Setter Property="OutlineWidth" Value="2" />
+        <Setter Property="RippleDuration" Value="0.25" />
+        <Setter Property="OutlineColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="IconData" Value="M9.55,18 L3.85,12.3 5.275,10.875 9.55,15.15 18.725,5.975 20.15,7.4Z" />
+        <Setter Property="IconColor" Value="{DynamicResource OnPrimaryColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="IconColor" Value="{DynamicResource SurfaceColor}" />
+                            <Setter Property="OutlineColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
