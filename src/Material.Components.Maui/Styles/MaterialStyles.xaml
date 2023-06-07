@@ -10,7 +10,8 @@
         <Styles:ButtonStyles />
         <Styles:IconButtonStyles />
         <Styles:CardStyles />
-        <Styles:CheckBoxStyles/>
+        <Styles:CheckBoxStyles />
+        <Styles:ChipStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
