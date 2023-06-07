@@ -16,8 +16,7 @@ public class CheckBox : TouchGraphicView, IOutlineElement, IIconElement
         VisualStateManager.GoToState(this, state);
         this.IsVisualStateChanging = false;
 
-        if (!this.IsFocused)
-            this.Invalidate();
+        this.Invalidate();
     }
 
     public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
@@ -26,7 +25,7 @@ public class CheckBox : TouchGraphicView, IOutlineElement, IIconElement
         IOutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
-    public static BindableProperty IsCheckedProperty = BindableProperty.Create(
+    public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(
         nameof(IsChecked),
         typeof(bool),
         typeof(CheckBox),
@@ -85,7 +84,7 @@ public class CheckBox : TouchGraphicView, IOutlineElement, IIconElement
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing)
+        if (!this.disposedValue && disposing)
         {
             this.EndInteraction -= this.OnCheckChanged;
         }

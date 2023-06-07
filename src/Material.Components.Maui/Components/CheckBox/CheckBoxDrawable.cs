@@ -15,7 +15,7 @@ internal class CheckBoxDrawable : IDrawable
     {
         canvas.Antialias = true;
         var scale = rect.Height / 40f;
-        var drawRect = new RectF(11 * scale, 11 * scale, 18 * scale, 18 * scale);
+        var drawRect = new RectF(11f * scale, 11f * scale, 18f * scale, 18f * scale);
         if (this.view.IsChecked)
         {
             canvas.SaveState();
@@ -39,10 +39,9 @@ internal class CheckBoxDrawable : IDrawable
         drawRect.AppendCircle(rect.Center.X, rect.Center.Y, Math.Max(rect.Width, rect.Height) / 2f);
         canvas.ClipPath(drawRect);
 
-        if (this.view.RipplePercent == 0f)
+        if (this.view.RipplePercent is 0f or 1f)
             canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
-
-        if (this.view.RipplePercent != 0f)
+        else
             canvas.DrawRipple(
                 this.view,
                 this.view.LastTouchPoint,

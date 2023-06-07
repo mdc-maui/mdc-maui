@@ -1,6 +1,5 @@
 using Material.Components.Maui.Extensions;
 using Material.Components.Maui.Styles;
-using System.Diagnostics;
 
 namespace Material.Components.Maui;
 
@@ -49,15 +48,13 @@ public class IconButton
                     : "disabled",
             _ => "normal",
         };
-        Debug.WriteLine(state);
         VisualStateManager.GoToState(this, state);
         this.IsVisualStateChanging = false;
 
-        if (!this.IsFocused)
-            this.Invalidate();
+        this.Invalidate();
     }
 
-    public static readonly BindableProperty IconDataroperty = IIconElement.IconDataProperty;
+    public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
 
     public static readonly BindableProperty IsToggleEnabledProperty =
@@ -78,8 +75,8 @@ public class IconButton
 
     public string IconData
     {
-        get => (string)this.GetValue(IconDataroperty);
-        set => this.SetValue(IconDataroperty, value);
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     PathF IIconElement.IconPath { get; set; }

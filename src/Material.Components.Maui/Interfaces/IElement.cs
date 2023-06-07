@@ -1,3 +1,5 @@
+using Microsoft.Maui.Controls.Internals;
+
 namespace Material.Components.Maui.Interfaces;
 
 public interface IElement
@@ -7,6 +9,15 @@ public interface IElement
     bool IsEnabled { get; set; }
 
     void OnPropertyChanged();
+
+    void InvalidateMeasure()
+    {
+        if (this is View view)
+            (view.Parent as VisualElement)?.InvalidateMeasureNonVirtual(
+                InvalidationTrigger.MeasureChanged
+            );
+        this.OnPropertyChanged();
+    }
 
     public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(
         nameof(IsEnabled),

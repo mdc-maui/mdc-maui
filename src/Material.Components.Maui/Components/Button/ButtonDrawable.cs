@@ -22,10 +22,9 @@ internal class ButtonDrawable : IDrawable
         canvas.DrawOutline(this.view, rect);
         canvas.DrawOverlayLayer(this.view, rect);
 
-        if (this.view.RipplePercent == 0f)
+        if (this.view.RipplePercent is 0f or 1f)
             canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
-
-        if (this.view.RipplePercent != 0f)
+        else
             canvas.DrawRipple(
                 this.view,
                 this.view.LastTouchPoint,
@@ -36,12 +35,12 @@ internal class ButtonDrawable : IDrawable
         var scale = rect.Height / 40f;
         canvas.DrawIcon(
             this.view,
-            new RectF(16 * scale, 11 * scale, 18 * scale, 18 * scale),
+            new RectF(16f * scale, 11f * scale, 18f * scale, 18f * scale),
             18,
             scale
         );
 
-        var iconSize = (!string.IsNullOrEmpty(this.view.IconData) ? 18 : 0) * scale;
+        var iconSize = (!string.IsNullOrEmpty(this.view.IconData) ? 18f : 0f) * scale;
         canvas.DrawText(this.view, new RectF(iconSize, 0, rect.Width - iconSize, rect.Height));
         canvas.ResetState();
     }

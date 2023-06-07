@@ -4,7 +4,6 @@ public interface ITextElement : IElement
 {
     string Text { get; set; }
     Color TextColor { get; set; }
-    float TextOpacity { get; set; }
     float FontSize { get; set; }
     string FontFamily { get; set; }
     FontSlant FontSlant { get; set; }
@@ -16,7 +15,7 @@ public interface ITextElement : IElement
         typeof(string),
         typeof(ITextElement),
         default,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(
@@ -26,20 +25,12 @@ public interface ITextElement : IElement
         propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
     );
 
-    public static readonly BindableProperty TextOpacityProperty = BindableProperty.Create(
-        nameof(TextOpacity),
-        typeof(float),
-        typeof(ITextElement),
-        1f,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
-    );
-
     public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(
         nameof(FontSize),
         typeof(float),
         typeof(ITextElement),
         14f,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(
@@ -47,7 +38,7 @@ public interface ITextElement : IElement
         typeof(string),
         typeof(ITextElement),
         default,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 
     public static readonly BindableProperty FontSlantProperty = BindableProperty.Create(
@@ -55,7 +46,7 @@ public interface ITextElement : IElement
         typeof(FontSlant),
         typeof(ITextElement),
         FontSlant.Default,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 
     public static readonly BindableProperty FontWeightProperty = BindableProperty.Create(
@@ -63,6 +54,6 @@ public interface ITextElement : IElement
         typeof(FontWeight),
         typeof(ITextElement),
         FontWeight.Regular,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 }

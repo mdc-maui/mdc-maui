@@ -14,7 +14,7 @@ public interface IIconElement : IElement
         propertyChanged: (bo, ov, nv) =>
         {
             ((IIconElement)bo).IconPath = PathBuilder.Build((string)nv);
-            ((IElement)bo).OnPropertyChanged();
+            ((IElement)bo).InvalidateMeasure();
         }
     );
 

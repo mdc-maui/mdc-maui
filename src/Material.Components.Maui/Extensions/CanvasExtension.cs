@@ -127,6 +127,11 @@ internal static class CanvasExtension
             canvas.FillColor = element.StateLayerColor.WithAlpha(StateLayerOpacity.Hovered);
             canvas.FillRectangle(rect);
         }
+        else if (viewState is ViewState.Pressed)
+        {
+            canvas.FillColor = element.StateLayerColor.WithAlpha(StateLayerOpacity.Pressed);
+            canvas.FillRectangle(rect);
+        }
     }
 
     internal static void DrawRipple(

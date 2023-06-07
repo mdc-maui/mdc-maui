@@ -10,6 +10,8 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="MinimumWidthRequest" Value="40" />
         <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="40" />
         <Setter Property="Shape" Value="2" />
         <Setter Property="OutlineWidth" Value="2" />
         <Setter Property="RippleDuration" Value="0.25" />

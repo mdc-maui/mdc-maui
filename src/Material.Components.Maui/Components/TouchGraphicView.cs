@@ -116,7 +116,7 @@ public class TouchGraphicView
     internal PointF LastTouchPoint { get; private set; }
 
     protected IAnimationManager animationManager;
-    bool disposedValue;
+    protected bool disposedValue;
 
     public TouchGraphicView()
     {
@@ -141,7 +141,7 @@ public class TouchGraphicView
     {
         if (!this.IsEnabled)
             return;
-        this.ResetRipplePercent();
+
 #if __MOBILE__
         this.ViewState = ViewState.Normal;
 #else
@@ -157,7 +157,6 @@ public class TouchGraphicView
         if (!this.IsEnabled)
             return;
 
-        this.ResetRipplePercent();
         this.ViewState = ViewState.Normal;
     }
 
@@ -165,6 +164,7 @@ public class TouchGraphicView
     {
         if (!this.IsEnabled)
             return;
+        this.LastTouchPoint = e.Touches[0];
         this.ViewState = ViewState.Hovered;
     }
 
@@ -188,25 +188,9 @@ public class TouchGraphicView
                     this.Invalidate();
                 },
                 duration: this.RippleDuration,
-                easing: this.RippleEasing,
-                finished: () =>
-                {
-                    if (this.ViewState != ViewState.Pressed)
-                    {
-                        this.RipplePercent = 0f;
-                        this.Invalidate();
-                    }
-                }
+                easing: this.RippleEasing
             )
         );
-    }
-
-    void ResetRipplePercent()
-    {
-        if (this.RipplePercent == 1f)
-        {
-            this.RipplePercent = 0f;
-        }
     }
 
     float GetRippleSize()
@@ -221,7 +205,7 @@ public class TouchGraphicView
         {
             var size = MathF.Pow(
                 MathF.Pow(point.X - this.LastTouchPoint.X, 2f)
-                    + MathF.Pow(point.Y - this.LastTouchPoint.Y, 2),
+                    + MathF.Pow(point.Y - this.LastTouchPoint.Y, 2f),
                 0.5f
             );
             if (size > maxSize)

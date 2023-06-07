@@ -27,25 +27,21 @@ public class Button
             ViewState.Disabled => "disabled",
             _ => "normal",
         };
-        if (!base.IsEnabled)
-            state = "disabled";
 
         VisualStateManager.GoToState(this, state);
         this.IsVisualStateChanging = false;
 
-        if (!this.IsFocused)
-            this.Invalidate();
+        this.Invalidate();
     }
 
     public static readonly BindableProperty TextProperty = ITextElement.TextProperty;
     public static readonly BindableProperty TextColorProperty = ITextElement.TextColorProperty;
-    public static readonly BindableProperty TextOpacityProperty = ITextElement.TextOpacityProperty;
     public static readonly BindableProperty FontSizeProperty = ITextElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = ITextElement.FontFamilyProperty;
     public static readonly BindableProperty FontSlantProperty = ITextElement.FontSlantProperty;
     public static readonly BindableProperty FontWeightProperty = ITextElement.FontWeightProperty;
 
-    public static readonly BindableProperty IconDataroperty = IIconElement.IconDataProperty;
+    public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
 
     public static readonly BindableProperty OutlineWidthProperty =
@@ -63,11 +59,6 @@ public class Button
     {
         get => (Color)this.GetValue(TextColorProperty);
         set => this.SetValue(TextColorProperty, value);
-    }
-    public float TextOpacity
-    {
-        get => (float)this.GetValue(TextOpacityProperty);
-        set => this.SetValue(TextOpacityProperty, value);
     }
     public float FontSize
     {
@@ -92,8 +83,8 @@ public class Button
 
     public string IconData
     {
-        get => (string)this.GetValue(IconDataroperty);
-        set => this.SetValue(IconDataroperty, value);
+        get => (string)this.GetValue(IconDataProperty);
+        set => this.SetValue(IconDataProperty, value);
     }
 
     PathF IIconElement.IconPath { get; set; }
@@ -144,13 +135,14 @@ public class Button
             this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
         );
 
-        var scale = (this.HeightRequest != -1 ? this.HeightRequest : Math.Min(40, maxHeight)) / 40;
-        var iconSize = (!string.IsNullOrEmpty(this.IconData) ? 18 : 0) * scale;
+        var scale =
+            (this.HeightRequest != -1 ? this.HeightRequest : Math.Min(40f, maxHeight)) / 40f;
+        var iconSize = (!string.IsNullOrEmpty(this.IconData) ? 18f : 0f) * scale;
         var textSize = this.GetStringSize();
         //18 + iconSize + 6 + textSize.Width + 24
-        var needWidth = 48 * scale + iconSize + textSize.Width;
-        //8 + iconSize + 8;
-        var needHeight = 16 * scale + Math.Max(iconSize, 24);
+        var needWidth = 48f * scale + iconSize + textSize.Width;
+        //8 + (iconSize || 18) + 8;
+        var needHeight = 16f * scale + Math.Max(iconSize, 18f * scale);
 
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill

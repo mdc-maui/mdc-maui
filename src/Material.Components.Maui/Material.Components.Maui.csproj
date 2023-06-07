@@ -88,6 +88,9 @@
 		  <MauiXaml Update="Styles\CheckBoxStyles.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
+		  <MauiXaml Update="Styles\ChipStyles.xaml">
+		    <Generator>MSBuild:Compile</Generator>
+		  </MauiXaml>
 		  <MauiXaml Update="Styles\MaterialColors.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
