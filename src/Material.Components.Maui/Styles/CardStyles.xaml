@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style TargetType="views:Card">
+    <Style x:Key="FilledCardStyle" TargetType="views:Card">
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Shape" Value="Medium" />
@@ -17,7 +17,7 @@
                     <views:CardContainer
                         x:Name="PART_Container"
                         BackgroundColor="{TemplateBinding BackgroundColor,
-                                                           Mode=TwoWay}"
+                                                          Mode=TwoWay}"
                         Elevation="{TemplateBinding Elevation,
                                                     Mode=TwoWay}"
                         OutlineColor="{TemplateBinding OutlineColor,
@@ -33,14 +33,20 @@
         </Setter>
     </Style>
 
-    <Style x:Key="FilledCardStyle" TargetType="views:Card" />
-
     <Style x:Key="ElevatedCardStyle" TargetType="views:Card">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Medium" />
+        <Setter Property="Padding" Value="16" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
         <Setter Property="Elevation" Value="Level1" />
     </Style>
 
     <Style x:Key="OutlinedCardStyle" TargetType="views:Card">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Medium" />
+        <Setter Property="Padding" Value="16" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
         <Setter Property="OutlineWidth" Value="1" />

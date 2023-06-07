@@ -42,9 +42,13 @@
         </Setter>
     </Style>
 
-    <Style BaseResourceKey="FilledButtonStyle" TargetType="views:Button" />
-
     <Style x:Key="ElevatedButtonStyle" TargetType="views:Button">
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontWeight" Value="Semibold" />
+        <Setter Property="Shape" Value="Full" />
         <Setter Property="Elevation" Value="Level1" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
         <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
@@ -78,6 +82,12 @@
     </Style>
 
     <Style x:Key="FilledTonalButtonStyle" TargetType="views:Button">
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontWeight" Value="Semibold" />
+        <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
         <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -109,6 +119,12 @@
     </Style>
 
     <Style x:Key="OutlinedButtonStyle" TargetType="views:Button">
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontWeight" Value="Semibold" />
+        <Setter Property="Shape" Value="Full" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
@@ -140,6 +156,12 @@
     </Style>
 
     <Style x:Key="TextButtonStyle" TargetType="views:Button">
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontWeight" Value="Semibold" />
+        <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />

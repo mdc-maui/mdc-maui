@@ -1,4 +1,5 @@
 ﻿using Material.Components.Maui.Extensions;
+using Material.Components.Maui.Styles;
 
 namespace Material.Components.Maui;
 
@@ -121,8 +122,14 @@ public class Button
 
     protected IFontManager fontManager;
 
+    static Style defaultStyle;
+
     public Button()
     {
+        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
+            .First(x => x.GetType() == typeof(ButtonStyles))
+            .FindStyle("FilledButtonStyle");
+
         this.Drawable = new ButtonDrawable(this);
     }
 

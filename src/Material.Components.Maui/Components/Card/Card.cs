@@ -1,3 +1,5 @@
+using Material.Components.Maui.Extensions;
+using Material.Components.Maui.Styles;
 using System.ComponentModel;
 
 namespace Material.Components.Maui;
@@ -68,7 +70,14 @@ public class Card
 
     Grid PART_Root;
 
-    public Card() { }
+    static Style defaultStyle;
+
+    public Card()
+    {
+        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
+            .First(x => x.GetType() == typeof(CardStyles))
+            .FindStyle("FilledCardStyle");
+    }
 
     protected override void OnApplyTemplate()
     {
