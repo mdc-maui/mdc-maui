@@ -85,6 +85,7 @@ public partial class ProgressIndicator : SKCanvasView, IBackgroundElement, IView
             this.AnimationIsPositive = true;
             this.StartIndeterminateAnimation();
         }
+        OnPropertyChanged();
         PercentChanged?.Invoke(this, new ValueChangedEventArgs(this.Percent));
         this.Command?.Execute(this.CommandParameter ?? this.Percent);
     }
