@@ -12,6 +12,8 @@
         <Styles:CardStyles />
         <Styles:CheckBoxStyles />
         <Styles:ChipStyles />
+        <Styles:FABStyles />
+        <Styles:ExtendedFABStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

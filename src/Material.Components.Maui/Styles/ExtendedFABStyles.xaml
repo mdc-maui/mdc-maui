@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.ExtendedFABStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+
+    <Style x:Key="SurfaceExtendedFABStyle" TargetType="views:ExtendedFAB">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="Shape" Value="Large" />
+        <Setter Property="Elevation" Value="Level3" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="Elevation" Value="Level4" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SecondaryExtendedFABStyle" TargetType="views:ExtendedFAB">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="Shape" Value="Large" />
+        <Setter Property="Elevation" Value="Level3" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="Elevation" Value="Level4" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TertiaryExtendedFABStyle" TargetType="views:ExtendedFAB">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="MinimumWidthRequest" Value="80" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="Shape" Value="Large" />
+        <Setter Property="Elevation" Value="Level3" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource TertiaryContainerColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource OnTertiaryContainerColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource OnTertiaryContainerColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnTertiaryContainerColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="Elevation" Value="Level4" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+</ResourceDictionary>
