@@ -1,6 +1,4 @@
-﻿using Material.Components.Maui.Extensions;
-using Material.Components.Maui.Styles;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Material.Components.Maui;
 
@@ -141,7 +139,7 @@ public class Chip : TouchGraphicView, IIconElement, ITextElement, IOutlineElemen
             .FindStyle("FilterChipStyle");
 
         this.Drawable = new ChipDrawable(this);
-        this.EndInteraction += this.OnPressed;
+        this.EndInteraction += this.OnEndInteraction;
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
@@ -162,8 +160,7 @@ public class Chip : TouchGraphicView, IIconElement, ITextElement, IOutlineElemen
         var textSize = this.GetStringSize();
         //16 + iconSize + textSize.Width + closeBtnSize +  16
         var needWidth = 32f * scale + iconSize + textSize.Width + closeSize;
-        //8 + (iconSize || 18)  + 8;
-        var needHeight = 16f * scale + Math.Max(iconSize, 18f * scale);
+        var needHeight = 32f * scale;
 
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill
@@ -188,7 +185,7 @@ public class Chip : TouchGraphicView, IIconElement, ITextElement, IOutlineElemen
         return this.DesiredSize;
     }
 
-    private void OnPressed(object sender, TouchEventArgs e)
+    private void OnEndInteraction(object sender, TouchEventArgs e)
     {
         if (this.HasCloseButton)
         {
@@ -213,7 +210,9 @@ public class Chip : TouchGraphicView, IIconElement, ITextElement, IOutlineElemen
     {
         if (!this.disposedValue && disposing)
         {
-            this.EndInteraction -= this.OnPressed;
+            this.EndInteraction -= this.OnEndInteraction;
+            ((IIconElement)this).IconPath?.Dispose();
+            ((ChipDrawable)this.Drawable)?.Dispose();
         }
         base.Dispose(disposing);
     }

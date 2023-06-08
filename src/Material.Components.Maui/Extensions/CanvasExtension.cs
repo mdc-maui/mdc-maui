@@ -148,13 +148,12 @@ internal static class CanvasExtension
 
     internal static void DrawText(this ICanvas canvas, ITextElement element, RectF rect)
     {
-        var font = string.IsNullOrEmpty(element.FontFamily)
-            ? Microsoft.Maui.Graphics.Font.Default
-            : new Microsoft.Maui.Graphics.Font(
+        var font = new Microsoft.Maui.Graphics.Font(
                 element.FontFamily,
                 (int)element.FontWeight,
                 (FontStyleType)element.FontSlant
             );
+
         canvas.Font = font;
         canvas.FontColor = element.TextColor.WithAlpha(
             element.ViewState is ViewState.Disabled ? 0.38f : 1f

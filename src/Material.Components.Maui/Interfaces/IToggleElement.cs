@@ -1,6 +1,6 @@
 ﻿namespace Material.Components.Maui.Interfaces;
 
-internal interface IToggleElement : IElement
+public interface IToggleElement : IElement
 {
     bool IsToggleEnabled { get; set; }
     bool IsSelected { get; set; }

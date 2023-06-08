@@ -1,6 +1,6 @@
 namespace Material.Components.Maui.Interfaces;
 
-internal interface IOutlineElement : IShapeElement
+public interface IOutlineElement : IShapeElement
 {
     int OutlineWidth { get; set; }
     Color OutlineColor { get; set; }

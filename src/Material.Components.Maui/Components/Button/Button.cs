@@ -1,7 +1,4 @@
-﻿using Material.Components.Maui.Extensions;
-using Material.Components.Maui.Styles;
-
-namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui;
 
 public class Button
     : TouchGraphicView,
@@ -111,8 +108,6 @@ public class Button
         set => this.SetValue(ElevationProperty, value);
     }
 
-    protected IFontManager fontManager;
-
     static Style defaultStyle;
 
     public Button()
@@ -122,6 +117,12 @@ public class Button
             .FindStyle("FilledButtonStyle");
 
         this.Drawable = new ButtonDrawable(this);
+        this.EndInteraction += this.OnEndInteraction;
+    }
+
+    void OnEndInteraction(object sender, TouchEventArgs e)
+    {
+        this.Command?.Execute(this.CommandParameter);
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
@@ -141,8 +142,7 @@ public class Button
         var textSize = this.GetStringSize();
         //18 + iconSize + 6 + textSize.Width + 24
         var needWidth = 48f * scale + iconSize + textSize.Width;
-        //8 + (iconSize || 18) + 8;
-        var needHeight = 16f * scale + Math.Max(iconSize, 18f * scale);
+        var needHeight = 40f * scale;
 
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill
@@ -165,5 +165,15 @@ public class Button
 
         this.DesiredSize = new Size(Math.Ceiling(width), Math.Ceiling(height));
         return this.DesiredSize;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!this.disposedValue && disposing)
+        {
+            this.EndInteraction -= this.OnEndInteraction;
+            ((IIconElement)this).IconPath?.Dispose();
+        }
+        base.Dispose(disposing);
     }
 }

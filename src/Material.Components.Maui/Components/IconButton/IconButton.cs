@@ -1,6 +1,3 @@
-using Material.Components.Maui.Extensions;
-using Material.Components.Maui.Styles;
-
 namespace Material.Components.Maui;
 
 public class IconButton
@@ -65,13 +62,7 @@ public class IconButton
         IOutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty ElevationProperty = BindableProperty.Create(
-        nameof(Elevation),
-        typeof(Elevation),
-        typeof(IconButton),
-        Elevation.Level0,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
-    );
+    public static readonly BindableProperty ElevationProperty = IElevationElement.ElevationProperty;
 
     public string IconData
     {
@@ -112,7 +103,6 @@ public class IconButton
         set => this.SetValue(OutlineWidthProperty, value);
     }
 
-    //[TypeConverter(typeof(ElevationConverter))]
     public Elevation Elevation
     {
         get => (Elevation)this.GetValue(ElevationProperty);
@@ -128,12 +118,27 @@ public class IconButton
             .FindStyle("FilledIconButtonStyle");
 
         this.Drawable = new IconButtonDrawable(this);
-        this.EndInteraction += this.OnToggleStateChanged;
+        this.EndInteraction += this.OnEndInteraction;
     }
 
-    private void OnToggleStateChanged(object sender, TouchEventArgs e)
+    void OnEndInteraction(object sender, TouchEventArgs e)
     {
         if (this.IsToggleEnabled)
+        {
             this.IsSelected = !this.IsSelected;
+        }
+        this.Command?.Execute(
+            this.CommandParameter ?? (this.IsToggleEnabled ? this.IsSelected : default)
+        );
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!this.disposedValue && disposing)
+        {
+            this.EndInteraction -= this.OnEndInteraction;
+            ((IIconElement)this).IconPath?.Dispose();
+        }
+        base.Dispose(disposing);
     }
 }

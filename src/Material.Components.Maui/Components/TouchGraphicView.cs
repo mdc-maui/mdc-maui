@@ -152,7 +152,7 @@ public class TouchGraphicView
 #endif
     }
 
-    private void OnCancelInteraction(object sender, EventArgs e)
+    void OnCancelInteraction(object sender, EventArgs e)
     {
         if (!this.IsEnabled)
             return;

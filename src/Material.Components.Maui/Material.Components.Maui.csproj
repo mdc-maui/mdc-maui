@@ -91,6 +91,12 @@
 		  <MauiXaml Update="Styles\ChipStyles.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
+		  <MauiXaml Update="Styles\ExtendedFABStyles.xaml">
+		    <Generator>MSBuild:Compile</Generator>
+		  </MauiXaml>
+		  <MauiXaml Update="Styles\FABStyles.xaml">
+		    <Generator>MSBuild:Compile</Generator>
+		  </MauiXaml>
 		  <MauiXaml Update="Styles\MaterialColors.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>

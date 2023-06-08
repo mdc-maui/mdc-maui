@@ -9,7 +9,6 @@ public interface ITextElement : IElement
     FontSlant FontSlant { get; set; }
     FontWeight FontWeight { get; set; }
 
-    [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
     public static readonly BindableProperty TextProperty = BindableProperty.Create(
         nameof(Text),
         typeof(string),

@@ -1,8 +1,6 @@
-﻿using Material.Components.Maui.Extensions;
+﻿namespace Material.Components.Maui;
 
-namespace Material.Components.Maui;
-
-internal class ChipDrawable : IDrawable
+internal class ChipDrawable : IDrawable, IDisposable
 {
     readonly Chip view;
 
@@ -77,5 +75,25 @@ internal class ChipDrawable : IDrawable
         var sy = rect.Center.Y - 18f / 2 * scale;
         path.Move(sx, sy);
         canvas.FillPath(path);
+    }
+
+    private bool disposedValue;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!this.disposedValue)
+        {
+            if (disposing)
+            {
+                this.closePath?.Dispose();
+            }
+            this.disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        this.Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

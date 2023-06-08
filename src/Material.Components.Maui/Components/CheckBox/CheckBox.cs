@@ -87,6 +87,7 @@ public class CheckBox : TouchGraphicView, IOutlineElement, IIconElement
         if (!this.disposedValue && disposing)
         {
             this.EndInteraction -= this.OnCheckChanged;
+            ((IIconElement)this).IconPath?.Dispose();
         }
         base.Dispose(disposing);
     }
