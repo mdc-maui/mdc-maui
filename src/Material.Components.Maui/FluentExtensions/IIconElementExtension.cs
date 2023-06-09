@@ -9,14 +9,14 @@ public static class IIconElementExtension
         return view;
     }
 
-    public static TBindable IconData<TBindable>(
+    public static TBindable BindIconData<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, IIconElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -31,14 +31,14 @@ public static class IIconElementExtension
         return view;
     }
 
-    public static TBindable IconColor<TBindable>(
+    public static TBindable BindIconColor<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, IIconElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);

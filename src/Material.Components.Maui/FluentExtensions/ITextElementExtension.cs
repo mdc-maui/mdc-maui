@@ -9,14 +9,14 @@ public static class ITextElementExtension
         return view;
     }
 
-    public static TBindable Text<TBindable>(
+    public static TBindable BindText<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, ITextElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -31,14 +31,14 @@ public static class ITextElementExtension
         return view;
     }
 
-    public static TBindable TextColor<TBindable>(
+    public static TBindable BindTextColor<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, ITextElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -53,14 +53,14 @@ public static class ITextElementExtension
         return view;
     }
 
-    public static TBindable FontSize<TBindable>(
+    public static TBindable BindFontSize<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, ITextElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -75,14 +75,14 @@ public static class ITextElementExtension
         return view;
     }
 
-    public static TBindable FontFamily<TBindable>(
+    public static TBindable BindFontFamily<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, ITextElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -97,14 +97,14 @@ public static class ITextElementExtension
         return view;
     }
 
-    public static TBindable FontSlant<TBindable>(
+    public static TBindable BindFontSlant<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, ITextElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -119,14 +119,14 @@ public static class ITextElementExtension
         return view;
     }
 
-    public static TBindable FontWeight<TBindable>(
+    public static TBindable BindFontWeight<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, ITextElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);

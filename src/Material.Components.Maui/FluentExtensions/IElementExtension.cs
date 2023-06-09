@@ -9,14 +9,14 @@ public static class IElementExtension
         return view;
     }
 
-    public static TBindable IsEnabled<TBindable>(
+    public static TBindable BindIsEnabled<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, IElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);

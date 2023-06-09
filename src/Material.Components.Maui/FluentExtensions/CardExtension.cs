@@ -9,14 +9,14 @@ public static class CardExtension
         return view;
     }
 
-    public static TBindable Content<TBindable>(
+    public static TBindable BindContent<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : Card
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);

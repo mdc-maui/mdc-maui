@@ -9,14 +9,14 @@ public static class IStateLayerElementExtension
         return view;
     }
 
-    public static TBindable StateLayerColor<TBindable>(
+    public static TBindable BindStateLayerColor<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, IStateLayerElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);

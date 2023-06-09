@@ -9,14 +9,14 @@ public static class IBackgroundElementExtension
         return view;
     }
 
-    public static TBindable BackgroundColor<TBindable>(
+    public static TBindable BindBackgroundColor<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, IBackgroundElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);

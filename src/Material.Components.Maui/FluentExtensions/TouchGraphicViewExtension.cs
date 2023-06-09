@@ -11,14 +11,14 @@ public static class TouchGraphicViewExtension
         return view;
     }
 
-    public static TBindable Command<TBindable>(
+    public static TBindable BindCommand<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : TouchGraphicView
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -33,14 +33,14 @@ public static class TouchGraphicViewExtension
         return view;
     }
 
-    public static TBindable CommandParameter<TBindable>(
+    public static TBindable BindCommandParameter<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : TouchGraphicView
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);

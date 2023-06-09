@@ -9,14 +9,14 @@ public static class IRippleElementExtension
         return view;
     }
 
-    public static TBindable OutlineWidth<TBindable>(
+    public static TBindable BindOutlineWidth<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, IRippleElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
@@ -31,14 +31,14 @@ public static class IRippleElementExtension
         return view;
     }
 
-    public static TBindable RippleEasing<TBindable>(
+    public static TBindable BindRippleEasing<TBindable>(
         this TBindable view,
-        object source,
         string path,
         BindingMode mode = BindingMode.Default,
         IValueConverter converter = null,
         object converterParameter = null,
-        string stringFormat = null
+        string stringFormat = null,
+        object source = null
     ) where TBindable : BindableObject, IRippleElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
