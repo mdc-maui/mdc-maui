@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.SwitchStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style x:Key="DefaultSwitchStyle" TargetType="views:Switch">
+        <Setter Property="WidthRequest" Value="60" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Full" />
+        <Setter Property="OutlineWidth" Value="2" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+        <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+        <Setter Property="ThumbColor" Value="{DynamicResource OutlineColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnPrimaryColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnPrimaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource PrimaryContainerColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnPrimaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource PrimaryContainerColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnPrimaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource SurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MarkSwitchStyle" TargetType="views:Switch">
+        <Setter Property="WidthRequest" Value="60" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Shape" Value="Full" />
+        <Setter Property="OutlineWidth" Value="2" />
+        <Setter Property="IconData" Value="M6.4,19 L5,17.6 10.6,12 5,6.4 6.4,5 12,10.6 17.6,5 19,6.4 13.4,12 19,17.6 17.6,19 12,13.4Z" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+        <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
+        <Setter Property="ThumbColor" Value="{DynamicResource OutlineColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="IconData" Value="M9.55,18 L3.85,12.3 5.275,10.875 9.55,15.15 18.725,5.975 20.15,7.4Z" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource OnPrimaryColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnPrimaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="IconData" Value="M9.55,18 L3.85,12.3 5.275,10.875 9.55,15.15 18.725,5.975 20.15,7.4Z" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource PrimaryContainerColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnPrimaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="IconData" Value="M9.55,18 L3.85,12.3 5.275,10.875 9.55,15.15 18.725,5.975 20.15,7.4Z" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource PrimaryContainerColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnPrimaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters>
+                            <Setter Property="OutlineWidth" Value="0" />
+                            <Setter Property="IconData" Value="M9.55,18 L3.85,12.3 5.275,10.875 9.55,15.15 18.725,5.975 20.15,7.4Z" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="ThumbColor" Value="{DynamicResource SurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

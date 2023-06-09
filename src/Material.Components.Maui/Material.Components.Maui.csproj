@@ -106,6 +106,9 @@
 		  <MauiXaml Update="Styles\MaterialStyles.xaml">
 		    <Generator>MSBuild:Compile</Generator>
 		  </MauiXaml>
+		  <MauiXaml Update="Styles\SwitchStyles.xaml">
+		    <Generator>MSBuild:Compile</Generator>
+		  </MauiXaml>
 		</ItemGroup>
 		<ItemGroup>
 		  <Folder Include="Converters\" />

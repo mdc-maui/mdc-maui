@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SampleApp"
+    xmlns:material="clr-namespace:IconPacks.Material;assembly=IconPacks.Material"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    BackgroundColor="{DynamicResource BackgroundColor}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            x:Name="Stack"
+            Padding="30"
+            Spacing="24">
+
+            <md:Switch IsSelected="True" Style="{DynamicResource DefaultSwitchStyle}" />
+            <md:Switch IsSelected="True" Style="{DynamicResource MarkSwitchStyle}" />
+            <md:ExtendedFAB
+                FontSize="24"
+                FontSlant="Italic"
+                HeightRequest="120"
+                IconData="{x:Static material:IconKind.Edit}"
+                Shape="32"
+                Text="Compose" />
+            <md:ExtendedFAB
+                FontSlant="Italic"
+                HeightRequest="96"
+                IconData="{x:Static material:IconKind.Edit}"
+                Shape="20"
+                Style="{DynamicResource SecondaryExtendedFABStyle}"
+                Text="Compose" />
+            <md:ExtendedFAB
+                FontFamily="OpenSansRegular"
+                FontSlant="Italic"
+                IconData="{x:Static material:IconKind.Edit}"
+                Style="{DynamicResource TertiaryExtendedFABStyle}"
+                Text="Compose" />
+
+            <md:FAB
+                HeightRequest="120"
+                IconData="{x:Static material:IconKind.Edit}"
+                WidthRequest="120" />
+            <md:FAB
+                HeightRequest="96"
+                IconData="{x:Static material:IconKind.Edit}"
+                Style="{DynamicResource SecondaryFABStyle}"
+                WidthRequest="96" />
+            <md:FAB IconData="{x:Static material:IconKind.Edit}" Style="{DynamicResource TertiaryFABStyle}" />
+
+            <md:Chip
+                FontFamily="OpenSansRegular"
+                FontSlant="Italic"
+                Text="Enabled" />
+            <md:Chip
+                FontFamily="OpenSansRegular"
+                FontSlant="Italic"
+                IconData="{x:Static material:IconKind.Wallpaper}"
+                Style="{DynamicResource AssistChipStyle}"
+                Text="Enabled" />
+            <md:Chip
+                IconData="{x:Static material:IconKind.Check}"
+                Style="{DynamicResource InputChipStyle}"
+                Text="Enabled" />
+            <md:Chip
+                IconData="{x:Static material:IconKind.Wallpaper}"
+                Style="{DynamicResource SuggestionChipStyle}"
+                Text="Enabled" />
+
+            <md:CheckBox
+                HeightRequest="260"
+                IsChecked="True"
+                IsEnabled="True"
+                OutlineWidth="12"
+                Shape="Medium"
+                WidthRequest="260" />
+            <md:CheckBox
+                HeightRequest="260"
+                IsChecked="False"
+                Shape="20"
+                WidthRequest="260" />
+            <md:CheckBox IsChecked="False" />
+
+            <md:Button
+                FontFamily="OpenSansRegular"
+                IconData="{x:Static material:IconKind.Settings}"
+                IsEnabled="False"
+                Text="Enabled" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                FontSlant="Italic"
+                IconData="{x:Static material:IconKind.Settings}"
+                Style="{DynamicResource ElevatedButtonStyle}"
+                Text="EnabledEnabled" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                IconData="{x:Static material:IconKind.Vaccines}"
+                Style="{DynamicResource FilledTonalButtonStyle}"
+                Text="hhhhhhhhhhhhhhhhhhhhhhhhhh" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                IconData="{x:Static material:IconKind.Vaccines}"
+                Style="{DynamicResource OutlinedButtonStyle}"
+                Text="Enabled" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                IconData="{x:Static material:IconKind.Vaccines}"
+                Style="{DynamicResource TextButtonStyle}"
+                Text="Enabled" />
+
+
+            <md:Button
+                FontFamily="OpenSansRegular"
+                FontSize="24"
+                HeightRequest="80"
+                IconData="{x:Static material:IconKind.ExploreOff}"
+                Text="Enabled" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                FontSize="24"
+                HeightRequest="80"
+                IconData="{x:Static material:IconKind.Vaccines}"
+                Style="{DynamicResource ElevatedButtonStyle}"
+                Text="Enabled" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                FontSize="24"
+                HeightRequest="80"
+                IconData="{x:Static material:IconKind.Vaccines}"
+                Style="{DynamicResource FilledTonalButtonStyle}"
+                Text="Enabled" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                FontSize="24"
+                HeightRequest="80"
+                IconData="{x:Static material:IconKind.Vaccines}"
+                Style="{DynamicResource OutlinedButtonStyle}"
+                Text="Enabled" />
+            <md:Button
+                FontFamily="OpenSansRegular"
+                FontSize="24"
+                HeightRequest="80"
+                IconData="{x:Static material:IconKind.Vaccines}"
+                Style="{DynamicResource TextButtonStyle}"
+                Text="Enabled" />
+
+            <md:IconButton
+                IconData="{x:Static material:IconKind.Vaccines}"
+                IsToggleEnabled="True"
+                Style="{DynamicResource FilledIconButtonStyle}" />
+            <md:IconButton
+                IconData="{x:Static material:IconKind.Vaccines}"
+                IsToggleEnabled="True"
+                Style="{DynamicResource FilledTonalIconButtonStyle}" />
+            <md:IconButton
+                IconData="{x:Static material:IconKind.Vaccines}"
+                IsToggleEnabled="True"
+                Style="{DynamicResource OutlinedIconButtonStyle}" />
+            <md:IconButton
+                IconData="{x:Static material:IconKind.Vaccines}"
+                IsToggleEnabled="True"
+                Style="{DynamicResource StandardIconButtonStyle}" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
