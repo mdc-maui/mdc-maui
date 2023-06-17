@@ -1,4 +1,9 @@
-﻿namespace Material.Components.Maui;
+﻿#if ANDROID
+using Android.Content.Res;
+using Android.Views;
+#endif
+
+namespace Material.Components.Maui;
 
 internal class SwitchDrawable : IDrawable
 {
@@ -18,9 +23,14 @@ internal class SwitchDrawable : IDrawable
         canvas.ClipPath(this.view.GetClipPath(drawRect));
         canvas.DrawBackground(this.view, drawRect);
         canvas.DrawOutline(this.view, drawRect);
+
         canvas.ResetState();
 
+#if ANDROID
+        canvas.Scale(canvas.DisplayScale, canvas.DisplayScale);
+#endif
         this.DrawStateLayer(canvas, rect, scale);
+
         this.DrawThumb(canvas, drawRect, scale);
     }
 
