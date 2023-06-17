@@ -10,7 +10,6 @@
         <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="FontWeight" Value="Semibold" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="TextColor" Value="{DynamicResource OnPrimaryColor}" />
@@ -47,7 +46,6 @@
         <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="FontWeight" Value="Semibold" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="Elevation" Value="Level1" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
@@ -86,7 +84,6 @@
         <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="FontWeight" Value="Semibold" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
         <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -123,7 +120,6 @@
         <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="FontWeight" Value="Semibold" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColor" Value="Transparent" />
@@ -160,7 +156,6 @@
         <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="FontWeight" Value="Semibold" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />

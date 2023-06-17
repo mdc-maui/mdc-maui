@@ -40,8 +40,8 @@ public class Chip : TouchGraphicView, IIconElement, ITextElement, IOutlineElemen
     public static readonly BindableProperty TextColorProperty = ITextElement.TextColorProperty;
     public static readonly BindableProperty FontSizeProperty = ITextElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = ITextElement.FontFamilyProperty;
-    public static readonly BindableProperty FontSlantProperty = ITextElement.FontSlantProperty;
-    public static readonly BindableProperty FontWeightProperty = ITextElement.FontWeightProperty;
+    public static readonly BindableProperty FontAttributesProperty =
+        ITextElement.FontAttributesProperty;
 
     public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
@@ -85,15 +85,10 @@ public class Chip : TouchGraphicView, IIconElement, ITextElement, IOutlineElemen
         get => (string)this.GetValue(FontFamilyProperty);
         set => this.SetValue(FontFamilyProperty, value);
     }
-    public FontSlant FontSlant
+    public FontAttributes FontAttributes
     {
-        get => (FontSlant)this.GetValue(FontSlantProperty);
-        set => this.SetValue(FontSlantProperty, value);
-    }
-    public FontWeight FontWeight
-    {
-        get => (FontWeight)this.GetValue(FontWeightProperty);
-        set => this.SetValue(FontWeightProperty, value);
+        get => (FontAttributes)this.GetValue(FontAttributesProperty);
+        set => this.SetValue(FontAttributesProperty, value);
     }
 
     public string IconData

@@ -6,8 +6,7 @@ public interface ITextElement : IElement
     Color TextColor { get; set; }
     float FontSize { get; set; }
     string FontFamily { get; set; }
-    FontSlant FontSlant { get; set; }
-    FontWeight FontWeight { get; set; }
+    FontAttributes FontAttributes { get; set; }
 
     public static readonly BindableProperty TextProperty = BindableProperty.Create(
         nameof(Text),
@@ -40,19 +39,11 @@ public interface ITextElement : IElement
         propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 
-    public static readonly BindableProperty FontSlantProperty = BindableProperty.Create(
-        nameof(FontSlant),
-        typeof(FontSlant),
+    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
+        nameof(FontAttributes),
+        typeof(FontAttributes),
         typeof(ITextElement),
-        FontSlant.Default,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
-    );
-
-    public static readonly BindableProperty FontWeightProperty = BindableProperty.Create(
-        nameof(FontWeight),
-        typeof(FontWeight),
-        typeof(ITextElement),
-        FontWeight.Regular,
+        FontAttributes.None,
         propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 }

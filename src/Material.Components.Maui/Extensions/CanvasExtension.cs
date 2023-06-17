@@ -148,11 +148,17 @@ internal static class CanvasExtension
 
     internal static void DrawText(this ICanvas canvas, ITextElement element, RectF rect)
     {
-        var font = new Microsoft.Maui.Graphics.Font(
-                element.FontFamily,
-                (int)element.FontWeight,
-                (FontStyleType)element.FontSlant
-            );
+#if MACCATALYST || IOS
+        canvas.PlatformDrawText(element, rect);
+#else
+        var weight = element.FontAttributes is FontAttributes.Bold or FontAttributes.BoldItalic
+            ? FontWeight.Bold
+            : FontWeight.Regular;
+        var style = element.FontAttributes is FontAttributes.Italic or FontAttributes.BoldItalic
+            ? FontStyleType.Italic
+            : FontStyleType.Normal;
+
+        var font = new Microsoft.Maui.Graphics.Font(element.FontFamily, (int)weight, style);
 
         canvas.Font = font;
         canvas.FontColor = element.TextColor.WithAlpha(
@@ -160,5 +166,6 @@ internal static class CanvasExtension
         );
         canvas.FontSize = element.FontSize;
         canvas.DrawString(element.Text, rect, HorizontalAlignment.Center, VerticalAlignment.Center);
+#endif
     }
 }

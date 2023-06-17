@@ -90,14 +90,14 @@ public static class ITextElementExtension
         return view;
     }
 
-    public static TBindable FontSlant<TBindable>(this TBindable view, FontSlant value)
+    public static TBindable FontAttributes<TBindable>(this TBindable view, FontSlant value)
         where TBindable : BindableObject, ITextElement
     {
-        view.SetValue(ITextElement.FontSlantProperty, value);
+        view.SetValue(ITextElement.FontAttributesProperty, value);
         return view;
     }
 
-    public static TBindable BindFontSlant<TBindable>(
+    public static TBindable BindFontAttributes<TBindable>(
         this TBindable view,
         string path,
         BindingMode mode = BindingMode.Default,
@@ -108,29 +108,7 @@ public static class ITextElementExtension
     ) where TBindable : BindableObject, ITextElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
-        view.SetBinding(ITextElement.FontSlantProperty, binding);
-        return view;
-    }
-
-    public static TBindable FontWeight<TBindable>(this TBindable view, FontWeight value)
-        where TBindable : BindableObject, ITextElement
-    {
-        view.SetValue(ITextElement.FontWeightProperty, value);
-        return view;
-    }
-
-    public static TBindable BindFontWeight<TBindable>(
-        this TBindable view,
-        string path,
-        BindingMode mode = BindingMode.Default,
-        IValueConverter converter = null,
-        object converterParameter = null,
-        string stringFormat = null,
-        object source = null
-    ) where TBindable : BindableObject, ITextElement
-    {
-        var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
-        view.SetBinding(ITextElement.FontWeightProperty, binding);
+        view.SetBinding(ITextElement.FontAttributesProperty, binding);
         return view;
     }
 }

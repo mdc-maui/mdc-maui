@@ -1,33 +1,90 @@
-﻿#if ANDROID
+﻿using Microsoft.Maui.Graphics.Platform;
+
+#if ANDROID
 using Android.Graphics;
 using Android.Text;
-using Microsoft.Maui.Graphics.Platform;
+
+#elif MACCATALYST || IOS
+using CoreGraphics;
+using CoreText;
+using Foundation;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics.Text;
+using UIKit;
 #endif
 
 namespace Material.Components.Maui.Extensions;
 
 internal static class TextElementExtension
 {
-    internal static Size GetStringSize(this ITextElement view)
+    internal static Size GetStringSize(this ITextElement element)
     {
-        var font = string.IsNullOrEmpty(view.FontFamily)
-            ? Microsoft.Maui.Graphics.Font.Default
-            : new Microsoft.Maui.Graphics.Font(view.FontFamily);
+        var weight = element.FontAttributes is FontAttributes.Bold or FontAttributes.BoldItalic
+            ? FontWeight.Bold
+            : FontWeight.Regular;
+        var style = element.FontAttributes is FontAttributes.Italic or FontAttributes.BoldItalic
+            ? FontStyleType.Italic
+            : FontStyleType.Normal;
+
+        var font = new Microsoft.Maui.Graphics.Font(element.FontFamily, (int)weight, style);
+
 #if WINDOWS
-        var service = new Microsoft.Maui.Graphics.Win2D.W2DStringSizeService();
-        var size = service.GetStringSize(view.Text, font, view.FontSize);
+        var service = new PlatformStringSizeService();
+        var size = service.GetStringSize(element.Text, font, element.FontSize);
 #elif ANDROID
-        var textPaint = new TextPaint { TextSize = view.FontSize };
+        using var textPaint = new TextPaint { TextSize = element.FontSize };
         textPaint.SetTypeface(font.ToTypeface() ?? Typeface.Default);
-        var m = textPaint.GetFontMetrics();
-        var bounds = new Android.Graphics.Rect();
-        textPaint.GetTextBounds(view.Text, 0, view.Text.Length, bounds);
+        using var bounds = new Android.Graphics.Rect();
+
+        textPaint.GetTextBounds(element.Text, 0, element.Text.Length, bounds);
         var size = new Size(bounds.Width(), bounds.Height());
 #elif MACCATALYST || IOS
-        var service = new Microsoft.Maui.Graphics.Platform.PlatformStringSizeService();
-        var size = service.GetStringSize(view.Text, font, view.FontSize);
-#endif
+        using var path = new CGPath();
+        path.AddRect(new CGRect(0, 0, 10000, 10000));
+        var text = new AttributedText(element.Text, null);
+        using var attrString = text.AsNSAttributedString(
+            font,
+            element.FontSize,
+            element.TextColor.ToHex(),
+            true
+        );
 
+        using var framesetter = new CTFramesetter(attrString);
+        using var frame = framesetter.GetFrame(new NSRange(0, 0), path, null);
+        var size = GetTextSize(frame);
+
+#endif
         return new Size(Math.Ceiling(size.Width), Math.Ceiling(size.Height));
     }
+
+#if MACCATALYST || IOS
+    internal static SizeF GetTextSize(CTFrame frame)
+    {
+        var minY = float.MaxValue;
+        var maxY = float.MinValue;
+        float width = 0;
+
+        var lines = frame.GetLines();
+        var origins = new CGPoint[lines.Length];
+        frame.GetLineOrigins(new NSRange(0, 0), origins);
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var line = lines[i];
+            var lineWidth = (float)
+                line.GetTypographicBounds(out var ascent, out var descent, out var leading);
+
+            if (lineWidth > width)
+            {
+                width = lineWidth;
+            }
+
+            var origin = origins[i];
+            minY = (float)Math.Min(minY, origin.Y - ascent);
+            maxY = (float)Math.Max(maxY, origin.Y + descent);
+        }
+
+        return new SizeF(width, Math.Max(0, maxY - minY));
+    }
+#endif
 }
