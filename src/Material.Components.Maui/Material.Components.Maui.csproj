@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
-		<UseMaui>true</UseMaui>
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
@@ -18,100 +17,102 @@
 	</PropertyGroup>
 
 
-		<ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net7.0-ios')) != true">
-			<Compile Remove="**\**\*.ios.cs" />
-			<None Include="**\**\*.ios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-			<Compile Remove="**\ios\**\*.cs" />
-			<None Include="**\ios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		</ItemGroup>
-		<ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('net7.0-maccatalyst')) != true">
-			<Compile Remove="**\*.macos.cs" />
-			<None Include="**\*.macos.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-			<Compile Remove="**\macos\**\*.cs" />
-			<None Include="**\macos\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		</ItemGroup>
-		<ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net7.0-ios')) != true AND $(TargetFramework.StartsWith('net7.0-maccatalyst')) != true">
-			<Compile Remove="**\*.macios.cs" />
-			<None Include="**\*.macios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-			<Compile Remove="**\macios\**\*.cs" />
-			<None Include="**\macios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		</ItemGroup>
-		<ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid')) != true AND $(TargetFramework.StartsWith('net7.0-android')) != true ">
-			<Compile Remove="**\**\*.android.cs" />
-			<None Include="**\**\*.android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-			<Compile Remove="**\android\**\*.cs" />
-			<None Include="**\android\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		</ItemGroup>
-		<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true ">
-			<Compile Remove="**\*.windows.cs" />
-			<None Include="**\*.windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-			<Compile Remove="**\windows\**\*.cs" />
-			<None Include="**\windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		</ItemGroup>
-		<ItemGroup Condition="$(TargetFramework.Contains('-tizen')) != true ">
-			<Compile Remove="**\*.tizen.cs" />
-			<None Include="**\*.tizen.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-			<Compile Remove="**\tizen\**\*.cs" />
-			<None Include="**\tizen\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		</ItemGroup>
-		<ItemGroup Condition="!($(TargetFramework.StartsWith('net')) == true AND $(TargetFramework.EndsWith('.0')) == true AND $(TargetFramework.Contains('-')) != true)">
-			<!-- e.g net6.0 or net7.0 -->
-			<Compile Remove="**\*.net.cs" />
-			<None Include="**\*.net.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-			<Compile Remove="**\net\**\*.cs" />
-			<None Include="**\net\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-		</ItemGroup>
-		<ItemGroup>
-		  <PackageReference Include="MaterialColorUtilities" Version="0.3.0" />
-		</ItemGroup>
-		<ItemGroup>
-		  <Compile Update="Styles\ButtonStyles.xaml.cs">
-		    <DependentUpon>ButtonStyles.xaml</DependentUpon>
-		  </Compile>
-		  <Compile Update="Styles\CardStyles.xaml.cs">
-		    <DependentUpon>CardStyles.xaml</DependentUpon>
-		  </Compile>
-		  <Compile Update="Styles\IconButtonStyles.xaml.cs">
-		    <DependentUpon>IconButtonStyles.xaml</DependentUpon>
-		  </Compile>
-		  <Compile Update="Styles\MaterialColors.xaml.cs">
-		    <DependentUpon>MaterialColors.xaml</DependentUpon>
-		  </Compile>
-		</ItemGroup>
-		<ItemGroup>
-		  <MauiXaml Update="Styles\ButtonStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\CardStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\CheckBoxStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\ChipStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\ExtendedFABStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\FABStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\MaterialColors.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\IconButtonStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\MaterialStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		  <MauiXaml Update="Styles\SwitchStyles.xaml">
-		    <Generator>MSBuild:Compile</Generator>
-		  </MauiXaml>
-		</ItemGroup>
-		<ItemGroup>
-		  <Folder Include="Converters\" />
-		</ItemGroup>
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true">
+		<Compile Remove="**\**\*.ios.cs" />
+		<None Include="**\**\*.ios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\ios\**\*.cs" />
+		<None Include="**\ios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
+		<Compile Remove="**\*.macos.cs" />
+		<None Include="**\*.macos.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\macos\**\*.cs" />
+		<None Include="**\macos\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true AND $(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
+		<Compile Remove="**\*.macios.cs" />
+		<None Include="**\*.macios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\macios\**\*.cs" />
+		<None Include="**\macios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true ">
+		<Compile Remove="**\**\*.android.cs" />
+		<None Include="**\**\*.android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\android\**\*.cs" />
+		<None Include="**\android\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true ">
+		<Compile Remove="**\*.windows.cs" />
+		<None Include="**\*.windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\windows\**\*.cs" />
+		<None Include="**\windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup Condition="$(TargetFramework.Contains('-tizen')) != true ">
+		<Compile Remove="**\*.tizen.cs" />
+		<None Include="**\*.tizen.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\tizen\**\*.cs" />
+		<None Include="**\tizen\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	<ItemGroup Condition="!($(TargetFramework.StartsWith('net')) == true AND $(TargetFramework.EndsWith('.0')) == true AND $(TargetFramework.Contains('-')) != true)">
+		<!-- e.g net6.0 or net8.0 -->
+		<Compile Remove="**\*.net.cs" />
+		<None Include="**\*.net.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\net\**\*.cs" />
+		<None Include="**\net\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-preview.5.8529" />
+		<PackageReference Include="MaterialColorUtilities" Version="0.3.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Styles\ButtonStyles.xaml.cs">
+			<DependentUpon>ButtonStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\CardStyles.xaml.cs">
+			<DependentUpon>CardStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\IconButtonStyles.xaml.cs">
+			<DependentUpon>IconButtonStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\MaterialColors.xaml.cs">
+			<DependentUpon>MaterialColors.xaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<MauiXaml Update="Styles\ButtonStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\CardStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\CheckBoxStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\ChipStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\ExtendedFABStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\FABStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\MaterialColors.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\IconButtonStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\MaterialStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\SwitchStyles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Converters\" />
+	</ItemGroup>
 
 </Project>
