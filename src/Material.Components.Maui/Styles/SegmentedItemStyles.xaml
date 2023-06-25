@@ -14,16 +14,36 @@
             <VisualStateGroupList>
                 <VisualStateGroup>
                     <VisualState x:Name="unselected_normal">
-                        <VisualState.Setters />
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="unselected_hovered">
-                        <VisualState.Setters />
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="unselected_pressed">
-                        <VisualState.Setters />
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="unselected_disabled">
-                        <VisualState.Setters />
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Transparent" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
                     </VisualState>
 
                     <VisualState x:Name="selected_normal">

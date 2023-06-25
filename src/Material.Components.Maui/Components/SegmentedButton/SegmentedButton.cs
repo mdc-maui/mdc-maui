@@ -6,6 +6,7 @@ namespace Material.Components.Maui;
 [ContentProperty(nameof(Items))]
 public class SegmentedButton
     : TouchGraphicView,
+        IItemsElement<SegmentedItem>,
         IOutlineElement,
         IVisualTreeElement,
         IElement,
@@ -36,32 +37,23 @@ public class SegmentedButton
         }
     }
 
-    private static readonly BindablePropertyKey ItemsPropertyKey = BindableProperty.CreateReadOnly(
-        nameof(Items),
-        typeof(ItemCollection<SegmentedItem>),
-        typeof(SegmentedButton),
-        null,
-        defaultValueCreator: bo => new ItemCollection<SegmentedItem>()
-    );
-
-    public static readonly BindableProperty ItemsProperty = ItemsPropertyKey.BindableProperty;
-
-    public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
-        nameof(ItemsSource),
-        typeof(IList),
-        typeof(SegmentedButton),
-        default,
-        propertyChanged: (bo, ov, nv) =>
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        if (this.Items != null)
         {
-            if (nv != null)
+            foreach (var item in Items)
             {
-                if (nv is INotifyCollectionChanged ncc)
-                {
-                    ncc.CollectionChanged += ((SegmentedButton)bo).OnItemsSourceCollectionChanged;
-                }
+                SetInheritedBindingContext(item, this.BindingContext);
             }
         }
-    );
+    }
+
+    public static readonly BindableProperty ItemsProperty =
+        IItemsElement<SegmentedItem>.ItemsProperty;
+
+    public static readonly BindableProperty ItemsSourceProperty =
+        IItemsElement<SegmentedItem>.ItemsSourceProperty;
 
     public static readonly BindableProperty MultiSelectModeProperty = BindableProperty.Create(
         nameof(MultiSelectMode),
@@ -87,6 +79,65 @@ public class SegmentedButton
         set => this.SetValue(ItemsSourceProperty, value);
     }
 
+    void IItemsElement<SegmentedItem>.OnItemsCollectionChanged(
+        object sender,
+        NotifyCollectionChangedEventArgs e
+    )
+    {
+        if (e.OldItems != null)
+        {
+            var index = e.OldStartingIndex;
+            foreach (SegmentedItem item in e.OldItems)
+            {
+                this.OnChildRemoved(item, index);
+                VisualDiagnostics.OnChildRemoved(this, item, index);
+                SetInheritedBindingContext(item, null);
+                index++;
+            }
+        }
+
+        if (e.NewItems != null)
+        {
+            var index = e.NewStartingIndex;
+            foreach (SegmentedItem item in e.NewItems)
+            {
+                this.OnChildAdded(item);
+                VisualDiagnostics.OnChildAdded(this, item, index);
+                if (this.BindingContext != null)
+                {
+                    SetInheritedBindingContext(item, this.BindingContext);
+                }
+            }
+        }
+        ((IElement)this).InvalidateMeasure();
+    }
+
+    void IItemsElement<SegmentedItem>.OnItemsSourceCollectionChanged(
+        object sender,
+        NotifyCollectionChangedEventArgs e
+    )
+    {
+        if (e.OldItems != null)
+        {
+            var index = e.OldStartingIndex;
+            foreach (string item in e.OldItems)
+            {
+                this.Items.RemoveAt(index);
+                index++;
+            }
+        }
+
+        if (e.NewItems != null)
+        {
+            var index = e.NewStartingIndex;
+            foreach (string item in e.NewItems)
+            {
+                this.Items.Insert(index, new SegmentedItem { Text = item });
+                index++;
+            }
+        }
+    }
+
     public bool MultiSelectMode
     {
         get => (bool)this.GetValue(MultiSelectModeProperty);
@@ -109,7 +160,6 @@ public class SegmentedButton
     {
         this.EndInteraction += this.OnEndInteraction;
         this.MoveHoverInteraction += this.OnMoveHoverInteraction;
-        this.Items.CollectionChanged += this.OnItemsCollectionChanged;
         this.Drawable = new SegmentedButtonDrawable(this);
     }
 
@@ -123,40 +173,6 @@ public class SegmentedButton
     {
         this.LastTouchPoint = e.Touches[0];
         this.ChangeVisualState();
-    }
-
-    private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
-        if (e.NewItems != null)
-        {
-            foreach (SegmentedItem item in e.NewItems)
-            {
-                item.Parent = this;
-            }
-        }
-    }
-
-    private void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
-        if (e.NewItems != null)
-        {
-            var index = e.NewStartingIndex;
-            foreach (string item in e.NewItems)
-            {
-                this.Items.Insert(index, new SegmentedItem { Text = item });
-                index++;
-            }
-        }
-
-        if (e.OldItems != null)
-        {
-            var index = e.OldStartingIndex;
-            foreach (string item in e.OldItems)
-            {
-                this.Items.RemoveAt(index);
-                index++;
-            }
-        }
     }
 
     internal void OnSelectedItemChanged(SegmentedItem item)
@@ -240,10 +256,14 @@ public class SegmentedButton
         {
             this.EndInteraction -= this.OnEndInteraction;
             this.MoveHoverInteraction -= this.OnMoveHoverInteraction;
-            this.Items.CollectionChanged -= this.OnItemsCollectionChanged;
+            this.Items.CollectionChanged -= (
+                (IItemsElement<SegmentedItem>)this
+            ).OnItemsCollectionChanged;
             if (this.ItemsSource is INotifyCollectionChanged ncc)
             {
-                ncc.CollectionChanged -= this.OnItemsSourceCollectionChanged;
+                ncc.CollectionChanged -= (
+                    (IItemsElement<SegmentedItem>)this
+                ).OnItemsSourceCollectionChanged;
             }
             ((IIconElement)this).IconPath?.Dispose();
         }

@@ -65,7 +65,15 @@ public class SegmentedItem
 
     public static new readonly BindableProperty BackgroundColorProperty =
         IBackgroundElement.BackgroundColorProperty;
-    public static readonly BindableProperty TextProperty = ITextElement.TextProperty;
+    public static readonly BindableProperty TextProperty = BindableProperty.Create(
+        nameof(Text),
+        typeof(string),
+        typeof(ITextElement),
+        default,
+        propertyChanged: (bo, ov, nv) =>
+            ((IElement)((SegmentedItem)bo)?.Parent)?.InvalidateMeasure()
+    );
+
     public static readonly BindableProperty TextColorProperty = ITextElement.TextColorProperty;
     public static readonly BindableProperty FontSizeProperty = ITextElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = ITextElement.FontFamilyProperty;
