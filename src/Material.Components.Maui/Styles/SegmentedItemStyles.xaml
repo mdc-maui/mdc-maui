@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.SegmentedItemStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style TargetType="views:SegmentedItem">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="unselected_normal">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_hovered">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_pressed">
+                        <VisualState.Setters />
+                    </VisualState>
+                    <VisualState x:Name="unselected_disabled">
+                        <VisualState.Setters />
+                    </VisualState>
+
+                    <VisualState x:Name="selected_normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="selected_disabled">
+                        <VisualState.Setters />
+                    </VisualState>
+
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+
+
+</ResourceDictionary>
