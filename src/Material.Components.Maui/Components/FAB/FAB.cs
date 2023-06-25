@@ -2,12 +2,15 @@
 
 public class FAB
     : TouchGraphicView,
-        IElement,
         IIconElement,
-        IBackgroundElement,
         IElevationElement,
+        IElement,
+        IBackgroundElement,
+        IShapeElement,
         IStateLayerElement,
-        IRippleElement
+        IRippleElement,
+        IVisualTreeElement,
+        IDisposable
 {
     protected override void ChangeVisualState()
     {

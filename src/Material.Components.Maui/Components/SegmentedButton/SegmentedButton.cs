@@ -4,7 +4,16 @@ using System.Collections.Specialized;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public class SegmentedButton : TouchGraphicView, IOutlineElement, IVisualTreeElement
+public class SegmentedButton
+    : TouchGraphicView,
+        IOutlineElement,
+        IVisualTreeElement,
+        IElement,
+        IBackgroundElement,
+        IShapeElement,
+        IStateLayerElement,
+        IRippleElement,
+        IDisposable
 {
     protected override void ChangeVisualState()
     {
@@ -224,4 +233,20 @@ public class SegmentedButton : TouchGraphicView, IOutlineElement, IVisualTreeEle
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
 
     public IVisualTreeElement GetVisualParent() => null;
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!this.disposedValue && disposing)
+        {
+            this.EndInteraction -= this.OnEndInteraction;
+            this.MoveHoverInteraction -= this.OnMoveHoverInteraction;
+            this.Items.CollectionChanged -= this.OnItemsCollectionChanged;
+            if (this.ItemsSource is INotifyCollectionChanged ncc)
+            {
+                ncc.CollectionChanged -= this.OnItemsSourceCollectionChanged;
+            }
+            ((IIconElement)this).IconPath?.Dispose();
+        }
+        base.Dispose(disposing);
+    }
 }

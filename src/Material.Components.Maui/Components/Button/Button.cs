@@ -2,16 +2,17 @@
 
 public class Button
     : TouchGraphicView,
-        IElement,
         ITextElement,
+        IIconElement,
+        IOutlineElement,
+        IElevationElement,
+        IElement,
         IBackgroundElement,
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
-        IContextMenuElement,
-        IIconElement,
-        IOutlineElement,
-        IElevationElement
+        IVisualTreeElement,
+        IDisposable
 {
     protected override void ChangeVisualState()
     {

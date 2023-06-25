@@ -1,6 +1,17 @@
 ﻿namespace Material.Components.Maui;
 
-public class ExtendedFAB : TouchGraphicView, IElement, IIconElement, ITextElement, IElevationElement
+public class ExtendedFAB
+    : TouchGraphicView,
+        IIconElement,
+        ITextElement,
+        IElevationElement,
+        IElement,
+        IBackgroundElement,
+        IShapeElement,
+        IStateLayerElement,
+        IRippleElement,
+        IVisualTreeElement,
+        IDisposable
 {
     protected override void ChangeVisualState()
     {

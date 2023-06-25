@@ -4,6 +4,7 @@ namespace Material.Components.Maui;
 
 public class CardContainer
     : GraphicsView,
+        IElement,
         IBackgroundElement,
         IShapeElement,
         IOutlineElement,

@@ -1,6 +1,16 @@
 ﻿namespace Material.Components.Maui;
 
-public class CheckBox : TouchGraphicView, IOutlineElement, IIconElement
+public class CheckBox
+    : TouchGraphicView,
+        IIconElement,
+        IOutlineElement,
+        IElement,
+        IBackgroundElement,
+        IShapeElement,
+        IStateLayerElement,
+        IRippleElement,
+        IVisualTreeElement,
+        IDisposable
 {
     protected override void ChangeVisualState()
     {

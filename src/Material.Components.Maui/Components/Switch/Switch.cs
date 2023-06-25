@@ -6,12 +6,13 @@ namespace Material.Components.Maui;
 
 public class Switch
     : GraphicsView,
+        IIconElement,
+        IOutlineElement,
         IElement,
         IBackgroundElement,
-        IOutlineElement,
         IShapeElement,
-        IIconElement,
         IStateLayerElement,
+        IVisualTreeElement,
         IDisposable
 {
     protected bool IsVisualStateChanging { get; set; }

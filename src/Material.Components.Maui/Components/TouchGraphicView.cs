@@ -11,7 +11,6 @@ public class TouchGraphicView
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
-        IContextMenuElement,
         IVisualTreeElement,
         IDisposable
 {

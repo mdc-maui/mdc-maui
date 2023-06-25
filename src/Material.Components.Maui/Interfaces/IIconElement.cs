@@ -1,6 +1,6 @@
 namespace Material.Components.Maui.Interfaces;
 
-public interface IIconElement : IElement
+public interface IIconElement : IElement, IDisposable
 {
     string IconData { get; set; }
     PathF IconPath { get; set; }

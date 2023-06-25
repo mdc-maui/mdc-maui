@@ -2,17 +2,17 @@ namespace Material.Components.Maui;
 
 public class IconButton
     : TouchGraphicView,
+        IIconElement,
         IToggleElement,
+        IOutlineElement,
+        IElevationElement,
         IElement,
         IBackgroundElement,
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
-        IContextMenuElement,
-        IIconElement,
-        IOutlineElement,
-        IElevationElement,
-        IVisualTreeElement
+        IVisualTreeElement,
+        IDisposable
 {
     protected override void ChangeVisualState()
     {
@@ -128,7 +128,7 @@ public class IconButton
             this.IsSelected = !this.IsSelected;
         }
         this.Command?.Execute(
-            this.CommandParameter ?? (this.IsToggleEnabled ? this.IsSelected : default)
+            this.CommandParameter ?? (this.IsToggleEnabled ? this.IsSelected : null)
         );
     }
 

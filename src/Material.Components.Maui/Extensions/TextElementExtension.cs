@@ -71,7 +71,7 @@ internal static class TextElementExtension
         var origins = new CGPoint[lines.Length];
         frame.GetLineOrigins(new NSRange(0, 0), origins);
 
-        for (int i = 0; i < lines.Length; i++)
+        for (var i = 0; i < lines.Length; i++)
         {
             var line = lines[i];
             var lineWidth = (float)

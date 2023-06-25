@@ -8,7 +8,8 @@ public class SegmentedItem
         ITextElement,
         IBackgroundElement,
         IStateLayerElement,
-        IVisualTreeElement
+        IVisualTreeElement,
+        IDisposable
 {
     protected bool IsVisualStateChanging { get; set; }
     ViewState viewState = ViewState.Normal;
@@ -144,5 +145,25 @@ public class SegmentedItem
     {
         get => (Color)this.GetValue(StateLayerColorProperty);
         set => this.SetValue(StateLayerColorProperty, value);
+    }
+
+    private bool disposedValue;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
+        {
+            if (disposing)
+            {
+                ((IIconElement)this).IconPath?.Dispose();
+            }
+            disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        this.Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

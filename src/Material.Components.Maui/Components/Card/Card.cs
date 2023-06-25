@@ -1,5 +1,3 @@
-using Material.Components.Maui.Extensions;
-using Material.Components.Maui.Styles;
 using System.ComponentModel;
 
 namespace Material.Components.Maui;
@@ -7,6 +5,7 @@ namespace Material.Components.Maui;
 [ContentProperty(nameof(Content))]
 public class Card
     : TemplatedView,
+        IElement,
         IBackgroundElement,
         IShapeElement,
         IOutlineElement,

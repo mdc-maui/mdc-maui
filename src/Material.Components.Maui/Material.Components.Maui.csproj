@@ -78,6 +78,12 @@
 		<Compile Update="Styles\MaterialColors.xaml.cs">
 			<DependentUpon>MaterialColors.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Styles\SegmentedItemStyles.xaml.cs">
+		  <DependentUpon>SegmentedItemStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\SegmentedButtonStyles.xaml.cs">
+		  <DependentUpon>SegmentedButtonStyles.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
@@ -106,6 +112,12 @@
 		</MauiXaml>
 		<MauiXaml Update="Styles\MaterialStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\SegmentedItemStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\SegmentedButtonStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Styles\SwitchStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>

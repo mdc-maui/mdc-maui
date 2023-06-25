@@ -2,7 +2,19 @@
 
 namespace Material.Components.Maui;
 
-public class Chip : TouchGraphicView, IIconElement, ITextElement, IOutlineElement, IElevationElement
+public class Chip
+    : TouchGraphicView,
+        IIconElement,
+        ITextElement,
+        IOutlineElement,
+        IElevationElement,
+        IElement,
+        IBackgroundElement,
+        IShapeElement,
+        IStateLayerElement,
+        IRippleElement,
+        IVisualTreeElement,
+        IDisposable
 {
     protected override void ChangeVisualState()
     {
