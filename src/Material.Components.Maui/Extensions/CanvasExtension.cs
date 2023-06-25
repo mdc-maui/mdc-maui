@@ -92,7 +92,12 @@ internal static class CanvasExtension
 
         var path = new PathF();
         path.AppendRoundedRectangle(
-            new RectF(rect.X, rect.Y, rect.Width, rect.Height),
+            new RectF(
+                rect.X + element.OutlineWidth / 2,
+                rect.Y + element.OutlineWidth / 2,
+                rect.Width - element.OutlineWidth,
+                rect.Height - element.OutlineWidth
+            ),
             (float)radii[0],
             (float)radii[1],
             (float)radii[2],

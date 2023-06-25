@@ -29,7 +29,7 @@ public class TouchGraphicView
         }
     }
 
-    public void OnPropertyChanged()
+    void IElement.OnPropertyChanged()
     {
         if (this.Handler != null && !this.IsVisualStateChanging)
         {
@@ -113,7 +113,7 @@ public class TouchGraphicView
 
     internal float RippleSize { get; private set; }
     internal float RipplePercent { get; private set; }
-    internal PointF LastTouchPoint { get; private set; }
+    internal PointF LastTouchPoint { get; set; }
 
     protected IAnimationManager animationManager;
     protected bool disposedValue;

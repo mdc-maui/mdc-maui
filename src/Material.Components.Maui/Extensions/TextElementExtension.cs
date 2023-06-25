@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Graphics.Platform;
-
-#if ANDROID
+﻿#if ANDROID
 using Android.Graphics;
 using Android.Text;
 
@@ -13,12 +11,17 @@ using Microsoft.Maui.Graphics.Text;
 using UIKit;
 #endif
 
+using Microsoft.Maui.Graphics.Platform;
+
 namespace Material.Components.Maui.Extensions;
 
 internal static class TextElementExtension
 {
     internal static Size GetStringSize(this ITextElement element)
     {
+        if (string.IsNullOrEmpty(element.Text))
+            return Size.Zero;
+
         var weight = element.FontAttributes is FontAttributes.Bold or FontAttributes.BoldItalic
             ? FontWeight.Bold
             : FontWeight.Regular;
@@ -72,7 +75,7 @@ internal static class TextElementExtension
         {
             var line = lines[i];
             var lineWidth = (float)
-                line.GetTypographicBounds(out var ascent, out var descent, out var leading);
+                line.GetTypographicBounds(out var ascent, out var descent, out var _);
 
             if (lineWidth > width)
             {
