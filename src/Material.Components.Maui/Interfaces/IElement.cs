@@ -26,7 +26,7 @@ public interface IElement
         true,
         propertyChanged: (bo, ov, nv) =>
         {
-            ((TouchGraphicView)bo).ViewState = ViewState.Disabled;
+            ((TouchGraphicsView)bo).ViewState = ViewState.Disabled;
             ((IElement)bo).OnPropertyChanged();
         }
     );

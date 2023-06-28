@@ -72,7 +72,7 @@ internal static class CanvasExtension
             element.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
-        var path = element.IconPath.AsScaledPath(defaultSize / 24f * scale);
+        using var path = element.IconPath.AsScaledPath(defaultSize / 24f * scale);
         var sx = rect.Center.X - defaultSize / 2 * scale;
         var sy = rect.Center.Y - defaultSize / 2 * scale;
         path.Move(sx, sy);
@@ -151,7 +151,13 @@ internal static class CanvasExtension
         canvas.FillCircle(point, 0f.Lerp(size, percent));
     }
 
-    internal static void DrawText(this ICanvas canvas, ITextElement element, RectF rect)
+    internal static void DrawText(
+        this ICanvas canvas,
+        ITextElement element,
+        RectF rect,
+        HorizontalAlignment horizontal = HorizontalAlignment.Center,
+        VerticalAlignment vertical = VerticalAlignment.Center
+    )
     {
 #if MACCATALYST || IOS
         canvas.PlatformDrawText(element, rect);
@@ -170,7 +176,7 @@ internal static class CanvasExtension
             element.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
         canvas.FontSize = element.FontSize;
-        canvas.DrawString(element.Text, rect, HorizontalAlignment.Center, VerticalAlignment.Center);
+        canvas.DrawString(element.Text, rect, horizontal, vertical);
 #endif
     }
 }

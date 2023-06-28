@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 public class CheckBox
-    : TouchGraphicView,
+    : TouchGraphicsView,
         IIconElement,
         IOutlineElement,
         IElement,

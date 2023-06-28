@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 public partial class MenuItem
-    : TouchGraphicView,
+    : TouchGraphicsView,
         IElement,
         IBackgroundElement,
         ITextElement,

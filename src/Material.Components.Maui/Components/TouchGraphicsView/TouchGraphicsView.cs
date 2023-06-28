@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
-public class TouchGraphicView
+public class TouchGraphicsView
     : GraphicsView,
         IElement,
         IBackgroundElement,
@@ -63,21 +63,21 @@ public class TouchGraphicView
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(
         nameof(Command),
         typeof(ICommand),
-        typeof(TouchGraphicView),
+        typeof(TouchGraphicsView),
         default
     );
 
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(
         nameof(CommandParameter),
         typeof(object),
-        typeof(TouchGraphicView),
+        typeof(TouchGraphicsView),
         default
     );
 
     public new bool IsEnabled
     {
-        get => (bool)this.GetValue(TouchGraphicView.IsEnabledProperty);
-        set => this.SetValue(TouchGraphicView.IsEnabledProperty, value);
+        get => (bool)this.GetValue(TouchGraphicsView.IsEnabledProperty);
+        set => this.SetValue(TouchGraphicsView.IsEnabledProperty, value);
     }
 
     public new Color BackgroundColor
@@ -137,7 +137,7 @@ public class TouchGraphicView
     readonly IDispatcherTimer touchTimer;
     bool isTouching;
 
-    public TouchGraphicView()
+    public TouchGraphicsView()
     {
         this.StartInteraction += this.OnStartInteraction;
         this.EndInteraction += this.OnEndInteraction;
@@ -188,7 +188,6 @@ public class TouchGraphicView
                 this.isTouching = false;
                 this.ContextMenu.Show(this, this.LastTouchPoint);
             }
-
         };
     }
 
@@ -221,7 +220,6 @@ public class TouchGraphicView
             this.ViewState = e.IsInsideBounds ? ViewState.Hovered : ViewState.Normal;
         }
 #endif
-
 
         this.Released?.Invoke(this, e);
         if (this.isTouching)
@@ -346,7 +344,6 @@ public class TouchGraphicView
         this.ContextMenu?.Show(this, new Point(position.X, position.Y));
     }
 #endif
-
 
     protected bool disposedValue;
 

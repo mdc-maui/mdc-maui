@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 public class FAB
-    : TouchGraphicView,
+    : TouchGraphicsView,
         IIconElement,
         IElevationElement,
         IElement,

@@ -84,14 +84,14 @@ public class Switch
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(
         nameof(Command),
         typeof(ICommand),
-        typeof(TouchGraphicView),
+        typeof(TouchGraphicsView),
         default
     );
 
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(
         nameof(CommandParameter),
         typeof(object),
-        typeof(TouchGraphicView),
+        typeof(TouchGraphicsView),
         default
     );
 
@@ -109,8 +109,8 @@ public class Switch
 
     public new bool IsEnabled
     {
-        get => (bool)this.GetValue(TouchGraphicView.IsEnabledProperty);
-        set => this.SetValue(TouchGraphicView.IsEnabledProperty, value);
+        get => (bool)this.GetValue(TouchGraphicsView.IsEnabledProperty);
+        set => this.SetValue(TouchGraphicsView.IsEnabledProperty, value);
     }
 
     public new Color BackgroundColor

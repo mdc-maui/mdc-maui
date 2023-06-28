@@ -5,7 +5,7 @@ namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
 public class SegmentedButton
-    : TouchGraphicView,
+    : TouchGraphicsView,
         IItemsElement<SegmentedItem>,
         IOutlineElement,
         IVisualTreeElement,

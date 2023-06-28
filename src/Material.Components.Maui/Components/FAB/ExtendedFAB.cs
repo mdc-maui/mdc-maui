@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 public class ExtendedFAB
-    : TouchGraphicView,
+    : TouchGraphicsView,
         IIconElement,
         ITextElement,
         IElevationElement,

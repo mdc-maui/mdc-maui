@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 public class Button
-    : TouchGraphicView,
+    : TouchGraphicsView,
         ITextElement,
         IIconElement,
         IOutlineElement,

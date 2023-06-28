@@ -3,7 +3,7 @@
 namespace Material.Components.Maui;
 
 public class Chip
-    : TouchGraphicView,
+    : TouchGraphicsView,
         IIconElement,
         ITextElement,
         IOutlineElement,
