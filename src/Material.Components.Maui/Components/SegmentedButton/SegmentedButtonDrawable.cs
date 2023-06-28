@@ -16,55 +16,37 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
     public void Draw(ICanvas canvas, RectF rect)
     {
         canvas.SaveState();
+
         canvas.Antialias = true;
         canvas.ClipPath(this.view.GetClipPath(rect));
 
         var itemWidth = rect.Width / this.view.Items.Count;
-        for (var i = 0; i < this.view.Items.Count; i++)
+
+        canvas.StrokeSize = this.view.OutlineWidth;
+        canvas.StrokeColor = this.view.OutlineColor;
+        for (var i = 0; i < this.view.Items.Count - 1; i++)
         {
-            var sx = itemWidth * i;
-            var ex = sx + itemWidth;
-
-            this.DrawItem(
-                canvas,
-                new RectF(sx, rect.Top, itemWidth, rect.Height),
-                this.view.Items[i]
-            );
-
-            if (i < this.view.Items.Count - 1)
-            {
-                canvas.SaveState();
-
-                var clipPath = new PathF();
-#if WINDOWS
-                clipPath.AppendRectangle(
-                    ex - this.view.OutlineWidth / 2f,
-                    rect.Top,
-                    this.view.OutlineWidth,
-                    rect.Height,
-                    true
-                );
-#else
-                clipPath.AppendRectangle(
-                    ex - this.view.OutlineWidth / 2f,
-                    rect.Top,
-                    this.view.OutlineWidth,
-                    rect.Height,
-                    true
-                );
-#endif
-                canvas.ClipPath(clipPath);
-                canvas.StrokeSize = this.view.OutlineWidth;
-                canvas.StrokeColor = this.view.OutlineColor;
-                using var path = new PathF();
-                path.MoveTo(ex, rect.Top);
-                path.LineTo(ex, rect.Bottom);
-                canvas.DrawPath(path);
-
-                canvas.ResetState();
-            }
+            var x = itemWidth * (i + 1);
+            using var path = new PathF();
+            path.MoveTo(x, rect.Top);
+            path.LineTo(x, rect.Bottom);
+            canvas.DrawPath(path);
         }
 
+        canvas.ResetState();
+        for (var i = 0; i < this.view.Items.Count; i++)
+        {
+            this.DrawItem(
+                canvas,
+                new RectF(itemWidth * i, rect.Top, itemWidth, rect.Height),
+                this.view.Items[i]
+            );
+        }
+        canvas.SaveState();
+
+#if ANDROID
+        canvas.Scale(canvas.DisplayScale, canvas.DisplayScale);
+#endif
         canvas.DrawOutline(this.view, rect);
         canvas.ResetState();
     }
@@ -72,7 +54,9 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
     void DrawItem(ICanvas canvas, RectF rect, SegmentedItem item)
     {
         canvas.SaveState();
-
+#if ANDROID
+        canvas.Scale(canvas.DisplayScale, canvas.DisplayScale);
+#endif
         this.ClipItemRect(canvas, rect, item);
         canvas.DrawBackground(item, rect);
 

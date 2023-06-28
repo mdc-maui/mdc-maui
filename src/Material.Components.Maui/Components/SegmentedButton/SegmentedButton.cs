@@ -42,7 +42,7 @@ public class SegmentedButton
         base.OnBindingContextChanged();
         if (this.Items != null)
         {
-            foreach (var item in Items)
+            foreach (var item in this.Items)
             {
                 SetInheritedBindingContext(item, this.BindingContext);
             }
@@ -158,9 +158,16 @@ public class SegmentedButton
 
     public SegmentedButton()
     {
+        this.StartInteraction += this.OnStartInteraction;
         this.EndInteraction += this.OnEndInteraction;
         this.MoveHoverInteraction += this.OnMoveHoverInteraction;
         this.Drawable = new SegmentedButtonDrawable(this);
+    }
+
+    private void OnStartInteraction(object sender, TouchEventArgs e)
+    {
+        this.LastTouchPoint = e.Touches[0];
+        this.ChangeVisualState();
     }
 
     private void OnEndInteraction(object sender, TouchEventArgs e)
