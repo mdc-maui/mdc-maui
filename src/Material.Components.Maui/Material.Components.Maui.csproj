@@ -72,6 +72,9 @@
 		<Compile Update="Styles\CardStyles.xaml.cs">
 			<DependentUpon>CardStyles.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Styles\MenuItemStyles.xaml.cs">
+		  <DependentUpon>MenuItemStyles.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Styles\IconButtonStyles.xaml.cs">
 			<DependentUpon>IconButtonStyles.xaml</DependentUpon>
 		</Compile>
@@ -83,6 +86,9 @@
 		</Compile>
 		<Compile Update="Styles\SegmentedButtonStyles.xaml.cs">
 		  <DependentUpon>SegmentedButtonStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\ContextMenuStyles.xaml.cs">
+		  <DependentUpon>ContextMenuStyles.xaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
@@ -97,6 +103,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Styles\ChipStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\MenuItemStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Styles\ExtendedFABStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
@@ -119,12 +128,16 @@
 		<MauiXaml Update="Styles\SegmentedButtonStyles.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Styles\ContextMenuStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Styles\SwitchStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Converters\" />
+		<Folder Include="Handlers\" />
 	</ItemGroup>
 
 </Project>
