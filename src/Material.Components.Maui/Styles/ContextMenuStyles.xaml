@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.ContextMenuStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style TargetType="views:ContextMenu">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="MinimumWidthRequest" Value="112" />
+        <Setter Property="MaximumWidthRequest" Value="280" />
+        <Setter Property="Shape" Value="4" />
+        <Setter Property="Elevation" Value="Level2" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root">
+                    <views:CardContainer
+                        x:Name="PART_Container"
+                        BackgroundColor="{TemplateBinding BackgroundColor}"
+                        Elevation="{TemplateBinding Elevation}"
+                        Shape="{TemplateBinding Shape}" />
+
+                    <ScrollView>
+                        <VerticalStackLayout x:Name="PART_Stack" Padding="0,8" />
+                    </ScrollView>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+    </Style>
+
+
+</ResourceDictionary>

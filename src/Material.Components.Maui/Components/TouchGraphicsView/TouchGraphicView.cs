@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Animations;
+using Microsoft.Maui.Platform;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -11,9 +12,19 @@ public class TouchGraphicView
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
+        IContextMenuElement,
         IVisualTreeElement,
         IDisposable
 {
+    public event EventHandler<TouchEventArgs> Clicked;
+    public event EventHandler<TouchEventArgs> Pressed;
+    public event EventHandler<TouchEventArgs> Released;
+    public event EventHandler<TouchEventArgs> LongPressed;
+
+#if WINDOWS || MACCATALYST
+    public event EventHandler<TouchEventArgs> RightClicked;
+#endif
+
     protected bool IsVisualStateChanging { get; set; }
     ViewState viewState = ViewState.Normal;
 
@@ -46,6 +57,8 @@ public class TouchGraphicView
         IRippleElement.RippleDurationProperty;
     public static readonly BindableProperty RippleEasingProperty =
         IRippleElement.RippleEasingProperty;
+    public static readonly BindableProperty ContextMenuProperty =
+        IContextMenuElement.ContextMenuProperty;
 
     public static readonly BindableProperty CommandProperty = BindableProperty.Create(
         nameof(Command),
@@ -98,6 +111,12 @@ public class TouchGraphicView
         set => this.SetValue(RippleEasingProperty, value);
     }
 
+    public ContextMenu ContextMenu
+    {
+        get => (ContextMenu)this.GetValue(ContextMenuProperty);
+        set => this.SetValue(ContextMenuProperty, value);
+    }
+
     public ICommand Command
     {
         get => (ICommand)this.GetValue(CommandProperty);
@@ -115,7 +134,8 @@ public class TouchGraphicView
     internal PointF LastTouchPoint { get; set; }
 
     protected IAnimationManager animationManager;
-    protected bool disposedValue;
+    readonly IDispatcherTimer touchTimer;
+    bool isTouching;
 
     public TouchGraphicView()
     {
@@ -124,16 +144,68 @@ public class TouchGraphicView
         this.CancelInteraction += this.OnCancelInteraction;
         this.StartHoverInteraction += this.OnStartHoverInteraction;
         this.EndHoverInteraction += this.OnEndHoverInteraction;
+
+        //#if WINDOWS || MACCATALYST
+#if MACCATALYST
+        var tapGestureRecognizer = new TapGestureRecognizer();
+        tapGestureRecognizer.Tapped += (s, e) =>
+        {
+            if (e.Buttons == ButtonsMask.Secondary)
+            {
+                var location = e.GetPosition(this)!;
+                var points = new PointF[1];
+                if (location != null)
+                    points[0] = (PointF)location;
+
+                this.RightClicked?.Invoke(this, new TouchEventArgs(points, true));
+
+                if (this.ContextMenu != null)
+                {
+                    this.isTouching = false;
+                    this.ContextMenu.Show(this, this.LastTouchPoint);
+                }
+            }
+        };
+        this.GestureRecognizers.Add(tapGestureRecognizer);
+#endif
+
+        this.touchTimer = this.Dispatcher.CreateTimer();
+        this.touchTimer.Interval = TimeSpan.FromMilliseconds(500);
+        this.touchTimer.IsRepeating = false;
+        this.touchTimer.Tick += (s, e) =>
+        {
+            if (this.LongPressed != null)
+            {
+                this.isTouching = false;
+                this.LongPressed.Invoke(
+                    this,
+                    new TouchEventArgs(new PointF[] { this.LastTouchPoint }, true)
+                );
+            }
+
+            if (this.ContextMenu != null)
+            {
+                this.isTouching = false;
+                this.ContextMenu.Show(this, this.LastTouchPoint);
+            }
+
+        };
     }
 
     void OnStartInteraction(object sender, TouchEventArgs e)
     {
         if (!this.IsEnabled)
             return;
+
         this.ViewState = ViewState.Pressed;
         this.LastTouchPoint = e.Touches[0];
         this.RippleSize = this.GetRippleSize();
         this.StartRippleEffect();
+
+        this.Pressed?.Invoke(this, e);
+
+        this.isTouching = true;
+        this.touchTimer.Start();
     }
 
     void OnEndInteraction(object sender, TouchEventArgs e)
@@ -149,6 +221,14 @@ public class TouchGraphicView
             this.ViewState = e.IsInsideBounds ? ViewState.Hovered : ViewState.Normal;
         }
 #endif
+
+
+        this.Released?.Invoke(this, e);
+        if (this.isTouching)
+            this.Clicked?.Invoke(this, e);
+
+        this.isTouching = false;
+        this.touchTimer.Stop();
     }
 
     void OnCancelInteraction(object sender, EventArgs e)
@@ -157,6 +237,9 @@ public class TouchGraphicView
             return;
 
         this.ViewState = ViewState.Normal;
+
+        this.isTouching = false;
+        this.touchTimer.Stop();
     }
 
     void OnStartHoverInteraction(object sender, TouchEventArgs e)
@@ -192,6 +275,35 @@ public class TouchGraphicView
         );
     }
 
+    void IContextMenuElement.OnContextMenuChanged(object oldValue, object newValue)
+    {
+        if (oldValue is not null and ContextMenu ov)
+        {
+            this.OnChildRemoved(ov, 0);
+            VisualDiagnostics.OnChildRemoved(this, ov, 0);
+            SetInheritedBindingContext(ov, null);
+        }
+
+        if (newValue is not null and ContextMenu nv)
+        {
+            this.OnChildAdded(nv);
+            VisualDiagnostics.OnChildAdded(this, nv);
+            if (this.BindingContext != null)
+            {
+                SetInheritedBindingContext(nv, this.BindingContext);
+            }
+        }
+    }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        if (this.ContextMenu != null)
+        {
+            SetInheritedBindingContext(this.ContextMenu, this.BindingContext);
+        }
+    }
+
     float GetRippleSize()
     {
         var points = new PointF[4];
@@ -215,6 +327,29 @@ public class TouchGraphicView
         return maxSize;
     }
 
+    protected override void OnHandlerChanged()
+    {
+        base.OnHandlerChanged();
+        if (this.Handler != null)
+        {
+#if WINDOWS
+            var pv = this.Handler.PlatformView as PlatformTouchGraphicsView;
+            pv.RightTapped += this.OnRightTapped;
+#endif
+        }
+    }
+
+#if WINDOWS
+    private void OnRightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+    {
+        var position = e.GetPosition(sender as PlatformTouchGraphicsView);
+        this.ContextMenu?.Show(this, new Point(position.X, position.Y));
+    }
+#endif
+
+
+    protected bool disposedValue;
+
     protected virtual void Dispose(bool disposing)
     {
         if (!this.disposedValue)
@@ -226,6 +361,13 @@ public class TouchGraphicView
                 this.CancelInteraction -= this.OnCancelInteraction;
                 this.StartHoverInteraction -= this.OnStartHoverInteraction;
                 this.EndHoverInteraction -= this.OnEndHoverInteraction;
+                if (this.Handler != null)
+                {
+#if WINDOWS
+                    var pv = this.Handler.PlatformView as PlatformTouchGraphicsView;
+                    pv.RightTapped -= this.OnRightTapped;
+#endif
+                }
             }
             this.disposedValue = true;
         }

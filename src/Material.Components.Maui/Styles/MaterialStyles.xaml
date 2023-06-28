@@ -17,6 +17,8 @@
         <Styles:SwitchStyles />
         <Styles:SegmentedButtonStyles />
         <Styles:SegmentedItemStyles />
+        <Styles:ContextMenuStyles />
+        <Styles:MenuItemStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
