@@ -186,19 +186,12 @@ public class SegmentedButton
 
     public SegmentedButton()
     {
-        this.StartInteraction += this.OnStartInteraction;
-        this.EndInteraction += this.OnEndInteraction;
+        this.Clicked += this.OnClicked;
         this.MoveHoverInteraction += this.OnMoveHoverInteraction;
         this.Drawable = new SegmentedButtonDrawable(this);
     }
 
-    private void OnStartInteraction(object sender, TouchEventArgs e)
-    {
-        this.LastTouchPoint = e.Touches[0];
-        this.ChangeVisualState();
-    }
-
-    private void OnEndInteraction(object sender, TouchEventArgs e)
+    private void OnClicked(object sender, TouchEventArgs e)
     {
         var index = (int)(this.LastTouchPoint.X / (this.Bounds.Width / this.Items.Count));
         this.Items[index].IsSelected = !this.Items[index].IsSelected;
@@ -289,7 +282,7 @@ public class SegmentedButton
     {
         if (!this.disposedValue && disposing)
         {
-            this.EndInteraction -= this.OnEndInteraction;
+            this.Clicked -= this.OnClicked;
             this.MoveHoverInteraction -= this.OnMoveHoverInteraction;
             this.Items.CollectionChanged -= (
                 (IItemsElement<SegmentedItem>)this

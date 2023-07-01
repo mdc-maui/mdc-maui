@@ -114,10 +114,10 @@ public class Button
             .FindStyle("FilledButtonStyle");
 
         this.Drawable = new ButtonDrawable(this);
-        this.EndInteraction += this.OnEndInteraction;
+        this.Clicked += this.OnClicked;
     }
 
-    void OnEndInteraction(object sender, TouchEventArgs e)
+    void OnClicked(object sender, TouchEventArgs e)
     {
         this.Command?.Execute(this.CommandParameter);
     }
@@ -168,7 +168,7 @@ public class Button
     {
         if (!this.disposedValue && disposing)
         {
-            this.EndInteraction -= this.OnEndInteraction;
+            this.Clicked -= this.OnClicked;
             ((IIconElement)this).IconPath?.Dispose();
         }
         base.Dispose(disposing);

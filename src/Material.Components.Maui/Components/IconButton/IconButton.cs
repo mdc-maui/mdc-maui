@@ -118,10 +118,10 @@ public class IconButton
             .FindStyle("FilledIconButtonStyle");
 
         this.Drawable = new IconButtonDrawable(this);
-        this.EndInteraction += this.OnEndInteraction;
+        this.Clicked += this.OnClicked;
     }
 
-    void OnEndInteraction(object sender, TouchEventArgs e)
+    void OnClicked(object sender, TouchEventArgs e)
     {
         if (this.IsToggleEnabled)
         {
@@ -136,7 +136,7 @@ public class IconButton
     {
         if (!this.disposedValue && disposing)
         {
-            this.EndInteraction -= this.OnEndInteraction;
+            this.Clicked -= this.OnClicked;
             ((IIconElement)this).IconPath?.Dispose();
         }
         base.Dispose(disposing);

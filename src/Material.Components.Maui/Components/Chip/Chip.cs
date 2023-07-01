@@ -147,7 +147,7 @@ public class Chip
             .FindStyle("FilterChipStyle");
 
         this.Drawable = new ChipDrawable(this);
-        this.EndInteraction += this.OnEndInteraction;
+        this.Clicked += this.OnClicked;
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)
@@ -193,7 +193,7 @@ public class Chip
         return this.DesiredSize;
     }
 
-    private void OnEndInteraction(object sender, TouchEventArgs e)
+    private void OnClicked(object sender, TouchEventArgs e)
     {
         if (this.HasCloseButton)
         {
@@ -218,7 +218,7 @@ public class Chip
     {
         if (!this.disposedValue && disposing)
         {
-            this.EndInteraction -= this.OnEndInteraction;
+            this.Clicked -= this.OnClicked;
             ((IIconElement)this).IconPath?.Dispose();
             ((ChipDrawable)this.Drawable)?.Dispose();
         }

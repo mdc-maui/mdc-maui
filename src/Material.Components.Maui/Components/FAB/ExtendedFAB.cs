@@ -97,10 +97,10 @@ public class ExtendedFAB
             .FindStyle("SurfaceExtendedFABStyle");
 
         this.Drawable = new ExtendedFABDrawable(this);
-        this.EndInteraction += this.OnEndInteraction;
+        this.Clicked += this.OnClicked;
     }
 
-    void OnEndInteraction(object sender, TouchEventArgs e)
+    void OnClicked(object sender, TouchEventArgs e)
     {
         this.Command?.Execute(this.CommandParameter);
     }
@@ -151,7 +151,7 @@ public class ExtendedFAB
     {
         if (!this.disposedValue && disposing)
         {
-            this.EndInteraction -= this.OnEndInteraction;
+            this.Clicked -= this.OnClicked;
             ((IIconElement)this).IconPath?.Dispose();
         }
         base.Dispose(disposing);

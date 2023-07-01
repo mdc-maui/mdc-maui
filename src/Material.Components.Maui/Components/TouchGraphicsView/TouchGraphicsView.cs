@@ -191,7 +191,7 @@ public class TouchGraphicsView
         };
     }
 
-    void OnStartInteraction(object sender, TouchEventArgs e)
+    protected virtual void OnStartInteraction(object sender, TouchEventArgs e)
     {
         if (!this.IsEnabled)
             return;
@@ -207,7 +207,7 @@ public class TouchGraphicsView
         this.touchTimer.Start();
     }
 
-    void OnEndInteraction(object sender, TouchEventArgs e)
+    protected virtual void OnEndInteraction(object sender, TouchEventArgs e)
     {
         if (!this.IsEnabled)
             return;
@@ -229,7 +229,7 @@ public class TouchGraphicsView
         this.touchTimer.Stop();
     }
 
-    void OnCancelInteraction(object sender, EventArgs e)
+    protected virtual void OnCancelInteraction(object sender, EventArgs e)
     {
         if (!this.IsEnabled)
             return;
@@ -240,7 +240,7 @@ public class TouchGraphicsView
         this.touchTimer.Stop();
     }
 
-    void OnStartHoverInteraction(object sender, TouchEventArgs e)
+    protected virtual void OnStartHoverInteraction(object sender, TouchEventArgs e)
     {
         if (!this.IsEnabled)
             return;
@@ -248,7 +248,7 @@ public class TouchGraphicsView
         this.ViewState = ViewState.Hovered;
     }
 
-    void OnEndHoverInteraction(object sender, EventArgs e)
+    protected virtual void OnEndHoverInteraction(object sender, EventArgs e)
     {
         if (!this.IsEnabled)
             return;

@@ -169,6 +169,7 @@ public class Switch
     }
 
     protected IAnimationManager animationManager;
+    bool isTouching = false;
 
     static Style defaultStyle;
 
@@ -181,6 +182,7 @@ public class Switch
         this.Drawable = new SwitchDrawable(this);
         this.StartInteraction += this.OnStartInteraction;
         this.EndInteraction += this.OnEndInteraction;
+        this.CancelInteraction += this.OnCancelInteraction;
         this.StartHoverInteraction += this.OnStartHoverInteraction;
         this.EndHoverInteraction += this.OnEndHoverInteraction;
     }
@@ -191,6 +193,7 @@ public class Switch
             return;
 
         this.ViewState = ViewState.Pressed;
+        this.isTouching = true;
     }
 
     private void OnEndInteraction(object sender, TouchEventArgs e)
@@ -198,7 +201,8 @@ public class Switch
         if (!this.IsEnabled)
             return;
 
-        this.IsSelected = !this.IsSelected;
+        if (this.isTouching)
+            this.IsSelected = !this.IsSelected;
 
 #if __MOBILE__
         this.ViewState = ViewState.Normal;
@@ -208,6 +212,13 @@ public class Switch
             this.ViewState = e.IsInsideBounds ? ViewState.Hovered : ViewState.Normal;
         }
 #endif
+
+        this.isTouching = false;
+    }
+
+    private void OnCancelInteraction(object sender, EventArgs e)
+    {
+        this.isTouching = false;
     }
 
     private void OnStartHoverInteraction(object sender, TouchEventArgs e)
@@ -236,6 +247,7 @@ public class Switch
             {
                 this.StartInteraction -= this.OnStartInteraction;
                 this.EndInteraction -= this.OnEndInteraction;
+                this.CancelInteraction -= this.OnCancelInteraction;
                 this.StartHoverInteraction -= this.OnStartHoverInteraction;
                 this.EndHoverInteraction -= this.OnEndHoverInteraction;
             }
