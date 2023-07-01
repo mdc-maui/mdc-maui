@@ -8,7 +8,6 @@
     <Style TargetType="views:SegmentedItem">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -17,7 +16,6 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="Transparent" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -25,7 +23,6 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="Transparent" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -33,7 +30,6 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="Transparent" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -41,7 +37,6 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="Transparent" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -50,7 +45,6 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -58,7 +52,6 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -66,7 +59,6 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>

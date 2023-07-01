@@ -151,16 +151,28 @@ internal static class CanvasExtension
         canvas.FillCircle(point, 0f.Lerp(size, percent));
     }
 
-    internal static void DrawText(
+    internal static void DrawText<TElement>(
         this ICanvas canvas,
-        ITextElement element,
+        TElement element,
         RectF rect,
         HorizontalAlignment horizontal = HorizontalAlignment.Center,
         VerticalAlignment vertical = VerticalAlignment.Center
-    )
+    ) where TElement : ITextElement, IFontElement
+    {
+        canvas.DrawText(element, element.Text, rect, horizontal, vertical);
+    }
+
+    internal static void DrawText<TElement>(
+        this ICanvas canvas,
+        TElement element,
+        string text,
+        RectF rect,
+        HorizontalAlignment horizontal = HorizontalAlignment.Center,
+        VerticalAlignment vertical = VerticalAlignment.Center
+    ) where TElement : IFontElement
     {
 #if MACCATALYST || IOS
-        canvas.PlatformDrawText(element, rect);
+        canvas.PlatformDrawText(element, text, rect, horizontal, vertical);
 #else
         var weight = element.FontAttributes is FontAttributes.Bold or FontAttributes.BoldItalic
             ? FontWeight.Bold
@@ -172,11 +184,11 @@ internal static class CanvasExtension
         var font = new Microsoft.Maui.Graphics.Font(element.FontFamily, (int)weight, style);
 
         canvas.Font = font;
-        canvas.FontColor = element.TextColor.WithAlpha(
+        canvas.FontColor = element.FontColor.WithAlpha(
             element.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
         canvas.FontSize = element.FontSize;
-        canvas.DrawString(element.Text, rect, horizontal, vertical);
+        canvas.DrawString(text, rect, horizontal, vertical);
 #endif
     }
 }

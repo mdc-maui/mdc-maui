@@ -12,7 +12,7 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource OnPrimaryColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource OnPrimaryColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnPrimaryColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnPrimaryColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -32,7 +32,7 @@
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -49,7 +49,7 @@
         <Setter Property="Shape" Value="Full" />
         <Setter Property="Elevation" Value="Level1" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -69,7 +69,7 @@
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="Elevation" Value="Level0" />
                         </VisualState.Setters>
@@ -86,7 +86,7 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -106,7 +106,7 @@
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -124,7 +124,7 @@
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -142,7 +142,7 @@
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
                             <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -158,7 +158,7 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -175,7 +175,7 @@
                     </VisualState>
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                         </VisualState.Setters>
                     </VisualState>

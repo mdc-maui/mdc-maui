@@ -75,7 +75,7 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
             canvas.DrawStateLayer(item, rect, item.ViewState);
 
         var scale = rect.Height / 40f;
-        var textSize = item.GetStringSize();
+        var textSize = this.view.GetStringSize(item.Text);
 
         if (item.IsSelected)
         {
@@ -142,7 +142,8 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
             if (item.IsSelected || !string.IsNullOrEmpty(item.IconData))
             {
                 canvas.DrawText(
-                    item,
+                    this.view,
+                    item.Text,
                     new RectF(
                         rect.X + (18f + 8f) * scale,
                         rect.Y,
@@ -153,7 +154,7 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
             }
             else
             {
-                canvas.DrawText(item, rect);
+                canvas.DrawText(this.view, item.Text, rect);
             }
         }
 

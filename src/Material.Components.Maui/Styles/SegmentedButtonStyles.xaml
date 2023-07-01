@@ -13,6 +13,8 @@
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="RippleDuration" Value="0.25" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
     </Style>
 
 

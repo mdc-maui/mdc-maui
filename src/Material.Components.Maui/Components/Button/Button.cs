@@ -3,6 +3,7 @@
 public class Button
     : TouchGraphicsView,
         ITextElement,
+        IFontElement,
         IIconElement,
         IOutlineElement,
         IElevationElement,
@@ -33,11 +34,11 @@ public class Button
     }
 
     public static readonly BindableProperty TextProperty = ITextElement.TextProperty;
-    public static readonly BindableProperty TextColorProperty = ITextElement.TextColorProperty;
-    public static readonly BindableProperty FontSizeProperty = ITextElement.FontSizeProperty;
-    public static readonly BindableProperty FontFamilyProperty = ITextElement.FontFamilyProperty;
+    public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
+    public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
+    public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
     public static readonly BindableProperty FontAttributesProperty =
-        ITextElement.FontAttributesProperty;
+        IFontElement.FontAttributesProperty;
 
     public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
@@ -53,10 +54,10 @@ public class Button
         get => (string)this.GetValue(TextProperty);
         set => this.SetValue(TextProperty, value);
     }
-    public Color TextColor
+    public Color FontColor
     {
-        get => (Color)this.GetValue(TextColorProperty);
-        set => this.SetValue(TextColorProperty, value);
+        get => (Color)this.GetValue(FontColorProperty);
+        set => this.SetValue(FontColorProperty, value);
     }
     public float FontSize
     {

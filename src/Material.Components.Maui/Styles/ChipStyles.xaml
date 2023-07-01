@@ -14,7 +14,7 @@
         <Setter Property="MinimumWidthRequest" Value="48" />
         <Setter Property="MinimumHeightRequest" Value="32" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
@@ -36,7 +36,7 @@
                         <VisualState.Setters>
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
 
@@ -45,7 +45,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
@@ -55,7 +55,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level2" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
@@ -65,7 +65,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
@@ -76,7 +76,7 @@
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -93,7 +93,7 @@
         <Setter Property="MinimumWidthRequest" Value="48" />
         <Setter Property="MinimumHeightRequest" Value="32" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
@@ -115,7 +115,7 @@
                     <VisualState x:Name="unselected_disabled">
                         <VisualState.Setters>
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -126,7 +126,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
@@ -137,7 +137,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level2" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
@@ -148,7 +148,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
@@ -159,7 +159,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -178,7 +178,7 @@
         <Setter Property="HasCloseButton" Value="True" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
@@ -197,7 +197,7 @@
                     <VisualState x:Name="unselected_disabled">
                         <VisualState.Setters>
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
 
@@ -206,7 +206,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
@@ -216,7 +216,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level2" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
@@ -226,7 +226,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSecondaryContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
@@ -237,7 +237,7 @@
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -255,7 +255,7 @@
         <Setter Property="MinimumWidthRequest" Value="48" />
         <Setter Property="MinimumHeightRequest" Value="32" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="OutlineColor" Value="{DynamicResource OutlineColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
@@ -274,7 +274,7 @@
                     <VisualState x:Name="unselected_disabled">
                         <VisualState.Setters>
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
 
@@ -283,7 +283,7 @@
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                         </VisualState.Setters>
@@ -293,7 +293,7 @@
                             <Setter Property="Elevation" Value="Level2" />
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                         </VisualState.Setters>
@@ -303,7 +303,7 @@
                             <Setter Property="Elevation" Value="Level1" />
                             <Setter Property="OutlineWidth" Value="0" />
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                         </VisualState.Setters>
@@ -312,7 +312,7 @@
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceColor}" />
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

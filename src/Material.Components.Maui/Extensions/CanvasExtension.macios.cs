@@ -9,20 +9,21 @@ namespace Material.Components.Maui.Extensions;
 
 internal static class PlatformCanvasExtension
 {
-    internal static void PlatformDrawText(
+    internal static void PlatformDrawText<TElement>(
         this ICanvas canvas,
-        ITextElement element,
+        TElement element,
+        string text,
         RectF rect,
-        HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center,
-        VerticalAlignment verticalAlignment = VerticalAlignment.Center,
+        HorizontalAlignment horizontal = HorizontalAlignment.Center,
+        VerticalAlignment vertical = VerticalAlignment.Center,
         float ix = 0f,
         float iy = 0f
-    )
+    ) where TElement : IFontElement
     {
-        float rx = rect.X;
-        float ry = -rect.Y;
-        float rw = rect.Width;
-        float rh = rect.Height;
+        var rx = rect.X;
+        var ry = -rect.Y;
+        var rw = rect.Width;
+        var rh = rect.Height;
         var cGRect = new CGRect(rx, ry, rw, rh);
 
         using var path = new CGPath();
@@ -38,7 +39,7 @@ internal static class PlatformCanvasExtension
         context.TextMatrix = CGAffineTransform.MakeIdentity();
         context.TextMatrix.Translate(0, 0);
 
-        using var attributedString = new NSMutableAttributedString(element.Text);
+        using var attributedString = new NSMutableAttributedString(text);
 
         var attributes = new CTStringAttributes();
 
@@ -58,19 +59,19 @@ internal static class PlatformCanvasExtension
         platformFont = platformFont.WithSymbolicTraits(element.FontSize, traits, traits);
 
         attributes.Font = platformFont;
-        attributes.ForegroundColor = element.TextColor.ToCGColor();
+        attributes.ForegroundColor = element.FontColor.ToCGColor();
 
-        if (verticalAlignment == VerticalAlignment.Center)
+        if (vertical == VerticalAlignment.Center)
         {
             iy += -(float)(platformFont.DescentMetric / 2);
         }
-        else if (verticalAlignment == VerticalAlignment.Bottom)
+        else if (vertical == VerticalAlignment.Bottom)
         {
             iy += -(float)(platformFont.DescentMetric);
         }
 
         var paragraphSettings = new CTParagraphStyleSettings();
-        switch (horizontalAlignment)
+        switch (horizontal)
         {
             case HorizontalAlignment.Left:
                 paragraphSettings.Alignment = CTTextAlignment.Left;
@@ -88,7 +89,7 @@ internal static class PlatformCanvasExtension
 
         using var paragraphStyle = new CTParagraphStyle(paragraphSettings);
         attributes.ParagraphStyle = paragraphStyle;
-        attributedString.SetAttributes(attributes, new NSRange(0, element.Text.Length));
+        attributedString.SetAttributes(attributes, new NSRange(0, text.Length));
 
         using var framesetter = new CTFramesetter(attributedString);
 
@@ -96,12 +97,12 @@ internal static class PlatformCanvasExtension
 
         if (frame != null)
         {
-            if (verticalAlignment != VerticalAlignment.Top)
+            if (vertical != VerticalAlignment.Top)
             {
                 var textSize = TextElementExtension.GetTextSize(frame);
                 if (textSize.Height > 0)
                 {
-                    if (verticalAlignment == VerticalAlignment.Bottom)
+                    if (vertical == VerticalAlignment.Bottom)
                     {
                         var dy = cGRect.Height - textSize.Height + iy;
                         context.TranslateCTM(-ix, -dy);

@@ -5,6 +5,7 @@ public partial class MenuItem
         IElement,
         IBackgroundElement,
         ITextElement,
+        IFontElement,
         IIconElement,
         ITrailingIconElement,
         IStateLayerElement,
@@ -29,11 +30,11 @@ public partial class MenuItem
     }
 
     public static readonly BindableProperty TextProperty = ITextElement.TextProperty;
-    public static readonly BindableProperty TextColorProperty = ITextElement.TextColorProperty;
-    public static readonly BindableProperty FontSizeProperty = ITextElement.FontSizeProperty;
-    public static readonly BindableProperty FontFamilyProperty = ITextElement.FontFamilyProperty;
+    public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
+    public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
+    public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
     public static readonly BindableProperty FontAttributesProperty =
-        ITextElement.FontAttributesProperty;
+        IFontElement.FontAttributesProperty;
 
     public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
@@ -48,10 +49,10 @@ public partial class MenuItem
         get => (string)this.GetValue(TextProperty);
         set => this.SetValue(TextProperty, value);
     }
-    public Color TextColor
+    public Color FontColor
     {
-        get => (Color)this.GetValue(TextColorProperty);
-        set => this.SetValue(TextColorProperty, value);
+        get => (Color)this.GetValue(FontColorProperty);
+        set => this.SetValue(FontColorProperty, value);
     }
     public float FontSize
     {
@@ -125,7 +126,7 @@ public partial class MenuItem
             this.HeightRequest != -1 ? this.HeightRequest : double.PositiveInfinity
         );
 
-        var (needWidth, needHeight) = GetDesiredSize();
+        var (needWidth, needHeight) = this.GetDesiredSize();
 
         var width =
             this.HorizontalOptions.Alignment == LayoutAlignment.Fill

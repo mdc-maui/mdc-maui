@@ -17,9 +17,14 @@ namespace Material.Components.Maui.Extensions;
 
 internal static class TextElementExtension
 {
-    internal static Size GetStringSize(this ITextElement element)
+    internal static Size GetStringSize<TElement>(this TElement element) where TElement : ITextElement, IFontElement
     {
-        if (string.IsNullOrEmpty(element.Text))
+        return element.GetStringSize(element.Text);
+    }
+
+    internal static Size GetStringSize<TElement>(this TElement element, string text) where TElement : IFontElement
+    {
+        if (string.IsNullOrEmpty(text))
             return Size.Zero;
 
         var weight = element.FontAttributes is FontAttributes.Bold or FontAttributes.BoldItalic
@@ -33,22 +38,22 @@ internal static class TextElementExtension
 
 #if WINDOWS
         var service = new PlatformStringSizeService();
-        var size = service.GetStringSize(element.Text, font, element.FontSize);
+        var size = service.GetStringSize(text, font, element.FontSize);
 #elif ANDROID
         using var textPaint = new TextPaint { TextSize = element.FontSize };
         textPaint.SetTypeface(font.ToTypeface() ?? Typeface.Default);
         using var bounds = new Android.Graphics.Rect();
 
-        textPaint.GetTextBounds(element.Text, 0, element.Text.Length, bounds);
+        textPaint.GetTextBounds(text, 0, text.Length, bounds);
         var size = new Size(bounds.Width(), bounds.Height());
 #elif MACCATALYST || IOS
         using var path = new CGPath();
         path.AddRect(new CGRect(0, 0, 10000, 10000));
-        var text = new AttributedText(element.Text, null);
-        using var attrString = text.AsNSAttributedString(
+        var attrText = new AttributedText(text, null);
+        using var attrString = attrText.AsNSAttributedString(
             font,
             element.FontSize,
-            element.TextColor.ToHex(),
+            element.FontColor.ToHex(),
             true
         );
 

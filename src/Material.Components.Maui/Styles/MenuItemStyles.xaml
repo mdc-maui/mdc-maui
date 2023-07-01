@@ -11,10 +11,10 @@
         <Setter Property="MinimumWidthRequest" Value="112" />
         <Setter Property="MaximumWidthRequest" Value="280" />
         <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
         <Setter Property="TrailingIconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -23,7 +23,7 @@
                         <VisualState.Setters>
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                             <Setter Property="TrailingIconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -31,7 +31,7 @@
                         <VisualState.Setters>
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                             <Setter Property="TrailingIconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -39,7 +39,7 @@
                         <VisualState.Setters>
                             <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
                             <Setter Property="TrailingIconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
-                            <Setter Property="TextColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>

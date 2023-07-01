@@ -7,6 +7,7 @@ namespace Material.Components.Maui;
 public class SegmentedButton
     : TouchGraphicsView,
         IItemsElement<SegmentedItem>,
+        IFontElement,
         IOutlineElement,
         IVisualTreeElement,
         IElement,
@@ -61,6 +62,12 @@ public class SegmentedButton
         typeof(SegmentedButton),
         default
     );
+
+    public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
+    public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
+    public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
+    public static readonly BindableProperty FontAttributesProperty =
+        IFontElement.FontAttributesProperty;
 
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
@@ -144,6 +151,27 @@ public class SegmentedButton
         set => this.SetValue(MultiSelectModeProperty, value);
     }
 
+    public Color FontColor
+    {
+        get => (Color)this.GetValue(FontColorProperty);
+        set => this.SetValue(FontColorProperty, value);
+    }
+    public float FontSize
+    {
+        get => (float)this.GetValue(FontSizeProperty);
+        set => this.SetValue(FontSizeProperty, value);
+    }
+    public string FontFamily
+    {
+        get => (string)this.GetValue(FontFamilyProperty);
+        set => this.SetValue(FontFamilyProperty, value);
+    }
+    public FontAttributes FontAttributes
+    {
+        get => (FontAttributes)this.GetValue(FontAttributesProperty);
+        set => this.SetValue(FontAttributesProperty, value);
+    }
+
     public Color OutlineColor
     {
         get => (Color)this.GetValue(OutlineColorProperty);
@@ -214,7 +242,7 @@ public class SegmentedButton
         foreach (var item in this.Items)
         {
             var iconSize = 18f * scale;
-            var textSize = item.GetStringSize();
+            var textSize = this.GetStringSize(item.Text);
             //16 + iconSize + 8 + textSize.Width + 16
             if (textSize == Size.Zero)
                 maxItemWidth = Math.Max(

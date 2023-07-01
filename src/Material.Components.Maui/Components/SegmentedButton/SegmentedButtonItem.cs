@@ -74,12 +74,6 @@ public class SegmentedItem
             ((IElement)((SegmentedItem)bo)?.Parent)?.InvalidateMeasure()
     );
 
-    public static readonly BindableProperty TextColorProperty = ITextElement.TextColorProperty;
-    public static readonly BindableProperty FontSizeProperty = ITextElement.FontSizeProperty;
-    public static readonly BindableProperty FontFamilyProperty = ITextElement.FontFamilyProperty;
-    public static readonly BindableProperty FontAttributesProperty =
-        ITextElement.FontAttributesProperty;
-
     public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
 
@@ -108,26 +102,6 @@ public class SegmentedItem
     {
         get => (string)this.GetValue(TextProperty);
         set => this.SetValue(TextProperty, value);
-    }
-    public Color TextColor
-    {
-        get => (Color)this.GetValue(TextColorProperty);
-        set => this.SetValue(TextColorProperty, value);
-    }
-    public float FontSize
-    {
-        get => (float)this.GetValue(FontSizeProperty);
-        set => this.SetValue(FontSizeProperty, value);
-    }
-    public string FontFamily
-    {
-        get => (string)this.GetValue(FontFamilyProperty);
-        set => this.SetValue(FontFamilyProperty, value);
-    }
-    public FontAttributes FontAttributes
-    {
-        get => (FontAttributes)this.GetValue(FontAttributesProperty);
-        set => this.SetValue(FontAttributesProperty, value);
     }
 
     public string IconData
