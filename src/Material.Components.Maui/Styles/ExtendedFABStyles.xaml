@@ -13,6 +13,7 @@
         <Setter Property="HeightRequest" Value="56" />
         <Setter Property="Shape" Value="Large" />
         <Setter Property="Elevation" Value="Level3" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighColor}" />
         <Setter Property="IconColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="FontColor" Value="{DynamicResource PrimaryColor}" />
@@ -50,6 +51,7 @@
         <Setter Property="HeightRequest" Value="56" />
         <Setter Property="Shape" Value="Large" />
         <Setter Property="Elevation" Value="Level3" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnSecondaryContainerColor}" />
         <Setter Property="FontColor" Value="{DynamicResource OnSecondaryContainerColor}" />
@@ -87,6 +89,7 @@
         <Setter Property="HeightRequest" Value="56" />
         <Setter Property="Shape" Value="Large" />
         <Setter Property="Elevation" Value="Level3" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="BackgroundColor" Value="{DynamicResource TertiaryContainerColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnTertiaryContainerColor}" />
         <Setter Property="FontColor" Value="{DynamicResource OnTertiaryContainerColor}" />

@@ -9,6 +9,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Shape" Value="Small" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="MinimumWidthRequest" Value="48" />
@@ -88,6 +89,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Shape" Value="Small" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="MinimumWidthRequest" Value="48" />
@@ -172,6 +174,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Shape" Value="Small" />
         <Setter Property="MinimumWidthRequest" Value="48" />
         <Setter Property="MinimumHeightRequest" Value="32" />
@@ -250,6 +253,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Shape" Value="Small" />
         <Setter Property="OutlineWidth" Value="1" />
         <Setter Property="MinimumWidthRequest" Value="48" />

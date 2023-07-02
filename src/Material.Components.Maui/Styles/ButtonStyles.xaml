@@ -11,6 +11,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Shape" Value="Full" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
         <Setter Property="FontColor" Value="{DynamicResource OnPrimaryColor}" />
         <Setter Property="IconColor" Value="{DynamicResource OnPrimaryColor}" />
