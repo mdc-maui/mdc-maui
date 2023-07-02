@@ -19,15 +19,6 @@ public partial class ContextMenu
 
     void IElement.OnPropertyChanged() { }
 
-    protected override void OnBindingContextChanged()
-    {
-        base.OnBindingContextChanged();
-        if (this.PART_Root != null)
-        {
-            SetInheritedBindingContext(this.PART_Root, this.BindingContext);
-        }
-    }
-
     public static readonly BindableProperty ItemsProperty = IItemsElement<MenuItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
@@ -161,6 +152,15 @@ public partial class ContextMenu
 
         this.OnChildAdded(this.PART_Root);
         VisualDiagnostics.OnChildAdded(this, this.PART_Root);
+    }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        if (this.PART_Root != null)
+        {
+            SetInheritedBindingContext(this.PART_Root, this.BindingContext);
+        }
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)

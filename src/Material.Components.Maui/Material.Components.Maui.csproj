@@ -90,6 +90,9 @@
 		<Compile Update="Styles\ContextMenuStyles.xaml.cs">
 		  <DependentUpon>ContextMenuStyles.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Styles\ComboBoxStyle.xaml.cs">
+		  <DependentUpon>ComboBoxStyle.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
@@ -129,6 +132,9 @@
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Styles\ContextMenuStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\ComboBoxStyle.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Styles\SwitchStyles.xaml">
