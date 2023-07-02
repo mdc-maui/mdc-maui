@@ -93,8 +93,8 @@ internal static class CanvasExtension
         var path = new PathF();
         path.AppendRoundedRectangle(
             new RectF(
-                rect.X + element.OutlineWidth / 2,
-                rect.Y + element.OutlineWidth / 2,
+                rect.X + element.OutlineWidth / 2f,
+                rect.Y + element.OutlineWidth / 2f,
                 rect.Width - element.OutlineWidth,
                 rect.Height - element.OutlineWidth
             ),
@@ -171,24 +171,38 @@ internal static class CanvasExtension
         VerticalAlignment vertical = VerticalAlignment.Center
     ) where TElement : IFontElement
     {
-#if MACCATALYST || IOS
-        canvas.PlatformDrawText(element, text, rect, horizontal, vertical);
-#else
-        var weight = element.FontAttributes is FontAttributes.Bold or FontAttributes.BoldItalic
-            ? FontWeight.Bold
-            : FontWeight.Regular;
-        var style = element.FontAttributes is FontAttributes.Italic or FontAttributes.BoldItalic
-            ? FontStyleType.Italic
-            : FontStyleType.Normal;
+        canvas.DrawText(
+            element,
+            text,
+            element.FontColor,
+            element.FontSize,
+            rect,
+            horizontal,
+            vertical
+        );
+    }
 
-        var font = new Microsoft.Maui.Graphics.Font(element.FontFamily, (int)weight, style);
+    internal static void DrawText<TElement>(
+        this ICanvas canvas,
+        TElement element,
+        string text,
+        Color fontColor,
+        float fontSize,
+        RectF rect,
+        HorizontalAlignment horizontal = HorizontalAlignment.Center,
+        VerticalAlignment vertical = VerticalAlignment.Center
+    ) where TElement : IFontElement
+    {
+        var weight = (int)element.FontWeight;
+        var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
+
+        var font = new Microsoft.Maui.Graphics.Font(element.FontFamily, weight, style);
 
         canvas.Font = font;
-        canvas.FontColor = element.FontColor.WithAlpha(
+        canvas.FontColor = fontColor.WithAlpha(
             element.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
-        canvas.FontSize = element.FontSize;
+        canvas.FontSize = fontSize;
         canvas.DrawString(text, rect, horizontal, vertical);
-#endif
     }
 }

@@ -19,6 +19,7 @@
         <Styles:SegmentedItemStyles />
         <Styles:ContextMenuStyles />
         <Styles:MenuItemStyles />
+        <Styles:ComboBoxStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

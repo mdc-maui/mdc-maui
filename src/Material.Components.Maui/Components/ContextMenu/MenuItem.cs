@@ -33,8 +33,10 @@ public partial class MenuItem
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
-    public static readonly BindableProperty FontAttributesProperty =
-        IFontElement.FontAttributesProperty;
+    public static readonly BindableProperty FontWeightProperty =
+        IFontElement.FontWeightProperty;
+    public static readonly BindableProperty FontIsItalicProperty =
+        IFontElement.FontIsItalicProperty;
 
     public static readonly BindableProperty IconDataProperty = IIconElement.IconDataProperty;
     public static readonly BindableProperty IconColorProperty = IIconElement.IconColorProperty;
@@ -64,10 +66,15 @@ public partial class MenuItem
         get => (string)this.GetValue(FontFamilyProperty);
         set => this.SetValue(FontFamilyProperty, value);
     }
-    public FontAttributes FontAttributes
+    public FontWeight FontWeight
     {
-        get => (FontAttributes)this.GetValue(FontAttributesProperty);
-        set => this.SetValue(FontAttributesProperty, value);
+        get => (FontWeight)this.GetValue(FontWeightProperty);
+        set => this.SetValue(FontWeightProperty, value);
+    }
+    public bool FontIsItalic
+    {
+        get => (bool)this.GetValue(FontIsItalicProperty);
+        set => this.SetValue(FontIsItalicProperty, value);
     }
 
     public string IconData
@@ -101,6 +108,18 @@ public partial class MenuItem
     public MenuItem()
     {
         this.Drawable = new MenuItemDrawable(this);
+    }
+
+    protected override void OnStartHoverInteraction(object sender, TouchEventArgs e)
+    {
+        if (!this.IsEnabled)
+            return;
+
+        if (e.Touches[0].X >= 0 && e.Touches[0].Y >= 0)
+        {
+            this.LastTouchPoint = e.Touches[0];
+            this.ViewState = ViewState.Hovered;
+        }
     }
 
     internal SizeF GetDesiredSize()

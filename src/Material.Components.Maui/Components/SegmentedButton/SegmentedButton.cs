@@ -66,8 +66,10 @@ public class SegmentedButton
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
-    public static readonly BindableProperty FontAttributesProperty =
-        IFontElement.FontAttributesProperty;
+    public static readonly BindableProperty FontWeightProperty =
+        IFontElement.FontWeightProperty;
+    public static readonly BindableProperty FontIsItalicProperty =
+        IFontElement.FontIsItalicProperty;
 
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
@@ -166,10 +168,15 @@ public class SegmentedButton
         get => (string)this.GetValue(FontFamilyProperty);
         set => this.SetValue(FontFamilyProperty, value);
     }
-    public FontAttributes FontAttributes
+    public FontWeight FontWeight
     {
-        get => (FontAttributes)this.GetValue(FontAttributesProperty);
-        set => this.SetValue(FontAttributesProperty, value);
+        get => (FontWeight)this.GetValue(FontWeightProperty);
+        set => this.SetValue(FontWeightProperty, value);
+    }
+    public bool FontIsItalic
+    {
+        get => (bool)this.GetValue(FontIsItalicProperty);
+        set => this.SetValue(FontIsItalicProperty, value);
     }
 
     public Color OutlineColor
@@ -237,7 +244,7 @@ public class SegmentedButton
             var iconSize = 18f * scale;
             var textSize = this.GetStringSize(item.Text);
             //16 + iconSize + 8 + textSize.Width + 16
-            if (textSize == Size.Zero)
+            if (textSize == SizeF.Zero)
                 maxItemWidth = Math.Max(
                     maxItemWidth,
                     iconSize + iconSize + (16f + 8f + 16f) * scale

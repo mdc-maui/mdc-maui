@@ -97,7 +97,9 @@ public partial class ContextMenu
 
     private void OnMenuItemClicked(object sender, TouchEventArgs e)
     {
-        this.Close(this.Items.IndexOf(sender as MenuItem));
+        var item = sender as MenuItem;
+        item.ViewState = ViewState.Normal;
+        this.Close(this.Items.IndexOf(item));
     }
 
     void IItemsElement<MenuItem>.OnItemsSourceCollectionChanged(
@@ -140,20 +142,15 @@ public partial class ContextMenu
 
     public ContextMenu() { }
 
-    public void Show(View anchor)
+    public void Show(View anchor, Point location = default)
     {
         if (this.DesiredSize == Size.Zero)
             this.MeasureOverride(double.PositiveInfinity, double.PositiveInfinity);
 
-        this.PlatformShow(anchor);
-    }
-
-    public void Show(View anchor, Point location)
-    {
-        if (this.DesiredSize == Size.Zero)
-            this.MeasureOverride(double.PositiveInfinity, double.PositiveInfinity);
-
-        this.PlatformShow(anchor, location);
+        if (location == default)
+            this.PlatformShow(anchor);
+        else
+            this.PlatformShow(anchor, location);
     }
 
     protected override void OnApplyTemplate()

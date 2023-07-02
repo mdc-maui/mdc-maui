@@ -4,7 +4,8 @@ public interface IFontElement : IElement
     Color FontColor { get; set; }
     float FontSize { get; set; }
     string FontFamily { get; set; }
-    FontAttributes FontAttributes { get; set; }
+    FontWeight FontWeight { get; set; }
+    bool FontIsItalic { get; set; }
 
     public static readonly BindableProperty FontColorProperty = BindableProperty.Create(
         nameof(FontColor),
@@ -29,11 +30,19 @@ public interface IFontElement : IElement
         propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 
-    public static readonly BindableProperty FontAttributesProperty = BindableProperty.Create(
-        nameof(FontAttributes),
-        typeof(FontAttributes),
+    public static readonly BindableProperty FontWeightProperty = BindableProperty.Create(
+        nameof(FontWeight),
+        typeof(FontWeight),
         typeof(IFontElement),
-        FontAttributes.None,
+        FontWeight.Regular,
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
+    );
+
+    public static readonly BindableProperty FontIsItalicProperty = BindableProperty.Create(
+        nameof(FontIsItalic),
+        typeof(bool),
+        typeof(IFontElement),
+        default,
         propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 }

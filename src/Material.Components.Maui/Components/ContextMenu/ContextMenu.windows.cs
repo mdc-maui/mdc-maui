@@ -34,6 +34,9 @@ public partial class ContextMenu
         if (this.container == null)
         {
             this.platformAnchor = anchor.ToPlatform(context);
+            platformContent.Width = this.DesiredSize.Width;
+            platformContent.Height = this.DesiredSize.Height;
+
             this.container = new Flyout
             {
                 FlyoutPresenterStyle = flyoutStyle,

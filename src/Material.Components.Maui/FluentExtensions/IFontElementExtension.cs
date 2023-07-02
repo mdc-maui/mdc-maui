@@ -68,14 +68,14 @@ public static class IFontElementExtension
         return view;
     }
 
-    public static TBindable FontAttributes<TBindable>(this TBindable view, FontSlant value)
+    public static TBindable FontWeight<TBindable>(this TBindable view, FontSlant value)
         where TBindable : BindableObject, IFontElement
     {
-        view.SetValue(IFontElement.FontAttributesProperty, value);
+        view.SetValue(IFontElement.FontWeightProperty, value);
         return view;
     }
 
-    public static TBindable BindFontAttributes<TBindable>(
+    public static TBindable BindFontWeight<TBindable>(
         this TBindable view,
         string path,
         BindingMode mode = BindingMode.Default,
@@ -86,7 +86,7 @@ public static class IFontElementExtension
     ) where TBindable : BindableObject, IFontElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
-        view.SetBinding(IFontElement.FontAttributesProperty, binding);
+        view.SetBinding(IFontElement.FontWeightProperty, binding);
         return view;
     }
 }

@@ -24,16 +24,9 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
 
         canvas.StrokeSize = this.view.OutlineWidth;
         canvas.StrokeColor = this.view.OutlineColor;
-        for (var i = 0; i < this.view.Items.Count - 1; i++)
-        {
-            var x = itemWidth * (i + 1);
-            using var path = new PathF();
-            path.MoveTo(x, rect.Top);
-            path.LineTo(x, rect.Bottom);
-            canvas.DrawPath(path);
-        }
 
         canvas.ResetState();
+
         for (var i = 0; i < this.view.Items.Count; i++)
         {
             this.DrawItem(
@@ -42,12 +35,19 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
                 this.view.Items[i]
             );
         }
+
         canvas.SaveState();
 
 #if ANDROID
         canvas.Scale(canvas.DisplayScale, canvas.DisplayScale);
 #endif
+
         canvas.DrawOutline(this.view, rect);
+        for (var i = 0; i < this.view.Items.Count - 1; i++)
+        {
+            var x = itemWidth * (i + 1);
+            canvas.DrawLine(x - this.view.OutlineWidth / 2f, rect.Top, x - this.view.OutlineWidth / 2f, rect.Bottom);
+        }
         canvas.ResetState();
     }
 
