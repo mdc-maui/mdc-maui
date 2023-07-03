@@ -1,7 +1,10 @@
 ﻿#if ANDROID
 using Android.Content.Res;
 using Android.Views;
+using Material.Components.Maui.Primitives;
 #endif
+
+using Material.Components.Maui.Primitives;
 
 namespace Material.Components.Maui;
 

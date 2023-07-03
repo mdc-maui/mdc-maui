@@ -14,6 +14,7 @@ public class Chip
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
+        IICommandElement,
         IVisualTreeElement,
         IDisposable
 {
@@ -39,8 +40,15 @@ public class Chip
         typeof(bool),
         typeof(Chip),
         false,
-        propertyChanged: (bo, ov, nv) => ((Chip)bo).ChangeVisualState()
+        propertyChanged: (bo, ov, nv) =>
+        {
+            var view = bo as Chip;
+            view.ChangeVisualState();
+            view.SelectedChanged?.Invoke(view, new((bool)nv));
+            view.Command?.Execute(view.CommandParameter ?? nv);
+        }
     );
+
     public static readonly BindableProperty HasCloseButtonProperty = BindableProperty.Create(
         nameof(HasCloseButton),
         typeof(bool),
@@ -141,7 +149,8 @@ public class Chip
         set => this.SetValue(ElevationProperty, value);
     }
 
-    public event EventHandler OnClosed;
+    public event EventHandler Closed;
+    public event EventHandler<CheckedChangedEventArgs> SelectedChanged;
 
     protected IFontManager fontManager;
 
@@ -213,7 +222,7 @@ public class Chip
             );
             if (closeRect.Contains(e.Touches[0]))
             {
-                this.OnClosed?.Invoke(this, e);
+                this.Closed?.Invoke(this, e);
                 return;
             }
         }

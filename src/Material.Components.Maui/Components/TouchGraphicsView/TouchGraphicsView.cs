@@ -13,6 +13,7 @@ public class TouchGraphicsView
         IStateLayerElement,
         IRippleElement,
         IContextMenuElement,
+        IICommandElement,
         IVisualTreeElement,
         IDisposable
 {
@@ -60,19 +61,8 @@ public class TouchGraphicsView
     public static readonly BindableProperty ContextMenuProperty =
         IContextMenuElement.ContextMenuProperty;
 
-    public static readonly BindableProperty CommandProperty = BindableProperty.Create(
-        nameof(Command),
-        typeof(ICommand),
-        typeof(TouchGraphicsView),
-        default
-    );
-
-    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(
-        nameof(CommandParameter),
-        typeof(object),
-        typeof(TouchGraphicsView),
-        default
-    );
+    public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
+    public static readonly BindableProperty CommandParameterProperty = IICommandElement.CommandParameterProperty;
 
     public new bool IsEnabled
     {

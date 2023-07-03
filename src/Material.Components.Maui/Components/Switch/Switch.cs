@@ -12,6 +12,7 @@ public class Switch
         IBackgroundElement,
         IShapeElement,
         IStateLayerElement,
+        IICommandElement,
         IVisualTreeElement,
         IDisposable
 {
@@ -59,7 +60,13 @@ public class Switch
         typeof(bool),
         typeof(Switch),
         false,
-        propertyChanged: (bo, ov, nv) => ((Switch)bo).ChangeVisualState()
+        propertyChanged: (bo, ov, nv) =>
+        {
+            var view = bo as Switch;
+            view.ChangeVisualState();
+            view.SelectedChanged?.Invoke(view, new((bool)nv));
+            view.Command?.Execute(view.CommandParameter ?? nv);
+        }
     );
 
     public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(
@@ -81,19 +88,8 @@ public class Switch
     public static readonly BindableProperty StateLayerColorProperty =
         IStateLayerElement.StateLayerColorProperty;
 
-    public static readonly BindableProperty CommandProperty = BindableProperty.Create(
-        nameof(Command),
-        typeof(ICommand),
-        typeof(TouchGraphicsView),
-        default
-    );
-
-    public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(
-        nameof(CommandParameter),
-        typeof(object),
-        typeof(TouchGraphicsView),
-        default
-    );
+    public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
+    public static readonly BindableProperty CommandParameterProperty = IICommandElement.CommandParameterProperty;
 
     public Color ThumbColor
     {
@@ -167,6 +163,8 @@ public class Switch
         get => this.GetValue(CommandParameterProperty);
         set => this.SetValue(CommandParameterProperty, value);
     }
+
+    public event EventHandler<CheckedChangedEventArgs> SelectedChanged;
 
     protected IAnimationManager animationManager;
     bool isTouching = false;

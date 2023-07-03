@@ -9,6 +9,7 @@ public class CheckBox
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
+        IICommandElement,
         IVisualTreeElement,
         IDisposable
 {

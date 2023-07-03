@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Material.Components.Maui.Primitives;
+using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -213,21 +214,4 @@ public partial class ContextMenu
         this.Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
-
-#if !WINDOWS && !__ANDROID__
-    private void PlatformShow(View anchor)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void PlatformShow(View anchor, Point location)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Close(object result = null)
-    {
-        throw new NotImplementedException();
-    }
-#endif
 }

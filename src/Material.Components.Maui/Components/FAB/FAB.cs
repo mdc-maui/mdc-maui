@@ -9,6 +9,7 @@ public class FAB
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
+        IICommandElement,
         IVisualTreeElement,
         IDisposable
 {

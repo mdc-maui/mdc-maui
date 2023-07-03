@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Material.Components.Maui.Primitives;
+using System.ComponentModel;
 
 namespace Material.Components.Maui;
 

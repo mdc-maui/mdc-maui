@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Material.Components.Maui.Primitives;
+using System.Collections;
 using System.Collections.Specialized;
 
 namespace Material.Components.Maui;
@@ -9,12 +10,13 @@ public class SegmentedButton
         IItemsElement<SegmentedItem>,
         IFontElement,
         IOutlineElement,
-        IVisualTreeElement,
         IElement,
         IBackgroundElement,
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
+        IICommandElement,
+        IVisualTreeElement,
         IDisposable
 {
     protected override void ChangeVisualState()
@@ -66,8 +68,7 @@ public class SegmentedButton
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
-    public static readonly BindableProperty FontWeightProperty =
-        IFontElement.FontWeightProperty;
+    public static readonly BindableProperty FontWeightProperty = IFontElement.FontWeightProperty;
     public static readonly BindableProperty FontIsItalicProperty =
         IFontElement.FontIsItalicProperty;
 
@@ -191,6 +192,22 @@ public class SegmentedButton
         set => this.SetValue(OutlineWidthProperty, value);
     }
 
+    public IEnumerable<SegmentedItem> SelectedItems
+    {
+        get
+        {
+            foreach (var item in this.Items)
+            {
+                if (item.IsSelected)
+                {
+                    yield return item;
+                }
+            }
+        }
+    }
+
+    public event EventHandler<SelectedItemsChangedArgs<SegmentedItem>> SelectedItemsChanged;
+
     public SegmentedButton()
     {
         this.Clicked += this.OnClicked;
@@ -215,11 +232,16 @@ public class SegmentedButton
         if (item.IsSelected && !this.MultiSelectMode)
         {
             foreach (var _item in this.Items)
+            {
                 if (!_item.Equals(item))
                 {
                     _item.IsSelected = false;
                 }
+            }
         }
+
+        this.SelectedItemsChanged?.Invoke(this, new(this.SelectedItems));
+        this.Command?.Execute(this.CommandParameter ?? this.SelectedItems);
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)

@@ -1,7 +1,9 @@
+using Material.Components.Maui.Primitives;
 using Microsoft.Maui.Animations;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
@@ -14,6 +16,7 @@ public class ComboBox
         ILabelTextElement,
         IElement,
         IBackgroundElement,
+        IICommandElement,
         IVisualTreeElement
 {
     protected bool IsVisualStateChanging { get; set; }
@@ -59,59 +62,62 @@ public class ComboBox
         IItemsElement<MenuItem>.ItemsSourceProperty;
 
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
-       nameof(SelectedIndex),
-       typeof(int),
-       typeof(ComboBox),
-       -1,
-       propertyChanged: (bo, ov, nv) =>
-       {
-           var comboBox = bo as ComboBox;
-           var index = (int)nv;
-           if (index >= 0 && index < comboBox.Items.Count)
-               comboBox.SelectedItem = comboBox.Items[index];
+        nameof(SelectedIndex),
+        typeof(int),
+        typeof(ComboBox),
+        -1,
+        propertyChanged: (bo, ov, nv) =>
+        {
+            var comboBox = bo as ComboBox;
+            var index = (int)nv;
+            if (index >= 0 && index < comboBox.Items.Count)
+                comboBox.SelectedItem = comboBox.Items[index];
 
-           ((IElement)bo).OnPropertyChanged();
-       }
-   );
+            comboBox.Command?.Execute(comboBox.CommandParameter ?? index);
+            comboBox.SelectedChanged?.Invoke(comboBox, new(comboBox.Items[index], index));
+            ((IElement)bo).OnPropertyChanged();
+        }
+    );
 
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(
-       nameof(SelectedItem),
-       typeof(MenuItem),
-       typeof(ComboBox),
-       propertyChanged: (bo, ov, nv) =>
-       {
-           var comboBox = bo as ComboBox;
-           var item = (MenuItem)nv;
-           if (comboBox.Items.Contains(item))
-               comboBox.SelectedIndex = comboBox.Items.IndexOf(item);
-       }
-   );
+        nameof(SelectedItem),
+        typeof(MenuItem),
+        typeof(ComboBox),
+        propertyChanged: (bo, ov, nv) =>
+        {
+            var comboBox = bo as ComboBox;
+            var item = (MenuItem)nv;
+            if (comboBox.Items.Contains(item))
+                comboBox.SelectedIndex = comboBox.Items.IndexOf(item);
+
+        }
+    );
 
     public static readonly BindableProperty ActiveIndicatorHeightProperty = BindableProperty.Create(
-       nameof(ActiveIndicatorHeight),
-       typeof(int),
-       typeof(ComboBox),
-       0,
-      propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
-   );
+        nameof(ActiveIndicatorHeight),
+        typeof(int),
+        typeof(ComboBox),
+        0,
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+    );
 
     public static readonly BindableProperty ActiveIndicatorColorProperty = BindableProperty.Create(
-       nameof(ActiveIndicatorColor),
-       typeof(Color),
-       typeof(ComboBox),
-      propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
-   );
+        nameof(ActiveIndicatorColor),
+        typeof(Color),
+        typeof(ComboBox),
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+    );
 
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
-    public static readonly BindableProperty FontWeightProperty =
-        IFontElement.FontWeightProperty;
+    public static readonly BindableProperty FontWeightProperty = IFontElement.FontWeightProperty;
     public static readonly BindableProperty FontIsItalicProperty =
         IFontElement.FontIsItalicProperty;
 
     public static readonly BindableProperty LabelTextProperty = ILabelTextElement.LabelTextProperty;
-    public static readonly BindableProperty LabelFontColorProperty = ILabelTextElement.LabelFontColorProperty;
+    public static readonly BindableProperty LabelFontColorProperty =
+        ILabelTextElement.LabelFontColorProperty;
     public static readonly BindableProperty LabelFontSizeProperty =
         ILabelTextElement.LabelFontSizeProperty;
 
@@ -123,13 +129,15 @@ public class ComboBox
         propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
     );
 
-
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
 
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
+
+    public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
+    public static readonly BindableProperty CommandParameterProperty = IICommandElement.CommandParameterProperty;
 
     public ItemCollection<MenuItem> Items
     {
@@ -295,6 +303,21 @@ public class ComboBox
         set => this.SetValue(OutlineWidthProperty, value);
     }
 
+    public ICommand Command
+    {
+        get => (ICommand)this.GetValue(CommandProperty);
+        set => this.SetValue(CommandProperty, value);
+    }
+
+    public object CommandParameter
+    {
+        get => this.GetValue(CommandParameterProperty);
+        set => this.SetValue(CommandParameterProperty, value);
+    }
+
+    public event EventHandler<SelectedItemChangedEventArgs> SelectedChanged;
+
+
     bool isDropDown = false;
     internal bool IsDropDown
     {
@@ -306,10 +329,10 @@ public class ComboBox
         }
     }
 
+
     IAnimationManager animationManager;
     readonly ContextMenu menu = new();
     bool isTouching = false;
-
 
     public ComboBox()
     {
@@ -427,7 +450,7 @@ public class ComboBox
         );
 
         var scale =
-            (this.HeightRequest != -1 ? this.HeightRequest : Math.Min(56f, maxHeight)) / 56f;
+            (this.HeightRequest != -1 ? this.HeightRequest : Math.Min(64f, maxHeight)) / 64f;
 
         var itemTextSize = this.GetMaxItemTextSize();
         //16 + itemSize + 16 + arrowIconSize(24) + 16
@@ -457,7 +480,8 @@ public class ComboBox
         return this.DesiredSize;
     }
 
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => new List<IVisualTreeElement> { this.menu };
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        new List<IVisualTreeElement> { this.menu };
 
     public IVisualTreeElement GetVisualParent() => null;
 }

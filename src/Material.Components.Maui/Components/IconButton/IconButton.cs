@@ -11,6 +11,7 @@ public class IconButton
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
+        IICommandElement,
         IVisualTreeElement,
         IDisposable
 {

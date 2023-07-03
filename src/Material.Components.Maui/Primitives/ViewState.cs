@@ -1,4 +1,4 @@
-﻿namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui.Primitives;
 
 public enum ViewState
 {

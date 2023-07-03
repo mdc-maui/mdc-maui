@@ -11,6 +11,7 @@ public class ExtendedFAB
         IShapeElement,
         IStateLayerElement,
         IRippleElement,
+        IICommandElement,
         IVisualTreeElement,
         IDisposable
 {

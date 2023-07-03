@@ -6,6 +6,7 @@
     xmlns:views="clr-namespace:Material.Components.Maui">
 
     <Style x:Key="FieldComboBoxStyle" TargetType="views:ComboBox">
+        <Setter Property="MinimumWidthRequest" Value="180" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="FontSize" Value="16" />
@@ -31,9 +32,9 @@
                     <VisualState x:Name="drop_down">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
-                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
-                            <Setter Property="LabelFontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="LabelFontColor" Value="{DynamicResource PrimaryColor}" />
                             <Setter Property="ActiveIndicatorHeight" Value="2" />
                         </VisualState.Setters>
                     </VisualState>
@@ -51,6 +52,7 @@
     </Style>
 
     <Style x:Key="OutlinedComboBoxStyle" TargetType="views:ComboBox">
+        <Setter Property="MinimumWidthRequest" Value="180" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="OutlineWidth" Value="1" />
@@ -94,5 +96,5 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

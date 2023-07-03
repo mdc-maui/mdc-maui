@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
-namespace Material.Components.Maui;
+namespace Material.Components.Maui.Primitives;
 
 public sealed class ItemCollection<T> : IEnumerable<T>, IList<T>, INotifyCollectionChanged
 {
