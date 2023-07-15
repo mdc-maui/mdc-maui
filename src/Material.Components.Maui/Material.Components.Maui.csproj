@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -16,26 +18,30 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('net7.0')) == true">
+		<UseMaui>true</UseMaui>
+	</PropertyGroup>
 
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true">
+	
+	<ItemGroup Condition="$(TargetFramework.Contains('-ios')) != true">
 		<Compile Remove="**\**\*.ios.cs" />
 		<None Include="**\**\*.ios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\ios\**\*.cs" />
 		<None Include="**\ios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
+	<ItemGroup Condition="$(TargetFramework.Contains('-maccatalyst')) != true">
 		<Compile Remove="**\*.macos.cs" />
 		<None Include="**\*.macos.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\macos\**\*.cs" />
 		<None Include="**\macos\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-ios')) != true AND $(TargetFramework.StartsWith('net8.0-maccatalyst')) != true">
+	<ItemGroup Condition="$(TargetFramework.Contains('-ios')) != true AND $(TargetFramework.Contains('-maccatalyst')) != true">
 		<Compile Remove="**\*.macios.cs" />
 		<None Include="**\*.macios.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\macios\**\*.cs" />
 		<None Include="**\macios\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0-android')) != true ">
+	<ItemGroup Condition="$(TargetFramework.Contains('-android')) != true ">
 		<Compile Remove="**\**\*.android.cs" />
 		<None Include="**\**\*.android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 		<Compile Remove="**\android\**\*.cs" />
@@ -61,11 +67,21 @@
 		<None Include="**\net\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
 
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0')) == true">
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-preview.6.8686" />
+	</ItemGroup>
+
+
+
+
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-preview.5.8529" />
 		<PackageReference Include="MaterialColorUtilities" Version="0.3.0" />
 	</ItemGroup>
+	
 	<ItemGroup>
+		<Compile Update="Styles\TextFieldStyles.xaml.cs">
+		  <DependentUpon>TextFieldStyles.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Styles\ButtonStyles.xaml.cs">
 			<DependentUpon>ButtonStyles.xaml</DependentUpon>
 		</Compile>
@@ -95,6 +111,12 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
+		<MauiXaml Update="Styles\BaseTextEditorStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\TextFieldStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -143,7 +165,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Converters\" />
-		<Folder Include="Handlers\" />
 	</ItemGroup>
 
 </Project>
