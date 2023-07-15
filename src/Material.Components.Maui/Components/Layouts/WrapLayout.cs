@@ -91,11 +91,10 @@ file class WrapLayoutManager : LayoutManager
                     : double.PositiveInfinity
             ) - this.layout.Padding.VerticalThickness;
 
-        Size result;
-        if (this.layout.Orientation == StackOrientation.Horizontal)
-            result = this.HorizontalMeasure(widthConstraint, heightConstraint);
-        else
-            result = this.VerticalMeasure(widthConstraint, heightConstraint);
+        var result = this.layout.Orientation == StackOrientation.Horizontal
+            ? (Size)this.HorizontalMeasure(widthConstraint, heightConstraint)
+            : (Size)this.VerticalMeasure(widthConstraint, heightConstraint);
+
         result.Width += this.layout.Padding.HorizontalThickness;
         result.Height += this.layout.Padding.VerticalThickness;
         return result;

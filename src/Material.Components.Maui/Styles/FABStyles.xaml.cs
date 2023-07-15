@@ -4,6 +4,6 @@ public partial class FABStyles : ResourceDictionary
 {
     public FABStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

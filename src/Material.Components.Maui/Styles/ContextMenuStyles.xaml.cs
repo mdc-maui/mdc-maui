@@ -4,6 +4,6 @@ public partial class ContextMenuStyles : ResourceDictionary
 {
     public ContextMenuStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

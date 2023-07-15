@@ -38,6 +38,11 @@ public class Switch
         }
     }
 
+    void IElement.InvalidateMeasure()
+    {
+        this.InvalidateMeasure();
+    }
+
     protected override void ChangeVisualState()
     {
         this.IsVisualStateChanging = true;

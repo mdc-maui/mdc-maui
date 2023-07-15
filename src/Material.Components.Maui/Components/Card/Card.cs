@@ -1,4 +1,3 @@
-using Material.Components.Maui.Primitives;
 using System.ComponentModel;
 
 namespace Material.Components.Maui;
@@ -16,6 +15,8 @@ public class Card
     ViewState IElement.ViewState => ViewState.Normal;
 
     void IElement.OnPropertyChanged() { }
+
+    void IElement.InvalidateMeasure() { }
 
     public static readonly BindableProperty ContentProperty = BindableProperty.Create(
         nameof(Content),

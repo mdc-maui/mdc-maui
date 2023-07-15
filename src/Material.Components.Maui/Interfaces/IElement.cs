@@ -16,6 +16,7 @@ public interface IElement
             (view.Parent as VisualElement)?.InvalidateMeasureNonVirtual(
                 InvalidationTrigger.MeasureChanged
             );
+
         this.OnPropertyChanged();
     }
 

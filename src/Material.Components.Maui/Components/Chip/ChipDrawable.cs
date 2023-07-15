@@ -1,6 +1,4 @@
-﻿using Material.Components.Maui.Primitives;
-
-namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui;
 
 internal class ChipDrawable : IDrawable, IDisposable
 {

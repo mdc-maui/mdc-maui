@@ -4,6 +4,6 @@ public partial class SegmentedButtonStyles : ResourceDictionary
 {
     public SegmentedButtonStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

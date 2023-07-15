@@ -1,5 +1,4 @@
-﻿using Material.Components.Maui.Primitives;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Material.Components.Maui;
 
@@ -30,6 +29,10 @@ public class SegmentedItem
     {
         var parent = this.GetParentElement<SegmentedButton>();
         (parent as IElement)?.OnPropertyChanged();
+    }
+
+    void IElement.InvalidateMeasure()
+    {
     }
 
     protected override void ChangeVisualState()
@@ -134,13 +137,13 @@ public class SegmentedItem
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposedValue)
+        if (!this.disposedValue)
         {
             if (disposing)
             {
                 ((IIconElement)this).IconPath?.Dispose();
             }
-            disposedValue = true;
+            this.disposedValue = true;
         }
     }
 

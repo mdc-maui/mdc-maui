@@ -1,5 +1,4 @@
-﻿using Material.Components.Maui.Extensions;
-using MaterialColorUtilities.Palettes;
+﻿using MaterialColorUtilities.Palettes;
 using MaterialColorUtilities.Schemes;
 
 namespace Material.Components.Maui.Tokens;

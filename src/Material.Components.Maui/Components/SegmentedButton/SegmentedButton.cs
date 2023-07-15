@@ -1,5 +1,4 @@
-﻿using Material.Components.Maui.Primitives;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Specialized;
 
 namespace Material.Components.Maui;
@@ -27,10 +26,7 @@ public class SegmentedButton
             for (var i = 0; i < this.Items.Count; i++)
             {
                 var item = this.Items[i];
-                if (i == index)
-                    item.ViewState = this.ViewState;
-                else
-                    item.ViewState = ViewState.Normal;
+                item.ViewState = i == index ? this.ViewState : ViewState.Normal;
             }
         }
         else
@@ -266,13 +262,12 @@ public class SegmentedButton
             var iconSize = 18f * scale;
             var textSize = this.GetStringSize(item.Text);
             //16 + iconSize + 8 + textSize.Width + 16
-            if (textSize == SizeF.Zero)
-                maxItemWidth = Math.Max(
+            maxItemWidth = textSize == SizeF.Zero
+                ? Math.Max(
                     maxItemWidth,
                     iconSize + iconSize + (16f + 8f + 16f) * scale
-                );
-            else
-                maxItemWidth = Math.Max(
+                )
+                : Math.Max(
                     maxItemWidth,
                     iconSize + 16f + textSize.Width + (8f + 16f) * scale
                 );

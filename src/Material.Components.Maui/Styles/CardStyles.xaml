@@ -13,7 +13,7 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceVariantColor}" />
         <Setter Property="ControlTemplate">
             <ControlTemplate>
-                <Grid x:Name="PART_Root">
+                <Grid x:Name="PART_Root" RowDefinitions="*,*">
                     <views:CardContainer
                         x:Name="PART_Container"
                         BackgroundColor="{TemplateBinding BackgroundColor,

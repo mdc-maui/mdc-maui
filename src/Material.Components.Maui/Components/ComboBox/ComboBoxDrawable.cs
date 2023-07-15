@@ -76,7 +76,7 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
             return;
 
         canvas.FillColor = this.view.ActiveIndicatorColor.MultiplyAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.12f : 1f
+            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
         canvas.FillRectangle(
@@ -125,7 +125,7 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
                 fontSize,
                 labelRect,
                 HorizontalAlignment.Left,
-                VerticalAlignment.Top
+                VerticalAlignment.Center
             );
         }
         else
@@ -172,14 +172,14 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposedValue)
+        if (!this.disposedValue)
         {
             if (disposing)
             {
                 this.arrowDropDownIcon.Dispose();
                 this.arrowDropUpIcon.Dispose();
             }
-            disposedValue = true;
+            this.disposedValue = true;
         }
     }
 

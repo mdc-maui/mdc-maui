@@ -10,37 +10,37 @@ public sealed class ItemCollection<T> : IEnumerable<T>, IList<T>, INotifyCollect
 
     public event NotifyCollectionChangedEventHandler CollectionChanged
     {
-        add { ((INotifyCollectionChanged)inner).CollectionChanged += value; }
-        remove { ((INotifyCollectionChanged)inner).CollectionChanged -= value; }
+        add { ((INotifyCollectionChanged)this.inner).CollectionChanged += value; }
+        remove { ((INotifyCollectionChanged)this.inner).CollectionChanged -= value; }
     }
 
-    public int Count => inner.Count;
+    public int Count => this.inner.Count;
 
-    public bool IsReadOnly => ((IList<T>)inner).IsReadOnly;
+    public bool IsReadOnly => ((IList<T>)this.inner).IsReadOnly;
 
     public T this[int index]
     {
-        get => inner[index];
-        set => inner[index] = value;
+        get => this.inner[index];
+        set => this.inner[index] = value;
     }
 
-    public void Add(T item) => inner.Add(item);
+    public void Add(T item) => this.inner.Add(item);
 
-    public void Clear() => inner.Clear();
+    public void Clear() => this.inner.Clear();
 
-    public bool Contains(T item) => inner.Contains(item);
+    public bool Contains(T item) => this.inner.Contains(item);
 
-    public void CopyTo(T[] array, int arrayIndex) => inner.CopyTo(array, arrayIndex);
+    public void CopyTo(T[] array, int arrayIndex) => this.inner.CopyTo(array, arrayIndex);
 
-    public IEnumerator<T> GetEnumerator() => inner.GetEnumerator();
+    public IEnumerator<T> GetEnumerator() => this.inner.GetEnumerator();
 
-    public int IndexOf(T item) => inner.IndexOf(item);
+    public int IndexOf(T item) => this.inner.IndexOf(item);
 
-    public void Insert(int index, T item) => inner.Insert(index, item);
+    public void Insert(int index, T item) => this.inner.Insert(index, item);
 
-    public bool Remove(T item) => inner.Remove(item);
+    public bool Remove(T item) => this.inner.Remove(item);
 
-    public void RemoveAt(int index) => inner.RemoveAt(index);
+    public void RemoveAt(int index) => this.inner.RemoveAt(index);
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)this.inner).GetEnumerator();
 }

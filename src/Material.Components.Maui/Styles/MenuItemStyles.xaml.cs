@@ -4,6 +4,6 @@ public partial class MenuItemStyles : ResourceDictionary
 {
     public MenuItemStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

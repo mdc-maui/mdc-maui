@@ -1,5 +1,3 @@
-using Material.Components.Maui.Extensions;
-
 namespace Material.Components.Maui.Styles;
 
 public partial class MaterialStyles : ResourceDictionary

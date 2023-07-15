@@ -1,6 +1,4 @@
-﻿using Material.Components.Maui.Primitives;
-
-namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui;
 
 internal class SegmentedButtonDrawable : IDrawable, IDisposable
 {
@@ -81,9 +79,8 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
 
         if (item.IsSelected)
         {
-            RectF markIconRect;
-            if (textSize.IsZero)
-                markIconRect = new RectF(
+            var markIconRect = textSize.IsZero
+                ? new RectF(
                     rect.Center.X
                         - (18f + 8f + (!string.IsNullOrEmpty(item.IconData) ? 18f : 0f))
                             / 2
@@ -91,15 +88,13 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
                     rect.Center.Y - 18f / 2 * scale,
                     18f * scale,
                     18f * scale
-                );
-            else
-                markIconRect = new RectF(
+                )
+                : new RectF(
                     rect.Center.X - (18f + 8f) / 2 * scale - (float)textSize.Width / 2,
                     rect.Center.Y - 18f / 2 * scale,
                     18f * scale,
                     18f * scale
                 );
-
             canvas.FillColor = item.IconColor.WithAlpha(
                 this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
             );
@@ -113,29 +108,26 @@ internal class SegmentedButtonDrawable : IDrawable, IDisposable
 
         if (!string.IsNullOrEmpty(item.IconData) && (textSize.IsZero || !item.IsSelected))
         {
-            RectF iconRect;
-            if (item.IsSelected)
-                iconRect = new RectF(
+            var iconRect = item.IsSelected
+                ? new RectF(
                     rect.Center.X - (18f + 8f + 18f) / 2 * scale + (18f + 8f) * scale,
                     rect.Center.Y - 18f / 2 * scale,
                     18f * scale,
                     18f * scale
-                );
-            else if (!textSize.IsZero)
-                iconRect = new RectF(
+                )
+                : !textSize.IsZero
+                ? new RectF(
                     rect.Center.X - (18f + 8f) / 2 * scale - (float)textSize.Width / 2,
                     rect.Center.Y - 18f / 2 * scale,
                     18f * scale,
                     18f * scale
-                );
-            else
-                iconRect = new RectF(
+                )
+                : new RectF(
                     rect.Center.X - 18f / 2 * scale,
                     rect.Center.Y - 18f / 2 * scale,
                     18f * scale,
                     18f * scale
                 );
-
             canvas.DrawIcon(item, iconRect, 18, scale);
         }
 

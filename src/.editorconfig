@@ -23,20 +23,20 @@ dotnet_sort_system_directives_first = false
 file_header_template = unset
 
 # this. 和 Me. 首选项
-dotnet_style_qualification_for_event = true:suggestion
+dotnet_style_qualification_for_event = true:error
 dotnet_style_qualification_for_field = true
-dotnet_style_qualification_for_method = true:suggestion
-dotnet_style_qualification_for_property = true:suggestion
+dotnet_style_qualification_for_method = true:error
+dotnet_style_qualification_for_property = true:error
 
 # 语言关键字与 bcl 类型首选项
 dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
 dotnet_style_predefined_type_for_member_access = true:suggestion
 
 # 括号首选项
-dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity
-dotnet_style_parentheses_in_other_binary_operators = always_for_clarity
-dotnet_style_parentheses_in_other_operators = never_if_unnecessary
-dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity
+dotnet_style_parentheses_in_arithmetic_binary_operators = never_if_unnecessary:suggestion
+dotnet_style_parentheses_in_other_binary_operators = never_if_unnecessary:suggestion
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:suggestion
+dotnet_style_parentheses_in_relational_binary_operators = never_if_unnecessary:suggestion
 
 # 修饰符首选项
 dotnet_style_require_accessibility_modifiers = for_non_interface_members
@@ -51,8 +51,8 @@ dotnet_style_object_initializer = true
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
 dotnet_style_prefer_auto_properties = true:suggestion
 dotnet_style_prefer_compound_assignment = true
-dotnet_style_prefer_conditional_expression_over_assignment = true
-dotnet_style_prefer_conditional_expression_over_return = true
+dotnet_style_prefer_conditional_expression_over_assignment = false:suggestion
+dotnet_style_prefer_conditional_expression_over_return = true:suggestion
 dotnet_style_prefer_foreach_explicit_cast_in_source = when_strongly_typed
 dotnet_style_prefer_inferred_anonymous_type_member_names = true
 dotnet_style_prefer_inferred_tuple_names = true
@@ -108,11 +108,12 @@ csharp_style_prefer_readonly_struct = true
 csharp_style_prefer_readonly_struct_member = true
 
 # 代码块首选项
-csharp_prefer_braces = false:suggestion
+csharp_prefer_braces = false
 csharp_prefer_simple_using_statement = true
-csharp_style_namespace_declarations = file_scoped:suggestion
-csharp_style_prefer_method_group_conversion = true
-csharp_style_prefer_top_level_statements = true
+csharp_style_namespace_declarations = file_scoped
+csharp_style_prefer_method_group_conversion = true:suggestion
+csharp_style_prefer_primary_constructors = true
+csharp_style_prefer_top_level_statements = true:suggestion
 
 # 表达式级首选项
 csharp_prefer_simple_default_expression = true

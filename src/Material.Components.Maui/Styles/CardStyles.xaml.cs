@@ -4,6 +4,6 @@ public partial class CardStyles : ResourceDictionary
 {
     public CardStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

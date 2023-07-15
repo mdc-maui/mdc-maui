@@ -1,4 +1,3 @@
-using Material.Components.Maui.Primitives;
 using Microsoft.Maui.Animations;
 using System.Collections;
 using System.Collections.Specialized;
@@ -14,6 +13,7 @@ public class ComboBox
         IOutlineElement,
         IFontElement,
         ILabelTextElement,
+        IActiveIndicatorElement,
         IElement,
         IBackgroundElement,
         IICommandElement,
@@ -93,21 +93,6 @@ public class ComboBox
         }
     );
 
-    public static readonly BindableProperty ActiveIndicatorHeightProperty = BindableProperty.Create(
-        nameof(ActiveIndicatorHeight),
-        typeof(int),
-        typeof(ComboBox),
-        0,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
-    );
-
-    public static readonly BindableProperty ActiveIndicatorColorProperty = BindableProperty.Create(
-        nameof(ActiveIndicatorColor),
-        typeof(Color),
-        typeof(ComboBox),
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
-    );
-
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
@@ -128,6 +113,9 @@ public class ComboBox
         1f,
         propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
     );
+
+    public static readonly BindableProperty ActiveIndicatorHeightProperty = IActiveIndicatorElement.ActiveIndicatorHeightProperty;
+    public static readonly BindableProperty ActiveIndicatorColorProperty = IActiveIndicatorElement.ActiveIndicatorColorProperty;
 
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
 
@@ -214,18 +202,6 @@ public class ComboBox
         set => this.SetValue(SelectedItemProperty, value);
     }
 
-    public int ActiveIndicatorHeight
-    {
-        get => (int)this.GetValue(ActiveIndicatorHeightProperty);
-        set => this.SetValue(ActiveIndicatorHeightProperty, value);
-    }
-
-    public Color ActiveIndicatorColor
-    {
-        get => (Color)this.GetValue(ActiveIndicatorColorProperty);
-        set => this.SetValue(ActiveIndicatorColorProperty, value);
-    }
-
     public new bool IsEnabled
     {
         get => (bool)this.GetValue(IsEnabledProperty);
@@ -283,6 +259,18 @@ public class ComboBox
     {
         get => (float)this.GetValue(LabelAnimationPercentProperty);
         set => this.SetValue(LabelAnimationPercentProperty, value);
+    }
+
+    public int ActiveIndicatorHeight
+    {
+        get => (int)this.GetValue(ActiveIndicatorHeightProperty);
+        set => this.SetValue(ActiveIndicatorHeightProperty, value);
+    }
+
+    public Color ActiveIndicatorColor
+    {
+        get => (Color)this.GetValue(ActiveIndicatorColorProperty);
+        set => this.SetValue(ActiveIndicatorColorProperty, value);
     }
 
     public Shape Shape

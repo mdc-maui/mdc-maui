@@ -18,6 +18,7 @@ public partial class Popup
             this.platformAnchor = anchor.ToPlatform(context) as ContentPanel;
             var layout = new AbsoluteLayout
             {
+                Parent = anchor,
                 BackgroundColor = Color.FromArgb("#80ffffff"),
                 WidthRequest = this.platformAnchor.ActualWidth,
                 HeightRequest = this.platformAnchor.ActualHeight,

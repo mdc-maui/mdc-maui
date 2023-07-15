@@ -93,7 +93,7 @@ internal static class ResourceExtension
         {
             return resources[key] as Style;
         }
-        if (resources.MergedDictionaries.Any())
+        if (resources.MergedDictionaries.Count != 0)
         {
             foreach (var r in resources.MergedDictionaries)
             {

@@ -4,6 +4,6 @@ public partial class ChipStyles : ResourceDictionary
 {
     public ChipStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

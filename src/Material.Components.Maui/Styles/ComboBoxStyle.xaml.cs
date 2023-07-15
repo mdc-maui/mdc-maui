@@ -4,6 +4,6 @@ public partial class ComboBoxStyles : ResourceDictionary
 {
     public ComboBoxStyles()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

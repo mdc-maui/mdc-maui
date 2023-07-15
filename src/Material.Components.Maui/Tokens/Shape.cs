@@ -57,30 +57,18 @@ public readonly struct Shape
 
     public static bool operator ==(Shape left, Shape right)
     {
-        if (
-            left.TopLeft == right.TopLeft
+        return left.TopLeft == right.TopLeft
             && left.TopRight == right.TopRight
             && left.BottomLeft == right.BottomLeft
-            && left.BottomRight == right.BottomRight
-        )
-        {
-            return true;
-        }
-        return false;
+            && left.BottomRight == right.BottomRight;
     }
 
     public static bool operator !=(Shape left, Shape right)
     {
-        if (
-            left.TopLeft != right.TopLeft
+        return left.TopLeft != right.TopLeft
             || left.TopRight != right.TopRight
             || left.BottomLeft != right.BottomLeft
-            || left.BottomRight != right.BottomRight
-        )
-        {
-            return true;
-        }
-        return false;
+            || left.BottomRight != right.BottomRight;
     }
 
     public override bool Equals([NotNullWhen(true)] object obj)

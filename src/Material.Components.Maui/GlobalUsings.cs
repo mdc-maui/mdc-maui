@@ -1,6 +1,8 @@
 global using Material.Components.Maui.Converters;
 global using Material.Components.Maui.Extensions;
+global using Material.Components.Maui.Extensions.Platform;
 global using Material.Components.Maui.Interfaces;
+global using Material.Components.Maui.Platform;
 global using Material.Components.Maui.Primitives;
 global using Material.Components.Maui.Styles;
 global using Material.Components.Maui.Tokens;

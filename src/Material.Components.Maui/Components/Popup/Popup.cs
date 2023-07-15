@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class Popup : Element
+public partial class Popup : Element, IVisualTreeElement
 {
     public static readonly BindableProperty ContentProperty = BindableProperty.Create(
         nameof(Content),
@@ -87,7 +87,7 @@ public partial class Popup : Element
 
     private readonly TaskCompletionSource<object> taskCompletionSource = new();
 
-    public async Task<object> ShowAtAsync(Page anchor)
+    public async Task<object> ShowAtAsync(Page anchor = default)
     {
         this.PlatformShow(anchor);
         return await this.taskCompletionSource.Task;

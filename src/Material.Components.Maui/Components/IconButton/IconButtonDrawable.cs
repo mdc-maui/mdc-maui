@@ -1,6 +1,4 @@
-﻿using Material.Components.Maui.Extensions;
-
-namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui;
 
 class IconButtonDrawable : IDrawable
 {

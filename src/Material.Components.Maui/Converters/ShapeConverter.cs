@@ -62,23 +62,23 @@ public class ShapeConverter : TypeConverter
         return null;
     }
 
+    private static readonly string[] values = new[]
+    {
+        "None",
+        "ExtraSmall",
+        "ExtraSmallTop",
+        "Small",
+        "Medium",
+        "Large",
+        "LargeTop",
+        "LargeEnd",
+        "ExtraLarge",
+        "ExtraLargeTop",
+        "Full",
+    };
+
     public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
     {
-        return new(
-            new[]
-            {
-                "None",
-                "ExtraSmall",
-                "ExtraSmallTop",
-                "Small",
-                "Medium",
-                "Large",
-                "LargeTop",
-                "LargeEnd",
-                "ExtraLarge",
-                "ExtraLargeTop",
-                "Full",
-            }
-        );
+        return new(values);
     }
 }

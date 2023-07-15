@@ -7,16 +7,12 @@ internal static class CanvasExtension
 {
     internal static Shape GetShape(this IShapeElement element, float width, float height)
     {
-        if (
-            element.Shape.TopLeft is -1
+        return element.Shape.TopLeft is -1
             && element.Shape.TopRight is -1
             && element.Shape.BottomLeft is -1
             && element.Shape.BottomRight is -1
-        )
-        {
-            return Math.Min(width, height) / 2;
-        }
-        return element.Shape;
+            ? (Shape)(Math.Min(width, height) / 2)
+            : element.Shape;
     }
 
     internal static double[] GetRadii(this IShapeElement view, float width, float height)

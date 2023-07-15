@@ -1,5 +1,4 @@
-﻿using Material.Components.Maui.Extensions;
-using RectF = Microsoft.Maui.Graphics.RectF;
+﻿using RectF = Microsoft.Maui.Graphics.RectF;
 
 namespace Material.Components.Maui;
 

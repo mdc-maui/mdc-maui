@@ -1,6 +1,4 @@
-﻿using Material.Components.Maui.Primitives;
-
-namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui;
 
 internal class MenuItemDrawable : IDrawable
 {
@@ -37,13 +35,13 @@ internal class MenuItemDrawable : IDrawable
             VerticalAlignment.Center
         );
 
-        if (!string.IsNullOrEmpty(view.TrailingIconData))
+        if (!string.IsNullOrEmpty(this.view.TrailingIconData))
         {
-            canvas.FillColor = view.TrailingIconColor.WithAlpha(
-                view.ViewState is ViewState.Disabled ? 0.38f : 1f
+            canvas.FillColor = this.view.TrailingIconColor.WithAlpha(
+                this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
             );
 
-            using var path = new PathF((view as ITrailingIconElement).TrailingIconPath);
+            using var path = new PathF((this.view as ITrailingIconElement).TrailingIconPath);
             var sx = rect.Right - 12f - 24f;
             var sy = rect.Center.Y - 12f;
             path.Move(sx, sy);

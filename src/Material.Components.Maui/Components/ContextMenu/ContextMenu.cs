@@ -1,5 +1,4 @@
-﻿using Material.Components.Maui.Primitives;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -17,6 +16,8 @@ public partial class ContextMenu
         IDisposable
 {
     ViewState IElement.ViewState => ViewState.Normal;
+
+    void IElement.InvalidateMeasure() { }
 
     void IElement.OnPropertyChanged() { }
 
@@ -196,7 +197,7 @@ public partial class ContextMenu
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposedValue)
+        if (!this.disposedValue)
         {
             if (disposing)
             {
@@ -205,7 +206,7 @@ public partial class ContextMenu
                     item.Clicked -= this.OnMenuItemClicked;
                 }
             }
-            disposedValue = true;
+            this.disposedValue = true;
         }
     }
 

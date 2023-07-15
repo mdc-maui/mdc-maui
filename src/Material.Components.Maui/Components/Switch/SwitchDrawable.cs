@@ -4,7 +4,6 @@ using Android.Views;
 using Material.Components.Maui.Primitives;
 #endif
 
-using Material.Components.Maui.Primitives;
 
 namespace Material.Components.Maui;
 
@@ -42,7 +41,7 @@ internal class SwitchDrawable : IDrawable
         canvas.SaveState();
 
         var drawRect = new PathF();
-        var x = (this.view.IsSelected ? rect.Width - 20f * scale : 20f * scale);
+        var x = this.view.IsSelected ? rect.Width - 20f * scale : 20f * scale;
         drawRect.AppendCircle(x, rect.Center.Y, rect.Height / 2f);
         canvas.ClipPath(drawRect);
         canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
