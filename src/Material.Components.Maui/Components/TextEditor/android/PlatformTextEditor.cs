@@ -40,7 +40,7 @@ public class PlatformTextEditor : TextView
         this.FocusableInTouchMode = true;
         this.SetTextIsSelectable(true);
         this.SetCursorVisible(false);
-        this.SetPadding(0, 0, 0, 0);
+        this.SetPadding(0, 0, (int)(3 * this.scale), 0);
     }
 
     protected override void OnSelectionChanged(int selStart, int selEnd)

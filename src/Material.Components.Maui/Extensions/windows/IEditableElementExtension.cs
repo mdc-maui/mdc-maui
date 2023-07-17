@@ -10,6 +10,7 @@ internal static class IEditableElementExtension
     public static SizeF GetLayoutSize<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var size = new SizeF((float)layout.LayoutBounds.Width, (float)layout.LayoutBounds.Height);
 
@@ -22,6 +23,7 @@ internal static class IEditableElementExtension
         PointF point
     ) where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var layout = element.CreateCanvasTextLayout(maxWidth);
         layout.HitTest(point.X, point.Y, out var region);
 
@@ -50,6 +52,7 @@ internal static class IEditableElementExtension
         int location
     ) where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var layout = element.CreateCanvasTextLayout(maxWidth);
         layout.GetCaretPosition(location, false, out var region);
 
@@ -66,6 +69,7 @@ internal static class IEditableElementExtension
     public static (RectF, RectF) GetSelectionRect<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var range = element.SelectionRange.Normalized();
 
@@ -93,6 +97,7 @@ internal static class IEditableElementExtension
     public static CaretInfo NavigateUp<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var range = element.SelectionRange.Normalized();
 
@@ -114,6 +119,7 @@ internal static class IEditableElementExtension
     public static CaretInfo NavigateDown<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var range = element.SelectionRange.Normalized();
 
@@ -175,7 +181,7 @@ internal static class IEditableElementExtension
         var device = CanvasDevice.GetSharedDevice();
         var textLayout = new CanvasTextLayout(device, text, format, maxWidth, 0f)
         {
-            HorizontalAlignment = CanvasHorizontalAlignment.Left,
+            HorizontalAlignment = element.TextAlignment == TextAlignment.End ? CanvasHorizontalAlignment.Right : element.TextAlignment == TextAlignment.Center ? CanvasHorizontalAlignment.Center : CanvasHorizontalAlignment.Left,
             VerticalAlignment = CanvasVerticalAlignment.Top
         };
 

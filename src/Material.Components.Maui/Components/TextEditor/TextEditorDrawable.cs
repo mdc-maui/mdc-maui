@@ -53,6 +53,7 @@ internal class TextEditorDrawable : IDrawable
                     ? HorizontalAlignment.Center
                     : HorizontalAlignment.Left;
 
+        rect.Width -= 3;
         canvas.DrawString(this.view.Text, rect, horizontal, VerticalAlignment.Top);
     }
 

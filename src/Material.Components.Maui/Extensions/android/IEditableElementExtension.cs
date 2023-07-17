@@ -13,11 +13,10 @@ namespace Material.Components.Maui.Extensions.Platform;
 
 internal static class IEditableElementExtension
 {
-    public static SizeF GetLayoutSize<TElement>(
-       this TElement element,
-       float maxWidth
-   ) where TElement : IEditableElement, IFontElement
+    public static SizeF GetLayoutSize<TElement>(this TElement element, float maxWidth)
+        where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var text = element.Text;
         var weight = (int)element.FontWeight;
         var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
@@ -28,7 +27,8 @@ internal static class IEditableElementExtension
         using var textPaint = new TextPaint { TextSize = element.FontSize * density };
         textPaint.SetTypeface(font.ToTypeface() ?? Typeface.Default);
 
-        if (string.IsNullOrEmpty(text)) return SizeF.Zero;
+        if (string.IsNullOrEmpty(text))
+            return SizeF.Zero;
 
         using var bounds = new Android.Graphics.Rect();
         textPaint.TextAlign =
@@ -58,6 +58,7 @@ internal static class IEditableElementExtension
     {
         var result = new CaretInfo();
 
+        maxWidth -= 3;
         var text = element.Text;
         var weight = (int)element.FontWeight;
         var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
@@ -160,6 +161,7 @@ internal static class IEditableElementExtension
     {
         var result = new CaretInfo();
 
+        maxWidth -= 3;
         var text = element.Text;
         var weight = (int)element.FontWeight;
         var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
@@ -174,7 +176,12 @@ internal static class IEditableElementExtension
         {
             var fontMetrics = textPaint.GetFontMetrics();
             result.Position = 0;
-            result.X = 0;
+            result.X =
+                element.TextAlignment == TextAlignment.End
+                    ? maxWidth
+                    : element.TextAlignment == TextAlignment.Center
+                        ? maxWidth / 2 + 2
+                        : 0;
             result.Y = 0;
             result.Height = (fontMetrics.Bottom - fontMetrics.Top) / density;
             return result;
@@ -222,6 +229,7 @@ internal static class IEditableElementExtension
     public static (RectF, RectF) GetSelectionRect<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
+        maxWidth -= 3;
         var range = element.SelectionRange.Normalized();
         var text = element.Text;
         var weight = (int)element.FontWeight;
@@ -315,8 +323,11 @@ internal static class IEditableElementExtension
         if (editor.Handler?.PlatformView is PlatformTextEditor pv)
         {
             var inputMethodManager = (InputMethodManager)
-               pv.Context?.GetSystemService(Context.InputMethodService);
-            if (inputMethodManager is not null && (!inputMethodManager.InvokeIsActive(pv) || !CheckKeyboard(editor)))
+                pv.Context?.GetSystemService(Context.InputMethodService);
+            if (
+                inputMethodManager is not null
+                && (!inputMethodManager.InvokeIsActive(pv) || !CheckKeyboard(editor))
+            )
             {
                 if (!pv.HasFocus)
                     pv.RequestFocus();

@@ -15,7 +15,6 @@ public interface IEditableElement : IElement
         propertyChanged: (bo, ov, nv) => ((IElement)bo).InvalidateMeasure()
     );
 
-
     public static readonly BindableProperty SelectionRangeProperty = BindableProperty.Create(
         nameof(SelectionRange),
         typeof(TextRange),

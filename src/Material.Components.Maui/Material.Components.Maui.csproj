@@ -79,9 +79,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<Compile Update="Styles\TextFieldStyles.xaml.cs">
-		  <DependentUpon>TextFieldStyles.xaml</DependentUpon>
-		</Compile>
 		<Compile Update="Styles\ButtonStyles.xaml.cs">
 			<DependentUpon>ButtonStyles.xaml</DependentUpon>
 		</Compile>
@@ -112,9 +109,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="Styles\BaseTextEditorStyles.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="Styles\TextFieldStyles.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
