@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.ProgressIndicatorStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+
+    <Style x:Key="CircularProgressIndicatorStyle" TargetType="views:ProgressIndicator">
+        <Setter Property="WidthRequest" Value="48" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+
+        <Setter Property="IndicatorType" Value="Circular" />
+        <Setter Property="Percent" Value="-1" />
+        <Setter Property="AnimationDuration" Value="1.5" />
+        <Setter Property="Shape" Value="Full" />
+        <Setter Property="ActiveIndicatorHeight" Value="4" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
+    </Style>
+
+    <Style x:Key="LinearProgressIndicatorStyle" TargetType="views:ProgressIndicator">
+        <Setter Property="WidthRequest" Value="150" />
+        <Setter Property="HeightRequest" Value="4" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+
+        <Setter Property="IndicatorType" Value="Linear" />
+        <Setter Property="Percent" Value="-1" />
+        <Setter Property="AnimationDuration" Value="1.5" />
+        <Setter Property="Shape" Value="None" />
+        <Setter Property="ActiveIndicatorHeight" Value="4" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+        <Setter Property="ActiveIndicatorColor" Value="{DynamicResource PrimaryColor}" />
+    </Style>
+
+
+</ResourceDictionary>

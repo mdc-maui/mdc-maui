@@ -21,6 +21,7 @@
         <Styles:MenuItemStyles />
         <Styles:ComboBoxStyles />
         <Styles:TextFieldStyles />
+        <Styles:ProgressIndicatorStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -138,6 +138,9 @@
 		<MauiXaml Update="Styles\MaterialStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Styles\ProgressIndicatorStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Styles\SegmentedItemStyles.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
