@@ -19,10 +19,9 @@ class IconButtonDrawable : IDrawable
         canvas.DrawIcon(this.view, rect, 24, scale);
         canvas.DrawOverlayLayer(this.view, rect);
 
-        if (this.view.RipplePercent == 0f)
+        if (this.view.RipplePercent is 0f or 1f)
             canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
-
-        if (this.view.RipplePercent != 0f)
+        else
             canvas.DrawRipple(
                 this.view,
                 this.view.LastTouchPoint,

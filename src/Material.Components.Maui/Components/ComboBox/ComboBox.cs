@@ -1,14 +1,12 @@
 using Microsoft.Maui.Animations;
 using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Windows.Input;
 
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
 public class ComboBox
-    : GraphicsView,
+    : TouchGraphicsView,
         IItemsElement<MenuItem>,
         IOutlineElement,
         IFontElement,
@@ -19,37 +17,13 @@ public class ComboBox
         IICommandElement,
         IVisualTreeElement
 {
-    protected bool IsVisualStateChanging { get; set; }
-    ViewState viewState = ViewState.Normal;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ViewState ViewState
-    {
-        get => this.viewState;
-        set
-        {
-            this.viewState = value;
-            this.ChangeVisualState();
-        }
-    }
-
-    void IElement.OnPropertyChanged()
-    {
-        if (this.Handler != null && !this.IsVisualStateChanging)
-        {
-            this.Invalidate();
-        }
-    }
-
     protected override void ChangeVisualState()
     {
         this.IsVisualStateChanging = true;
         var state = this.ViewState switch
         {
-            ViewState.Normal => this.IsDropDown ? "drop_down" : "normal",
-            ViewState.Pressed => this.IsDropDown ? "drop_down" : "normal",
             ViewState.Disabled => "disabled",
-            _ => "normal",
+            _ => this.IsDropDown ? "drop_down" : "normal",
         };
 
         VisualStateManager.GoToState(this, state);
@@ -75,7 +49,7 @@ public class ComboBox
 
             comboBox.Command?.Execute(comboBox.CommandParameter ?? index);
             comboBox.SelectedChanged?.Invoke(comboBox, new(comboBox.Items[index], index));
-            ((IElement)bo).OnPropertyChanged();
+            ((IElement)comboBox).OnPropertyChanged();
         }
     );
 
@@ -89,7 +63,6 @@ public class ComboBox
             var item = (MenuItem)nv;
             if (comboBox.Items.Contains(item))
                 comboBox.SelectedIndex = comboBox.Items.IndexOf(item);
-
         }
     );
 
@@ -103,29 +76,16 @@ public class ComboBox
     public static readonly BindableProperty LabelTextProperty = ILabelTextElement.LabelTextProperty;
     public static readonly BindableProperty LabelFontColorProperty =
         ILabelTextElement.LabelFontColorProperty;
-    public static readonly BindableProperty LabelFontSizeProperty =
-        ILabelTextElement.LabelFontSizeProperty;
 
-    public static readonly BindableProperty LabelAnimationPercentProperty = BindableProperty.Create(
-        nameof(LabelAnimationPercent),
-        typeof(float),
-        typeof(ComboBox),
-        1f,
-        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
-    );
-
-    public static readonly BindableProperty ActiveIndicatorHeightProperty = IActiveIndicatorElement.ActiveIndicatorHeightProperty;
-    public static readonly BindableProperty ActiveIndicatorColorProperty = IActiveIndicatorElement.ActiveIndicatorColorProperty;
-
-    public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
+    public static readonly BindableProperty ActiveIndicatorHeightProperty =
+        IActiveIndicatorElement.ActiveIndicatorHeightProperty;
+    public static readonly BindableProperty ActiveIndicatorColorProperty =
+        IActiveIndicatorElement.ActiveIndicatorColorProperty;
 
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
-
-    public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
-    public static readonly BindableProperty CommandParameterProperty = IICommandElement.CommandParameterProperty;
 
     public ItemCollection<MenuItem> Items
     {
@@ -250,16 +210,6 @@ public class ComboBox
         get => (Color)this.GetValue(LabelFontColorProperty);
         set => this.SetValue(LabelFontColorProperty, value);
     }
-    public float LabelFontSize
-    {
-        get => (float)this.GetValue(LabelFontSizeProperty);
-        set => this.SetValue(LabelFontSizeProperty, value);
-    }
-    public float LabelAnimationPercent
-    {
-        get => (float)this.GetValue(LabelAnimationPercentProperty);
-        set => this.SetValue(LabelAnimationPercentProperty, value);
-    }
 
     public int ActiveIndicatorHeight
     {
@@ -271,12 +221,6 @@ public class ComboBox
     {
         get => (Color)this.GetValue(ActiveIndicatorColorProperty);
         set => this.SetValue(ActiveIndicatorColorProperty, value);
-    }
-
-    public Shape Shape
-    {
-        get => (Shape)this.GetValue(ShapeProperty);
-        set => this.SetValue(ShapeProperty, value);
     }
 
     public Color OutlineColor
@@ -291,20 +235,7 @@ public class ComboBox
         set => this.SetValue(OutlineWidthProperty, value);
     }
 
-    public ICommand Command
-    {
-        get => (ICommand)this.GetValue(CommandProperty);
-        set => this.SetValue(CommandProperty, value);
-    }
-
-    public object CommandParameter
-    {
-        get => this.GetValue(CommandParameterProperty);
-        set => this.SetValue(CommandParameterProperty, value);
-    }
-
     public event EventHandler<SelectedItemChangedEventArgs> SelectedChanged;
-
 
     bool isDropDown = false;
     internal bool IsDropDown
@@ -317,10 +248,9 @@ public class ComboBox
         }
     }
 
+    internal float LabelAnimationPercent { get; private set; } = 1f;
 
-    IAnimationManager animationManager;
     readonly ContextMenu menu = new();
-    bool isTouching = false;
 
     public ComboBox()
     {
@@ -331,6 +261,37 @@ public class ComboBox
         this.CancelInteraction += this.OnCancelInteraction;
 
         this.menu.Closed += this.OnMenuClosed;
+    }
+
+    protected override void OnEndInteraction(object sender, TouchEventArgs e)
+    {
+        if (this.isTouching)
+        {
+            this.IsDropDown = !this.IsDropDown;
+        }
+
+        if (this.IsDropDown)
+        {
+            if (this.menu.DesiredSize == Size.Zero)
+                this.menu.WidthRequest = this.DesiredSize.Width;
+
+            this.StartLabelTextAnimation();
+            this.menu.Show(this);
+        }
+        else
+        {
+            this.menu.Close();
+        }
+
+        base.OnEndInteraction(sender, e);
+    }
+
+    private void OnMenuClosed(object sender, object e)
+    {
+        this.IsDropDown = false;
+        this.StartLabelTextAnimation();
+        if (e is int index)
+            this.SelectedIndex = index;
     }
 
     public void StartLabelTextAnimation()
@@ -351,6 +312,7 @@ public class ComboBox
                 callback: (progress) =>
                 {
                     this.LabelAnimationPercent = start.Lerp(end, progress);
+                    this.Invalidate();
                 },
                 duration: 0.5f,
                 easing: Easing.Default
@@ -358,45 +320,14 @@ public class ComboBox
         );
     }
 
-    private void OnStartInteraction(object sender, TouchEventArgs e)
+    protected override float GetRippleSize()
     {
-        this.isTouching = true;
+        return 0f;
     }
 
-    private void OnEndInteraction(object sender, TouchEventArgs e)
+    protected override void StartRippleEffect()
     {
-        if (this.isTouching)
-        {
-            this.IsDropDown = !this.IsDropDown;
-            this.Invalidate();
-        }
-
-        if (this.IsDropDown)
-        {
-            if (this.menu.DesiredSize == Size.Zero)
-                this.menu.WidthRequest = this.DesiredSize.Width;
-
-            this.StartLabelTextAnimation();
-            this.menu.Show(this);
-        }
-        else
-            this.menu.Close();
-
-        this.isTouching = false;
-    }
-
-    private void OnCancelInteraction(object sender, EventArgs e)
-    {
-        this.isTouching = false;
-    }
-
-    private void OnMenuClosed(object sender, object e)
-    {
-        if (e is int index)
-            this.SelectedIndex = index;
-
-        this.IsDropDown = false;
-        this.StartLabelTextAnimation();
+        return;
     }
 
     protected override void OnParentChanged()

@@ -62,7 +62,8 @@ public class TouchGraphicsView
         IContextMenuElement.ContextMenuProperty;
 
     public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
-    public static readonly BindableProperty CommandParameterProperty = IICommandElement.CommandParameterProperty;
+    public static readonly BindableProperty CommandParameterProperty =
+        IICommandElement.CommandParameterProperty;
 
     public new bool IsEnabled
     {
@@ -119,13 +120,13 @@ public class TouchGraphicsView
         set => this.SetValue(CommandParameterProperty, value);
     }
 
-    internal float RippleSize { get; private set; }
-    internal float RipplePercent { get; private set; }
+    internal float RippleSize { get; set; }
+    internal float RipplePercent { get; set; }
     internal PointF LastTouchPoint { get; set; }
 
     protected IAnimationManager animationManager;
     readonly IDispatcherTimer touchTimer;
-    bool isTouching;
+    protected bool isTouching;
 
     public TouchGraphicsView()
     {
@@ -134,6 +135,7 @@ public class TouchGraphicsView
         this.CancelInteraction += this.OnCancelInteraction;
         this.StartHoverInteraction += this.OnStartHoverInteraction;
         this.EndHoverInteraction += this.OnEndHoverInteraction;
+        this.MoveHoverInteraction += this.OnMoveHoverInteraction;
 
         //#if WINDOWS || MACCATALYST
 #if MACCATALYST
@@ -205,10 +207,7 @@ public class TouchGraphicsView
 #if __MOBILE__
         this.ViewState = ViewState.Normal;
 #else
-        if (e.IsInsideBounds)
-        {
-            this.ViewState = e.IsInsideBounds ? ViewState.Hovered : ViewState.Normal;
-        }
+        this.ViewState = e.IsInsideBounds ? ViewState.Hovered : ViewState.Normal;
 #endif
 
         this.Released?.Invoke(this, e);
@@ -245,7 +244,14 @@ public class TouchGraphicsView
         this.ViewState = ViewState.Normal;
     }
 
-    void StartRippleEffect()
+    protected virtual void OnMoveHoverInteraction(object sender, TouchEventArgs e)
+    {
+        if (!this.IsEnabled)
+            return;
+        if (!e.IsInsideBounds) this.ViewState = ViewState.Normal;
+    }
+
+    protected virtual void StartRippleEffect()
     {
         this.animationManager ??=
             this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
@@ -292,7 +298,7 @@ public class TouchGraphicsView
         }
     }
 
-    float GetRippleSize()
+    protected virtual float GetRippleSize()
     {
         var points = new PointF[4];
         points[0].X = points[2].X = this.LastTouchPoint.X;

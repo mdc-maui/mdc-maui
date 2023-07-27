@@ -91,18 +91,17 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
     {
         var percent =
             this.view.SelectedIndex != -1 || this.view.IsDropDown
-                ? 1 - this.view.LabelAnimationPercent
+                ? 1f - this.view.LabelAnimationPercent
                 : this.view.LabelAnimationPercent;
 
-        var fontSize =
-            this.view.LabelFontSize + (this.view.FontSize - this.view.LabelFontSize) * percent;
+        var fontSize = 12f + (this.view.FontSize - 12f) * percent;
 
         canvas.FontColor = this.view.LabelFontColor.MultiplyAlpha(
             this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
         var labelSize = this.view.GetStringSize(this.view.LabelText, fontSize);
-        var minLabelSize = this.view.GetStringSize(this.view.LabelText, this.view.LabelFontSize);
+        var minLabelSize = this.view.GetStringSize(this.view.LabelText, 12f);
         var maxLabelSize = this.view.GetStringSize(this.view.LabelText);
 
         if (this.view.OutlineWidth == 0)
@@ -154,10 +153,10 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
             var clipRect = new RectF
             {
                 Left =
-                   rect.Left
-                   + 16f * scale
-                   + minLabelSize.Width / 2
-                   - (minLabelSize.Width / 2 + 4f * scale) * (1 - percent),
+                    rect.Left
+                    + 16f * scale
+                    + minLabelSize.Width / 2
+                    - (minLabelSize.Width / 2 + 4f * scale) * (1 - percent),
                 Top = rect.Top - minLabelSize.Height / 2,
                 Width = (minLabelSize.Width + 8f * scale) * (1 - percent),
                 Height = minLabelSize.Height

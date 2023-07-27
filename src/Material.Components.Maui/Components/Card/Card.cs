@@ -16,8 +16,6 @@ public class Card
 
     void IElement.OnPropertyChanged() { }
 
-    void IElement.InvalidateMeasure() { }
-
     public static readonly BindableProperty ContentProperty = BindableProperty.Create(
         nameof(Content),
         typeof(View),

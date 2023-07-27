@@ -217,7 +217,7 @@ public class SegmentedButton
         this.Items[index].IsSelected = !this.Items[index].IsSelected;
     }
 
-    private void OnMoveHoverInteraction(object sender, TouchEventArgs e)
+    protected override void OnMoveHoverInteraction(object sender, TouchEventArgs e)
     {
         this.LastTouchPoint = e.Touches[0];
         this.ChangeVisualState();
