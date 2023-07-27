@@ -19,6 +19,16 @@ public class TextField
 {
     protected override void ChangeVisualState()
     {
+        this.IsVisualStateChanging = true;
+        var state = this.ViewState switch
+        {
+            ViewState.Disabled => "disabled",
+            _ => this.IsFocused ? "focused" : "normal",
+        };
+
+        VisualStateManager.GoToState(this, state);
+        this.IsVisualStateChanging = false;
+
         this.Invalidate();
     }
 
