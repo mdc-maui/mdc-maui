@@ -12,12 +12,18 @@ public interface IElement
 
     void InvalidateMeasure()
     {
-        if (this is View view)
+        if (this is GraphicsView view and not IContainerElement)
+#if WINDOWS
             (view.Parent as VisualElement)?.InvalidateMeasureNonVirtual(
                 InvalidationTrigger.MeasureChanged
             );
-
-        this.OnPropertyChanged();
+#else
+            (
+                view as VisualElement
+            )?.InvalidateMeasureNonVirtual(InvalidationTrigger.MeasureChanged);
+#endif
+        else
+            this.OnPropertyChanged();
     }
 
     public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(

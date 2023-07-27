@@ -2,9 +2,9 @@
 using Microsoft.Maui.Graphics.Platform;
 
 namespace Material.Components.Maui.Platform;
-public class PlatformTextEditor : PlatformGraphicsView
+public class PlatformTextField : PlatformGraphicsView
 {
-    public PlatformTextEditor() : base()
+    public PlatformTextField() : base()
     {
 
     }

@@ -1,5 +1,6 @@
 ﻿using Material.Components.Maui.Platform.Editable;
 using Microsoft.Maui.Platform;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
@@ -10,13 +11,14 @@ using Rect = Windows.Foundation.Rect;
 
 namespace Material.Components.Maui.Platform;
 
-public class PlatformTextEditor : PlatformTouchGraphicsView, IDisposable
+public class PlatformTextField : PlatformTouchGraphicsView, IDisposable
 {
+    public InputType InputType { get; set; }
     public CoreTextEditContext EditContext { get; private set; }
 
     readonly EditableHandler editableHandler;
 
-    public PlatformTextEditor(EditableHandler handler) : base()
+    public PlatformTextField(EditableHandler handler) : base()
     {
         this.editableHandler = handler;
         this.editableHandler.SelectionChanged += this.OnSelectionChanged;
@@ -58,10 +60,16 @@ public class PlatformTextEditor : PlatformTouchGraphicsView, IDisposable
         this.EditContext.LayoutRequested += this.OnEditContextLayoutRequested;
     }
 
+    public void UpdateInputType(InputType type)
+    {
+        this.InputType = type;
+    }
+
     protected override void OnCharacterReceived(CharacterReceivedRoutedEventArgs e)
     {
         if (this.FocusState != FocusState.Unfocused && !char.IsControl(e.Character))
         {
+
             this.editableHandler.CommitText(e.Character.ToString());
         }
     }
@@ -82,7 +90,10 @@ public class PlatformTextEditor : PlatformTouchGraphicsView, IDisposable
         }
         else if (e.Key == VirtualKey.Enter)
         {
-            this.editableHandler.CommitText("\n");
+            if (this.InputType is InputType.None)
+                this.editableHandler.CommitText("\n");
+            else
+                this.TryMoveFocus(FocusNavigationDirection.Next);
         }
         else if (e.Key == VirtualKey.Left)
         {
@@ -113,7 +124,6 @@ public class PlatformTextEditor : PlatformTouchGraphicsView, IDisposable
             else
                 this.editableHandler.Navigate(NavigationKind.Up);
         }
-
         else if (e.Key == VirtualKey.Down)
         {
             if (isShiftPressed)
@@ -147,6 +157,18 @@ public class PlatformTextEditor : PlatformTouchGraphicsView, IDisposable
         }
     }
 
+    protected override void OnPointerMoved(PointerRoutedEventArgs e)
+    {
+        base.OnPointerMoved(e);
+        var editablePadding = this.editableHandler.GetEditablePadding();
+        var point = e.GetCurrentPoint(this).Position;
+        if (point.X >= editablePadding.Left && point.X <= this.ActualWidth - editablePadding.Right &&
+            point.Y >= editablePadding.Top && point.Y <= this.ActualHeight - editablePadding.Bottom)
+            this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.IBeam);
+        else
+            this.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
+    }
+
     private void OnSelectionChanged(object sender, SelectionChangedArgs e)
     {
         var start = e.SelectionRange.Start;
@@ -176,8 +198,8 @@ public class PlatformTextEditor : PlatformTouchGraphicsView, IDisposable
         CoreTextTextUpdatingEventArgs args
     )
     {
-        if (!string.IsNullOrWhiteSpace(args.Text)) this.editableHandler.CommitText(args.Text);
-
+        if (!string.IsNullOrWhiteSpace(args.Text))
+            this.editableHandler.CommitText(args.Text);
     }
 
     Rect lastEditContextLayoutRequestRect = Rect.Empty;
@@ -240,6 +262,7 @@ public class PlatformTextEditor : PlatformTouchGraphicsView, IDisposable
             this.disposedValue = true;
         }
     }
+
     public void Dispose()
     {
         this.Dispose(disposing: true);

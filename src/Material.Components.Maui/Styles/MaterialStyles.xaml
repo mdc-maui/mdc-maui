@@ -20,7 +20,7 @@
         <Styles:ContextMenuStyles />
         <Styles:MenuItemStyles />
         <Styles:ComboBoxStyles />
-        <Styles:BaseTextEditorStyles />
+        <Styles:TextFieldStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

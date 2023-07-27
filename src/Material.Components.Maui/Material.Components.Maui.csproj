@@ -108,9 +108,6 @@
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<MauiXaml Update="Styles\BaseTextEditorStyles.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -156,9 +153,6 @@
 		<MauiXaml Update="Styles\SwitchStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Converters\" />
 	</ItemGroup>
 
 </Project>

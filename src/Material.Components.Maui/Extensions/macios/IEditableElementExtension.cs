@@ -32,17 +32,17 @@ internal static class IEditableElementExtension
         throw new NotImplementedException();
     }
 
-    public static bool ShowKeyboard(this BaseTextEditor editor)
+    public static bool ShowKeyboard(this TextField editor)
     {
         throw new NotImplementedException();
     }
 
-    public static bool CheckKeyboard(this BaseTextEditor editor)
+    public static bool CheckKeyboard(this TextField editor)
     {
         throw new NotImplementedException();
     }
 
-    public static bool HideKeyboard(this BaseTextEditor editor)
+    public static bool HideKeyboard(this TextField editor)
     {
         throw new NotImplementedException();
     }

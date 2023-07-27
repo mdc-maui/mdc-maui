@@ -9,7 +9,7 @@ namespace Material.Components.Maui.Platform.Editable;
 
 public class EditableHandler
 {
-    public BaseTextEditor editor;
+    public TextField editor;
 
     TextRange selectionRange = new();
     public TextRange SelectionRange
@@ -33,7 +33,7 @@ public class EditableHandler
 
     readonly UndoRedoHelper undoRedoHelper = new();
 
-    public EditableHandler(BaseTextEditor editor)
+    public EditableHandler(TextField editor)
     {
         this.editor = editor;
     }
@@ -43,38 +43,20 @@ public class EditableHandler
         if (text == null || text == this.ToString())
             return;
 
+        var range = this.SelectionRange.Normalized();
         this.TextBuilder.Clear();
         this.TextBuilder.Append(text);
         this.editor.Text = text;
         this.SelectionRange = new TextRange(
-            Math.Min(this.SelectionRange.Start, text.Length),
-            Math.Min(this.SelectionRange.End, text.Length)
+            Math.Min(range.Start, text.Length),
+            Math.Min(range.End, text.Length)
         );
     }
 
     public void ReplaceText(string text)
     {
-        if (this.SelectionRange.IsRange)
-        {
-            var replaceText = this.TextBuilder.ToString(
-                this.SelectionRange.Start,
-                this.SelectionRange.Length
-            );
-            this.TextBuilder.Replace(
-                replaceText,
-                text,
-                this.SelectionRange.Start,
-                this.SelectionRange.Length
-            );
-        }
-        else
-            this.TextBuilder.Insert(this.SelectionRange.End, text);
-
-        var location = Math.Min(this.SelectionRange.Start + text.Length, this.TextLength);
-        var newText = this.TextBuilder.ToString();
-        this.undoRedoHelper.Add(newText, location);
-        this.editor.Text = newText;
-        this.SelectionRange = new TextRange(location);
+        var range = this.SelectionRange.Normalized();
+        this.ReplaceText(text, range);
     }
 
     public void ReplaceText(string text, TextRange range)
@@ -96,31 +78,8 @@ public class EditableHandler
 
     public void DeleteText()
     {
-        var location = 0;
-        if (this.SelectionRange.IsRange)
-        {
-            var replaceText = this.TextBuilder.ToString(
-                this.SelectionRange.Start,
-                this.SelectionRange.Length
-            );
-            this.TextBuilder.Replace(
-                replaceText,
-                string.Empty,
-                this.SelectionRange.Start,
-                this.SelectionRange.Length
-            );
-            location = Math.Max(0, this.SelectionRange.Start);
-        }
-        else if (this.TextLength > 0 && this.SelectionRange.End > 0)
-        {
-            this.TextBuilder.Remove(this.SelectionRange.End - 1, 1);
-            location = Math.Max(0, this.SelectionRange.End - 1);
-        }
-
-        var newText = this.TextBuilder.ToString();
-        this.undoRedoHelper.Add(newText, location);
-        this.editor.Text = newText;
-        this.SelectionRange = new TextRange(location);
+        var range = this.SelectionRange.Normalized();
+        this.DeleteText(range);
     }
 
     public void DeleteText(TextRange range)
@@ -160,12 +119,12 @@ public class EditableHandler
 
     public void CopyRangeTextToClipboard()
     {
-        if (this.SelectionRange.IsRange)
+        if (this.editor.InputType is InputType.Password) return;
+
+        var range = this.SelectionRange.Normalized();
+        if (range.IsRange)
         {
-            var text = this.TextBuilder.ToString(
-                this.SelectionRange.Start,
-                this.SelectionRange.Length
-            );
+            var text = this.TextBuilder.ToString(range.Start, range.Length);
             Clipboard.SetTextAsync(text);
         }
     }
@@ -179,12 +138,12 @@ public class EditableHandler
 
     public void CutRangeTextToClipboard()
     {
-        if (this.SelectionRange.IsRange)
+        if (this.editor.InputType is InputType.Password) return;
+
+        var range = this.SelectionRange.Normalized();
+        if (range.IsRange)
         {
-            var text = this.TextBuilder.ToString(
-                this.SelectionRange.Start,
-                this.SelectionRange.Length
-            );
+            var text = this.TextBuilder.ToString(range.Start, range.Length);
             Clipboard.Default.SetTextAsync(text);
             this.DeleteText();
         }
@@ -231,7 +190,14 @@ public class EditableHandler
 
     internal CaretInfo GetCaretInfo()
     {
-        return this.editor.GetCaretInfo((float)this.editor.Bounds.Width, this.selectionRange.Start);
+        var result = this.editor.GetCaretInfo(
+            (float)(this.editor.Bounds.Width),
+            this.selectionRange.Start
+        );
+        result.X += (float)this.editor.EditablePadding.Left;
+        result.Y += (float)this.editor.EditablePadding.Top;
+
+        return result;
     }
 
 #if WINDOWS
@@ -240,7 +206,7 @@ public class EditableHandler
         switch (kind)
         {
             case NavigationKind.Left:
-                this.SelectionRange = new(Math.Max(0, this.SelectionRange.Start - 1));
+                this.SelectionRange = new(Math.Max(0, this.SelectionRange.End - 1));
                 break;
             case NavigationKind.Right:
                 this.SelectionRange = new(Math.Min(this.SelectionRange.End + 1, this.TextLength));
@@ -251,7 +217,6 @@ public class EditableHandler
                     this.SelectionRange = new TextRange(caretInfo.Position);
                     break;
                 }
-
             case NavigationKind.Down:
                 {
                     var caretInfo = this.editor.NavigateDown((float)this.editor.Bounds.Width);
@@ -260,8 +225,8 @@ public class EditableHandler
                 }
             case NavigationKind.SelectLeft:
                 this.SelectionRange = new TextRange(
-                    Math.Max(0, this.SelectionRange.Start - 1),
-                    this.SelectionRange.End
+                    this.SelectionRange.Start,
+                    Math.Max(0, this.SelectionRange.End - 1)
                 );
                 break;
             case NavigationKind.SelectRight:
@@ -273,7 +238,7 @@ public class EditableHandler
             case NavigationKind.SelectUp:
                 {
                     var caretInfo = this.editor.NavigateUp((float)this.editor.Bounds.Width);
-                    this.SelectionRange = new TextRange(caretInfo.Position, this.SelectionRange.End);
+                    this.SelectionRange = new TextRange(this.SelectionRange.Start, caretInfo.Position);
                     break;
                 }
             case NavigationKind.SelectDown:
@@ -284,7 +249,7 @@ public class EditableHandler
                 }
             //TODO
             case NavigationKind.WordLeft:
-                this.SelectionRange = new(Math.Max(0, this.SelectionRange.Start - 1));
+                this.SelectionRange = new(Math.Max(0, this.SelectionRange.End - 1));
                 break;
             //TODO
             case NavigationKind.WordRight:
@@ -293,8 +258,8 @@ public class EditableHandler
             //TODO
             case NavigationKind.SelectWordleft:
                 this.SelectionRange = new TextRange(
-                    Math.Max(0, this.SelectionRange.Start - 1),
-                    this.SelectionRange.End
+                    this.SelectionRange.Start,
+                    Math.Max(0, this.SelectionRange.End - 1)
                 );
                 break;
             //TODO
@@ -315,5 +280,7 @@ public class EditableHandler
 
         return hwnd != IntPtr.Zero ? Win32Interop.GetWindowIdFromWindow(hwnd) : null;
     }
+
+    internal Thickness GetEditablePadding() => this.editor.EditablePadding;
 #endif
 }

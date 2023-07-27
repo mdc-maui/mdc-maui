@@ -10,7 +10,8 @@ internal static class IEditableElementExtension
     public static SizeF GetLayoutSize<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var size = new SizeF((float)layout.LayoutBounds.Width, (float)layout.LayoutBounds.Height);
 
@@ -23,7 +24,10 @@ internal static class IEditableElementExtension
         PointF point
     ) where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+        point.X -= (float)element.EditablePadding.Left;
+        point.Y -= (float)element.EditablePadding.Top;
+
         var layout = element.CreateCanvasTextLayout(maxWidth);
         layout.HitTest(point.X, point.Y, out var region);
 
@@ -52,7 +56,8 @@ internal static class IEditableElementExtension
         int location
     ) where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+
         var layout = element.CreateCanvasTextLayout(maxWidth);
         layout.GetCaretPosition(location, false, out var region);
 
@@ -69,7 +74,8 @@ internal static class IEditableElementExtension
     public static (RectF, RectF) GetSelectionRect<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var range = element.SelectionRange.Normalized();
 
@@ -97,7 +103,8 @@ internal static class IEditableElementExtension
     public static CaretInfo NavigateUp<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var range = element.SelectionRange.Normalized();
 
@@ -119,7 +126,8 @@ internal static class IEditableElementExtension
     public static CaretInfo NavigateDown<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+
         var layout = element.CreateCanvasTextLayout(maxWidth);
         var range = element.SelectionRange.Normalized();
 
@@ -158,7 +166,7 @@ internal static class IEditableElementExtension
         float maxWidth
     ) where TElement : IEditableElement, IFontElement
     {
-        var text = element.Text;
+        var text = element.InputType is InputType.Password ? new string('•', element.Text.Length) : element.Text;
         var fontSize = element.FontSize;
 
         var weight = (int)element.FontWeight;
@@ -212,9 +220,9 @@ internal static class IEditableElementExtension
         return IntPtr.Zero;
     }
 
-    public static bool ShowKeyboard(this BaseTextEditor editor)
+    public static bool ShowKeyboard(this TextField editor)
     {
-        if (editor.Handler?.PlatformView is PlatformTextEditor pv)
+        if (editor.Handler?.PlatformView is PlatformTextField pv)
         {
             var hwnd = editor.GetWindowHwnd();
             if (hwnd != IntPtr.Zero)
@@ -227,9 +235,9 @@ internal static class IEditableElementExtension
         return false;
     }
 
-    public static bool CheckKeyboard(this BaseTextEditor editor)
+    public static bool CheckKeyboard(this TextField editor)
     {
-        if (editor.Handler?.PlatformView is PlatformTextEditor)
+        if (editor.Handler?.PlatformView is PlatformTextField)
         {
             var hwnd = editor.GetWindowHwnd();
             if (hwnd != IntPtr.Zero)
@@ -241,9 +249,9 @@ internal static class IEditableElementExtension
         return false;
     }
 
-    public static bool HideKeyboard(this BaseTextEditor editor)
+    public static bool HideKeyboard(this TextField editor)
     {
-        if (editor.Handler?.PlatformView is PlatformTextEditor pv)
+        if (editor.Handler?.PlatformView is PlatformTextField pv)
         {
             var hwnd = editor.GetWindowHwnd();
             if (hwnd != IntPtr.Zero)

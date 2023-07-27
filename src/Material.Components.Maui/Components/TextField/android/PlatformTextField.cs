@@ -3,6 +3,7 @@ using Android.Graphics;
 using Android.Text;
 using Android.Text.Method;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using Microsoft.Maui.Graphics.Platform;
 using Color = Microsoft.Maui.Graphics.Color;
@@ -11,43 +12,75 @@ using RectF = Microsoft.Maui.Graphics.RectF;
 
 namespace Material.Components.Maui.Platform;
 
-public class PlatformTextEditor : TextView
+public class PlatformTextField : TextView
 {
-    public override int SelectionStart => Selection.GetSelectionStart(this.EditableText);
-    public override int SelectionEnd => Selection.GetSelectionEnd(this.EditableText);
-    public override bool OnCheckIsTextEditor() => true;
+    public new event EventHandler<EditTextChangedEventArgs> TextChanged;
+
+    public event EventHandler<SelectionChangedArgs> SelectionChanged;
+
+    public PlatformTextField(Context context, IDrawable drawable = null)
+        : base(context, null, Android.Resource.Attribute.EditTextStyle, 0)
+    {
+        this.scale = this.Resources.DisplayMetrics.Density;
+        this.canvas = new PlatformCanvas(context);
+        this.scalingCanvas = new ScalingCanvas(this.canvas);
+        this.drawable = drawable;
+
+        this.Focusable = true;
+        this.FocusableInTouchMode = true;
+        this.SetTextIsSelectable(true);
+        this.SetCursorVisible(false);
+    }
+
+    public void UpdateDrawable(IDrawable drawable) => this.drawable = drawable;
+
+    public void UpdateText(string text) => this.Text = text;
+
+    public void UpdateFontSize(float size) => this.SetTextSize(Android.Util.ComplexUnitType.Dip, size);
+
+    public void UpdateTypeface(Typeface typeface) => this.Typeface = typeface;
+
+    public void UpdateSelection(int index) => Selection.SetSelection(this.EditableText, index);
+
+    public void UpdateSelection(int start, int end) =>
+        Selection.SetSelection(this.EditableText, start, end);
+
+    public void UpdateTextAlignment(Android.Views.TextAlignment alignment) =>
+        this.TextAlignment = alignment;
+
+    public void UpdatePadding(Thickness padding)
+    {
+        var left = padding.Left * this.scale;
+        var top = padding.Top * this.scale;
+        var right = padding.Right * this.scale;
+        var bottom = padding.Bottom * this.scale;
+        this.SetPadding((int)left, (int)top, (int)right, (int)bottom);
+    }
+
+    public void UpdateInputType(Primitives.InputType type)
+    {
+
+        this.SetSingleLine(type is not Primitives.InputType.None);
+        this.ImeOptions = type is not Primitives.InputType.None ? ImeAction.Next : ImeAction.None;
+
+        this.TransformationMethod =
+            type is Primitives.InputType.Password
+                ? PasswordTransformationMethod.Instance
+                : (ITransformationMethod)null;
+    }
+
     protected override bool DefaultEditable => true;
     public override bool FreezesText
     {
         get => true;
         set => base.FreezesText = value;
     }
+
     protected override IMovementMethod DefaultMovementMethod => ArrowKeyMovementMethod.Instance;
 
-    public new event EventHandler<EditTextChangedEventArgs> TextChanged;
+    public override int SelectionStart => Selection.GetSelectionStart(this.EditableText);
 
-    public event EventHandler<SelectionChangedArgs> SelectionChanged;
-
-    public PlatformTextEditor(Context context, IDrawable drawable = null)
-        : base(context, null, Android.Resource.Attribute.EditTextStyle, 0)
-    {
-        this.scale = this.Resources.DisplayMetrics.Density;
-        this.canvas = new PlatformCanvas(context);
-        this.scalingCanvas = new ScalingCanvas(this.canvas);
-        this.Drawable = drawable;
-
-        this.Focusable = true;
-        this.FocusableInTouchMode = true;
-        this.SetTextIsSelectable(true);
-        this.SetCursorVisible(false);
-        this.SetPadding(0, 0, (int)(3 * this.scale), 0);
-    }
-
-    protected override void OnSelectionChanged(int selStart, int selEnd)
-    {
-        base.OnSelectionChanged(selStart, selEnd);
-        this.SelectionChanged?.Invoke(this, new(selStart, selEnd));
-    }
+    public override int SelectionEnd => Selection.GetSelectionEnd(this.EditableText);
 
     protected override void OnTextChanged(
         Java.Lang.ICharSequence text,
@@ -60,20 +93,16 @@ public class PlatformTextEditor : TextView
         this.TextChanged?.Invoke(this, new(this.Text, new(this.SelectionStart, this.SelectionEnd)));
     }
 
-    public override void SetText(Java.Lang.ICharSequence text, BufferType type)
+    protected override void OnSelectionChanged(int selStart, int selEnd)
     {
+        base.OnSelectionChanged(selStart, selEnd);
+        this.SelectionChanged?.Invoke(this, new(selStart, selEnd));
+    }
+
+    public override bool OnCheckIsTextEditor() => true;
+
+    public override void SetText(Java.Lang.ICharSequence text, BufferType type) =>
         base.SetText(text, BufferType.Editable);
-    }
-
-    public void SetSelection(int index)
-    {
-        Selection.SetSelection(this.EditableText, index);
-    }
-
-    public void SetSelection(int start, int end)
-    {
-        Selection.SetSelection(this.EditableText, start, end);
-    }
 
     //------------------------------------------------------------------------------------------------//
 
@@ -83,16 +112,6 @@ public class PlatformTextEditor : TextView
         set
         {
             this.backgroundColor = value;
-            this.Invalidate();
-        }
-    }
-
-    public IDrawable Drawable
-    {
-        get => this.drawable;
-        set
-        {
-            this.drawable = value;
             this.Invalidate();
         }
     }

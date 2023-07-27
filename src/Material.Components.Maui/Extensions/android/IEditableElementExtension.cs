@@ -16,7 +16,7 @@ internal static class IEditableElementExtension
     public static SizeF GetLayoutSize<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
         var text = element.Text;
         var weight = (int)element.FontWeight;
         var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
@@ -28,7 +28,10 @@ internal static class IEditableElementExtension
         textPaint.SetTypeface(font.ToTypeface() ?? Typeface.Default);
 
         if (string.IsNullOrEmpty(text))
-            return SizeF.Zero;
+        {
+            var fontMetrics = textPaint.GetFontMetrics();
+            return new SizeF(0f, (fontMetrics.Bottom - fontMetrics.Top) / density);
+        }
 
         using var bounds = new Android.Graphics.Rect();
         textPaint.TextAlign =
@@ -45,7 +48,7 @@ internal static class IEditableElementExtension
                     ? Android.Text.Layout.Alignment.AlignCenter
                     : Android.Text.Layout.Alignment.AlignNormal;
 
-        var layout = CreateStaticLayout(text, textPaint, maxWidth, alignment);
+        var layout = element.CreateStaticLayout(textPaint, maxWidth, alignment);
 
         return new SizeF(layout.Width / density, layout.Height / density);
     }
@@ -58,7 +61,10 @@ internal static class IEditableElementExtension
     {
         var result = new CaretInfo();
 
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+        point.X -= (float)element.EditablePadding.Left;
+        point.Y -= (float)element.EditablePadding.Top;
+
         var text = element.Text;
         var weight = (int)element.FontWeight;
         var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
@@ -93,7 +99,7 @@ internal static class IEditableElementExtension
                     ? Android.Text.Layout.Alignment.AlignCenter
                     : Android.Text.Layout.Alignment.AlignNormal;
 
-        var layout = CreateStaticLayout(text, textPaint, maxWidth, alignment);
+        var layout = element.CreateStaticLayout(textPaint, maxWidth, alignment);
 
         for (var line = 0; line < layout.LineCount; line++)
         {
@@ -161,7 +167,7 @@ internal static class IEditableElementExtension
     {
         var result = new CaretInfo();
 
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
         var text = element.Text;
         var weight = (int)element.FontWeight;
         var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
@@ -201,7 +207,7 @@ internal static class IEditableElementExtension
                     ? Android.Text.Layout.Alignment.AlignCenter
                     : Android.Text.Layout.Alignment.AlignNormal;
 
-        var layout = CreateStaticLayout(text, textPaint, maxWidth, alignment);
+        var layout = element.CreateStaticLayout(textPaint, maxWidth, alignment);
 
         var line = layout.GetLineForOffset(position);
         var lineBounds = new Android.Graphics.Rect();
@@ -229,7 +235,8 @@ internal static class IEditableElementExtension
     public static (RectF, RectF) GetSelectionRect<TElement>(this TElement element, float maxWidth)
         where TElement : IEditableElement, IFontElement
     {
-        maxWidth -= 3;
+        maxWidth -= (float)element.EditablePadding.HorizontalThickness;
+
         var range = element.SelectionRange.Normalized();
         var text = element.Text;
         var weight = (int)element.FontWeight;
@@ -256,7 +263,7 @@ internal static class IEditableElementExtension
                     ? Android.Text.Layout.Alignment.AlignCenter
                     : Android.Text.Layout.Alignment.AlignNormal;
 
-        var layout = CreateStaticLayout(text, textPaint, maxWidth, alignment);
+        var layout = element.CreateStaticLayout(textPaint, maxWidth, alignment);
 
         var startLine = layout.GetLineForOffset(range.Start);
         var startLineBounds = new Android.Graphics.Rect();
@@ -283,13 +290,14 @@ internal static class IEditableElementExtension
         return (startRect, endRect);
     }
 
-    public static StaticLayout CreateStaticLayout(
-        string text,
+    public static StaticLayout CreateStaticLayout<TElement>(this TElement element,
         TextPaint paint,
         float width,
         Android.Text.Layout.Alignment alignment
-    )
+    ) where TElement : IEditableElement
     {
+
+        var text = element.InputType is InputType.Password ? new string('•', element.Text.Length) : element.Text;
         var density = Android.App.Application.Context.Resources.DisplayMetrics.Density;
 
         StaticLayout layout;
@@ -307,10 +315,11 @@ internal static class IEditableElementExtension
             );
             layoutBuilder.SetAlignment(alignment);
             layout = layoutBuilder.Build();
+
         }
         else
         {
-            layout = new StaticLayout(text, paint, (int)width, alignment, 1.0f, 0.0f, false);
+            layout = new StaticLayout(text, paint, (int)(width * density), alignment, 1.0f, 0.0f, false);
         }
 #pragma warning restore CA1422
 #pragma warning restore CA1416
@@ -318,9 +327,9 @@ internal static class IEditableElementExtension
         return layout;
     }
 
-    public static bool ShowKeyboard(this BaseTextEditor editor)
+    public static bool ShowKeyboard(this TextField editor)
     {
-        if (editor.Handler?.PlatformView is PlatformTextEditor pv)
+        if (editor.Handler?.PlatformView is PlatformTextField pv)
         {
             var inputMethodManager = (InputMethodManager)
                 pv.Context?.GetSystemService(Context.InputMethodService);
@@ -339,9 +348,9 @@ internal static class IEditableElementExtension
         return false;
     }
 
-    public static bool CheckKeyboard(this BaseTextEditor editor)
+    public static bool CheckKeyboard(this TextField editor)
     {
-        if (editor.Handler?.PlatformView is PlatformTextEditor pv)
+        if (editor.Handler?.PlatformView is PlatformTextField pv)
         {
             var insets = ViewCompat.GetRootWindowInsets(pv);
             if (insets is null)
@@ -355,9 +364,9 @@ internal static class IEditableElementExtension
         return false;
     }
 
-    public static bool HideKeyboard(this BaseTextEditor editor)
+    public static bool HideKeyboard(this TextField editor)
     {
-        if (editor.Handler?.PlatformView is PlatformTextEditor pv)
+        if (editor.Handler?.PlatformView is PlatformTextField pv)
         {
             var focusedView = pv.Context?.GetActivity()?.Window?.CurrentFocus;
             var tokenView = focusedView ?? pv;
