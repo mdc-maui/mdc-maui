@@ -216,7 +216,7 @@ internal class TextFieldDrawable : IDrawable
     private void DrawLabelText(ICanvas canvas, RectF rect)
     {
         var percent =
-            !string.IsNullOrEmpty(this.view.Text) || this.view.IsFocused
+            !string.IsNullOrEmpty(this.view.Text) || (this.view.IsFocused && !this.view.IsReadOnly)
                 ? 1 - this.view.LabelAnimationPercent
                 : this.view.LabelAnimationPercent;
 

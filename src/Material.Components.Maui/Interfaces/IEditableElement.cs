@@ -6,6 +6,7 @@ public interface IEditableElement : IElement
     TextRange SelectionRange { get; set; }
     Color CaretColor { get; set; }
     TextAlignment TextAlignment { get; set; }
+    bool IsReadOnly { get; set; }
     Thickness EditablePadding { get; set; }
     InputType InputType { get; set; }
 
@@ -38,6 +39,14 @@ public interface IEditableElement : IElement
         typeof(TextAlignment),
         typeof(IEditableElement),
         TextAlignment.Start,
+        propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
+    );
+
+    public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(
+        nameof(IsReadOnly),
+        typeof(bool),
+        typeof(IEditableElement),
+        default,
         propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
     );
 

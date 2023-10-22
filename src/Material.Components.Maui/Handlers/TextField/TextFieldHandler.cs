@@ -15,6 +15,7 @@ public partial class TextFieldHandler : IViewHandler
             [nameof(TextField.TextAlignment)] = MapTextAlignment,
             [nameof(TextField.EditablePadding)] = MapEditablePadding,
             [nameof(TextField.InputType)] = MapInputType,
+            [nameof(TextField.IsReadOnly)] = MapIsReadOnly,
         };
 
     public static CommandMapper<TextField, TextFieldHandler> CommandMapper { get; set; } =
@@ -40,4 +41,6 @@ public partial class TextFieldHandler : IViewHandler
     static partial void MapEditablePadding(TextFieldHandler handler, TextField virtualView);
 
     static partial void MapInputType(TextFieldHandler handler, TextField virtualView);
+
+    static partial void MapIsReadOnly(TextFieldHandler handler, TextField virtualView);
 }

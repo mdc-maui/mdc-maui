@@ -50,4 +50,9 @@ public partial class TextFieldHandler : ViewHandler<TextField, PlatformTextField
     {
         throw new NotImplementedException();
     }
+
+    static partial void MapIsReadOnly(TextFieldHandler handler, TextField virtualView)
+    {
+        throw new NotImplementedException();
+    }
 }

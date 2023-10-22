@@ -55,8 +55,11 @@ public class EditableHandler
 
     public void ReplaceText(string text)
     {
-        var range = this.SelectionRange.Normalized();
-        this.ReplaceText(text, range);
+        if (!this.editor.IsReadOnly)
+        {
+            var range = this.SelectionRange.Normalized();
+            this.ReplaceText(text, range);
+        }
     }
 
     public void ReplaceText(string text, TextRange range)
@@ -84,6 +87,8 @@ public class EditableHandler
 
     public void DeleteText(TextRange range)
     {
+        if (this.editor.IsReadOnly) return;
+
         var location = 0;
         if (range.IsRange)
         {

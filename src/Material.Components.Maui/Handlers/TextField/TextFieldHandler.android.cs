@@ -100,4 +100,9 @@ public partial class TextFieldHandler : ViewHandler<TextField, PlatformTextField
         MapFontAttributes(handler, virtualView);
         MapFontSize(handler, virtualView);
     }
+
+    static partial void MapIsReadOnly(TextFieldHandler handler, TextField virtualView)
+    {
+        handler.PlatformView?.UpdateIsReadOnly(virtualView.IsReadOnly);
+    }
 }

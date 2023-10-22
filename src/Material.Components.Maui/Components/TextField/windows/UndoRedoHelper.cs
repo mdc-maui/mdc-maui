@@ -6,8 +6,12 @@ internal class UndoRedoHelper
 
     public void Add(EditableCache cache)
     {
+
         if (this.position < this.caches.Count - 1)
             this.caches.RemoveRange(this.position + 1, this.caches.Count - this.position - 1);
+
+        if (this.position <= 0)
+            this.caches.Add(new(string.Empty, 0));
 
         this.caches.Add(cache);
         this.position = this.caches.Count;

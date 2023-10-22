@@ -18,6 +18,8 @@ public class PlatformTextField : TextView
 
     public event EventHandler<SelectionChangedArgs> SelectionChanged;
 
+    private readonly IKeyListener editableKeyListener;
+
     public PlatformTextField(Context context, IDrawable drawable = null)
         : base(context, null, Android.Resource.Attribute.EditTextStyle, 0)
     {
@@ -30,6 +32,8 @@ public class PlatformTextField : TextView
         this.FocusableInTouchMode = true;
         this.SetTextIsSelectable(true);
         this.SetCursorVisible(false);
+
+        this.editableKeyListener = this.KeyListener;
     }
 
     public void UpdateDrawable(IDrawable drawable) => this.drawable = drawable;
@@ -67,6 +71,11 @@ public class PlatformTextField : TextView
             type is Primitives.InputType.Password
                 ? PasswordTransformationMethod.Instance
                 : (ITransformationMethod)null;
+    }
+
+    public void UpdateIsReadOnly(bool isReadOnly)
+    {
+        this.KeyListener = isReadOnly ? null : this.editableKeyListener;
     }
 
     protected override bool DefaultEditable => true;
@@ -273,4 +282,5 @@ public class PlatformTextField : TextView
     public void Connect(IGraphicsView graphicsView) => this.graphicsView = graphicsView;
 
     public void Disconnect() => this.graphicsView = null;
+
 }

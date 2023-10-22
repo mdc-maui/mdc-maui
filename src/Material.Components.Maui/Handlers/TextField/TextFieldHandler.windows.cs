@@ -58,4 +58,6 @@ public partial class TextFieldHandler : ViewHandler<TextField, PlatformTextField
     {
         handler.PlatformView?.UpdateInputType(virtualView.InputType);
     }
+
+    static partial void MapIsReadOnly(TextFieldHandler handler, TextField virtualView) { }
 }

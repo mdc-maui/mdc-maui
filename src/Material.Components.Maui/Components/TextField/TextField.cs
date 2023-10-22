@@ -62,6 +62,8 @@ public class TextField
         IEditableElement.CaretColorProperty;
     public static readonly BindableProperty TextAlignmentProperty =
         IEditableElement.TextAlignmentProperty;
+    public static readonly BindableProperty IsReadOnlyProperty =
+        IEditableElement.IsReadOnlyProperty;
     public static readonly BindableProperty EditablePaddingProperty =
         IEditableElement.EditablePaddingProperty;
     public static readonly BindableProperty InputTypeProperty = IEditableElement.InputTypeProperty;
@@ -123,6 +125,13 @@ public class TextField
         get => (TextAlignment)this.GetValue(TextAlignmentProperty);
         set => this.SetValue(TextAlignmentProperty, value);
     }
+
+    public bool IsReadOnly
+    {
+        get => (bool)this.GetValue(IsReadOnlyProperty);
+        set => this.SetValue(IsReadOnlyProperty, value);
+    }
+
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public Thickness EditablePadding
@@ -307,11 +316,14 @@ public class TextField
     {
         if (e.IsFocused)
         {
-            if (this.CaretInfo.IsZero)
-                this.CaretInfo = this.GetCaretInfo((float)this.Bounds.Width, 0);
+            if (!this.IsReadOnly)
+            {
+                if (this.CaretInfo.IsZero)
+                    this.CaretInfo = this.GetCaretInfo((float)this.Bounds.Width, 0);
 
-            this.IsDrawCaret = true;
-            this.caretAnimationTimer.Start();
+                this.IsDrawCaret = true;
+                this.caretAnimationTimer.Start();
+            }
         }
         else
         {
@@ -320,13 +332,14 @@ public class TextField
         }
 
 #if WINDOWS
-        if (e.IsFocused)
+        if (e.IsFocused && !this.IsReadOnly)
             this.ShowKeyboard();
         else
             this.HideKeyboard();
-#endif
 
-        this.StartLabelTextAnimation();
+#endif
+        if (e.IsFocused && !this.IsReadOnly)
+            this.StartLabelTextAnimation();
     }
 
     public void UpdateSelectionRange(TextRange range)
