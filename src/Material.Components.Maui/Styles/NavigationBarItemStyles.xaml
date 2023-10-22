@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.NavigationBarItemStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+
+    <Style TargetType="views:NavigationBarItem">
+        <Setter Property="HeightRequest" Value="80" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <!--<Setter Property="Elevation" Value="Level2" />-->
+        <Setter Property="ActiveIndicatorHeight" Value="32" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+        <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+        <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup>
+                    <VisualState x:Name="normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="hovered">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="actived_normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="actived_hovered">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="actived_pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource SecondaryContainerColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
