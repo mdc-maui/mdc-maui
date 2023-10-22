@@ -22,6 +22,7 @@
         <Styles:ComboBoxStyles />
         <Styles:TextFieldStyles />
         <Styles:ProgressIndicatorStyles />
+        <Styles:RadioItemStyles />
         <Styles:NavigationBarStyles />
         <Styles:NavigationBarItemStyles />
     </ResourceDictionary.MergedDictionaries>
