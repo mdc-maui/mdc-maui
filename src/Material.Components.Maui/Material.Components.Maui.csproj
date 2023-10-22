@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
@@ -16,10 +15,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="$(TargetFramework.StartsWith('net7.0')) == true">
-		<UseMaui>true</UseMaui>
 	</PropertyGroup>
 
 	
@@ -67,20 +62,18 @@
 		<None Include="**\net\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
 	</ItemGroup>
 
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net8.0')) == true">
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-preview.6.8686" />
-	</ItemGroup>
-
-
-
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-rc.2.9373" />
 		<PackageReference Include="MaterialColorUtilities" Version="0.3.0" />
 	</ItemGroup>
 	
 	<ItemGroup>
 		<Compile Update="Styles\ButtonStyles.xaml.cs">
 			<DependentUpon>ButtonStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\RadioItemStyles.xaml.cs">
+		  <DependentUpon>RadioItemStyles.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Styles\CardStyles.xaml.cs">
 			<DependentUpon>CardStyles.xaml</DependentUpon>
@@ -93,6 +86,10 @@
 		</Compile>
 		<Compile Update="Styles\MaterialColors.xaml.cs">
 			<DependentUpon>MaterialColors.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\NavigationBarItemStyles.xaml.cs">
+		  <SubType>Code</SubType>
+		  <DependentUpon>NavigationBarItemStyles.xaml</DependentUpon>
 		</Compile>
 		<Compile Update="Styles\SegmentedItemStyles.xaml.cs">
 		  <DependentUpon>SegmentedItemStyles.xaml</DependentUpon>
@@ -110,6 +107,9 @@
 	<ItemGroup>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\RadioItemStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Styles\CardStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
@@ -138,6 +138,13 @@
 		<MauiXaml Update="Styles\MaterialStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationBarItemStyles.xaml">
+		  <SubType>Designer</SubType>
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationBarStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Styles\ProgressIndicatorStyles.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -156,6 +163,9 @@
 		<MauiXaml Update="Styles\SwitchStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Components\Tabs\" />
 	</ItemGroup>
 
 </Project>
