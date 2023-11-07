@@ -1,16 +1,9 @@
 ﻿namespace Material.Components.Maui;
 
-internal class ComboBoxDrawable : IDrawable, IDisposable
+internal class ComboBoxDrawable(ComboBox view) : IDrawable, IDisposable
 {
-    readonly ComboBox view;
-
     readonly PathF arrowDropDownIcon = PathBuilder.Build("M12,15 L7,10H17Z");
     readonly PathF arrowDropUpIcon = PathBuilder.Build("M7,14 L12,9 17,14Z");
-
-    public ComboBoxDrawable(ComboBox view)
-    {
-        this.view = view;
-    }
 
     public void Draw(ICanvas canvas, RectF rect)
     {
@@ -26,34 +19,34 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
             Height = rect.Height - 8f * scale
         };
 
-        canvas.DrawBackground(this.view, containerRect);
+        canvas.DrawBackground(view, containerRect);
         this.DrawItem(canvas, containerRect, scale);
         this.DrawDrapIcon(canvas, containerRect, scale);
         this.DrawActiveIndicator(canvas, containerRect);
         this.DrawLabelText(canvas, containerRect, scale);
-        canvas.DrawOutline(this.view, containerRect);
+        canvas.DrawOutline(view, containerRect);
 
         canvas.RestoreState();
     }
 
     void DrawItem(ICanvas canvas, RectF rect, float scale)
     {
-        if (this.view.SelectedItem != null)
+        if (view.SelectedItem != null)
         {
             var textRect = new RectF
             {
                 Left = rect.Left + 16f * scale,
                 Width = rect.Width - (16f - 24f - 16f) * scale,
                 Top = rect.Top,
-                Height = this.view.OutlineWidth == 0 ? rect.Height - 8f * scale : rect.Height
+                Height = view.OutlineWidth == 0 ? rect.Height - 8f * scale : rect.Height
             };
 
             canvas.DrawText(
-                this.view,
-                this.view.SelectedItem.Text,
+                view,
+                view.SelectedItem.Text,
                 textRect,
                 HorizontalAlignment.Left,
-                this.view.OutlineWidth == 0 ? VerticalAlignment.Bottom : VerticalAlignment.Center
+                view.OutlineWidth == 0 ? VerticalAlignment.Bottom : VerticalAlignment.Center
             );
         }
     }
@@ -61,7 +54,7 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
     void DrawDrapIcon(ICanvas canvas, RectF rect, float scale)
     {
         using var path = (
-            this.view.IsDropDown ? this.arrowDropUpIcon : this.arrowDropDownIcon
+            view.IsDropDown ? this.arrowDropUpIcon : this.arrowDropDownIcon
         ).AsScaledPath(scale);
         var sx = rect.Right - 40f * scale;
         var sy = rect.Center.Y - 24f / 2 * scale;
@@ -72,39 +65,39 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
 
     private void DrawActiveIndicator(ICanvas canvas, RectF rect)
     {
-        if (this.view.ActiveIndicatorHeight == 0)
+        if (view.ActiveIndicatorHeight == 0)
             return;
 
-        canvas.FillColor = this.view.ActiveIndicatorColor.MultiplyAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FillColor = view.ActiveIndicatorColor.MultiplyAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
         canvas.FillRectangle(
             rect.Left,
-            rect.Bottom - this.view.ActiveIndicatorHeight,
+            rect.Bottom - view.ActiveIndicatorHeight,
             rect.Width,
-            this.view.ActiveIndicatorHeight
+            view.ActiveIndicatorHeight
         );
     }
 
     void DrawLabelText(ICanvas canvas, RectF rect, float scale)
     {
         var percent =
-            this.view.SelectedIndex != -1 || this.view.IsDropDown
-                ? 1f - this.view.LabelAnimationPercent
-                : this.view.LabelAnimationPercent;
+            view.SelectedIndex != -1 || view.IsDropDown
+                ? 1f - view.LabelAnimationPercent
+                : view.LabelAnimationPercent;
 
-        var fontSize = 12f + (this.view.FontSize - 12f) * percent;
+        var fontSize = 12f + (view.FontSize - 12f) * percent;
 
-        canvas.FontColor = this.view.LabelFontColor.MultiplyAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FontColor = view.LabelFontColor.MultiplyAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
-        var labelSize = this.view.GetStringSize(this.view.LabelText, fontSize);
-        var minLabelSize = this.view.GetStringSize(this.view.LabelText, 12f);
-        var maxLabelSize = this.view.GetStringSize(this.view.LabelText);
+        var labelSize = view.GetStringSize(view.LabelText, fontSize);
+        var minLabelSize = view.GetStringSize(view.LabelText, 12f);
+        var maxLabelSize = view.GetStringSize(view.LabelText);
 
-        if (this.view.OutlineWidth == 0)
+        if (view.OutlineWidth == 0)
         {
             var minY = rect.Top + 8f * scale;
             var maxY = rect.Center.Y - maxLabelSize.Height / 2;
@@ -118,9 +111,9 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
             };
 
             canvas.DrawText(
-                this.view,
-                this.view.LabelText,
-                this.view.LabelFontColor,
+                view,
+                view.LabelText,
+                view.LabelFontColor,
                 fontSize,
                 labelRect,
                 HorizontalAlignment.Left,
@@ -141,9 +134,9 @@ internal class ComboBoxDrawable : IDrawable, IDisposable
             };
 
             canvas.DrawText(
-                this.view,
-                this.view.LabelText,
-                this.view.LabelFontColor,
+                view,
+                view.LabelText,
+                view.LabelFontColor,
                 fontSize,
                 labelRect,
                 HorizontalAlignment.Left,

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
 
@@ -7,13 +8,14 @@ namespace Material.Components.Maui;
 public class RadioButton
     : WrapLayout,
         IItemsElement<RadioItem>,
+        IItemsSourceElement<RadioItem>,
         IICommandElement,
         IVisualTreeElement
 {
     public static readonly BindableProperty ItemsProperty = IItemsElement<RadioItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsElement<RadioItem>.ItemsSourceProperty;
+        IItemsSourceElement<RadioItem>.ItemsSourceProperty;
 
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
         nameof(SelectedIndex),
@@ -55,9 +57,9 @@ public class RadioButton
     public static readonly BindableProperty CommandParameterProperty =
         IICommandElement.CommandParameterProperty;
 
-    public ItemCollection<RadioItem> Items
+    public ObservableCollection<RadioItem> Items
     {
-        get => (ItemCollection<RadioItem>)this.GetValue(ItemsProperty);
+        get => (ObservableCollection<RadioItem>)this.GetValue(ItemsProperty);
         set => this.SetValue(ItemsProperty, value);
     }
 
@@ -72,7 +74,7 @@ public class RadioButton
         NotifyCollectionChangedEventArgs e
     ) { }
 
-    void IItemsElement<RadioItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement<RadioItem>.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )

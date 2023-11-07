@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui.Platform.Editable;
 internal class UndoRedoHelper
 {
-    private readonly List<EditableCache> caches = new();
+    private readonly List<EditableCache> caches = [];
     private int position = -1;
 
     public void Add(EditableCache cache)

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
 namespace Material.Components.Maui;
@@ -7,6 +8,7 @@ namespace Material.Components.Maui;
 public class SegmentedButton
     : TouchGraphicsView,
         IItemsElement<SegmentedItem>,
+        IItemsSourceElement<SegmentedItem>,
         IFontElement,
         IOutlineElement,
         IElement,
@@ -52,7 +54,7 @@ public class SegmentedButton
         IItemsElement<SegmentedItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsElement<SegmentedItem>.ItemsSourceProperty;
+        IItemsSourceElement<SegmentedItem>.ItemsSourceProperty;
 
     public static readonly BindableProperty MultiSelectModeProperty = BindableProperty.Create(
         nameof(MultiSelectMode),
@@ -73,9 +75,9 @@ public class SegmentedButton
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
 
-    public ItemCollection<SegmentedItem> Items
+    public ObservableCollection<SegmentedItem> Items
     {
-        get => (ItemCollection<SegmentedItem>)this.GetValue(ItemsProperty);
+        get => (ObservableCollection<SegmentedItem>)this.GetValue(ItemsProperty);
         set => this.SetValue(ItemsProperty, value);
     }
 
@@ -118,7 +120,7 @@ public class SegmentedButton
         ((IElement)this).InvalidateMeasure();
     }
 
-    void IItemsElement<SegmentedItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement<SegmentedItem>.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )
@@ -262,15 +264,10 @@ public class SegmentedButton
             var iconSize = 18f * scale;
             var textSize = this.GetStringSize(item.Text);
             //16 + iconSize + 8 + textSize.Width + 16
-            maxItemWidth = textSize == SizeF.Zero
-                ? Math.Max(
-                    maxItemWidth,
-                    iconSize + iconSize + (16f + 8f + 16f) * scale
-                )
-                : Math.Max(
-                    maxItemWidth,
-                    iconSize + 16f + textSize.Width + (8f + 16f) * scale
-                );
+            maxItemWidth =
+                textSize == SizeF.Zero
+                    ? Math.Max(maxItemWidth, iconSize + iconSize + (16f + 8f + 16f) * scale)
+                    : Math.Max(maxItemWidth, iconSize + 16f + textSize.Width + (8f + 16f) * scale);
         }
 
         var width =
@@ -314,7 +311,7 @@ public class SegmentedButton
             if (this.ItemsSource is INotifyCollectionChanged ncc)
             {
                 ncc.CollectionChanged -= (
-                    (IItemsElement<SegmentedItem>)this
+                    (IItemsSourceElement<SegmentedItem>)this
                 ).OnItemsSourceCollectionChanged;
             }
             ((IIconElement)this).IconPath?.Dispose();

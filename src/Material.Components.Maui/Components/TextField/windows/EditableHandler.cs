@@ -7,9 +7,9 @@ using WinRT.Interop;
 
 namespace Material.Components.Maui.Platform.Editable;
 
-public class EditableHandler
+public class EditableHandler(TextField editor)
 {
-    public TextField editor;
+    public TextField editor = editor;
 
     TextRange selectionRange = new();
     public TextRange SelectionRange
@@ -32,11 +32,6 @@ public class EditableHandler
     public StringBuilder TextBuilder { get; private set; } = new();
 
     readonly UndoRedoHelper undoRedoHelper = new();
-
-    public EditableHandler(TextField editor)
-    {
-        this.editor = editor;
-    }
 
     public void UpdateText(string text)
     {
@@ -196,7 +191,7 @@ public class EditableHandler
     internal CaretInfo GetCaretInfo()
     {
         var result = this.editor.GetCaretInfo(
-            (float)(this.editor.Bounds.Width),
+            (float)this.editor.Bounds.Width,
             this.selectionRange.Start
         );
         result.X += (float)this.editor.EditablePadding.Left;

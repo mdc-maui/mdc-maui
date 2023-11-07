@@ -1,9 +1,9 @@
 ﻿namespace Material.Components.Maui.Primitives;
 
-public struct TextRange
+public struct TextRange(int start, int end)
 {
-    public int Start { get; set; }
-    public int End { get; set; }
+    public int Start { get; set; } = start;
+    public int End { get; set; } = end;
 
     public readonly int Length => this.End - this.Start;
 
@@ -12,12 +12,6 @@ public struct TextRange
     public TextRange() : this(0, 0) { }
 
     public TextRange(int positon) : this(positon, positon) { }
-
-    public TextRange(int start, int end)
-    {
-        this.Start = start;
-        this.End = end;
-    }
 
     public readonly TextRange Normalized()
     {

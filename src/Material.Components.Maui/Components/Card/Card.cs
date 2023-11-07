@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using IPaddingElement = Material.Components.Maui.Interfaces.IPaddingElement;
 
 namespace Material.Components.Maui;
 
@@ -7,6 +8,7 @@ public class Card
     : TemplatedView,
         IElement,
         IBackgroundElement,
+        IPaddingElement,
         IShapeElement,
         IOutlineElement,
         IElevationElement,
@@ -24,6 +26,7 @@ public class Card
 
     public static new readonly BindableProperty BackgroundColorProperty =
         IBackgroundElement.BackgroundColorProperty;
+    public static new readonly BindableProperty PaddingProperty = IPaddingElement.PaddingProperty;
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
     public static readonly BindableProperty OutlineWidthProperty =
         IOutlineElement.OutlineWidthProperty;
@@ -41,6 +44,12 @@ public class Card
     {
         get => (Color)this.GetValue(BackgroundColorProperty);
         set => this.SetValue(BackgroundColorProperty, value);
+    }
+
+    public new Thickness Padding
+    {
+        get => (Thickness)this.GetValue(PaddingProperty);
+        set => this.SetValue(PaddingProperty, value);
     }
 
     [TypeConverter(typeof(ShapeConverter))]
@@ -94,7 +103,7 @@ public class Card
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         this.PART_Root != null
-            ? new List<IVisualTreeElement> { this.PART_Root }
+            ? [this.PART_Root]
             : Array.Empty<IVisualTreeElement>().ToList();
 
     public IVisualTreeElement GetVisualParent() => null;

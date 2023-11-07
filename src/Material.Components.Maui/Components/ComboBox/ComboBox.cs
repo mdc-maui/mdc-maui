@@ -1,5 +1,6 @@
 using Microsoft.Maui.Animations;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
 namespace Material.Components.Maui;
@@ -8,6 +9,7 @@ namespace Material.Components.Maui;
 public class ComboBox
     : TouchGraphicsView,
         IItemsElement<MenuItem>,
+        IItemsSourceElement<MenuItem>,
         IOutlineElement,
         IFontElement,
         ILabelTextElement,
@@ -33,7 +35,7 @@ public class ComboBox
     public static readonly BindableProperty ItemsProperty = IItemsElement<MenuItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsElement<MenuItem>.ItemsSourceProperty;
+        IItemsSourceElement<MenuItem>.ItemsSourceProperty;
 
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
         nameof(SelectedIndex),
@@ -87,9 +89,9 @@ public class ComboBox
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
 
-    public ItemCollection<MenuItem> Items
+    public ObservableCollection<MenuItem> Items
     {
-        get => (ItemCollection<MenuItem>)this.GetValue(ItemsProperty);
+        get => (ObservableCollection<MenuItem>)this.GetValue(ItemsProperty);
         set => this.SetValue(ItemsProperty, value);
     }
 
@@ -124,7 +126,7 @@ public class ComboBox
         ((IElement)this).InvalidateMeasure();
     }
 
-    void IItemsElement<MenuItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement<MenuItem>.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )

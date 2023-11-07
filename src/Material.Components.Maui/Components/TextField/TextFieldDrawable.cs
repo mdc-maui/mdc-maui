@@ -1,14 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
-internal class TextFieldDrawable : IDrawable
+internal class TextFieldDrawable(TextField view) : IDrawable
 {
-    readonly TextField view;
-
-    public TextFieldDrawable(TextField view)
-    {
-        this.view = view;
-    }
-
     public void Draw(ICanvas canvas, RectF rect)
     {
         canvas.Antialias = true;
@@ -23,13 +16,13 @@ internal class TextFieldDrawable : IDrawable
 
         var editableRect = new RectF
         {
-            Left = rect.Left + (float)this.view.EditablePadding.Left,
-            Top = rect.Top + (float)this.view.EditablePadding.Top,
-            Width = rect.Width - (float)this.view.EditablePadding.HorizontalThickness,
-            Height = rect.Height - (float)this.view.EditablePadding.VerticalThickness
+            Left = rect.Left + (float)view.EditablePadding.Left,
+            Top = rect.Top + (float)view.EditablePadding.Top,
+            Width = rect.Width - (float)view.EditablePadding.HorizontalThickness,
+            Height = rect.Height - (float)view.EditablePadding.VerticalThickness
         };
 
-        canvas.DrawBackground(this.view, containerRect);
+        canvas.DrawBackground(view, containerRect);
 
         this.DrawIcon(canvas, containerRect);
         this.DrawTrailingIcon(canvas, containerRect);
@@ -40,19 +33,19 @@ internal class TextFieldDrawable : IDrawable
         this.DrawSupportingText(canvas, rect);
         this.DrawLabelText(canvas, containerRect);
         this.DrawRipple(canvas, containerRect);
-        canvas.DrawOutline(this.view, containerRect);
+        canvas.DrawOutline(view, containerRect);
     }
 
     private void DrawIcon(ICanvas canvas, RectF rect)
     {
-        if (string.IsNullOrEmpty(this.view.IconData))
+        if (string.IsNullOrEmpty(view.IconData))
             return;
 
-        canvas.FillColor = this.view.IconColor.WithAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FillColor = view.IconColor.WithAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
-        using var path = ((IIconElement)this.view).IconPath.AsScaledPath(1f);
+        using var path = ((IIconElement)view).IconPath.AsScaledPath(1f);
         var sx = rect.Left + 12f;
         var sy = rect.Center.Y - 12f;
         path.Move(sx, sy);
@@ -61,14 +54,14 @@ internal class TextFieldDrawable : IDrawable
 
     private void DrawTrailingIcon(ICanvas canvas, RectF rect)
     {
-        if (string.IsNullOrEmpty(this.view.TrailingIconData))
+        if (string.IsNullOrEmpty(view.TrailingIconData))
             return;
 
-        canvas.FillColor = this.view.TrailingIconColor.WithAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FillColor = view.TrailingIconColor.WithAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
-        using var path = ((ITrailingIconElement)this.view).TrailingIconPath.AsScaledPath(1f);
+        using var path = ((ITrailingIconElement)view).TrailingIconPath.AsScaledPath(1f);
         var sx = rect.Right - 12f - 24f;
         var sy = rect.Center.Y - 12f;
         path.Move(sx, sy);
@@ -77,41 +70,41 @@ internal class TextFieldDrawable : IDrawable
 
     private void DrawText(ICanvas canvas, RectF rect)
     {
-        if (string.IsNullOrEmpty(this.view.Text))
+        if (string.IsNullOrEmpty(view.Text))
             return;
 
-        var weight = (int)this.view.FontWeight;
-        var style = this.view.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
+        var weight = (int)view.FontWeight;
+        var style = view.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
 
-        var font = new Microsoft.Maui.Graphics.Font(this.view.FontFamily, weight, style);
+        var font = new Microsoft.Maui.Graphics.Font(view.FontFamily, weight, style);
 
         canvas.Font = font;
-        canvas.FontColor = this.view.FontColor.WithAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FontColor = view.FontColor.WithAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
-        canvas.FontSize = this.view.FontSize;
+        canvas.FontSize = view.FontSize;
         var horizontal =
-            this.view.TextAlignment == TextAlignment.End
+            view.TextAlignment == TextAlignment.End
                 ? HorizontalAlignment.Right
-                : this.view.TextAlignment == TextAlignment.Center
+                : view.TextAlignment == TextAlignment.Center
                     ? HorizontalAlignment.Center
                     : HorizontalAlignment.Left;
 
         var text =
-            this.view.InputType is InputType.Password
-                ? new string('•', this.view.Text.Length)
-                : this.view.Text;
+            view.InputType is InputType.Password
+                ? new string('•', view.Text.Length)
+                : view.Text;
         canvas.DrawString(text, rect, horizontal, VerticalAlignment.Center);
     }
 
     public void DrawSelection(ICanvas canvas, RectF rect)
     {
-        if (!this.view.SelectionRange.IsRange)
+        if (!view.SelectionRange.IsRange)
             return;
 
-        canvas.FillColor = this.view.CaretColor;
-        var (startRect, endRect) = this.view.GetSelectionRect(
-            rect.Width + (float)this.view.EditablePadding.HorizontalThickness
+        canvas.FillColor = view.CaretColor;
+        var (startRect, endRect) = view.GetSelectionRect(
+            rect.Width + (float)view.EditablePadding.HorizontalThickness
         );
         if (startRect.Y != endRect.Y)
         {
@@ -148,21 +141,21 @@ internal class TextFieldDrawable : IDrawable
 
     public void DrawCaret(ICanvas canvas, RectF rect)
     {
-        if (this.view.SelectionRange.IsRange || !this.view.IsDrawCaret)
+        if (view.SelectionRange.IsRange || !view.IsDrawCaret)
             return;
 
-        canvas.FillColor = this.view.CaretColor;
+        canvas.FillColor = view.CaretColor;
         canvas.FillRectangle(
-            rect.Left + this.view.CaretInfo.X,
-            rect.Top + this.view.CaretInfo.Y,
+            rect.Left + view.CaretInfo.X,
+            rect.Top + view.CaretInfo.Y,
             2,
-            this.view.CaretInfo.Height
+            view.CaretInfo.Height
         );
     }
 
     private void DrawSupportingText(ICanvas canvas, RectF rect)
     {
-        if (string.IsNullOrEmpty(this.view.SupportingText))
+        if (string.IsNullOrEmpty(view.SupportingText))
             return;
 
         var stRect = new Rect
@@ -173,18 +166,18 @@ internal class TextFieldDrawable : IDrawable
             Height = 16f
         };
 
-        var weight = (int)this.view.FontWeight;
-        var style = this.view.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
+        var weight = (int)view.FontWeight;
+        var style = view.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
 
-        var font = new Microsoft.Maui.Graphics.Font(this.view.FontFamily, weight, style);
+        var font = new Microsoft.Maui.Graphics.Font(view.FontFamily, weight, style);
 
         canvas.Font = font;
-        canvas.FontColor = this.view.SupportingFontColor.WithAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FontColor = view.SupportingFontColor.WithAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
         canvas.FontSize = 12f;
         canvas.DrawString(
-            this.view.SupportingText,
+            view.SupportingText,
             stRect,
             HorizontalAlignment.Left,
             VerticalAlignment.Bottom
@@ -193,7 +186,7 @@ internal class TextFieldDrawable : IDrawable
 
     private void DrawRipple(ICanvas canvas, RectF rect)
     {
-        if (string.IsNullOrEmpty(this.view.TrailingIconData))
+        if (string.IsNullOrEmpty(view.TrailingIconData))
             return;
 
         canvas.SaveState();
@@ -202,12 +195,12 @@ internal class TextFieldDrawable : IDrawable
         drawRect.AppendCircle(rect.Right - 24f, rect.Center.Y, 20f);
         canvas.ClipPath(drawRect);
 
-        if (this.view.RipplePercent is not 0f and not 1f)
+        if (view.RipplePercent is not 0f and not 1f)
             canvas.DrawRipple(
-                this.view,
-                this.view.LastTouchPoint,
-                this.view.RippleSize,
-                this.view.RipplePercent
+                view,
+                view.LastTouchPoint,
+                view.RippleSize,
+                view.RipplePercent
             );
 
         canvas.RestoreState();
@@ -216,24 +209,24 @@ internal class TextFieldDrawable : IDrawable
     private void DrawLabelText(ICanvas canvas, RectF rect)
     {
         var percent =
-            !string.IsNullOrEmpty(this.view.Text) || (this.view.IsFocused && !this.view.IsReadOnly)
-                ? 1 - this.view.LabelAnimationPercent
-                : this.view.LabelAnimationPercent;
+            !string.IsNullOrEmpty(view.Text) || view.IsFocused && !view.IsReadOnly
+                ? 1 - view.LabelAnimationPercent
+                : view.LabelAnimationPercent;
 
-        var fontSize = 12f + (this.view.FontSize - 12f) * percent;
+        var fontSize = 12f + (view.FontSize - 12f) * percent;
 
-        canvas.FontColor = this.view.LabelFontColor.MultiplyAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FontColor = view.LabelFontColor.MultiplyAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
-        var labelSize = this.view.GetStringSize(this.view.LabelText, fontSize);
-        var minLabelSize = this.view.GetStringSize(this.view.LabelText, 12f);
-        var maxLabelSize = this.view.GetStringSize(this.view.LabelText);
+        var labelSize = view.GetStringSize(view.LabelText, fontSize);
+        var minLabelSize = view.GetStringSize(view.LabelText, 12f);
+        var maxLabelSize = view.GetStringSize(view.LabelText);
 
         var rectLeft =
-            rect.Left + (!string.IsNullOrEmpty(this.view.IconData) ? 12f + 24f + 16f : 16f);
+            rect.Left + (!string.IsNullOrEmpty(view.IconData) ? 12f + 24f + 16f : 16f);
 
-        if (this.view.OutlineWidth == 0)
+        if (view.OutlineWidth == 0)
         {
             var minY = rect.Top + 8f;
             var maxY = rect.Center.Y - maxLabelSize.Height / 2;
@@ -247,9 +240,9 @@ internal class TextFieldDrawable : IDrawable
             };
 
             canvas.DrawText(
-                this.view,
-                this.view.LabelText,
-                this.view.LabelFontColor,
+                view,
+                view.LabelText,
+                view.LabelFontColor,
                 fontSize,
                 labelRect,
                 HorizontalAlignment.Left,
@@ -270,9 +263,9 @@ internal class TextFieldDrawable : IDrawable
             };
 
             canvas.DrawText(
-                this.view,
-                this.view.LabelText,
-                this.view.LabelFontColor,
+                view,
+                view.LabelText,
+                view.LabelFontColor,
                 fontSize,
                 labelRect,
                 HorizontalAlignment.Left,
@@ -297,18 +290,18 @@ internal class TextFieldDrawable : IDrawable
 
     private void DrawActiveIndicator(ICanvas canvas, RectF rect)
     {
-        if (this.view.ActiveIndicatorHeight == 0)
+        if (view.ActiveIndicatorHeight == 0)
             return;
 
-        canvas.FillColor = this.view.ActiveIndicatorColor.MultiplyAlpha(
-            this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+        canvas.FillColor = view.ActiveIndicatorColor.MultiplyAlpha(
+            view.ViewState is ViewState.Disabled ? 0.38f : 1f
         );
 
         canvas.FillRectangle(
             rect.Left,
-            rect.Bottom - this.view.ActiveIndicatorHeight,
+            rect.Bottom - view.ActiveIndicatorHeight,
             rect.Width,
-            this.view.ActiveIndicatorHeight
+            view.ActiveIndicatorHeight
         );
     }
 }

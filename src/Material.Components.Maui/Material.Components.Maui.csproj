@@ -72,6 +72,9 @@
 		<Compile Update="Styles\ButtonStyles.xaml.cs">
 			<DependentUpon>ButtonStyles.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Styles\NavigationDrawerStyles.xaml.cs">
+		  <DependentUpon>NavigationDrawerStyles.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Styles\RadioItemStyles.xaml.cs">
 		  <DependentUpon>RadioItemStyles.xaml</DependentUpon>
 		</Compile>
@@ -103,10 +106,16 @@
 		<Compile Update="Styles\ComboBoxStyle.xaml.cs">
 		  <DependentUpon>ComboBoxStyle.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Styles\NavigationDrawerItemStyles.xaml.cs">
+		  <DependentUpon>NavigationDrawerItemStyles.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationDrawerStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Styles\RadioItemStyles.xaml">
 		  <Generator>MSBuild:Compile</Generator>
@@ -162,6 +171,9 @@
 		</MauiXaml>
 		<MauiXaml Update="Styles\SwitchStyles.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\NavigationDrawerItemStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>
 	<ItemGroup>

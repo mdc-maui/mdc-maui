@@ -7,24 +7,17 @@ using Material.Components.Maui.Primitives;
 
 namespace Material.Components.Maui;
 
-internal class SwitchDrawable : IDrawable
+internal class SwitchDrawable(Switch view) : IDrawable
 {
-    readonly Switch view;
-
-    public SwitchDrawable(Switch view)
-    {
-        this.view = view;
-    }
-
     public void Draw(ICanvas canvas, RectF rect)
     {
         canvas.SaveState();
         canvas.Antialias = true;
         var scale = rect.Height / 40f;
         var drawRect = new RectF(4f * scale, 4f * scale, rect.Width - 8f * scale, 32f * scale);
-        canvas.ClipPath(this.view.GetClipPath(drawRect));
-        canvas.DrawBackground(this.view, drawRect);
-        canvas.DrawOutline(this.view, drawRect);
+        canvas.ClipPath(view.GetClipPath(drawRect));
+        canvas.DrawBackground(view, drawRect);
+        canvas.DrawOutline(view, drawRect);
 
         canvas.ResetState();
 
@@ -41,10 +34,10 @@ internal class SwitchDrawable : IDrawable
         canvas.SaveState();
 
         var drawRect = new PathF();
-        var x = this.view.IsSelected ? rect.Width - 20f * scale : 20f * scale;
+        var x = view.IsSelected ? rect.Width - 20f * scale : 20f * scale;
         drawRect.AppendCircle(x, rect.Center.Y, rect.Height / 2f);
         canvas.ClipPath(drawRect);
-        canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
+        canvas.DrawStateLayer(view, rect, view.ViewState);
 
         canvas.RestoreState();
     }
@@ -53,23 +46,23 @@ internal class SwitchDrawable : IDrawable
     {
         var thumbSize =
             (
-                this.view.ViewState is ViewState.Pressed
+                view.ViewState is ViewState.Pressed
                     ? 28f
-                    : this.view.IsSelected || !string.IsNullOrEmpty(this.view.IconData)
+                    : view.IsSelected || !string.IsNullOrEmpty(view.IconData)
                         ? 24f
                         : 16f
             ) * scale;
 
         var x =
-            (this.view.IsSelected ? rect.Width - 16f * scale : 16f * scale)
+            (view.IsSelected ? rect.Width - 16f * scale : 16f * scale)
             - thumbSize / 2f
             + rect.X;
         var thumbRect = new RectF(x, 16f * scale - thumbSize / 2f + rect.Y, thumbSize, thumbSize);
 
-        canvas.FillColor = this.view.ThumbColor;
+        canvas.FillColor = view.ThumbColor;
         canvas.FillCircle(thumbRect.Center, thumbSize / 2);
 
-        if (!string.IsNullOrEmpty(this.view.IconData))
-            canvas.DrawIcon(this.view, thumbRect, 16, scale);
+        if (!string.IsNullOrEmpty(view.IconData))
+            canvas.DrawIcon(view, thumbRect, 16, scale);
     }
 }

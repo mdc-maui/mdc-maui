@@ -62,8 +62,8 @@ public class ShapeConverter : TypeConverter
         return null;
     }
 
-    private static readonly string[] values = new[]
-    {
+    private static readonly string[] values =
+    [
         "None",
         "ExtraSmall",
         "ExtraSmallTop",
@@ -75,7 +75,7 @@ public class ShapeConverter : TypeConverter
         "ExtraLarge",
         "ExtraLargeTop",
         "Full",
-    };
+    ];
 
     public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
     {

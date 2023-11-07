@@ -63,16 +63,9 @@ public partial class WrapLayout : Microsoft.Maui.Controls.Layout, IItemsLayout
     }
 }
 
-file class WrapLayoutManager : LayoutManager
+file class WrapLayoutManager(WrapLayout layout) : LayoutManager(layout)
 {
-    private readonly WrapLayout layout;
-
-    private readonly List<Rect> childrenBounds = new();
-
-    public WrapLayoutManager(WrapLayout layout) : base(layout)
-    {
-        this.layout = layout;
-    }
+    private readonly List<Rect> childrenBounds = [];
 
     public override Size Measure(double widthConstraint, double heightConstraint)
     {
@@ -80,23 +73,23 @@ file class WrapLayoutManager : LayoutManager
 
         widthConstraint =
             Math.Min(
-                Math.Min(widthConstraint, this.layout.MaximumWidthRequest),
-                this.layout.WidthRequest != -1 ? this.layout.WidthRequest : double.PositiveInfinity
-            ) - this.layout.Padding.HorizontalThickness;
+                Math.Min(widthConstraint, layout.MaximumWidthRequest),
+                layout.WidthRequest != -1 ? layout.WidthRequest : double.PositiveInfinity
+            ) - layout.Padding.HorizontalThickness;
         heightConstraint =
             Math.Min(
-                Math.Min(heightConstraint, this.layout.MaximumHeightRequest),
-                this.layout.HeightRequest != -1
-                    ? this.layout.HeightRequest
+                Math.Min(heightConstraint, layout.MaximumHeightRequest),
+                layout.HeightRequest != -1
+                    ? layout.HeightRequest
                     : double.PositiveInfinity
-            ) - this.layout.Padding.VerticalThickness;
+            ) - layout.Padding.VerticalThickness;
 
-        var result = this.layout.Orientation == StackOrientation.Horizontal
+        var result = layout.Orientation == StackOrientation.Horizontal
             ? (Size)this.HorizontalMeasure(widthConstraint, heightConstraint)
             : (Size)this.VerticalMeasure(widthConstraint, heightConstraint);
 
-        result.Width += this.layout.Padding.HorizontalThickness;
-        result.Height += this.layout.Padding.VerticalThickness;
+        result.Width += layout.Padding.HorizontalThickness;
+        result.Height += layout.Padding.VerticalThickness;
         return result;
     }
 
@@ -108,7 +101,7 @@ file class WrapLayoutManager : LayoutManager
         var rowHeight = 0d;
         var rowViews = new List<MIView>();
 
-        foreach (var item in this.layout.Children)
+        foreach (var item in layout.Children)
         {
             var size = item.Measure(widthConstraint, heightConstraint);
             if (rowWidth + size.Width > widthConstraint)
@@ -117,19 +110,19 @@ file class WrapLayoutManager : LayoutManager
                 rowViews.Clear();
 
                 width = Math.Max(width, rowWidth);
-                height += rowHeight + this.layout.VerticalSpacing;
+                height += rowHeight + layout.VerticalSpacing;
 
                 rowWidth = 0d;
                 rowHeight = 0d;
             }
 
-            rowWidth += size.Width + this.layout.HorizontalSpacing;
+            rowWidth += size.Width + layout.HorizontalSpacing;
             rowHeight = Math.Max(rowHeight, size.Height);
             rowViews.Add(item);
         }
 
         this.UpdateHorizontalChildrenBounds(height, rowHeight, rowViews);
-        width = Math.Max(rowWidth, width) - this.layout.HorizontalSpacing;
+        width = Math.Max(rowWidth, width) - layout.HorizontalSpacing;
         height = Math.Min(heightConstraint, height + rowHeight);
         return new Size(width, height);
     }
@@ -141,7 +134,7 @@ file class WrapLayoutManager : LayoutManager
         foreach (var view in views)
         {
             this.childrenBounds.Add(new Rect(x, y, view.DesiredSize.Width, height));
-            x += view.DesiredSize.Width + this.layout.HorizontalSpacing;
+            x += view.DesiredSize.Width + layout.HorizontalSpacing;
         }
     }
 
@@ -153,27 +146,27 @@ file class WrapLayoutManager : LayoutManager
         var columnHeight = 0d;
         var columnViews = new List<MIView>();
 
-        foreach (var item in this.layout.Children)
+        foreach (var item in layout.Children)
         {
             var size = item.Measure(widthConstraint, heightConstraint);
-            if (size.Height + columnHeight - this.layout.VerticalSpacing > heightConstraint)
+            if (size.Height + columnHeight - layout.VerticalSpacing > heightConstraint)
             {
                 this.UpdateVerticalChildrenBounds(width, columnWidth, columnViews);
                 columnViews.Clear();
 
-                width += columnWidth + this.layout.HorizontalSpacing;
+                width += columnWidth + layout.HorizontalSpacing;
                 height = Math.Max(columnHeight, size.Height);
                 columnWidth = 0d;
                 columnHeight = 0d;
             }
             columnWidth = Math.Max(columnWidth, size.Width);
-            columnHeight += size.Height + this.layout.VerticalSpacing;
+            columnHeight += size.Height + layout.VerticalSpacing;
             columnViews.Add(item);
         }
         this.UpdateVerticalChildrenBounds(height, columnWidth, columnViews);
 
         width = Math.Min(widthConstraint, width + columnWidth);
-        height = Math.Max(columnHeight, height) - this.layout.VerticalSpacing;
+        height = Math.Max(columnHeight, height) - layout.VerticalSpacing;
         return new Size(width, height);
     }
 
@@ -184,13 +177,13 @@ file class WrapLayoutManager : LayoutManager
         foreach (var view in views)
         {
             this.childrenBounds.Add(new Rect(x, y, width, view.DesiredSize.Height));
-            y += view.DesiredSize.Height + this.layout.VerticalSpacing;
+            y += view.DesiredSize.Height + layout.VerticalSpacing;
         }
     }
 
     public override Size ArrangeChildren(Rect bounds)
     {
-        if (this.layout.Orientation == StackOrientation.Horizontal)
+        if (layout.Orientation == StackOrientation.Horizontal)
             this.HorizontalArrangeChildren();
         else
             this.VerticalArrangeChildren();
@@ -201,7 +194,7 @@ file class WrapLayoutManager : LayoutManager
     private void HorizontalArrangeChildren()
     {
         var index = 0;
-        foreach (var item in this.layout.Children)
+        foreach (var item in layout.Children)
         {
             var bounds = this.childrenBounds[index];
             item.Arrange(bounds);
@@ -212,7 +205,7 @@ file class WrapLayoutManager : LayoutManager
     private void VerticalArrangeChildren()
     {
         var index = 0;
-        foreach (var item in this.layout.Children)
+        foreach (var item in layout.Children)
         {
             var bounds = this.childrenBounds[index];
             item.Arrange(bounds);

@@ -171,7 +171,7 @@ public class TouchGraphicsView
                 this.isTouching = false;
                 this.LongPressed.Invoke(
                     this,
-                    new TouchEventArgs(new PointF[] { this.LastTouchPoint }, true)
+                    new TouchEventArgs([this.LastTouchPoint], true)
                 );
             }
 

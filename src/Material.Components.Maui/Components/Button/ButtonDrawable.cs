@@ -2,14 +2,9 @@
 
 namespace Material.Components.Maui;
 
-internal class ButtonDrawable : IDrawable
+internal class ButtonDrawable(Button view) : IDrawable
 {
-    readonly Button view;
-
-    public ButtonDrawable(Button view)
-    {
-        this.view = view;
-    }
+    readonly Button view = view;
 
     public void Draw(ICanvas canvas, RectF rect)
     {

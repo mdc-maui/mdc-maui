@@ -1,9 +1,5 @@
 ﻿namespace Material.Components.Maui.Primitives;
-public class SelectedItemsChangedArgs<T> : EventArgs
+public class SelectedItemsChangedArgs<T>(IEnumerable<T> selectedItems) : EventArgs
 {
-    public IEnumerable<T> SelectedItems { get; set; }
-    public SelectedItemsChangedArgs(IEnumerable<T> selectedItems)
-    {
-        this.SelectedItems = selectedItems;
-    }
+    public IEnumerable<T> SelectedItems { get; set; } = selectedItems;
 }

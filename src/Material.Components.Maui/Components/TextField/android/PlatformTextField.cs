@@ -136,7 +136,7 @@ public class PlatformTextField : TextView
     IGraphicsView graphicsView;
     RectF bounds;
     bool dragStarted;
-    PointF[] lastMovedViewPoints = Array.Empty<PointF>();
+    PointF[] lastMovedViewPoints = [];
     bool pressedContained = false;
 
     public override void Draw(Canvas androidCanvas)

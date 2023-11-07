@@ -238,7 +238,6 @@ internal static class IEditableElementExtension
         maxWidth -= (float)element.EditablePadding.HorizontalThickness;
 
         var range = element.SelectionRange.Normalized();
-        var text = element.Text;
         var weight = (int)element.FontWeight;
         var style = element.FontIsItalic ? FontStyleType.Italic : FontStyleType.Normal;
         var font = new Microsoft.Maui.Graphics.Font(element.FontFamily, weight, style);

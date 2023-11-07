@@ -1,7 +1,5 @@
 ﻿namespace Material.Components.Maui.Primitives;
-public class SelectionRangeChangedEventArgs : EventArgs
+public class SelectionRangeChangedEventArgs(TextRange range) : EventArgs
 {
-    public TextRange SelectionRange { get; set; }
-
-    public SelectionRangeChangedEventArgs(TextRange range) => this.SelectionRange = range;
+    public TextRange SelectionRange { get; set; } = range;
 }

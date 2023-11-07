@@ -13,15 +13,9 @@ internal class AutoFillLayout : Layout, IItemsLayout
     }
 }
 
-file class UniformStackLayoutManager : LayoutManager
+file class UniformStackLayoutManager(AutoFillLayout layout) : LayoutManager(layout)
 {
-    private readonly AutoFillLayout layout;
-    private readonly List<Size> childrenSizes = new();
-
-    public UniformStackLayoutManager(AutoFillLayout layout) : base(layout)
-    {
-        this.layout = layout;
-    }
+    private readonly List<Size> childrenSizes = [];
 
     public override Size Measure(double widthConstraint, double heightConstraint)
     {
@@ -30,7 +24,7 @@ file class UniformStackLayoutManager : LayoutManager
         var maxWidth = 0d;
         var maxHeight = 0d;
 
-        foreach (var item in this.layout.Children)
+        foreach (var item in layout.Children)
         {
             var size = item.Measure(widthConstraint, heightConstraint);
             maxWidth += size.Width;
@@ -42,7 +36,7 @@ file class UniformStackLayoutManager : LayoutManager
             widthConstraint != double.PositiveInfinity
                 ? Math.Max(maxWidth, widthConstraint)
                 : maxWidth;
-        var childrenWidth = Math.Ceiling(maxWidth / this.layout.Children.Count);
+        var childrenWidth = Math.Ceiling(maxWidth / layout.Children.Count);
         for (var i = 0; i < this.childrenSizes.Count; i++)
         {
             this.childrenSizes[i] = new Size(childrenWidth, maxHeight);
@@ -55,13 +49,14 @@ file class UniformStackLayoutManager : LayoutManager
     {
         var x = 0d;
         var index = 0;
-        foreach (var item in this.layout.Children)
+        foreach (var item in layout.Children)
         {
             var size = this.childrenSizes[index];
             item.Arrange(new Rect(x, 0d, size.Width, size.Height));
             x += size.Width;
             index++;
         }
+
         return new Size(bounds.Width, bounds.Height);
     }
 }

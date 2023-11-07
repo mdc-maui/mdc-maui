@@ -18,13 +18,13 @@ internal static class CanvasExtension
     internal static double[] GetRadii(this IShapeElement view, float width, float height)
     {
         var radius = view.GetShape(width, height);
-        return new double[]
-        {
+        return
+        [
             radius.TopLeft,
             radius.TopRight,
             radius.BottomLeft,
             radius.BottomRight,
-        };
+        ];
     }
 
     internal static PathF GetClipPath(this IShapeElement element, RectF rect)

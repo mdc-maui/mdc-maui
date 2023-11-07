@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Material.Components.Maui.Tokens;
 
 [TypeConverter(typeof(ShapeConverter))]
-public readonly struct Shape
+public readonly struct Shape(float topLeft, float topRight, float bottomLeft, float bottomRight)
 {
     public static readonly Shape None = 0;
     public static readonly Shape ExtraSmall = 4;
@@ -18,21 +18,13 @@ public readonly struct Shape
     public static readonly Shape ExtraLargeTop = new(28, 28, 0, 0);
     public static readonly Shape Full = -1;
 
-    public readonly float TopLeft { get; }
-    public readonly float TopRight { get; }
-    public readonly float BottomLeft { get; }
-    public readonly float BottomRight { get; }
+    public readonly float TopLeft { get; } = topLeft;
+    public readonly float TopRight { get; } = topRight;
+    public readonly float BottomLeft { get; } = bottomLeft;
+    public readonly float BottomRight { get; } = bottomRight;
 
     public Shape(float uniformRadius)
         : this(uniformRadius, uniformRadius, uniformRadius, uniformRadius) { }
-
-    public Shape(float topLeft, float topRight, float bottomLeft, float bottomRight)
-    {
-        this.TopLeft = topLeft;
-        this.TopRight = topRight;
-        this.BottomLeft = bottomLeft;
-        this.BottomRight = bottomRight;
-    }
 
     public double[] GetRadii(float width, float height)
     {
@@ -44,10 +36,10 @@ public readonly struct Shape
         )
         {
             var full = Math.Min(width, height) / 2;
-            return new double[] { full, full, full, full };
+            return [full, full, full, full];
         }
 
-        return new double[] { this.TopLeft, this.TopRight, this.BottomLeft, this.BottomRight, };
+        return [this.TopLeft, this.TopRight, this.BottomLeft, this.BottomRight,];
     }
 
     public static implicit operator Shape(float value)
