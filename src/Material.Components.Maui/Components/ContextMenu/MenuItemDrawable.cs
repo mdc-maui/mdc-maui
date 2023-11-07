@@ -1,47 +1,40 @@
 ﻿namespace Material.Components.Maui;
 
-internal class MenuItemDrawable : IDrawable
+internal class MenuItemDrawable(MenuItem view) : IDrawable
 {
-    readonly MenuItem view;
-
-    public MenuItemDrawable(MenuItem view)
-    {
-        this.view = view;
-    }
-
     public void Draw(ICanvas canvas, RectF rect)
     {
         canvas.SaveState();
         canvas.Antialias = true;
         canvas.ClipRectangle(rect);
 
-        if (this.view.RipplePercent is 0f or 1f)
-            canvas.DrawStateLayer(this.view, rect, this.view.ViewState);
+        if (view.RipplePercent is 0f or 1f)
+            canvas.DrawStateLayer(view, rect, view.ViewState);
         else
             canvas.DrawRipple(
-                this.view,
-                this.view.LastTouchPoint,
-                this.view.RippleSize,
-                this.view.RipplePercent
+                view,
+                view.LastTouchPoint,
+                view.RippleSize,
+                view.RipplePercent
             );
 
-        canvas.DrawIcon(this.view, new RectF(12f, 12f, 24f, 24f), 24, 1f);
+        canvas.DrawIcon(view, new RectF(12f, 12f, 24f, 24f), 24, 1f);
 
-        var iconSize = !string.IsNullOrEmpty(this.view.IconData) ? 24f : 0f;
+        var iconSize = !string.IsNullOrEmpty(view.IconData) ? 24f : 0f;
         canvas.DrawText(
-            this.view,
+            view,
             new RectF(12f + iconSize + 12f, 0, rect.Width - iconSize, rect.Height),
             HorizontalAlignment.Left,
             VerticalAlignment.Center
         );
 
-        if (!string.IsNullOrEmpty(this.view.TrailingIconData))
+        if (!string.IsNullOrEmpty(view.TrailingIconData))
         {
-            canvas.FillColor = this.view.TrailingIconColor.WithAlpha(
-                this.view.ViewState is ViewState.Disabled ? 0.38f : 1f
+            canvas.FillColor = view.TrailingIconColor.WithAlpha(
+                view.ViewState is ViewState.Disabled ? 0.38f : 1f
             );
 
-            using var path = new PathF((this.view as ITrailingIconElement).TrailingIconPath);
+            using var path = new PathF((view as ITrailingIconElement).TrailingIconPath);
             var sx = rect.Right - 12f - 24f;
             var sy = rect.Center.Y - 12f;
             path.Move(sx, sy);

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -8,6 +9,7 @@ namespace Material.Components.Maui;
 public partial class ContextMenu
     : TemplatedView,
         IItemsElement<MenuItem>,
+        IItemsSourceElement<MenuItem>,
         IElement,
         IBackgroundElement,
         IShapeElement,
@@ -24,7 +26,7 @@ public partial class ContextMenu
     public static readonly BindableProperty ItemsProperty = IItemsElement<MenuItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsElement<MenuItem>.ItemsSourceProperty;
+        IItemsSourceElement<MenuItem>.ItemsSourceProperty;
 
     public static readonly new BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
     public static new readonly BindableProperty BackgroundColorProperty =
@@ -32,9 +34,9 @@ public partial class ContextMenu
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
     public static readonly BindableProperty ElevationProperty = IElevationElement.ElevationProperty;
 
-    public ItemCollection<MenuItem> Items
+    public ObservableCollection<MenuItem> Items
     {
-        get => (ItemCollection<MenuItem>)this.GetValue(ItemsProperty);
+        get => (ObservableCollection<MenuItem>)this.GetValue(ItemsProperty);
         set => this.SetValue(ItemsProperty, value);
     }
 
@@ -73,7 +75,7 @@ public partial class ContextMenu
             foreach (MenuItem item in e.OldItems)
             {
                 item.Clicked -= this.OnMenuItemClicked;
-                this.PART_Stack.Remove(item);
+                //this.PART_Stack.Remove(item);
             }
         }
 
@@ -82,7 +84,7 @@ public partial class ContextMenu
             var index = e.NewStartingIndex;
             foreach (MenuItem item in e.NewItems)
             {
-                this.PART_Stack.Insert(index, item);
+                //this.PART_Stack.Insert(index, item);
                 item.Clicked += this.OnMenuItemClicked;
             }
         }
@@ -95,7 +97,7 @@ public partial class ContextMenu
         this.Close(this.Items.IndexOf(item));
     }
 
-    void IItemsElement<MenuItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement<MenuItem>.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )
@@ -131,7 +133,8 @@ public partial class ContextMenu
     }
 
     private Grid PART_Root;
-    private VerticalStackLayout PART_Stack;
+
+    //private VerticalStackLayout PART_Stack;
 
     public ContextMenu() { }
 
@@ -150,7 +153,7 @@ public partial class ContextMenu
     {
         base.OnApplyTemplate();
         this.PART_Root = (Grid)this.GetTemplateChild("PART_Root");
-        this.PART_Stack = (VerticalStackLayout)this.GetTemplateChild("PART_Stack");
+        //this.PART_Stack = (VerticalStackLayout)this.GetTemplateChild("PART_Stack");
 
         this.OnChildAdded(this.PART_Root);
         VisualDiagnostics.OnChildAdded(this, this.PART_Root);
@@ -188,7 +191,7 @@ public partial class ContextMenu
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         this.PART_Root != null
-            ? new List<IVisualTreeElement> { this.PART_Root }
+            ? [this.PART_Root]
             : Array.Empty<IVisualTreeElement>().ToList();
 
     public IVisualTreeElement GetVisualParent() => null;

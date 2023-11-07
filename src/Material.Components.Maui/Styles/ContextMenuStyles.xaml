@@ -23,7 +23,16 @@
                         Shape="{TemplateBinding Shape}" />
 
                     <ScrollView>
-                        <VerticalStackLayout x:Name="PART_Stack" Padding="0,8" />
+                        <views:WrapLayout
+                            Padding="0,8"
+                            BindableLayout.ItemsSource="{TemplateBinding Items}"
+                            Orientation="Vertical">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </views:WrapLayout>
                     </ScrollView>
                 </Grid>
             </ControlTemplate>
