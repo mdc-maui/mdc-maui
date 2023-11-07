@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.NavigationDrawerStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Material.Components.Maui.Converters"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+    <Style x:Key="StandardNavigationDrawer" TargetType="views:NavigationDrawer">
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" ColumnDefinitions="360,*">
+                    <views:CardContainer
+                        Grid.Column="0"
+                        BackgroundColor="{DynamicResource SurfaceColor}"
+                        Elevation="Level0"
+                        Shape="None" />
+                    <Grid
+                        Grid.Column="0"
+                        Padding="12"
+                        RowDefinitions="*,auto">
+                        <ScrollView
+                            Grid.Row="0"
+                            HorizontalScrollBarVisibility="Never"
+                            Orientation="Vertical"
+                            VerticalScrollBarVisibility="Never">
+                            <views:WrapLayout BindableLayout.ItemsSource="{TemplateBinding Items}" Orientation="Vertical">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentPresenter Content="{Binding}" />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </views:WrapLayout>
+                        </ScrollView>
+
+                        <views:WrapLayout
+                            Grid.Row="1"
+                            Padding="0,12,0,0"
+                            BindableLayout.ItemsSource="{TemplateBinding FooterItems}"
+                            Orientation="Vertical">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </views:WrapLayout>
+                    </Grid>
+
+                    <ContentPresenter
+                        x:Name="PART_Content"
+                        Grid.Column="1"
+                        Content="{TemplateBinding SelectedItem.Content}" />
+                </Grid>
+
+
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

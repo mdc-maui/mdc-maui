@@ -25,6 +25,8 @@
         <Styles:RadioItemStyles />
         <Styles:NavigationBarStyles />
         <Styles:NavigationBarItemStyles />
+        <Styles:NavigationDrawerStyles />
+        <Styles:NavigationDrawerItemStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
