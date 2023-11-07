@@ -15,13 +15,14 @@
                         Grid.Row="0"
                         Content="{TemplateBinding SelectedItem.Content}" />
                     <views:AutoFillLayout
+                        x:Name="Part_Stack"
                         Grid.Row="1"
                         BackgroundColor="Transparent"
                         BindableLayout.ItemsSource="{TemplateBinding Items}"
                         HeightRequest="80">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <ContentView Content="{Binding}" />
+                                <ContentPresenter Content="{Binding}" />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </views:AutoFillLayout>

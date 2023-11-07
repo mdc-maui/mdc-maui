@@ -12,7 +12,6 @@ public class NavigationBarItem
         IBackgroundElement,
         IStateLayerElement,
         IRippleElement,
-        IVisualTreeElement,
         IDisposable
 {
     protected override void ChangeVisualState()
@@ -43,7 +42,17 @@ public class NavigationBarItem
         nameof(IsActived),
         typeof(bool),
         typeof(NavigationBarItem),
-        propertyChanged: (bo, ov, nv) => ((NavigationBarItem)bo).ChangeVisualState()
+        propertyChanged: (bo, ov, nv) =>
+        {
+            var nbi = (NavigationBarItem)bo;
+            nbi.ChangeVisualState();
+            if (nv is true)
+            {
+                var navBar = nbi.GetParentElement<NavigationBar>();
+                if (navBar is not null)
+                    navBar.SelectedItem = nbi;
+            }
+        }
     );
 
     public static readonly BindableProperty TextProperty = ITextElement.TextProperty;
@@ -182,11 +191,6 @@ public class NavigationBarItem
         }
         return maxSize;
     }
-
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-        new List<IVisualTreeElement> { this.Content };
-
-    public IVisualTreeElement GetVisualParent() => null;
 
     protected override void Dispose(bool disposing)
     {
