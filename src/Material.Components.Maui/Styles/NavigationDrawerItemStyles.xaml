@@ -74,10 +74,6 @@
                             <Setter Property="StateLayerColor" Value="{DynamicResource OnSecondaryContainerColor}" />
                         </VisualState.Setters>
                     </VisualState>
-
-
-
-
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>

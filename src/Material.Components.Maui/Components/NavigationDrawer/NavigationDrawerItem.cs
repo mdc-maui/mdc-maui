@@ -133,6 +133,9 @@ public class NavigationDrawerItem
     {
         var navDrawer = this.GetParentElement<NavigationDrawer>();
         navDrawer.SelectedItem = this;
+
+        if (this.GetParentElement<Popup>() is Popup popup)
+            popup.Close();
     }
 
     protected override void Dispose(bool disposing)

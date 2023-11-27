@@ -5,6 +5,8 @@ internal class NavigationDrawerItemDrawable(NavigationDrawerItem view) : IDrawab
 
     public void Draw(ICanvas canvas, RectF rect)
     {
+        if (rect == RectF.Zero) return;
+
         canvas.SaveState();
         canvas.Antialias = true;
         canvas.ClipPath(this.view.GetClipPath(rect));

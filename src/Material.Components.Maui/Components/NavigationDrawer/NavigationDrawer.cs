@@ -119,6 +119,82 @@ public class NavigationDrawer
         SetInheritedBindingContext(this.PART_Root, this.BindingContext);
     }
 
+    internal static Popup CreatePopup(Grid grid)
+    {
+        var navDrawer = grid.GetParentElement<NavigationDrawer>();
+
+        var itemsLayout = new WrapLayout { Orientation = StackOrientation.Vertical };
+
+        foreach (var item in navDrawer.Items)
+            itemsLayout.Add(item);
+
+        var footerItemsLayout = new WrapLayout
+        {
+            Orientation = StackOrientation.Vertical,
+            Padding = new(0, 12, 0, 0),
+            VerticalOptions = LayoutOptions.End
+        };
+
+        foreach (var item in navDrawer.FooterItems)
+            footerItemsLayout.Add(item);
+
+        var scrollView = new ScrollView
+        {
+            HorizontalScrollBarVisibility = Microsoft.Maui.ScrollBarVisibility.Never,
+            Orientation = ScrollOrientation.Vertical,
+            VerticalScrollBarVisibility = Microsoft.Maui.ScrollBarVisibility.Never,
+            Content = itemsLayout
+        };
+
+        scrollView.SetValue(Grid.RowProperty, 0);
+        footerItemsLayout.SetValue(Grid.RowProperty, 1);
+
+        var content = new Card
+        {
+            HorizontalOptions = LayoutOptions.Start,
+            VerticalOptions = LayoutOptions.Start,
+            Elevation = Elevation.Level1,
+            Shape = new(0, 16, 0, 16),
+            Padding = new(12),
+            WidthRequest = 360,
+            Content = new Grid
+            {
+                HorizontalOptions = LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.Fill,
+                RowDefinitions =
+                    {
+                        new RowDefinition { Height = GridLength.Star },
+                        new RowDefinition { Height = GridLength.Auto }
+                    },
+                Children = { scrollView, footerItemsLayout }
+            },
+        };
+
+        content.SetDynamicResource(BackgroundColorProperty, "SurfaceColor");
+        content.SetBinding(
+            HeightRequestProperty,
+            new Binding("Height", source: new RelativeBindingSource(RelativeBindingSourceMode.FindAncestor, typeof(Grid))));
+
+
+        var popup = new Popup
+        {
+            DismissOnOutside = true,
+            HorizontalOptions = LayoutAlignment.Start,
+            VerticalOptions = LayoutAlignment.Start,
+            Content = content,
+            Parent = grid
+        };
+
+        navDrawer.OnChildAdded(grid);
+        VisualDiagnostics.OnChildAdded(navDrawer, grid);
+        if (navDrawer.BindingContext != null)
+            SetInheritedBindingContext(grid, navDrawer.BindingContext);
+
+        return popup;
+    }
+
+
+
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         this.Items != null
             ? [this.PART_Root]
