@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class Popup : Element, IVisualTreeElement
+public partial class Popup : Element, IVisualTreeElement, IDisposable
 {
     public static readonly BindableProperty ContentProperty = BindableProperty.Create(
         nameof(Content),
@@ -51,7 +51,6 @@ public partial class Popup : Element, IVisualTreeElement
         set => this.SetValue(ContentProperty, value);
     }
 
-
     public LayoutAlignment HorizontalOptions
     {
         get => (LayoutAlignment)this.GetValue(HorizontalOptionsProperty);
@@ -86,6 +85,8 @@ public partial class Popup : Element, IVisualTreeElement
     public EventHandler<object> Closed;
 
     private readonly TaskCompletionSource<object> taskCompletionSource = new();
+
+    private bool disposedValue;
 
     public async Task<object> ShowAtAsync(Page anchor = default)
     {

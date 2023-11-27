@@ -65,4 +65,24 @@ public partial class Popup
             this.Closed?.Invoke(this, result);
         }
     }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!this.disposedValue)
+        {
+            if (disposing)
+            {
+                this.Close();
+                this.container.Dispose();
+            }
+
+            this.disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        this.Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
 }

@@ -1,5 +1,8 @@
 ﻿using Microsoft.Maui.Platform;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Grid = Microsoft.Maui.Controls.Grid;
+using Page = Microsoft.Maui.Controls.Page;
 using WPopup = Microsoft.UI.Xaml.Controls.Primitives.Popup;
 
 namespace Material.Components.Maui;
@@ -8,37 +11,95 @@ public partial class Popup
 {
     private WPopup container;
     private ContentPanel platformAnchor;
+    private FrameworkElement platformOutside;
 
-    private void PlatformShow(Microsoft.Maui.Controls.Page anchor)
+    private void PlatformShow(Page anchor)
     {
         var context = anchor.Handler.MauiContext;
         var platformContent = this.Content.ToPlatform(context);
+
         if (this.container == null)
         {
             this.platformAnchor = anchor.ToPlatform(context) as ContentPanel;
-            var layout = new AbsoluteLayout
+
+            var outside = new Grid
             {
-                Parent = anchor,
-                BackgroundColor = Color.FromArgb("#80ffffff"),
-                WidthRequest = this.platformAnchor.ActualWidth,
-                HeightRequest = this.platformAnchor.ActualHeight,
-                Children = { this.Content },
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                BackgroundColor = Color.FromArgb("#80808080"),
             };
+
+            var root = new AbsoluteLayout
+            {
+                Parent = this,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
+                Children = { outside, this.Content },
+            };
+
+            this.platformOutside = outside.ToPlatform(context);
+            var platformRoot = root.ToPlatform(context);
+
+            this.platformOutside.Tapped += this.OnOutsideTapped;
 
             this.container = new WPopup
             {
-                Child = layout.ToPlatform(context),
-                IsLightDismissEnabled = this.DismissOnOutside,
+                Child = platformRoot,
+                IsLightDismissEnabled = false,
                 LightDismissOverlayMode = LightDismissOverlayMode.Off,
             };
 
             this.platformAnchor.Children.Add(this.container);
-            this.container.Opened += (s, e) => this.Opened?.Invoke(this, EventArgs.Empty);
-            this.container.Closed += (s, e) => this.Close();
-            platformContent.Measure(
-                new Windows.Foundation.Size(double.PositiveInfinity, double.PositiveInfinity)
+
+            this.container.Opened += this.OnContainerOpened;
+            this.container.Closed += this.OnContainerClosed;
+
+            outside.SetBinding(
+                View.WidthRequestProperty,
+                new Binding(
+                    "Width",
+                    source: new RelativeBindingSource(
+                        RelativeBindingSourceMode.FindAncestor,
+                        typeof(Page)
+                    )
+                )
+            );
+            outside.SetBinding(
+                View.HeightRequestProperty,
+                new Binding(
+                    "Height",
+                    source: new RelativeBindingSource(
+                        RelativeBindingSourceMode.FindAncestor,
+                        typeof(Page)
+                    )
+                )
+            );
+
+            root.SetBinding(
+                View.WidthRequestProperty,
+                new Binding(
+                    "Width",
+                    source: new RelativeBindingSource(
+                        RelativeBindingSourceMode.FindAncestor,
+                        typeof(Page)
+                    )
+                )
+            );
+            root.SetBinding(
+                View.HeightRequestProperty,
+                new Binding(
+                    "Height",
+                    source: new RelativeBindingSource(
+                        RelativeBindingSourceMode.FindAncestor,
+                        typeof(Page)
+                    )
+                )
             );
         }
+
+        platformContent.Measure(
+            new Windows.Foundation.Size(double.PositiveInfinity, double.PositiveInfinity)
+        );
         var size = platformContent.DesiredSize;
         var x =
             this.OffsetX
@@ -56,6 +117,7 @@ public partial class Popup
                 LayoutAlignment.End => this.platformAnchor.ActualHeight - size.Height,
                 _ => (this.platformAnchor.ActualHeight - size.Height) / 2
             };
+
         this.Content.SetValue(
             AbsoluteLayout.LayoutBoundsProperty,
             new Rect(x, y, size.Width, size.Height)
@@ -63,17 +125,48 @@ public partial class Popup
         this.container.IsOpen = true;
     }
 
+    private void OnOutsideTapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
+    {
+        if (this.DismissOnOutside)
+            this.Close();
+    }
+
+    private void OnContainerClosed(object sender, object e) => this.Close();
+
+    private void OnContainerOpened(object sender, object e) =>
+        this.Opened?.Invoke(this, EventArgs.Empty);
+
     public void Close(object result = null)
     {
         if (this.container.IsOpen)
-        {
             this.container.IsOpen = false;
-            this.platformAnchor.Children.Remove(this.container);
-        }
+
         if (!this.taskCompletionSource.Task.IsCompleted)
         {
             this.taskCompletionSource.TrySetResult(result);
             this.Closed?.Invoke(this, result);
         }
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!this.disposedValue)
+        {
+            if (disposing)
+            {
+                this.Close();
+                this.platformOutside.Tapped -= this.OnOutsideTapped;
+                this.container.Opened -= this.OnContainerOpened;
+                this.container.Closed -= this.OnContainerClosed;
+                this.platformAnchor.Children.Remove(this.container);
+            }
+            this.disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        this.Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }
