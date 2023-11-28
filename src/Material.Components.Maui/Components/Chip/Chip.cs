@@ -61,8 +61,7 @@ public class Chip
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
-    public static readonly BindableProperty FontWeightProperty =
-        IFontElement.FontWeightProperty;
+    public static readonly BindableProperty FontWeightProperty = IFontElement.FontWeightProperty;
     public static readonly BindableProperty FontIsItalicProperty =
         IFontElement.FontIsItalicProperty;
 
@@ -149,7 +148,7 @@ public class Chip
         set => this.SetValue(ElevationProperty, value);
     }
 
-    public event EventHandler Closed;
+    public event EventHandler<EventArgs> Closed;
     public event EventHandler<CheckedChangedEventArgs> SelectedChanged;
 
     protected IFontManager fontManager;
