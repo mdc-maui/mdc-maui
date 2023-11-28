@@ -1,4 +1,6 @@
-﻿namespace Material.Components.Maui;
+﻿using System.Diagnostics;
+
+namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
 public class NavigationDrawerItem
@@ -26,6 +28,8 @@ public class NavigationDrawerItem
             _ => "normal",
         };
 
+        Debug.WriteLine(state);
+
         VisualStateManager.GoToState(this, state);
         this.IsVisualStateChanging = false;
 
@@ -45,13 +49,15 @@ public class NavigationDrawerItem
         propertyChanged: (bo, ov, nv) =>
         {
             var ndi = (NavigationDrawerItem)bo;
-            ndi.ChangeVisualState();
             if (nv is true)
             {
                 var navDrawer = ndi.GetParentElement<NavigationDrawer>();
                 if (navDrawer is not null)
                     navDrawer.SelectedItem = ndi;
+                ndi.ChangeVisualState();
             }
+            else
+                ndi.ViewState = Primitives.ViewState.Normal;
         }
     );
 

@@ -44,6 +44,14 @@ public class NavigationDrawer
                     }
                 }
 
+                foreach (var navItem in navDrawer.FooterItems)
+                {
+                    if (navItem is NavigationDrawerItem item)
+                    {
+                        item.IsActived = item.Equals(ndi);
+                    }
+                }
+
                 navDrawer.SelectedItemChanged?.Invoke(navDrawer, new(ndi));
                 navDrawer.Command?.Execute(navDrawer.CommandParameter ?? ndi);
             }
@@ -153,7 +161,7 @@ public class NavigationDrawer
         {
             HorizontalOptions = LayoutOptions.Start,
             VerticalOptions = LayoutOptions.Start,
-            Elevation = Elevation.Level1,
+            Elevation = Elevation.Level0,
             Shape = new(0, 16, 0, 16),
             Padding = new(12),
             WidthRequest = 360,
@@ -170,7 +178,7 @@ public class NavigationDrawer
             },
         };
 
-        content.SetDynamicResource(BackgroundColorProperty, "SurfaceColor");
+        content.SetDynamicResource(Card.BackgroundColorProperty, "SurfaceColor");
         content.SetBinding(
             HeightRequestProperty,
             new Binding("Height", source: new RelativeBindingSource(RelativeBindingSourceMode.FindAncestor, typeof(Grid))));

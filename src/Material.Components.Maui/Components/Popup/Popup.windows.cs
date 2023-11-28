@@ -26,7 +26,6 @@ public partial class Popup
             {
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
-                BackgroundColor = Color.FromArgb("#80808080"),
             };
 
             var root = new AbsoluteLayout
@@ -34,6 +33,7 @@ public partial class Popup
                 Parent = this,
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
+                BackgroundColor = Color.FromArgb("#80808080"),
                 Children = { outside, this.Content },
             };
 
