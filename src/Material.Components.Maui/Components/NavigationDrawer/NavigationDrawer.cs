@@ -11,8 +11,7 @@ public class NavigationDrawer
         IICommandElement,
         IVisualTreeElement
 {
-    public static readonly BindableProperty ItemsProperty =
-        IItemsElement<View>.ItemsProperty;
+    public static readonly BindableProperty ItemsProperty = IItemsElement<View>.ItemsProperty;
 
     private static readonly BindablePropertyKey FooterItemsPropertyKey =
         BindableProperty.CreateReadOnly(
@@ -79,7 +78,10 @@ public class NavigationDrawer
         NotifyCollectionChangedEventArgs e
     )
     {
-        if (e.Action is NotifyCollectionChangedAction.Add && this.Items[e.NewStartingIndex] is NavigationDrawerItem ndi)
+        if (
+            e.Action is NotifyCollectionChangedAction.Add
+            && this.Items[e.NewStartingIndex] is NavigationDrawerItem ndi
+        )
         {
             if (ndi.IsActived)
                 this.SelectedItem = ndi;
@@ -108,7 +110,6 @@ public class NavigationDrawer
 
     public event EventHandler<SelectedItemChangedArgs<NavigationDrawerItem>> SelectedItemChanged;
 
-
     private Grid PART_Root;
 
     protected override void OnApplyTemplate()
@@ -127,7 +128,7 @@ public class NavigationDrawer
         SetInheritedBindingContext(this.PART_Root, this.BindingContext);
     }
 
-    internal static Popup CreatePopup(Grid grid)
+    internal static Popup CreateDrawer(Grid grid)
     {
         var navDrawer = grid.GetParentElement<NavigationDrawer>();
 
@@ -140,7 +141,7 @@ public class NavigationDrawer
         {
             Orientation = StackOrientation.Vertical,
             Padding = new(0, 12, 0, 0),
-            VerticalOptions = LayoutOptions.End
+            VerticalOptions = LayoutOptions.End,
         };
 
         foreach (var item in navDrawer.FooterItems)
@@ -170,10 +171,10 @@ public class NavigationDrawer
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Fill,
                 RowDefinitions =
-                    {
-                        new RowDefinition { Height = GridLength.Star },
-                        new RowDefinition { Height = GridLength.Auto }
-                    },
+                {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Auto }
+                },
                 Children = { scrollView, footerItemsLayout }
             },
         };
@@ -181,8 +182,14 @@ public class NavigationDrawer
         content.SetDynamicResource(Card.BackgroundColorProperty, "SurfaceColor");
         content.SetBinding(
             HeightRequestProperty,
-            new Binding("Height", source: new RelativeBindingSource(RelativeBindingSourceMode.FindAncestor, typeof(Grid))));
-
+            new Binding(
+                "Height",
+                source: new RelativeBindingSource(
+                    RelativeBindingSourceMode.FindAncestor,
+                    typeof(NavigationDrawer)
+                )
+            )
+        );
 
         var popup = new Popup
         {
@@ -190,23 +197,14 @@ public class NavigationDrawer
             HorizontalOptions = LayoutAlignment.Start,
             VerticalOptions = LayoutAlignment.Start,
             Content = content,
-            Parent = grid
+            Parent = navDrawer
         };
-
-        navDrawer.OnChildAdded(grid);
-        VisualDiagnostics.OnChildAdded(navDrawer, grid);
-        if (navDrawer.BindingContext != null)
-            SetInheritedBindingContext(grid, navDrawer.BindingContext);
 
         return popup;
     }
 
-
-
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         this.Items != null
-            ? [this.PART_Root]
+            ? this.Items.Concat(this.FooterItems).Append(this.PART_Root).ToArray()
             : Array.Empty<IVisualTreeElement>().ToList();
-
-    public IVisualTreeElement GetVisualParent() => null;
 }

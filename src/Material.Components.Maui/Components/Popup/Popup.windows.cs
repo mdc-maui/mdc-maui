@@ -55,7 +55,7 @@ public partial class Popup
             this.container.Closed += this.OnContainerClosed;
 
             outside.SetBinding(
-                View.WidthRequestProperty,
+                WidthRequestProperty,
                 new Binding(
                     "Width",
                     source: new RelativeBindingSource(
@@ -65,7 +65,7 @@ public partial class Popup
                 )
             );
             outside.SetBinding(
-                View.HeightRequestProperty,
+                HeightRequestProperty,
                 new Binding(
                     "Height",
                     source: new RelativeBindingSource(
@@ -76,7 +76,7 @@ public partial class Popup
             );
 
             root.SetBinding(
-                View.WidthRequestProperty,
+                WidthRequestProperty,
                 new Binding(
                     "Width",
                     source: new RelativeBindingSource(
@@ -86,7 +86,7 @@ public partial class Popup
                 )
             );
             root.SetBinding(
-                View.HeightRequestProperty,
+                HeightRequestProperty,
                 new Binding(
                     "Height",
                     source: new RelativeBindingSource(

@@ -190,11 +190,7 @@ public partial class ContextMenu
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-        this.PART_Root != null
-            ? [this.PART_Root]
-            : Array.Empty<IVisualTreeElement>().ToList();
-
-    public IVisualTreeElement GetVisualParent() => null;
+        this.Items != null ? this.Items : Array.Empty<IVisualTreeElement>().ToList();
 
     private bool disposedValue;
 

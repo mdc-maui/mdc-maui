@@ -10,7 +10,6 @@ internal class NavigationBarItemDrawable(NavigationBarItem view) : IDrawable
         canvas.DrawBackground(view, rect);
         this.DrawStateLayer(canvas, rect);
 
-        canvas.DrawOverlayLayer(view, rect);
 
         var iconBounds = new RectF(rect.Center.X - 12, rect.X + 16, 24, 24);
         canvas.DrawIcon(view, iconBounds, 24, 1f);

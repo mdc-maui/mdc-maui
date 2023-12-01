@@ -211,7 +211,7 @@ public class TouchGraphicsView
 #endif
 
         this.Released?.Invoke(this, e);
-        if (this.isTouching)
+        if (this.isTouching && MathF.Abs(e.Touches[0].X - this.LastTouchPoint.X) < 50 && MathF.Abs(e.Touches[0].Y - this.LastTouchPoint.Y) < 50)
             this.Clicked?.Invoke(this, e);
 
         this.isTouching = false;
@@ -273,15 +273,13 @@ public class TouchGraphicsView
     {
         if (oldValue is not null and ContextMenu ov)
         {
-            this.OnChildRemoved(ov, 0);
-            VisualDiagnostics.OnChildRemoved(this, ov, 0);
+            this.RemoveLogicalChild(ov);
             SetInheritedBindingContext(ov, null);
         }
 
         if (newValue is not null and ContextMenu nv)
         {
-            this.OnChildAdded(nv);
-            VisualDiagnostics.OnChildAdded(this, nv);
+            this.AddLogicalChild(nv);
             if (this.BindingContext != null)
             {
                 SetInheritedBindingContext(nv, this.BindingContext);

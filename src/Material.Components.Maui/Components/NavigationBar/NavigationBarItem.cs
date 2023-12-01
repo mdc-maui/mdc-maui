@@ -7,7 +7,6 @@ public class NavigationBarItem
         IFontElement,
         IIconElement,
         IActiveIndicatorElement,
-        IElevationElement,
         IElement,
         IBackgroundElement,
         IStateLayerElement,
@@ -70,12 +69,6 @@ public class NavigationBarItem
         IActiveIndicatorElement.ActiveIndicatorHeightProperty;
     public static readonly BindableProperty ActiveIndicatorColorProperty =
         IActiveIndicatorElement.ActiveIndicatorColorProperty;
-
-    public static readonly BindableProperty OutlineWidthProperty =
-        IOutlineElement.OutlineWidthProperty;
-    public static readonly BindableProperty OutlineColorProperty =
-        IOutlineElement.OutlineColorProperty;
-    public static readonly BindableProperty ElevationProperty = IElevationElement.ElevationProperty;
 
     public View Content
     {
@@ -144,12 +137,6 @@ public class NavigationBarItem
     {
         get => (Color)this.GetValue(ActiveIndicatorColorProperty);
         set => this.SetValue(ActiveIndicatorColorProperty, value);
-    }
-
-    public Elevation Elevation
-    {
-        get => (Elevation)this.GetValue(ElevationProperty);
-        set => this.SetValue(ElevationProperty, value);
     }
 
     public NavigationBarItem()

@@ -336,8 +336,7 @@ public class ComboBox
     {
         base.OnParentChanged();
 
-        this.OnChildAdded(this.menu);
-        VisualDiagnostics.OnChildAdded(this, this.menu);
+        this.AddLogicalChild(this.menu);
         SetInheritedBindingContext(this.menu, this.BindingContext);
     }
 
@@ -403,6 +402,4 @@ public class ComboBox
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
         new List<IVisualTreeElement> { this.menu };
-
-    public IVisualTreeElement GetVisualParent() => null;
 }

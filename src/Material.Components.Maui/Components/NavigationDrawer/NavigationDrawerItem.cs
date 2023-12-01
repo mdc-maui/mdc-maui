@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Material.Components.Maui;
+﻿namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
 public class NavigationDrawerItem
@@ -14,6 +12,7 @@ public class NavigationDrawerItem
         IRippleElement,
         IStateLayerElement,
         IICommandElement,
+        IVisualTreeElement,
         IDisposable
 {
     protected override void ChangeVisualState()
@@ -27,8 +26,6 @@ public class NavigationDrawerItem
             ViewState.Disabled => "disabled",
             _ => "normal",
         };
-
-        Debug.WriteLine(state);
 
         VisualStateManager.GoToState(this, state);
         this.IsVisualStateChanging = false;
@@ -143,6 +140,11 @@ public class NavigationDrawerItem
         if (this.GetParentElement<Popup>() is Popup popup)
             popup.Close();
     }
+
+    //public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+    //    this.Content != null
+    //        ? [this.Content]
+    //        : Array.Empty<IVisualTreeElement>().ToList();
 
     protected override void Dispose(bool disposing)
     {

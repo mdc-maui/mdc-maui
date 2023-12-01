@@ -6,7 +6,7 @@
     xmlns:converters="clr-namespace:Material.Components.Maui.Converters"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style x:Key="StandardNavigationDrawer" TargetType="views:NavigationDrawer">
+    <Style x:Key="StandardNavigationDrawerStyle" TargetType="views:NavigationDrawer">
         <Setter Property="ControlTemplate">
             <ControlTemplate>
                 <Grid x:Name="PART_Root" ColumnDefinitions="360,*">
@@ -14,7 +14,7 @@
                         Grid.Column="0"
                         BackgroundColor="{DynamicResource SurfaceColor}"
                         Elevation="Level0"
-                        Shape="None" />
+                        Shape="0,16,0,16" />
                     <Grid
                         Grid.Column="0"
                         Padding="12"
@@ -57,16 +57,19 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ModalNavigationDrawer" TargetType="views:NavigationDrawer">
+    <Style x:Key="ModalNavigationDrawerStyle" TargetType="views:NavigationDrawer">
         <Setter Property="ControlTemplate">
             <ControlTemplate>
-                <Grid x:Name="PART_Root" BindingContext="{Binding Source={RelativeSource TemplatedParent}}">
+                <Grid x:Name="PART_Root">
                     <ContentPresenter
                         x:Name="PART_Content"
                         Grid.Column="1"
                         Content="{TemplateBinding SelectedItem.Content}" />
+
                     <Grid.GestureRecognizers>
-                        <SwipeGestureRecognizer Direction="Right" Swiped="OnSwiped" />
+                        <PointerGestureRecognizer
+                            PointerPressed="OnPointPressed"
+                            PointerReleased="OnPointReleased" />
                     </Grid.GestureRecognizers>
                 </Grid>
 

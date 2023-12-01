@@ -109,8 +109,7 @@ public class SegmentedButton
             var index = e.NewStartingIndex;
             foreach (SegmentedItem item in e.NewItems)
             {
-                this.OnChildAdded(item);
-                VisualDiagnostics.OnChildAdded(this, item, index);
+                this.AddLogicalChild(item);
                 if (this.BindingContext != null)
                 {
                     SetInheritedBindingContext(item, this.BindingContext);
@@ -296,8 +295,6 @@ public class SegmentedButton
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items.ToList();
-
-    public IVisualTreeElement GetVisualParent() => null;
 
     protected override void Dispose(bool disposing)
     {

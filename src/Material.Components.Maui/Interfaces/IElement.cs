@@ -22,8 +22,8 @@ public interface IElement
                 view as VisualElement
             )?.InvalidateMeasureNonVirtual(InvalidationTrigger.MeasureChanged);
 #endif
-        else
-            this.OnPropertyChanged();
+
+        this.OnPropertyChanged();
     }
 
     public static readonly BindableProperty IsEnabledProperty = BindableProperty.Create(

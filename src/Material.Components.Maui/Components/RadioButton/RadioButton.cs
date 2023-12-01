@@ -143,6 +143,4 @@ public class RadioButton
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items?.ToList();
-
-    public IVisualTreeElement GetVisualParent() => null;
 }

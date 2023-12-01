@@ -91,6 +91,7 @@ public class Card
     {
         base.OnApplyTemplate();
         this.PART_Root = (Grid)this.GetTemplateChild("PART_Root");
+
         this.OnChildAdded(this.PART_Root);
         VisualDiagnostics.OnChildAdded(this, this.PART_Root);
     }
@@ -106,5 +107,5 @@ public class Card
             ? [this.PART_Root]
             : Array.Empty<IVisualTreeElement>().ToList();
 
-    public IVisualTreeElement GetVisualParent() => null;
+
 }

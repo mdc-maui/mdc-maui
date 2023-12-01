@@ -5,7 +5,11 @@ using System.Windows.Input;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public class NavigationBar : TemplatedView, IItemsElement<NavigationBarItem>, IICommandElement, IVisualTreeElement
+public class NavigationBar
+    : TemplatedView,
+        IItemsElement<NavigationBarItem>,
+        IICommandElement,
+        IVisualTreeElement
 {
     public static readonly BindableProperty ItemsProperty =
         IItemsElement<NavigationBarItem>.ItemsProperty;
@@ -49,7 +53,6 @@ public class NavigationBar : TemplatedView, IItemsElement<NavigationBarItem>, II
 
             this.SelectedItem ??= this.Items[e.NewStartingIndex];
         }
-
     }
 
     public NavigationBarItem SelectedItem
@@ -91,9 +94,5 @@ public class NavigationBar : TemplatedView, IItemsElement<NavigationBarItem>, II
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-        this.Items != null
-            ? [this.PART_Root]
-            : Array.Empty<IVisualTreeElement>().ToList();
-
-    public IVisualTreeElement GetVisualParent() => null;
+        this.Items != null ? this.Items : Array.Empty<IVisualTreeElement>().ToList();
 }

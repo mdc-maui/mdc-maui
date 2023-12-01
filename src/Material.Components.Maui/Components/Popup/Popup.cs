@@ -1,7 +1,7 @@
 ﻿namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Content))]
-public partial class Popup : Element, IVisualTreeElement, IDisposable
+public partial class Popup : View, IVisualTreeElement, IDisposable
 {
     public static readonly BindableProperty ContentProperty = BindableProperty.Create(
         nameof(Content),
@@ -10,14 +10,14 @@ public partial class Popup : Element, IVisualTreeElement, IDisposable
         default
     );
 
-    public static readonly BindableProperty HorizontalOptionsProperty = BindableProperty.Create(
+    public new static readonly BindableProperty HorizontalOptionsProperty = BindableProperty.Create(
         nameof(HorizontalOptions),
         typeof(LayoutAlignment),
         typeof(Popup),
         LayoutAlignment.Center
     );
 
-    public static readonly BindableProperty VerticalOptionsProperty = BindableProperty.Create(
+    public new static readonly BindableProperty VerticalOptionsProperty = BindableProperty.Create(
         nameof(VerticalOptions),
         typeof(LayoutAlignment),
         typeof(Popup),
@@ -51,13 +51,13 @@ public partial class Popup : Element, IVisualTreeElement, IDisposable
         set => this.SetValue(ContentProperty, value);
     }
 
-    public LayoutAlignment HorizontalOptions
+    public new LayoutAlignment HorizontalOptions
     {
         get => (LayoutAlignment)this.GetValue(HorizontalOptionsProperty);
         set => this.SetValue(HorizontalOptionsProperty, value);
     }
 
-    public LayoutAlignment VerticalOptions
+    public new LayoutAlignment VerticalOptions
     {
         get => (LayoutAlignment)this.GetValue(VerticalOptionsProperty);
         set => this.SetValue(VerticalOptionsProperty, value);
@@ -93,4 +93,17 @@ public partial class Popup : Element, IVisualTreeElement, IDisposable
         this.PlatformShow(anchor);
         return await this.taskCompletionSource.Task;
     }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        if (this.Content != null)
+            SetInheritedBindingContext(this.Content, this.BindingContext);
+    }
+
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+     this.Content != null
+         ? [this.Content]
+         : Array.Empty<IVisualTreeElement>().ToList();
+
 }
