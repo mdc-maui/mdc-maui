@@ -44,7 +44,7 @@ public class ProgressIndicator
     public static readonly BindableProperty IndicatorTypeProperty = BindableProperty.Create(
         nameof(IndicatorType),
         typeof(IndicatorType),
-        typeof(IElement),
+        typeof(ProgressIndicator),
         IndicatorType.Circular,
         propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
     );
@@ -52,7 +52,7 @@ public class ProgressIndicator
     public static readonly BindableProperty AnimationDurationProperty = BindableProperty.Create(
         nameof(AnimationDuration),
         typeof(float),
-        typeof(IElement),
+        typeof(ProgressIndicator),
         1.5f,
         propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
     );
@@ -140,13 +140,9 @@ public class ProgressIndicator
     internal float AnimationPercent { get; private set; } = 0f;
     internal bool AnimationIsPositive = true;
 
-    static Style defaultStyle;
     public ProgressIndicator()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(ProgressIndicatorStyles))
-            .FindStyle("CircularProgressIndicatorStyle");
-
+        this.SetDynamicResource(StyleProperty, "CircularProgressIndicatorStyle");
         this.Drawable = new ProgressIndicatorDrawable(this);
     }
 

@@ -38,8 +38,7 @@ public class Button
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
-    public static readonly BindableProperty FontWeightProperty =
-        IFontElement.FontWeightProperty;
+    public static readonly BindableProperty FontWeightProperty = IFontElement.FontWeightProperty;
     public static readonly BindableProperty FontIsItalicProperty =
         IFontElement.FontIsItalicProperty;
 
@@ -113,13 +112,9 @@ public class Button
         set => this.SetValue(ElevationProperty, value);
     }
 
-    static Style defaultStyle;
-
     public Button()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(ButtonStyles))
-            .FindStyle("FilledButtonStyle");
+        this.SetDynamicResource(StyleProperty, "FilledButtonStyle");
 
         this.Drawable = new ButtonDrawable(this);
         this.Clicked += this.OnClicked;

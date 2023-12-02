@@ -110,13 +110,9 @@ public class IconButton
         set => this.SetValue(ElevationProperty, value);
     }
 
-    static Style defaultStyle;
-
     public IconButton()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(IconButtonStyles))
-            .FindStyle("FilledIconButtonStyle");
+        this.SetDynamicResource(StyleProperty, "FilledIconButtonStyle");
 
         this.Drawable = new IconButtonDrawable(this);
         this.Clicked += this.OnClicked;

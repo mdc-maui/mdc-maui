@@ -55,13 +55,9 @@ public class FAB
         set => this.SetValue(ElevationProperty, value);
     }
 
-    static Style defaultStyle;
-
     public FAB()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(FABStyles))
-            .FindStyle("SurfaceFABStyle");
+        this.SetDynamicResource(StyleProperty, "SurfaceFABStyle");
 
         this.Drawable = new FABDrawable(this);
         this.Clicked += this.OnClicked;

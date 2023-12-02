@@ -94,7 +94,8 @@ public class Switch
         IStateLayerElement.StateLayerColorProperty;
 
     public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
-    public static readonly BindableProperty CommandParameterProperty = IICommandElement.CommandParameterProperty;
+    public static readonly BindableProperty CommandParameterProperty =
+        IICommandElement.CommandParameterProperty;
 
     public Color ThumbColor
     {
@@ -174,13 +175,9 @@ public class Switch
     protected IAnimationManager animationManager;
     bool isTouching = false;
 
-    static Style defaultStyle;
-
     public Switch()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(SwitchStyles))
-            .FindStyle("DefaultSwitchStyle");
+        this.SetDynamicResource(StyleProperty, "DefaultSwitchStyle");
 
         this.Drawable = new SwitchDrawable(this);
         this.StartInteraction += this.OnStartInteraction;

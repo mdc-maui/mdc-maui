@@ -37,8 +37,7 @@ public class ExtendedFAB
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
     public static readonly BindableProperty FontFamilyProperty = IFontElement.FontFamilyProperty;
-    public static readonly BindableProperty FontWeightProperty =
-        IFontElement.FontWeightProperty;
+    public static readonly BindableProperty FontWeightProperty = IFontElement.FontWeightProperty;
     public static readonly BindableProperty FontIsItalicProperty =
         IFontElement.FontIsItalicProperty;
 
@@ -96,13 +95,9 @@ public class ExtendedFAB
         set => this.SetValue(ElevationProperty, value);
     }
 
-    static Style defaultStyle;
-
     public ExtendedFAB()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(ExtendedFABStyles))
-            .FindStyle("SurfaceExtendedFABStyle");
+        this.SetDynamicResource(StyleProperty, "SurfaceExtendedFABStyle");
 
         this.Drawable = new ExtendedFABDrawable(this);
         this.Clicked += this.OnClicked;

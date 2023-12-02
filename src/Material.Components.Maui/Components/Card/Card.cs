@@ -78,13 +78,9 @@ public class Card
 
     Grid PART_Root;
 
-    static Style defaultStyle;
-
     public Card()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(CardStyles))
-            .FindStyle("FilledCardStyle");
+        this.SetDynamicResource(StyleProperty, "FilledCardStyle");
     }
 
     protected override void OnApplyTemplate()

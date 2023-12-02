@@ -153,13 +153,9 @@ public class Chip
 
     protected IFontManager fontManager;
 
-    static Style defaultStyle;
-
     public Chip()
     {
-        this.Style = defaultStyle ??= ResourceExtension.MaterialDictionaries
-            .First(x => x.GetType() == typeof(ChipStyles))
-            .FindStyle("FilterChipStyle");
+        this.SetDynamicResource(StyleProperty, "FilterChipStyle");
 
         this.Drawable = new ChipDrawable(this);
         this.Clicked += this.OnClicked;

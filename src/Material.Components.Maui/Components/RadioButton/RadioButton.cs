@@ -142,5 +142,6 @@ public class RadioButton
         this.Items.Remove((RadioItem)e.Element);
     }
 
-    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() => this.Items?.ToList();
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        this.Items != null ? this.Items : Array.Empty<IVisualTreeElement>().ToList();
 }
