@@ -10,12 +10,16 @@ ContextMenu display a list of choices on a temporary surface, It can be included
 ## Examples
 
 ```xml
-<mdc:FAB IconKind="Settings">
+<...
+	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
+...>
+
+<mdc:FAB IconData="{Static icon:Material.Settings}">
 	<mdc:FAB.ContextMenu>
         <mdc:ContextMenu>
-            <mdc:MenuItem IconKind="Menu" Text="item 1" />
-            <mdc:MenuItem IconKind="Menu" Text="item 2" />
-            <mdc:MenuItem IconKind="Menu" Text="item 3" />
+            <mdc:MenuItem Text="item 1" />
+            <mdc:MenuItem Text="item 2" />
+            <mdc:MenuItem Text="item 3" />
     	</mdc:ContextMenu>
 	</mdc:FAB.ContextMenu>
 </mdc:FAB>
@@ -25,43 +29,28 @@ ContextMenu display a list of choices on a temporary surface, It can be included
 
 ## Properties
 
-| name             | type                       | default | describes                         |
-| ---------------- | -------------------------- | ------- | --------------------------------- |
-| Items            | `ItemCollection<MenuItem>` |         | ContextMenu's items.              |
-| Result           | object                     |         | ContextMenu's result.             |
-| BackgroundColour | Color                      | style   | ContextMenu's background color.   |
-| RippleColor      | Color                      | style   | ContextMenu's items ripple color. |
+| name            | type                             | default               |
+| --------------- | -------------------------------- | --------------------- |
+| Items           | `ObservableCollection<MenuItem>` |                       |
+| ItemsSource     | IList                            |                       |
+| Result          | object                           |                       |
+| BackgroundColor | Color                            | SurfaceContainerColor |
+| Shape           | Shape                            | 4                     |
+| Elevation       | Elevation                        | Level2                |
 
 
 
-## MenuItem Properties
+## Methods
 
-| name             | type      | default | describes                                  |
-| ---------------- | --------- | ------- | ------------------------------------------ |
-| Text             | string    | empty   | MenuItem's text.                           |
-| IconKind         | IconKind  | none    | MenuItem's icon from iconkind.             |
-| IconSource       | SkPicture |         | MenuItem's icon from file.                 |
-| IconData         | string    | empty   | MenuItem's icon from path data.            |
-| BackgroundColour | Color     | style   | MenuItem's background color.               |
-| ForegroundColor  | Color     | style   | MenuItem's foreground color.               |
-| FontFamily       | string    |         | font family of the MenuItem's text.        |
-| FontSize         | float     | 16      | font size of the MenuItem's text.          |
-| FontWeight       | int       | 500     | font weight of the MenuItem's text.        |
-| FontItalic       | bool      | false   | enable font italic of the MenuItem's text. |
-| RippleColor      | Color     | style   | MenuItem's items ripple color.             |
-| Command          | ICommand  |         | executed when the MenuItem is clicked.     |
-| CommandParameter | object    |         | Command's parameter.                       |
+| name        | args                            |
+| ----------- | -------------------------------- |
+| Close     | result |
 
 
 
-## MenuItem Events
+## Events
 
 | name        | type                             |
 | ----------- | -------------------------------- |
-| Clicked     | `EventHandler<SKTouchEventArgs>` |
-| Pressed     | `EventHandler<SKTouchEventArgs>` |
-| Released    | `EventHandler<SKTouchEventArgs>` |
-| Moved       | `EventHandler<SKTouchEventArgs>` |
-| LongPressed | `EventHandler<SKTouchEventArgs>` |
-| Entered     | `EventHandler<SKTouchEventArgs>` |
-| Exited      | `EventHandler<SKTouchEventArgs>` |
+| Closed     | `EventHandler<object>` |
+

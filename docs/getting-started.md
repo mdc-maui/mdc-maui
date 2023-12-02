@@ -24,25 +24,17 @@
        	...
                
            builder
-               .UseMaterialComponents(new List<string>
-               {
-                   //generally, we needs add 6 types of font families
-                   "xxx-Regular.ttf",
-                   "xxx-Italic.ttf",
-                   "xxx-Medium.ttf",
-                   "xxx-MediumItalic.ttf",
-                   "xxx-Bold.ttf",
-                   "xxx-BoldItalic.ttf",
-               });
+               .UseMaterialComponents();
+       
            return builder.Build();
        }
    
    ...
        
    ```
-
    
-
+   
+   
 4. Add Material colors & styles in `App.xaml`
    ```xml
    <?xml version="1.0" encoding="UTF-8" ?>

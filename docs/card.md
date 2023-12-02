@@ -2,13 +2,19 @@
 
 Cards contain content about a single subject.
 
+
+
+- Use cards to contain related elements.
+- Three styles: FilledCardStyle, ElevatedCardStyle, OutlinedCardStyle.
+- Contents can include anything from images to headlines, supporting text, buttons, and lists.
+- Can also contain other components.
+- Cards have flexible layouts and dimensions based on their contents.
+
+
+
 ![](/assets/cards.png)
 
 
-
-## Styles
-
-There are 3 Styles of cards: 1. Elevated, 2. Filled,  3. Outlined.
 
 ## Examples
 
@@ -28,30 +34,11 @@ There are 3 Styles of cards: 1. Elevated, 2. Filled,  3. Outlined.
 
 ## Properties
 
-| name              | type        | defalut | describes                           |
-| ----------------- | ----------- | ------- | ----------------------------------- |
-| Content           | View        |         | card's contain content.             |
-| BackgroundColour  | Color       | style   | card's background color.            |
-| Shape             | Shape       | style   | corner radius of the card's border. |
-| Elevation         | int         | style   | card's elevation.                   |
-| OutlineColor      | Color       | style   | card's border color.                |
-| RippleColor       | Color       | style   | card's ripple color.                |
-| ContextMenu       | ContextMenu |         | card's context menu.                |
-| enableTouchEvents | bool        | false   | enable touch events of the card     |
-| Style             | Style       | Filled  | card's style                        |
-| Command           | ICommand    |         | executed when the card is clicked.  |
-| CommandParameter  | object      |         | Command's parameter.                |
-
-
-
-## Events
-
-| name        | type                             |
-| ----------- | -------------------------------- |
-| Clicked     | `EventHandler<SKTouchEventArgs>` |
-| Pressed     | `EventHandler<SKTouchEventArgs>` |
-| Released    | `EventHandler<SKTouchEventArgs>` |
-| Moved       | `EventHandler<SKTouchEventArgs>` |
-| LongPressed | `EventHandler<SKTouchEventArgs>` |
-| Entered     | `EventHandler<SKTouchEventArgs>` |
-| Exited      | `EventHandler<SKTouchEventArgs>` |
+| name            | type  | defalut |
+| --------------- | ----- | ------- |
+| Content         | View  |         |
+| BackgroundColor | Color | style   |
+| Shape           | Shape | style   |
+| Elevation       | int   | style   |
+| OutlineColor    | Color | style   |
+| Style           | Style | Filled  |

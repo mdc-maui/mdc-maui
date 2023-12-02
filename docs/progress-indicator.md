@@ -1,6 +1,13 @@
 # ProgressIndicator
 
-Progress indicators inform users about the status of ongoing processes.
+Progress indicators show the status of a process in real time.
+
+
+
+- Use the same progress indicator for all instances of a process (like loading).
+- Two styles: CircularProgressIndicatorStyle and LinearProgressIndicatorStyle.
+- Never use them as decoration.
+- They capture attention through motion.
 
 
 
@@ -8,17 +15,11 @@ Progress indicators inform users about the status of ongoing processes.
 
 
 
-## Styles
-
-There are 2 Styles of :  1. Circular,  2. Linear.
-
-
-
 ## Examples
 
 ```xml
-<mdc:ProgressIndicator Percent="25" Style="{DynamicResource CircularProgressIndicatorStyle}" />
-<mdc:ProgressIndicator Percent="25" Style="{DynamicResource LinearProgressIndicatorStyle}" />
+<md:ProgressIndicator Style="{DynamicResource CircularProgressIndicatorStyle}" />
+<md:ProgressIndicator Style="{DynamicResource LinearProgressIndicatorStyle}" />
 ```
 
 
@@ -27,14 +28,15 @@ There are 2 Styles of :  1. Circular,  2. Linear.
 
 ## Properties
 
-| name                 | type     | default | describes                                              |
-| -------------------- | -------- | ------- | ------------------------------------------------------ |
-| Percent              | float    | -1      | ProgressIndicator's progress.                          |
-| AnimationDuration    | float    | 1.5     | ProgressIndicator's animation duration.                |
-| ActiveIndicatorColor | Color    | style   | ProgressIndicator's activeIndicator color.             |
-| BackgroundColour     | Color    | style   | ProgressIndicator's background color.                  |
-| Command              | ICommand |         | executed when the ProgressIndicator is PercentChanged. |
-| CommandParameter     | object   |         | Command's parameter.                                   |
+| name                  | type     | default      |
+| --------------------- | -------- | ------------ |
+| Percent               | float    | -1           |
+| AnimationDuration     | float    | 1.5          |
+| ActiveIndicatorHeight | int      | 4            |
+| ActiveIndicatorColor  | Color    | PrimaryColor |
+| BackgroundColor       | Color    | style        |
+| Command               | ICommand |              |
+| CommandParameter      | object   |              |
 
 
 

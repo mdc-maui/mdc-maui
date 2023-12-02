@@ -1,6 +1,14 @@
 # TextField
 
-Text fields allow users to enter text into a UI. 
+Text fields let users enter text into a UI.
+
+
+
+- Make sure text fields look interactive
+- Two types: filled and outlined
+- The text field’s state (blank, with input, error, etc) should be visible at a glance
+- Keep labels and error messages brief and easy to act on
+- Text fields commonly appear in forms and dialogs
 
 
 
@@ -8,17 +16,20 @@ Text fields allow users to enter text into a UI.
 
 
 
-## Styles
-
-There are 2 Styles of text fields: 1. Filled,  2. Outlined.
-
-
-
 ## Examples
 
 ```xml
-<mdc:TextField IconKind="Search" WidthRequest="250" Style="{DynamicResource FilledTextFieldStyle}"/>
-<mdc:TextField IconKind="Password" IsError="True" WidthRequest="300" SupportingText="Incorrect password" TextChanged="OnTextChanged" TrailingIconKind="Close" TrailingIconClicked="OnTrailingIconClicked" Style="{DynamicResource OutlinedTextFieldStyle}" />
+<md:TextField
+    IconData="{Static icon:Material.Search}"
+    Style="{DynamicResource FilledTextFieldStyle}"
+    WidthRequest="250" />
+
+<md:TextField
+    IconData="{Static icon:Material.Password}"
+    Style="{DynamicResource OutlinedTextFieldStyle}"
+    SupportingText="Incorrect password"
+    TrailingIconData="{Static icon:Material.Close}"
+    WidthRequest="300" />
 ```
 
 
@@ -27,37 +38,31 @@ There are 2 Styles of text fields: 1. Filled,  2. Outlined.
 
 ## Properties
 
-| name                  | type      | default         | describes                                     |
-| --------------------- | --------- | --------------- | --------------------------------------------- |
-| Text                  | string    | empty           | TextField's text.                             |
-| IsError               | bool      |                 | TextField's verified state.                   |
-| CaretPosition         | int       |                 | TextField's caret position.                   |
-| CaretColor            | Color     | style           | TextField's caret and cursor color.           |
-| IconKind              | IconKind  | none            | TextField's icon from iconkind.               |
-| IconSource            | SkPicture |                 | TextField's icon from file.                   |
-| IconData              | string    | empty           | TextField's icon from path data.              |
-| TrailingIcon          | IconKind  | none            | TextField's trailing icon from iconkind.      |
-| TrailingIconSource    | SkPicture |                 | TextField's trailing icon from file.          |
-| TrailingIconData      | string    | empty           | TextField's trailing icon from path data.     |
-| LabelText             | string    | Label text      | TextField's label text.                       |
-| LabelTextColor        | Color     | style           | TextField's label text color.                 |
-| SupportingText        | string    | Supporting text | TextField's supporting text.                  |
-| SupportingTextColor   | Color     | style           | TextField's supporting text color.            |
-| ActiveIndicatorHeight | int       | style           | TextField's active indicator height.          |
-| ActiveIndicatorColor  | Color     | style           | TextField's active indicator color.           |
-| BackgroundColour      | Color     | style           | TextField's background color.                 |
-| ForegroundColor       | Color     | style           | TextField's foreground color.                 |
-| FontFamily            | string    |                 | font family of the TextField's text.          |
-| FontSize              | float     | 16              | font size of the TextField's text.            |
-| FontWeight            | int       | 400             | font weight of the TextField's text.          |
-| FontItalic            | bool      | false           | enable font italic of the TextField's text.   |
-| Shape                 | Shape     | style           | corner radius of the TextField's border.      |
-| OutlineWidth          | int       | style           | TextField's border width.                     |
-| OutlineColor          | Color     | style           | TextField's border color.                     |
-| RippleColor           | Color     | style           | TextField's ripple color.                     |
-| Style                 | Style     | Filled          | TextField's style                             |
-| Command               | ICommand  |                 | executed when the TextField's is TextChanged. |
-| CommandParameter      | object    |                 | Command's parameter.                          |
+| name                  | type          | default         |
+| --------------------- | ------------- | --------------- |
+| InputType             | InputType     | None            |
+| Text                  | string        | empty           |
+| FontColor    | Color      | style   |
+| FontSize     | float      | 16     |
+| FontFamily   | string     |         |
+| FontWeight   | FontWeight | Regular |
+| FontIsItalic | bool       | false   |
+| CaretColor            | Color         | style           |
+| SelectionRange        | TextRange     | 0               |
+| TextAlignment         | TextAlignment | Start           |
+| IconData | string |  |
+| IconColor | Color | OnSurfaceVariantColor |
+| TrailingIconData | string |  |
+| TrailingIconColor | Color | OnSurfaceVariantColor |
+| ActiveIndicatorHeight | int |  |
+| ActiveIndicatorColor | Color | OnSurfaceVariantColor |
+| LabelText | string |  |
+| LabelFontColor | Color | OnSurfaceVariantColor |
+| SupportingText | string |  |
+| SupportingFontColor | Color | OnSurfaceVariantColor |
+| BackgroundColor      | Color         | SurfaceContainerHighestColor |
+| Shape                 | Shape         | ExtraSmallTop |
+| StateLayerColor           | Color         | OnSurfaceVariantColor |
 
 
 
@@ -66,11 +71,9 @@ There are 2 Styles of text fields: 1. Filled,  2. Outlined.
 | name                | type                                 |
 | ------------------- | ------------------------------------ |
 | TextChanged         | `EventHandler<TextChangedEventArgs>` |
-| TrailingIconClicked | `EventHandler<SKTouchEventArgs>`     |
-| Clicked             | `EventHandler<SKTouchEventArgs>`     |
-| Pressed             | `EventHandler<SKTouchEventArgs>`     |
-| Released            | `EventHandler<SKTouchEventArgs>`     |
-| Moved               | `EventHandler<SKTouchEventArgs>`     |
-| LongPressed         | `EventHandler<SKTouchEventArgs>`     |
-| Entered             | `EventHandler<SKTouchEventArgs>`     |
-| Exited              | `EventHandler<SKTouchEventArgs>`     |
+| TrailingIconClicked | `EventHandler<EventArgs>`            |
+| Clicked                       | `EventHandler<TouchEventArgs>` |
+| Pressed                       | `EventHandler<TouchEventArgs>` |
+| Released                      | `EventHandler<TouchEventArgs>` |
+| LongPressed                   | `EventHandler<TouchEventArgs>` |
+| RightClicked ( desktop only ) | `EventHandler<TouchEventArgs>` |

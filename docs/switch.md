@@ -1,5 +1,15 @@
 # Switch
 
+Switches toggle the selection of an item on or off.
+
+
+
+- Use switches (not radio buttons) if the items in a list can be independently controlled.
+- Switches are the best way to let users adjust settings.
+- Make sure the switch’s selection (on or off) is visible at a glance.
+- Two styles: DefaultSwitchStyle and MarkSwitchStyle.
+
+
 
 
 ![](/assets/switchs.png)
@@ -9,9 +19,9 @@
 ## Examples
 
 ```xml
-<mdc:Switch />
-<mdc:Switch HasIcon="False" />
-<mdc:Switch IsChecked="True" />
+<md:Switch />
+<md:Switch IsSelected="True" />
+<md:Switch IsSelected="True" Style="{DynamicResource MarkSwitchStyle}" />
 ```
 
 
@@ -20,29 +30,28 @@
 
 ## Properties
 
-| name             | type     | default | describes                                   |
-| ---------------- | -------- | ------- | ------------------------------------------- |
-| IsChecked        | bool     | false   | Switch's selected state.                    |
-| HasIcon          | bool     | true    | enable check-mark icon of the Switch.       |
-| TrackColor       | Color    | style   | Switch's track color.                       |
-| ThumbColor       | Color    | style   | Switch's thumb color.                       |
-| Shape            | Shape    | style   | corner radius of the Switch's border.       |
-| OutlineColor     | Color    | style   | Switch's border color.                      |
-| RippleColor      | Color    | style   | Switch's ripple color.                      |
-| Command          | ICommand |         | executed when the Switch is CheckedChanged. |
-| CommandParameter | object   |         | Command's parameter.                        |
+| name             | type     | default                      |
+| ---------------- | -------- | ---------------------------- |
+| IsSelected       | bool     | false                        |
+| ThumbColor       | Color    | OutlineColor                 |
+| IconData         | string   |                              |
+| IconColor        | Color    | SurfaceContainerHighestColor |
+| BackgroundColor  | Color    | SurfaceContainerHighestColor |
+| Shape            | Shape    | full                         |
+| OutlineColor     | Color    | OutlineColor                 |
+| StateLayerColor  | Color    | style                        |
+| Command          | ICommand |                              |
+| CommandParameter | object   |                              |
 
 
 
 ## Events
 
-| name           | type                                    |
-| -------------- | --------------------------------------- |
-| CheckedChanged | `EventHandler<CheckedChangedEventArgs>` |
-| Clicked        | `EventHandler<SKTouchEventArgs>`        |
-| Pressed        | `EventHandler<SKTouchEventArgs>`        |
-| Released       | `EventHandler<SKTouchEventArgs>`        |
-| Moved          | `EventHandler<SKTouchEventArgs>`        |
-| LongPressed    | `EventHandler<SKTouchEventArgs>`        |
-| Entered        | `EventHandler<SKTouchEventArgs>`        |
-| Exited         | `EventHandler<SKTouchEventArgs>`        |
+| name           | type                                  |
+| -------------- | ------------------------------------- |
+| SelectedChanged | `EventHandler<CheckedChangedEventArgs>` |
+| Clicked                       | `EventHandler<TouchEventArgs>`          |
+| Pressed                       | `EventHandler<TouchEventArgs>`          |
+| Released                      | `EventHandler<TouchEventArgs>`          |
+| LongPressed                   | `EventHandler<TouchEventArgs>`          |
+| RightClicked ( desktop only ) | `EventHandler<TouchEventArgs>`          |

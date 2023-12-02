@@ -1,6 +1,14 @@
 # NavigationDrawer
 
-Navigation drawers provide ergonomic access to destinations in an app.
+Navigation drawers let people switch between UI views on larger devices.
+
+
+
+- Can be open or closed by default.
+- Two types: StandardNavigationDrawerStyle and ModalNavigationDrawerStyle.
+- Put the most frequent destinations at the top and group related destinations together.
+
+
 
 ![](/assets/navigation-drawers.png)
 
@@ -8,29 +16,85 @@ Navigation drawers provide ergonomic access to destinations in an app.
 ## Examples
 
 ```xml
-<mdc:NavigationDrawer Title="Components">
-    <mdc:NavigationDrawerItem Title="Overview" IconKind="AutoAwesome" ContentType="{x:Type panels:OverviewPanel}" />
-	<mdc:NavigationDrawerItem Title="Button" IconKind="AutoAwesome" ContentType="{x:Type panels:ButtonPanel}" />
-</mdc:NavigationDrawer>
+ <md:NavigationDrawer Style="{DynamicResource ModalNavigationDrawerStyle}">
+     <Label
+         Padding="20,0,20,20"
+         FontAttributes="Bold"
+         FontSize="18"
+         Text="Title"
+         TextColor="{DynamicResource OnSurfaceVariantColor}" />
+     <md:NavigationDrawerItem IconData="{Static icon:Material.Category}" Text="Item 1">
+         <Label
+             FontSize="26"
+             HorizontalOptions="Center"
+             Text="Item 1"
+             VerticalOptions="Center" />
+     </md:NavigationDrawerItem>
+     <md:NavigationDrawerItem IconData="{Static icon:Material.Category}" Text="Item 22">
+         <Label
+             FontSize="26"
+             HorizontalOptions="Center"
+             Text="Item 2"
+             VerticalOptions="Center" />
+     </md:NavigationDrawerItem>
+     <md:NavigationDrawer.FooterItems>
+         <md:NavigationDrawerItem IconData="{Static icon:Material.Settings}" Text="Settings">
+             <Label
+                 FontSize="26"
+                 HorizontalOptions="Center"
+                 Text="Settings"
+                 VerticalOptions="Center" />
+         </md:NavigationDrawerItem>
+     </md:NavigationDrawer.FooterItems>
+ </md:NavigationDrawer>
+ 
+ ........................................................
+ 
+ 
+  <md:NavigationDrawer Style="{DynamicResource StandardNavigationDrawerStyle}">
+     <Label
+         Padding="20,0,20,20"
+         FontAttributes="Bold"
+         FontSize="18"
+         Text="Title"
+         TextColor="{DynamicResource OnSurfaceVariantColor}" />
+     <md:NavigationDrawerItem IconData="{Static icon:Material.Category}" Text="Item 1">
+         <Label
+             FontSize="26"
+             HorizontalOptions="Center"
+             Text="Item 1"
+             VerticalOptions="Center" />
+     </md:NavigationDrawerItem>
+     <md:NavigationDrawerItem IconData="{Static icon:Material.Category}" Text="Item 22">
+         <Label
+             FontSize="26"
+             HorizontalOptions="Center"
+             Text="Item 2"
+             VerticalOptions="Center" />
+     </md:NavigationDrawerItem>
+     <md:NavigationDrawer.FooterItems>
+         <md:NavigationDrawerItem IconData="{Static icon:Material.Settings}" Text="Settings">
+             <Label
+                 FontSize="26"
+                 HorizontalOptions="Center"
+                 Text="Settings"
+                 VerticalOptions="Center" />
+         </md:NavigationDrawerItem>
+     </md:NavigationDrawer.FooterItems>
+ </md:NavigationDrawer>
 ```
 
 
 
 ## Properties
 
-| name                    | type                   | default              | describes                                                  |
-| ----------------------- | ---------------------- | -------------------- | ---------------------------------------------------------- |
-| Items                   | `ItemCollection<View>` |                      | NavigationDrawer's items.                                  |
-| FooterItems             | `ItemCollection<View>` |                      | NavigationDrawer's footer items.                           |
-| Title                   | string                 | empty                | NavigationDrawer's title.                                  |
-| DisplayMode             | DrawerDisplayMode      | device               | NavigationDrawer's DisplayMode, split or popup.            |
-| SelectedItem            | NavigationDrawerItem   | 0                    | NavigationDrawer's selected item.                          |
-| IsPaneOpen              | bool                   | false                | open NavigationDrawer's pane.                              |
-| HasToolBar              | bool                   | Binding  DisplayMode | enable toolBar of the NavigationDrawer.                    |
-| PaneBackGroundColour    | Color                  | style                | NavigationDrawer's pane background color.                  |
-| ToolBarBackGroundColour | Color                  | style                | NavigationDrawer's toolBarbackground color.                |
-| Command                 | ICommand               |                      | executed when the NavigationDrawer is SelectedItemChanged. |
-| CommandParameter        | object                 |                      | Command's parameter.                                       |
+| name                    | type                         | default              |
+| ----------------------- | ---------------------------- | -------------------- |
+| Items                   | `ObservableCollection<View>` |                      |
+| FooterItems             | `ObservableCollection<View>` |                      |
+| SelectedItem            | View                         |                      |
+| Command                 | ICommand                     |                      |
+| CommandParameter        | object                       |                      |
 
 
 
@@ -38,39 +102,38 @@ Navigation drawers provide ergonomic access to destinations in an app.
 
 | name                | type                                         |
 | ------------------- | -------------------------------------------- |
-| SelectedItemChanged | `EventHandler<SelectedItemChangedEventArgs>` |
+| SelectedItemChanged | `EventHandler<SelectedItemChangedArgs<NavigationDrawerItem>>` |
 
 
 
 ## NavigationDrawerItem Properties
 
-| name                 | type      | default                 | describes                                              |
-| -------------------- | --------- | ----------------------- | ------------------------------------------------------ |
-| Title                | string    | empty                   | NavigationDrawerItem's title.                          |
-| Text                 | string    | empty                   | NavigationDrawerItem's Text.                           |
-| ContentType          | Type      |                         | NavigationDrawerItem's contain content type.           |
-| IconKind             | IconKind  | none                    | NavigationDrawerItem's icon from iconkind.             |
-| IconSource           | SkPicture |                         | NavigationDrawerItem's icon from file.                 |
-| IconData             | string    | empty                   | NavigationDrawerItem's icon from path data.            |
-| ActiveIndicatorColor |           | SecondaryContainerColor | NavigationDrawerItem's activeIndicator color.          |
-| BackgroundColour     | Color     | Transparent             | NavigationDrawerItem's background color.               |
-| ForegroundColor      | Color     | OnSurfaceVariantColor   | NavigationDrawerItem's foreground color.               |
-| FontFamily           | string    |                         | font family of the NavigationDrawerItem's text.        |
-| FontSize             | float     | 14                      | font size of the NavigationDrawerItem's text.          |
-| FontWeight           | int       | 500                     | font weight of the NavigationDrawerItem's text.        |
-| FontItalic           | bool      | false                   | enable font italic of the NavigationDrawerItem's text. |
-| RippleColor          | Color     | SurfaceTintColor        | NavigationDrawerItem's ripple color.                   |
+| name                 | type      | default                 |
+| -------------------- | --------- | ----------------------- |
+| Content              | View      |                         |
+| IsActived            | bool      | false |
+| Text                 | string    | empty                   |
+| IconData             | string    | empty                   |
+| IconColor | Color | OnSurfaceVariantColor |
+| BackgroundColour     | Color     | Transparent             |
+| FontColor        | Color       | OnSurfaceVariantColor |
+| FontSize         | float       | 14       |
+| FontFamily       | string      |          |
+| FontWeight       | FontWeight  | Medium |
+| FontIsItalic     | bool        | false    |
+| Shape            | Shape       | full    |
+| StateLayerColor  | Color       | OnSecondaryContainerColor |
+| RippleDuration   | float       | 0.5      |
+| RippleEasing     | Easing      | SinInOut |
 
 
 
 ## NavigationDrawerItem Events
 
-| name        | type                             |
-| ----------- | -------------------------------- |
-| Clicked     | `EventHandler<SKTouchEventArgs>` |
-| Pressed     | `EventHandler<SKTouchEventArgs>` |
-| Released    | `EventHandler<SKTouchEventArgs>` |
-| Moved       | `EventHandler<SKTouchEventArgs>` |
-| LongPressed | `EventHandler<SKTouchEventArgs>` |
-| Entered     | `EventHandler<SKTouchEventArgs>` |
-| Exited      | `EventHandler<SKTouchEventArgs>` |
+| name                        | type                           |
+| --------------------------- | ------------------------------ |
+| Clicked                     | `EventHandler<TouchEventArgs>` |
+| Pressed                     | `EventHandler<TouchEventArgs>` |
+| Released                    | `EventHandler<TouchEventArgs>` |
+| LongPressed                 | `EventHandler<TouchEventArgs>` |
+| RightClicked ( desktop only ) | `EventHandler<TouchEventArgs>` |

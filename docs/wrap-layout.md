@@ -9,16 +9,15 @@ WrapLayout is a layout container that lets you position items in rows or columns
 ## Examples
 
 ```xml
-<mdc:WrapLayout Orientation="Horizontal">
-	<mdc:Chip Text="chip" IconKind="Add" />
-	<mdc:Chip Text="chip" IconKind="Add" />
-	<mdc:Chip Text="chip" IconKind="Add" />
-	<mdc:Chip Text="chip" IconKind="Add" />
-	<mdc:Chip Text="chip" IconKind="Add" />
-	<mdc:Chip Text="chip" IconKind="Add" />
-	<mdc:Chip Text="chip" IconKind="Add" />
-	<mdc:Chip Text="chip" IconKind="Add" />
-</mdc:WrapLayout>
+ <md:WrapLayout Orientation="Horizontal">
+     <md:Chip IconData="{Static icon:Material.Add}" Text="chip" />
+     <md:Chip IconData="{Static icon:Material.Add}" Text="chip" />
+     <md:Chip IconData="{Static icon:Material.Add}" Text="chip" />
+     <md:Chip IconData="{Static icon:Material.Add}" Text="chip" />
+     <md:Chip IconData="{Static icon:Material.Add}" Text="chip" />
+     <md:Chip IconData="{Static icon:Material.Add}" Text="chip" />
+     <md:Chip IconData="{Static icon:Material.Add}" Text="chip" />
+ </md:WrapLayout>
 ```
 
 
@@ -27,9 +26,9 @@ WrapLayout is a layout container that lets you position items in rows or columns
 
 ## Properties
 
-| name              | type             | default    | describes                                                    |
-| ----------------- | ---------------- | ---------- | ------------------------------------------------------------ |
-| Orientation       | StackOrientation | Horizontal | WrapLayout's item orientation.                               |
-| Spacing           | double           | 0          | Adjustment WrapLayout's HorizontalSpacing and VerticalSpacing. |
-| HorizontalSpacing | double           | 0          | WrapLayout's horizontal spacing .                            |
-| VerticalSpacing   | double           | 0          | WrapLayout's vertical spacing.                               |
+| name              | type             | default    |
+| ----------------- | ---------------- | ---------- |
+| Orientation       | StackOrientation | Horizontal |
+| Spacing           | double           | 0          |
+| HorizontalSpacing | double           | 0          |
+| VerticalSpacing   | double           | 0          |

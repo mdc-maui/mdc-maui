@@ -1,54 +1,58 @@
 # IconButton
 
-Icon buttons help users take supplementary actions with a single tap.
+Icon buttons help people take minor actions with one tap.
+
+- Icon buttons must use a system icon with a clear meaning
+- Four types: FilledIconButtonStyle, FilledTonal ButtonStyle, OutlinedButtonStyle and StandardButtonStyle
+- On hover, display a tooltip describing the button’s action (not the name of the icon)
+- Use outline-style icons to indicate an unselected state, and filled-style icons for selected state
 
 ![](/assets/icon-buttons.png)
 
 
 
-## Styles
-
-There are 4 Styles of icon buttons: 1. Filled, 2. FilledTonal , 3. Outlined, 4. Standard.
-
 ## Examples
 
 ```xml
-<mdc:IconButton IconKind="Star" Style="{DynamicResource FilledIconButtonStyle}" />
-<mdc:IconButton IconKind="Star" Style="{DynamicResource FilledTonalIconButtonStyle}" />
-<mdc:IconButton IconKind="Star" Style="{DynamicResource OutlinedIconButtonStyle}" />
-<mdc:IconButton IconKind="Star" Style="{DynamicResource StandardIconButtonStyle}" />
+<...
+	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
+...>
+
+<mdc:IconButton IconData="{Static icon:Material.Star}" Style="{DynamicResource FilledIconButtonStyle}" />
+<mdc:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource FilledTonalIconButtonStyle}" />
+<mdc:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource OutlinedIconButtonStyle}" />
+<mdc:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource StandardIconButtonStyle}" />
 ```
 
 
 
 ## Properties
 
-| name             | type        | defalut | describes                             |
-| ---------------- | ----------- | ------- | ------------------------------------- |
-| IconKind         | IconKind    | none    | button's icon from iconkind.          |
-| IconSource       | SkPicture   |         | button's icon from file.              |
-| IconData         | string      | empty   | button's icon from path data.         |
-| BackgroundColour | Color       | style   | button's background color.            |
-| ForegroundColor  | Color       | style   | button's foreground color.            |
-| Shape            | Shape       | style   | corner radius of the button's border. |
-| Elevation        | int         | style   | button's elevation.                   |
-| OutlineColor     | Color       | style   | button's border color.                |
-| RippleColor      | Color       | style   | button's ripple color.                |
-| ContextMenu      | ContextMenu |         | button's context menu.                |
-| Style            | Style       | Filled  | button's style                        |
-| Command          | ICommand    |         | executed when the button is clicked.  |
-| CommandParameter | object      |         | Command's parameter.                  |
+| name             | type        | defalut  |
+| ---------------- | ----------- | -------- |
+| IconData         | string      | empty    |
+| BackgroundColor  | Color       | style    |
+| Shape            | Shape       | style    |
+| Elevation        | Elevation   | style    |
+| OutlineWidth     | int         | style    |
+| OutlineColor     | Color       | style    |
+| StateLayerColor  | Color       | style    |
+| RippleDuration   | float       | 0.5      |
+| RippleEasing     | Easing      | SinInOut |
+| ContextMenu      | ContextMenu |          |
+| Style            | Style       | Filled   |
+| Command          | ICommand    |          |
+| CommandParameter | object      |          |
+
 
 
 
 ## Events
 
-| name        | type                             |
-| ----------- | -------------------------------- |
-| Clicked     | `EventHandler<SKTouchEventArgs>` |
-| Pressed     | `EventHandler<SKTouchEventArgs>` |
-| Released    | `EventHandler<SKTouchEventArgs>` |
-| Moved       | `EventHandler<SKTouchEventArgs>` |
-| LongPressed | `EventHandler<SKTouchEventArgs>` |
-| Entered     | `EventHandler<SKTouchEventArgs>` |
-| Exited      | `EventHandler<SKTouchEventArgs>` |
+| name                        | type                           |
+| --------------------------- | ------------------------------ |
+| Clicked                     | `EventHandler<TouchEventArgs>` |
+| Pressed                     | `EventHandler<TouchEventArgs>` |
+| Released                    | `EventHandler<TouchEventArgs>` |
+| LongPressed                 | `EventHandler<TouchEventArgs>` |
+| RightClicked ( desktop only ) | `EventHandler<TouchEventArgs>` |

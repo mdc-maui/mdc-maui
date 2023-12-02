@@ -1,6 +1,12 @@
 # CheckBox
 
-CheckBox allow the user to select options.
+Checkboxes let users select one or more items from a list, or turn an item on or off.
+
+
+
+- Use checkboxes if multiple options can be selected from a list.
+- Label should be scannable.
+- Selected items are more prominent than unselected items.
 
 ![](/assets/check-boxs.png)
 
@@ -16,33 +22,29 @@ CheckBox allow the user to select options.
 
 ## Properties
 
-| name             | type     | default | describes                                   |
-| ---------------- | -------- | ------- | ------------------------------------------- |
-| IsChecked        | bool     | false   | checkBox's selected state.                  |
-| Text             | string   | empty   | checkBox's text.                            |
-| OnColor          | Color    | style   | checkBox's box color when checked.          |
-| MarkColor        | Color    | style   | checkBox's checkmark color when checked.    |
-| BackgroundColour | Color    | style   | checkBox's background color.                |
-| ForegroundColor  | Color    | style   | checkBox's foreground color.                |
-| FontFamily       | string   |         | font family of the checkBox's text.         |
-| FontSize         | float    | 14      | font size of the checkBox's text.           |
-| FontWeight       | int      | 400     | font weight of the checkBox's text.         |
-| FontItalic       | bool     | false   | enable font italic of the checkBox's text.  |
-| RippleColor      | Color    | style   | button's ripple color.                      |
-| Command          | ICommand |         | executed when the checkBox is checkchanged. |
-| CommandParameter | object   |         | Command's parameter.                        |
+| name             | type     | default |
+| ---------------- | -------- | ------- |
+| IsChecked        | bool     | false   |
+| IconData         | string     | mark           |
+| IconColor        | Color      | OnPrimaryColor |
+| BackgroundColor  | Color      | PrimaryColor   |
+| Shape           | Shape      | 2    |
+| OutlineWidth    | int        | 2   |
+| OutlineColor    | Color      | OnSurfaceColor |
+| StateLayerColor | Color      | OnSurfaceColor |
+| RippleDuration  | float      | 0.25      |
+| RippleEasing    | Easing     | SinInOut |
+| Command          | ICommand |         |
+| CommandParameter | object   |         |
 
 
 
 ## Events
 
-| name           | type                                    |
-| -------------- | --------------------------------------- |
-| CheckedChanged | `EventHandler<CheckedChangedEventArgs>` |
-| Clicked        | `EventHandler<SKTouchEventArgs>`        |
-| Pressed        | `EventHandler<SKTouchEventArgs>`        |
-| Released       | `EventHandler<SKTouchEventArgs>`        |
-| Moved          | `EventHandler<SKTouchEventArgs>`        |
-| LongPressed    | `EventHandler<SKTouchEventArgs>`        |
-| Entered        | `EventHandler<SKTouchEventArgs>`        |
-| Exited         | `EventHandler<SKTouchEventArgs>`        |
+| name                          | type                           |
+| ----------------------------- | ------------------------------ |
+| Clicked                       | `EventHandler<TouchEventArgs>` |
+| Pressed                       | `EventHandler<TouchEventArgs>` |
+| Released                      | `EventHandler<TouchEventArgs>` |
+| LongPressed                   | `EventHandler<TouchEventArgs>` |
+| RightClicked ( desktop only ) | `EventHandler<TouchEventArgs>` |

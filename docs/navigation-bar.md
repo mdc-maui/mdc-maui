@@ -1,6 +1,16 @@
 # NavigationBar
 
-Navigation bars offer a persistent and convenient way to switch between primary destinations in an app.
+Navigation bars let people switch between UI views on smaller devices.
+
+
+
+- Can contain 3-5 destinations of equal importance.
+
+- Destinations don't change. They should be consistent across app screens.
+
+- Used to be named bottom navigation.
+
+  
 
 ![](/assets/navigation-bars.png)
 
@@ -8,11 +18,17 @@ Navigation bars offer a persistent and convenient way to switch between primary 
 ## Examples
 
 ```xml
+<...
+	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
+...>
+
+<mdc:FAB IconData="{Static icon:Material.Star}" Style="{DynamicResource SecondaryFABStyle}" />
+
 <mdc:NavigationBar>
-    <mdc:NavigationBarItem ActivedIconKind="StarRate" IconKind="Star" Text="label 1">
+    <mdc:NavigationBarItem IconData="{Static icon:Material.Star}" Text="label 1">
 		...
 	</mdc:NavigationBarItem>
-        <mdc:NavigationBarItem ActivedIconKind="StarRate" IconKind="Star" Text="label 2">
+    <mdc:NavigationBarItem IconData="{Static icon:Material.Star}" Text="label 2">
 		...
 	</mdc:NavigationBarItem>
 </mdc:NavigationBar>
@@ -24,22 +40,20 @@ Navigation bars offer a persistent and convenient way to switch between primary 
 
 ## Properties
 
-| name             | type                                | default | describes                                               |
-| ---------------- | ----------------------------------- | ------- | ------------------------------------------------------- |
-| Items            | `ItemCollection<NavigationBarItem>` |         | navigationBar's Items.                                  |
-| HasLabel         | bool                                | true    | has label of the navigationBar's Item.                  |
-| SelectedIndex    | int                                 | 0       | navigationBar's selected index.                         |
-| SelectedItem     | NavigationBarItem                   |         | navigationBar's selected item.                          |
-| Command          | ICommand                            |         | executed when the navigationBar is SelectedItemChanged. |
-| CommandParameter | object                              |         | Command's parameter.                                    |
+| name             | type                                      | default |
+| ---------------- | ----------------------------------------- | ------- |
+| Items            | `ObservableCollection<NavigationBarItem>` |         |
+| SelectedItem     | NavigationBarItem                         |         |
+| Command          | ICommand                                  |         |
+| CommandParameter | object                                    |         |
 
 
 
 ## Events
 
-| name                | type                                         |
-| ------------------- | -------------------------------------------- |
-| SelectedItemChanged | `EventHandler<SelectedItemChangedEventArgs>` |
+| name                | type                                                       |
+| ------------------- | ---------------------------------------------------------- |
+| SelectedItemChanged | `EventHandler<SelectedItemChangedArgs<NavigationBarItem>>` |
 
 
 
@@ -47,36 +61,34 @@ Navigation bars offer a persistent and convenient way to switch between primary 
 
 ## NavigationBarItem Properties
 
-| name                 | type      | default | describes                                             |
-| -------------------- | --------- | ------- | ----------------------------------------------------- |
-| Content              | View      |         | NavigationBarItem's contain content.                  |
-| Text                 | string    | empty   | NavigationBarItem's text.                             |
-| IconKind             | IconKind  | none    | NavigationBarItem's icon from iconkind.               |
-| IconSource           | SkPicture |         | NavigationBarItem's icon from file.                   |
-| IconData             | string    | empty   | NavigationBarItem's icon from path data.              |
-| ActivedIconKind      | IconKind  | none    | NavigationBarItem's icon from iconkind when actived.  |
-| ActivedIconSource    | SkPicture |         | NavigationBarItem's icon from file when actived.      |
-| ActivedIconData      | string    | empty   | NavigationBarItem's icon from path data when actived. |
-| ActiveIndicatorColor | Color     | style   | NavigationBarItem's activeIndicator color.            |
-| IconColor            | Color     | style   | NavigationBarItem's icon color.                       |
-| BackgroundColour     | Color     | style   | NavigationBarItem's background color.                 |
-| ForegroundColor      | Color     | style   | NavigationBarItem's foreground color.                 |
-| FontFamily           | string    |         | font family of the NavigationBarItem's text.          |
-| FontSize             | float     | 14      | font size of the NavigationBarItem's text.            |
-| FontWeight           | int       | 400     | font weight of the NavigationBarItem's text.          |
-| FontItalic           | bool      | false   | enable font italic of the NavigationBarItem's text.   |
-| RippleColor          | Color     | style   | NavigationBarItem's ripple color.                     |
+| name                  | type      | default |
+| --------------------- | --------- | ------- |
+| Content               | View      |         |
+| IsActived             | bool      |         |
+| Text                  | string    | empty   |
+| IconData              | string    | empty   |
+| IconColor             | Color     |         |
+| ActiveIndicatorHeight | int       | 32 |
+| ActiveIndicatorColor  | Color     | SecondaryContainerColor |
+| BackgroundColor      | Color     | SurfaceContainerColor |
+| FontColor        | Color       | OnSurfaceVariantColor |
+| FontSize         | float       | 14       |
+| FontFamily       | string      |          |
+| FontWeight       | FontWeight  | Medium |
+| FontIsItalic     | bool        | false    |
+| StateLayerColor  | Color       | OnSurfaceVariantColor |
+| RippleDuration   | float       | 0.5      |
+| RippleEasing     | Easing      | SinInOut |
 
 
 
 ## NavigationBarItem Events
 
-| name        | type                             |
-| ----------- | -------------------------------- |
-| Clicked     | `EventHandler<SKTouchEventArgs>` |
-| Pressed     | `EventHandler<SKTouchEventArgs>` |
-| Released    | `EventHandler<SKTouchEventArgs>` |
-| Moved       | `EventHandler<SKTouchEventArgs>` |
-| LongPressed | `EventHandler<SKTouchEventArgs>` |
-| Entered     | `EventHandler<SKTouchEventArgs>` |
-| Exited      | `EventHandler<SKTouchEventArgs>` |
+| name                        | type                           |
+| --------------------------- | ------------------------------ |
+| Clicked                     | `EventHandler<TouchEventArgs>` |
+| Pressed                     | `EventHandler<TouchEventArgs>` |
+| Released                    | `EventHandler<TouchEventArgs>` |
+| LongPressed                 | `EventHandler<TouchEventArgs>` |
+| RightClicked ( desktop only ) | `EventHandler<TouchEventArgs>` |
+
