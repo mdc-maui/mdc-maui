@@ -366,5 +366,4 @@ yarn.lock
 node_modules
 package.json
 .vitepress
-/Sample/**
 /.gitignore
