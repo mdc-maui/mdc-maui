@@ -1,13 +1,16 @@
-﻿namespace SampleApp;
+﻿namespace Sample;
 
 public partial class MainPage : ContentPage
 {
     public MainPage()
     {
-        try
-        {
-            this.InitializeComponent();
-        }
-        catch (Exception ex) { }
+        this.InitializeComponent();
+    }
+
+    private void Button_Clicked(object sender, TouchEventArgs e)
+    {
+        var dlg = new Dialog { Parent = this };
+
+        _ = dlg.ShowAtAsync(this);
     }
 }

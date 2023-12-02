@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace SampleApp;
+namespace Sample;
 public class Program
 {
     // This is the main entry point of the application.
