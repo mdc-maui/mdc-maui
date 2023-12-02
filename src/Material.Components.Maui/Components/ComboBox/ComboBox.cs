@@ -256,6 +256,8 @@ public class ComboBox
 
     public ComboBox()
     {
+        this.SetDynamicResource(StyleProperty, "FieldComboBoxStyle");
+
         this.Drawable = new ComboBoxDrawable(this);
 
         this.StartInteraction += this.OnStartInteraction;
@@ -401,5 +403,5 @@ public class ComboBox
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-        new List<IVisualTreeElement> { this.menu };
+        this.Items != null ? this.Items : Array.Empty<IVisualTreeElement>().ToList();
 }

@@ -112,6 +112,11 @@ public class NavigationDrawer
 
     private Grid PART_Root;
 
+    public NavigationDrawer()
+    {
+        this.SetDynamicResource(StyleProperty, "StandardNavigationDrawerStyle");
+    }
+
     protected override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
