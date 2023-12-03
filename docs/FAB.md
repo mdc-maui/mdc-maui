@@ -34,7 +34,7 @@ Floating action buttons (FABs) help people take primary actions.
 
 ## Properties
 
-| name                             | type        | defalut |
+| name                             | type        | default |
 | -------------------------------- | ----------- | ------- |
 | IconData                         | string      |         |
 | BackgroundColor                  | Color       | style   |
