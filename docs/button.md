@@ -32,7 +32,7 @@ Common buttons prompt most actions in a UI.
 
 ## Properties
 
-| name             | type        | defalut  |
+| name             | type        | default  |
 | ---------------- | ----------- | -------- |
 | Text             | string      | empty    |
 | IconData         | string      | empty    |

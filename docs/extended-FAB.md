@@ -36,7 +36,7 @@ Extended floating action buttons (extended FABs) help people take primary action
 
 ## Properties
 
-| name             | type        | defalut  |
+| name             | type        | default  |
 | ---------------- | ----------- | -------- |
 | Text             | string      |          |
 | IconData         | string      |          |
