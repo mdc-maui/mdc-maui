@@ -34,7 +34,7 @@ Cards contain content about a single subject.
 
 ## Properties
 
-| name            | type  | defalut |
+| name            | type  | default |
 | --------------- | ----- | ------- |
 | Content         | View  |         |
 | BackgroundColor | Color | style   |

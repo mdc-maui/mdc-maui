@@ -28,7 +28,7 @@ Icon buttons help people take minor actions with one tap.
 
 ## Properties
 
-| name             | type        | defalut  |
+| name             | type        | default  |
 | ---------------- | ----------- | -------- |
 | IconData         | string      | empty    |
 | BackgroundColor  | Color       | style    |
