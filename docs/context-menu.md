@@ -14,15 +14,15 @@ ContextMenu display a list of choices on a temporary surface, It can be included
 	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
 ...>
 
-<mdc:FAB IconData="{Static icon:Material.Settings}">
-	<mdc:FAB.ContextMenu>
-        <mdc:ContextMenu>
-            <mdc:MenuItem Text="item 1" />
-            <mdc:MenuItem Text="item 2" />
-            <mdc:MenuItem Text="item 3" />
-    	</mdc:ContextMenu>
-	</mdc:FAB.ContextMenu>
-</mdc:FAB>
+<md:FAB IconData="{Static icon:Material.Settings}">
+	<md:FAB.ContextMenu>
+        <md:ContextMenu>
+            <md:MenuItem Text="item 1" />
+            <md:MenuItem Text="item 2" />
+            <md:MenuItem Text="item 3" />
+    	</md:ContextMenu>
+	</md:FAB.ContextMenu>
+</md:FAB>
 ```
 
 

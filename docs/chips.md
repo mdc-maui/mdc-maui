@@ -15,10 +15,10 @@ Chips help people enter information, make selections, filter content, or trigger
 ## Examples
 
 ```xml
-<mdc:Chip Text="chip" Style="{DynamicResource AssistChipStyle}" />
-<mdc:Chip Text="chip" Style="{DynamicResource FilterChipStyle}" />
-<mdc:Chip Text="chip" Style="{DynamicResource InputChipStyle}" />
-<mdc:Chip Text="chip" Style="{DynamicResource SuggestionChipStyle}" />
+<md:Chip Text="chip" Style="{DynamicResource AssistChipStyle}" />
+<md:Chip Text="chip" Style="{DynamicResource FilterChipStyle}" />
+<md:Chip Text="chip" Style="{DynamicResource InputChipStyle}" />
+<md:Chip Text="chip" Style="{DynamicResource SuggestionChipStyle}" />
 ```
 
 

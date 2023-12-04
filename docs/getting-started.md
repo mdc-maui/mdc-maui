@@ -70,9 +70,9 @@
        
        ...
                 
-       xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+       xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
        
-       <mdc:Button Text="button" IconKind="Add" />
+       <md:Button Text="button" IconKind="Add" />
        
    </ContentPage>
    ```

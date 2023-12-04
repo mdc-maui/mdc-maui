@@ -19,15 +19,15 @@ Cards contain content about a single subject.
 ## Examples
 
 ```xml
-<mdc:Card Style="{DynamicResource FilledCardStyle}">
+<md:Card Style="{DynamicResource FilledCardStyle}">
     ...
-</mdc:Card>
-<mdc:Card Style="{DynamicResource ElevatedCardStyle}">
+</md:Card>
+<md:Card Style="{DynamicResource ElevatedCardStyle}">
     ...
-</mdc:Card>
-<mdc:Card Style="{DynamicResource OutlinedCardStyle}">
+</md:Card>
+<md:Card Style="{DynamicResource OutlinedCardStyle}">
     ...
-</mdc:Card>
+</md:Card>
 ```
 
 

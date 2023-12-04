@@ -27,9 +27,9 @@ Extended floating action buttons (extended FABs) help people take primary action
 	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
 ...>
 
-<mdc:ExtendedFAB IconData="{Static icon:Material.Add}" Text="Extended" Style="{DynamicResource SecondaryExtendedFABStyle}" />
-<mdc:ExtendedFAB IconData="{Static icon:Material.Add}" Text="Extended" Style="{DynamicResource SurfaceExtendedFABStyle }" />
-<mdc:ExtendedFAB IconData="{Static icon:Material.Add}" Text="Extended" Style="{DynamicResource TertiaryExtendedFABStyle}" />
+<md:ExtendedFAB IconData="{Static icon:Material.Add}" Text="Extended" Style="{DynamicResource SecondaryExtendedFABStyle}" />
+<md:ExtendedFAB IconData="{Static icon:Material.Add}" Text="Extended" Style="{DynamicResource SurfaceExtendedFABStyle }" />
+<md:ExtendedFAB IconData="{Static icon:Material.Add}" Text="Extended" Style="{DynamicResource TertiaryExtendedFABStyle}" />
 ```
 
 

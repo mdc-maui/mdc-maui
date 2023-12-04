@@ -18,10 +18,10 @@ Icon buttons help people take minor actions with one tap.
 	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
 ...>
 
-<mdc:IconButton IconData="{Static icon:Material.Star}" Style="{DynamicResource FilledIconButtonStyle}" />
-<mdc:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource FilledTonalIconButtonStyle}" />
-<mdc:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource OutlinedIconButtonStyle}" />
-<mdc:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource StandardIconButtonStyle}" />
+<md:IconButton IconData="{Static icon:Material.Star}" Style="{DynamicResource FilledIconButtonStyle}" />
+<md:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource FilledTonalIconButtonStyle}" />
+<md:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource OutlinedIconButtonStyle}" />
+<md:IconButton IconKind="{Static icon:Material.Star}" Style="{DynamicResource StandardIconButtonStyle}" />
 ```
 
 

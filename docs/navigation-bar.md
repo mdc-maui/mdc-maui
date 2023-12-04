@@ -22,16 +22,16 @@ Navigation bars let people switch between UI views on smaller devices.
 	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
 ...>
 
-<mdc:FAB IconData="{Static icon:Material.Star}" Style="{DynamicResource SecondaryFABStyle}" />
+<md:FAB IconData="{Static icon:Material.Star}" Style="{DynamicResource SecondaryFABStyle}" />
 
-<mdc:NavigationBar>
-    <mdc:NavigationBarItem IconData="{Static icon:Material.Star}" Text="label 1">
+<md:NavigationBar>
+    <md:NavigationBarItem IconData="{Static icon:Material.Star}" Text="label 1">
 		...
-	</mdc:NavigationBarItem>
-    <mdc:NavigationBarItem IconData="{Static icon:Material.Star}" Text="label 2">
+	</md:NavigationBarItem>
+    <md:NavigationBarItem IconData="{Static icon:Material.Star}" Text="label 2">
 		...
-	</mdc:NavigationBarItem>
-</mdc:NavigationBar>
+	</md:NavigationBarItem>
+</md:NavigationBar>
 ```
 
 

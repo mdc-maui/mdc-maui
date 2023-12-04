@@ -13,7 +13,7 @@ Checkboxes let users select one or more items from a list, or turn an item on or
 ## Examples
 
 ```xml
-<mdc:CheckBox Text="checkbox" />
+<md:CheckBox Text="checkbox" />
 ```
 
 

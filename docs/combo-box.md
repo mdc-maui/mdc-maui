@@ -11,14 +11,14 @@ ComboBox displays a short list of items, from which the user can select an item.
 ## Examples
 
 ```xml
-<mdc:ComboBox Style="{DynamicResource FilledComboBoxStyle}">
-	<mdc:MenuItem Text="item 1" />
-	<mdc:MenuItem Text="item 2" />
-</mdc:ComboBox>
-<mdc:ComboBox Style="{DynamicResource OutlinedComboBoxStyle}">
-	<mdc:MenuItem Text="item 1" />
-	<mdc:MenuItem Text="item 2" />
-</mdc:ComboBox>
+<md:ComboBox Style="{DynamicResource FilledComboBoxStyle}">
+	<md:MenuItem Text="item 1" />
+	<md:MenuItem Text="item 2" />
+</md:ComboBox>
+<md:ComboBox Style="{DynamicResource OutlinedComboBoxStyle}">
+	<md:MenuItem Text="item 1" />
+	<md:MenuItem Text="item 2" />
+</md:ComboBox>
 ```
 
 

@@ -25,9 +25,9 @@ Floating action buttons (FABs) help people take primary actions.
 	xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
 ...>
 
-<mdc:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource SecondaryFABStyle}" />
-<mdc:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource SurfaceFABStyle}" />
-<mdc:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource TertiaryFABStyle}" />
+<md:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource SecondaryFABStyle}" />
+<md:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource SurfaceFABStyle}" />
+<md:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource TertiaryFABStyle}" />
 ```
 
 
