@@ -1,5 +1,5 @@
-﻿using Microsoft.Maui.Animations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using Microsoft.Maui.Animations;
 
 namespace Material.Components.Maui;
 
@@ -23,7 +23,14 @@ public class TextField
         var state = this.ViewState switch
         {
             ViewState.Disabled => "disabled",
-            _ => this.IsFocused ? "focused" : "normal",
+            _
+                => this.IsFocused
+                    ? this.IsError
+                        ? "error_focused"
+                        : "focused"
+                    : this.IsError
+                        ? "error_normal"
+                        : "normal",
         };
 
         VisualStateManager.GoToState(this, state);
@@ -53,6 +60,23 @@ public class TextField
                 else
                     (view as IElement).OnPropertyChanged();
             }
+
+            view.TextChanged?.Invoke(view, new(ov as string, nv as string));
+            view.Command?.Execute(
+                view.CommandParameter ?? new TextChangedEventArgs(ov as string, nv as string)
+            );
+        }
+    );
+
+    public static readonly BindableProperty IsErrorProperty = BindableProperty.Create(
+        nameof(IsError),
+        typeof(bool),
+        typeof(IEditableElement),
+        default,
+        propertyChanged: (bo, ov, nv) =>
+        {
+            var view = bo as TextField;
+            view.ChangeVisualState();
         }
     );
 
@@ -108,6 +132,12 @@ public class TextField
         set => this.SetValue(TextProperty, value);
     }
 
+    public bool IsError
+    {
+        get => (bool)this.GetValue(IsErrorProperty);
+        set => this.SetValue(IsErrorProperty, value);
+    }
+
     public TextRange SelectionRange
     {
         get => (TextRange)this.GetValue(SelectionRangeProperty);
@@ -131,7 +161,6 @@ public class TextField
         get => (bool)this.GetValue(IsReadOnlyProperty);
         set => this.SetValue(IsReadOnlyProperty, value);
     }
-
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public Thickness EditablePadding
@@ -358,8 +387,10 @@ public class TextField
             return;
         }
 
-        this.animationManager ??=
-            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??= this.Handler
+            .MauiContext
+            ?.Services
+            .GetRequiredService<IAnimationManager>();
         var start = 0f;
         var end = 1f;
 
@@ -411,8 +442,10 @@ public class TextField
             && y <= this.Bounds.Center.Y + 20f
         )
         {
-            this.animationManager ??=
-                this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+            this.animationManager ??= this.Handler
+                .MauiContext
+                ?.Services
+                .GetRequiredService<IAnimationManager>();
 
             this.animationManager?.Add(
                 new Microsoft.Maui.Animations.Animation(

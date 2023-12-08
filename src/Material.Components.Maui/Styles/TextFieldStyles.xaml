@@ -55,6 +55,36 @@
                             <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
                         </VisualState.Setters>
                     </VisualState>
+
+                    <VisualState x:Name="error_normal">
+                        <VisualState.Setters>
+                            <Setter Property="ActiveIndicatorHeight" Value="1" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="LabelFontColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="SupportingFontColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="TrailingIconColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="CaretColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="error_focused">
+                        <VisualState.Setters>
+                            <Setter Property="ActiveIndicatorHeight" Value="2" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource SurfaceContainerHighestColor}" />
+                            <Setter Property="IconColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="LabelFontColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="SupportingFontColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="TrailingIconColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="ActiveIndicatorColor" Value="{DynamicResource ErrorColor}" />
+                            <Setter Property="StateLayerColor" Value="{DynamicResource OnSurfaceVariantColor}" />
+                            <Setter Property="CaretColor" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="FontColor" Value="{DynamicResource OnSurfaceColor}" />
+                        </VisualState.Setters>
+                    </VisualState>
+
                     <VisualState x:Name="disabled">
                         <VisualState.Setters>
                             <Setter Property="ActiveIndicatorHeight" Value="1" />
