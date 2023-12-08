@@ -64,7 +64,7 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-rc.2.9373" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
 		<PackageReference Include="MaterialColorUtilities" Version="0.3.0" />
 	</ItemGroup>
 	
@@ -179,5 +179,16 @@
 	<ItemGroup>
 	  <Folder Include="Components\Tabs\" />
 	</ItemGroup>
+
+	<PropertyGroup>
+		<Authors>yiszza</Authors>
+		<Description>Material design Components for .NET MAUI</Description>
+		<RepositoryUrl>https://github.com/mdc-maui/mdc-maui</RepositoryUrl>
+		<PackageTags>material, components</PackageTags>
+		<AssemblyVersion></AssemblyVersion>
+		<FileVersion></FileVersion>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>0.2.1-preview</Version>
+	</PropertyGroup>
 
 </Project>
