@@ -21,28 +21,14 @@ file class UniformStackLayoutManager(AutoFillLayout layout) : LayoutManager(layo
     {
         this.childrenSizes.Clear();
 
-        var maxWidth = 0d;
-        var maxHeight = 0d;
-
-        foreach (var item in layout.Children)
+        var childrenWidth = Math.Ceiling(widthConstraint / layout.Children.Count);
+        for (var i = 0; i < layout.Children.Count; i++)
         {
-            var size = item.Measure(widthConstraint, heightConstraint);
-            maxWidth += size.Width;
-            maxHeight = Math.Max(maxHeight, size.Height);
-            this.childrenSizes.Add(size);
+            this.childrenSizes.Add(new Size(childrenWidth, heightConstraint));
+            layout.Children[i].Measure(childrenWidth, heightConstraint);
         }
 
-        maxWidth =
-            widthConstraint != double.PositiveInfinity
-                ? Math.Max(maxWidth, widthConstraint)
-                : maxWidth;
-        var childrenWidth = Math.Ceiling(maxWidth / layout.Children.Count);
-        for (var i = 0; i < this.childrenSizes.Count; i++)
-        {
-            this.childrenSizes[i] = new Size(childrenWidth, maxHeight);
-        }
-
-        return new Size(maxWidth, maxHeight);
+        return new Size(widthConstraint, heightConstraint);
     }
 
     public override Size ArrangeChildren(Rect bounds)
