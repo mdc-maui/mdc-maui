@@ -10,28 +10,21 @@ internal class NavigationBarItemDrawable(NavigationBarItem view) : IDrawable
         canvas.DrawBackground(view, rect);
         this.DrawStateLayer(canvas, rect);
 
+#if ANDROID
+        canvas.Scale(canvas.DisplayScale, canvas.DisplayScale);
+#endif
 
         var iconBounds = new RectF(rect.Center.X - 12, rect.X + 16, 24, 24);
         canvas.DrawIcon(view, iconBounds, 24, 1f);
 
         var textBounds = new RectF(rect.Left, rect.Top, rect.Width, rect.Height - 16);
-        canvas.DrawText(
-            view,
-            textBounds,
-            HorizontalAlignment.Center,
-            VerticalAlignment.Bottom
-        );
+        canvas.DrawText(view, textBounds, HorizontalAlignment.Center, VerticalAlignment.Bottom);
         canvas.ResetState();
     }
 
     private void DrawStateLayer(ICanvas canvas, RectF rect)
     {
-        var bounds = new RectF(
-            rect.Center.X - 32,
-            rect.Top + 12,
-            64,
-            view.ActiveIndicatorHeight
-        );
+        var bounds = new RectF(rect.Center.X - 32, rect.Top + 12, 64, view.ActiveIndicatorHeight);
 
         var path = new PathF();
         path.AppendRoundedRectangle(bounds, 16f, 16f, 16f, 16f, true);
@@ -50,12 +43,7 @@ internal class NavigationBarItemDrawable(NavigationBarItem view) : IDrawable
         if (view.RipplePercent is 0f or 1f)
             canvas.DrawStateLayer(view, bounds, view.ViewState);
         else
-            canvas.DrawRipple(
-                view,
-                view.LastTouchPoint,
-                view.RippleSize,
-                view.RipplePercent
-            );
+            canvas.DrawRipple(view, view.rippleStartPoint, view.RippleSize, view.RipplePercent);
 
         canvas.ResetState();
     }

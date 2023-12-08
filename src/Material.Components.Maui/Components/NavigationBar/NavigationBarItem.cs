@@ -11,6 +11,7 @@ public class NavigationBarItem
         IBackgroundElement,
         IStateLayerElement,
         IRippleElement,
+        IVisualTreeElement,
         IDisposable
 {
     protected override void ChangeVisualState()
@@ -139,6 +140,8 @@ public class NavigationBarItem
         set => this.SetValue(ActiveIndicatorColorProperty, value);
     }
 
+    internal PointF rippleStartPoint = new();
+
     public NavigationBarItem()
     {
         this.Drawable = new NavigationBarItemDrawable(this);
@@ -156,7 +159,7 @@ public class NavigationBarItem
         var bounds = new Rect(this.Bounds.Center.X - 32, this.Bounds.Top + 12, 64, 32);
         var sx = Math.Clamp(this.LastTouchPoint.X, bounds.Left, bounds.Right);
         var sy = Math.Clamp(this.LastTouchPoint.Y, bounds.Top, bounds.Bottom);
-        this.LastTouchPoint = new Point(sx, sy);
+        this.rippleStartPoint = new Point(sx, sy);
 
         var points = new PointF[4];
         points[0].X = points[2].X = this.LastTouchPoint.X;
@@ -178,6 +181,9 @@ public class NavigationBarItem
         }
         return maxSize;
     }
+
+    public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
+        this.Content != null ? [this.Content] : Array.Empty<IVisualTreeElement>().ToList();
 
     protected override void Dispose(bool disposing)
     {
