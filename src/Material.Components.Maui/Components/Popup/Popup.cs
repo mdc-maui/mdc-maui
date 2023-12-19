@@ -10,14 +10,14 @@ public partial class Popup : View, IVisualTreeElement, IDisposable
         default
     );
 
-    public new static readonly BindableProperty HorizontalOptionsProperty = BindableProperty.Create(
+    public static new readonly BindableProperty HorizontalOptionsProperty = BindableProperty.Create(
         nameof(HorizontalOptions),
         typeof(LayoutAlignment),
         typeof(Popup),
         LayoutAlignment.Center
     );
 
-    public new static readonly BindableProperty VerticalOptionsProperty = BindableProperty.Create(
+    public static new readonly BindableProperty VerticalOptionsProperty = BindableProperty.Create(
         nameof(VerticalOptions),
         typeof(LayoutAlignment),
         typeof(Popup),
@@ -102,8 +102,5 @@ public partial class Popup : View, IVisualTreeElement, IDisposable
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-     this.Content != null
-         ? [this.Content]
-         : Array.Empty<IVisualTreeElement>().ToList();
-
+        this.Content != null ? [this.Content] : Array.Empty<IVisualTreeElement>().ToList();
 }

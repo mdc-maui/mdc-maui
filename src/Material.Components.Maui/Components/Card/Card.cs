@@ -6,6 +6,7 @@ namespace Material.Components.Maui;
 [ContentProperty(nameof(Content))]
 public class Card
     : TemplatedView,
+        IContentElement,
         IElement,
         IBackgroundElement,
         IPaddingElement,
@@ -99,9 +100,5 @@ public class Card
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-        this.PART_Root != null
-            ? [this.PART_Root]
-            : Array.Empty<IVisualTreeElement>().ToList();
-
-
+        this.PART_Root != null ? [this.PART_Root] : Array.Empty<IVisualTreeElement>().ToList();
 }

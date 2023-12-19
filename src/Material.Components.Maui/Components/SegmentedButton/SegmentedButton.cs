@@ -8,7 +8,7 @@ namespace Material.Components.Maui;
 public class SegmentedButton
     : TouchGraphicsView,
         IItemsElement<SegmentedItem>,
-        IItemsSourceElement<SegmentedItem>,
+        IItemsSourceElement,
         IFontElement,
         IOutlineElement,
         IElement,
@@ -54,7 +54,7 @@ public class SegmentedButton
         IItemsElement<SegmentedItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsSourceElement<SegmentedItem>.ItemsSourceProperty;
+        IItemsSourceElement.ItemsSourceProperty;
 
     public static readonly BindableProperty MultiSelectModeProperty = BindableProperty.Create(
         nameof(MultiSelectMode),
@@ -119,7 +119,7 @@ public class SegmentedButton
         ((IElement)this).InvalidateMeasure();
     }
 
-    void IItemsSourceElement<SegmentedItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )
@@ -307,9 +307,7 @@ public class SegmentedButton
             ).OnItemsCollectionChanged;
             if (this.ItemsSource is INotifyCollectionChanged ncc)
             {
-                ncc.CollectionChanged -= (
-                    (IItemsSourceElement<SegmentedItem>)this
-                ).OnItemsSourceCollectionChanged;
+                ncc.CollectionChanged -= ((IItemsSourceElement)this).OnItemsSourceCollectionChanged;
             }
             ((IIconElement)this).IconPath?.Dispose();
         }

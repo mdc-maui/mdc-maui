@@ -8,14 +8,14 @@ namespace Material.Components.Maui;
 public class RadioButton
     : WrapLayout,
         IItemsElement<RadioItem>,
-        IItemsSourceElement<RadioItem>,
+        IItemsSourceElement,
         IICommandElement,
         IVisualTreeElement
 {
     public static readonly BindableProperty ItemsProperty = IItemsElement<RadioItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsSourceElement<RadioItem>.ItemsSourceProperty;
+        IItemsSourceElement.ItemsSourceProperty;
 
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
         nameof(SelectedIndex),
@@ -74,7 +74,7 @@ public class RadioButton
         NotifyCollectionChangedEventArgs e
     ) { }
 
-    void IItemsSourceElement<RadioItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )

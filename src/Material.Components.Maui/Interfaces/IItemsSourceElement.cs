@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace Material.Components.Maui.Interfaces;
 
-public interface IItemsSourceElement<T>
+public interface IItemsSourceElement
 {
     IList ItemsSource { get; set; }
     void OnItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e);
@@ -11,7 +11,7 @@ public interface IItemsSourceElement<T>
     public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(
         nameof(ItemsSource),
         typeof(IList),
-        typeof(IItemsSourceElement<T>),
+        typeof(IItemsSourceElement),
         default,
         propertyChanged: (bo, ov, nv) =>
         {
@@ -20,7 +20,7 @@ public interface IItemsSourceElement<T>
                 if (nv is INotifyCollectionChanged ncc)
                 {
                     ncc.CollectionChanged += (
-                        (IItemsSourceElement<T>)bo
+                        (IItemsSourceElement)bo
                     ).OnItemsSourceCollectionChanged;
                 }
             }

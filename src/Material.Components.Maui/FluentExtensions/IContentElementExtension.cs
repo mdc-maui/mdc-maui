@@ -1,11 +1,11 @@
 ﻿namespace Material.Components.Maui.FluentExtensions;
 
-public static class CardExtension
+public static class IContentElementExtension
 {
     public static TBindable Content<TBindable>(this TBindable view, View value)
-        where TBindable : Card
+        where TBindable : BindableObject, IContentElement
     {
-        view.SetValue(Card.ContentProperty, value);
+        view.SetValue(IContentElement.ContentProperty, value);
         return view;
     }
 
@@ -17,10 +17,11 @@ public static class CardExtension
         object converterParameter = null,
         string stringFormat = null,
         object source = null
-    ) where TBindable : Card
+    )
+        where TBindable : BindableObject, IContentElement
     {
         var binding = new Binding(path, mode, converter, converterParameter, stringFormat, source);
-        view.SetBinding(Card.ContentProperty, binding);
+        view.SetBinding(IContentElement.ContentProperty, binding);
         return view;
     }
 }

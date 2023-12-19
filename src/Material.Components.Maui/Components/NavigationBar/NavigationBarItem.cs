@@ -3,6 +3,7 @@
 [ContentProperty(nameof(Content))]
 public class NavigationBarItem
     : TouchGraphicsView,
+        IContentElement,
         ITextElement,
         IFontElement,
         IIconElement,

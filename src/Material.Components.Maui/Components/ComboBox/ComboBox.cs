@@ -1,7 +1,7 @@
-using Microsoft.Maui.Animations;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Microsoft.Maui.Animations;
 
 namespace Material.Components.Maui;
 
@@ -9,7 +9,7 @@ namespace Material.Components.Maui;
 public class ComboBox
     : TouchGraphicsView,
         IItemsElement<MenuItem>,
-        IItemsSourceElement<MenuItem>,
+        IItemsSourceElement,
         IOutlineElement,
         IFontElement,
         ILabelTextElement,
@@ -35,7 +35,7 @@ public class ComboBox
     public static readonly BindableProperty ItemsProperty = IItemsElement<MenuItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsSourceElement<MenuItem>.ItemsSourceProperty;
+        IItemsSourceElement.ItemsSourceProperty;
 
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(
         nameof(SelectedIndex),
@@ -126,7 +126,7 @@ public class ComboBox
         ((IElement)this).InvalidateMeasure();
     }
 
-    void IItemsSourceElement<MenuItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )
@@ -306,8 +306,10 @@ public class ComboBox
             return;
         }
 
-        this.animationManager ??=
-            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??= this.Handler
+            .MauiContext
+            ?.Services
+            .GetRequiredService<IAnimationManager>();
         var start = 0f;
         var end = 1f;
 

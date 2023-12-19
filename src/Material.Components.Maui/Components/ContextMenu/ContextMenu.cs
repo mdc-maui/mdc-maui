@@ -9,7 +9,7 @@ namespace Material.Components.Maui;
 public partial class ContextMenu
     : TemplatedView,
         IItemsElement<MenuItem>,
-        IItemsSourceElement<MenuItem>,
+        IItemsSourceElement,
         IElement,
         IBackgroundElement,
         IShapeElement,
@@ -26,9 +26,9 @@ public partial class ContextMenu
     public static readonly BindableProperty ItemsProperty = IItemsElement<MenuItem>.ItemsProperty;
 
     public static readonly BindableProperty ItemsSourceProperty =
-        IItemsSourceElement<MenuItem>.ItemsSourceProperty;
+        IItemsSourceElement.ItemsSourceProperty;
 
-    public static readonly new BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
+    public static new readonly BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
     public static new readonly BindableProperty BackgroundColorProperty =
         IBackgroundElement.BackgroundColorProperty;
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
@@ -97,7 +97,7 @@ public partial class ContextMenu
         this.Close(this.Items.IndexOf(item));
     }
 
-    void IItemsSourceElement<MenuItem>.OnItemsSourceCollectionChanged(
+    void IItemsSourceElement.OnItemsSourceCollectionChanged(
         object sender,
         NotifyCollectionChangedEventArgs e
     )

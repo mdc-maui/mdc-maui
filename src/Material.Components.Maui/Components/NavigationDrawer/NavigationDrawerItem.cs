@@ -3,6 +3,7 @@
 [ContentProperty(nameof(Content))]
 public class NavigationDrawerItem
     : TouchGraphicsView,
+        IContentElement,
         ITextElement,
         IFontElement,
         IIconElement,
