@@ -39,6 +39,12 @@ public class NavigationBarItem
         typeof(NavigationBarItem)
     );
 
+    public static readonly BindableProperty ContentTypeProperty = BindableProperty.Create(
+        nameof(ContentType),
+        typeof(Type),
+        typeof(NavigationDrawerItem)
+    );
+
     public static readonly BindableProperty IsActivedProperty = BindableProperty.Create(
         nameof(IsActived),
         typeof(bool),
@@ -74,8 +80,22 @@ public class NavigationBarItem
 
     public View Content
     {
-        get => (View)this.GetValue(ContentProperty);
-        set => this.SetValue(ContentProperty, value);
+        get
+        {
+            var result = (View)this.GetValue(ContentProperty);
+            if (result == null && this.ContentType != null)
+            {
+                result = (View)Activator.CreateInstance(this.ContentType);
+                this.SetValue(ContentProperty, result);
+            }
+            return result;
+        }
+    }
+
+    public Type ContentType
+    {
+        get => (Type)this.GetValue(ContentTypeProperty);
+        set => this.SetValue(ContentTypeProperty, value);
     }
 
     public bool IsActived
