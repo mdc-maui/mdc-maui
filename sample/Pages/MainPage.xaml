@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SampleApp.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    xmlns:pages="clr-namespace:SampleApp.Pages">
+
+    <md:NavigationDrawer>
+        <Label
+            Margin="10,0,0,20"
+            FontSize="20" FontAttributes="Bold"
+            Text="mdc-maui" />
+        <md:NavigationDrawerItem
+            ContentType="{x:Type pages:OverviewPage}"
+            IconData="{Static icon:Material.Overview}"
+            Text="Overview" />
+
+        <md:NavigationDrawer.FooterItems>
+            <md:NavigationDrawerItem
+                ContentType="{x:Type pages:SettingsPage}"
+                IconData="{Static icon:Material.Settings}"
+                Text="Setting" />
+        </md:NavigationDrawer.FooterItems>
+    </md:NavigationDrawer>
+
+</ContentPage>

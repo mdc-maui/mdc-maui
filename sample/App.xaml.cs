@@ -1,20 +1,13 @@
-﻿using System.Diagnostics;
+﻿using SampleApp.Pages;
 
-namespace Sample;
+namespace SampleApp;
 
 public partial class App : Application
 {
     public App()
     {
-        try
-        {
-            this.InitializeComponent();
-            //this.UserAppTheme = AppTheme.Dark;
-            this.MainPage = new MainPage();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.ToString());
-        }
+        this.InitializeComponent();
+
+        this.MainPage = new MainPage();
     }
 }
