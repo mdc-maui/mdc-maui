@@ -109,6 +109,12 @@
 		<Compile Update="Styles\NavigationDrawerItemStyles.xaml.cs">
 		  <DependentUpon>NavigationDrawerItemStyles.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="Styles\TabItemStyles.xaml.cs">
+		  <DependentUpon>TabItemStyles.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\TabsStyles.xaml.cs">
+		  <DependentUpon>TabsStyles.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
 		<MauiXaml Update="Styles\ButtonStyles.xaml">
@@ -175,9 +181,12 @@
 		<MauiXaml Update="Styles\NavigationDrawerItemStyles.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Components\Tabs\" />
+		<MauiXaml Update="Styles\TabItemStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\TabsStyles.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<PropertyGroup>

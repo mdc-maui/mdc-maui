@@ -27,6 +27,8 @@
         <Styles:NavigationBarItemStyles />
         <Styles:NavigationDrawerStyles />
         <Styles:NavigationDrawerItemStyles />
+        <Styles:TabsStyles />
+        <Styles:TabItemStyles />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

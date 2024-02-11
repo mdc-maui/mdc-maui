@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="Material.Components.Maui.Styles.TabsStyles"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Material.Components.Maui.Converters"
+    xmlns:views="clr-namespace:Material.Components.Maui">
+
+
+    <Style x:Key="PrimaryTabsStyle" TargetType="views:Tabs">
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" RowDefinitions="auto,*">
+                    <views:AutoFillLayout Grid.Row="0" BindableLayout.ItemsSource="{TemplateBinding Items}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </views:AutoFillLayout>
+                    <ContentPresenter
+                        x:Name="PART_Content"
+                        Grid.Row="1"
+                        Content="{TemplateBinding SelectedItem.Content}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollingPrimaryTabsStyle" TargetType="views:Tabs">
+        <Setter Property="ItemStyle" Value="ScrollingPrimary" />
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" RowDefinitions="auto,*">
+                    <ScrollView
+                        Grid.Row="0"
+                        HorizontalScrollBarVisibility="Never"
+                        Orientation="Horizontal"
+                        VerticalScrollBarVisibility="Never">
+                        <views:WrapLayout BindableLayout.ItemsSource="{TemplateBinding Items}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </views:WrapLayout>
+                    </ScrollView>
+                    <ContentPresenter
+                        x:Name="PART_Content"
+                        Grid.Row="1"
+                        Content="{TemplateBinding SelectedItem.Content}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SecondaryTabsStyle" TargetType="views:Tabs">
+        <Setter Property="ItemStyle" Value="Secondary" />
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" RowDefinitions="auto,*">
+                    <views:AutoFillLayout Grid.Row="0" BindableLayout.ItemsSource="{TemplateBinding Items}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </views:AutoFillLayout>
+                    <ContentPresenter
+                        x:Name="PART_Content"
+                        Grid.Row="1"
+                        Content="{TemplateBinding SelectedItem.Content}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollingSecondaryTabsStyle" TargetType="views:Tabs">
+        <Setter Property="ItemStyle" Value="ScrollingSecondary" />
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Grid x:Name="PART_Root" RowDefinitions="auto,*">
+                    <ScrollView
+                        Grid.Row="0"
+                        HorizontalScrollBarVisibility="Never"
+                        Orientation="Horizontal"
+                        VerticalScrollBarVisibility="Never">
+                        <views:WrapLayout BindableLayout.ItemsSource="{TemplateBinding Items}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </views:WrapLayout>
+                    </ScrollView>
+                    <ContentPresenter
+                        x:Name="PART_Content"
+                        Grid.Row="1"
+                        Content="{TemplateBinding SelectedItem.Content}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
