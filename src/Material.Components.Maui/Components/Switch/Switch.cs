@@ -1,6 +1,6 @@
-﻿using Microsoft.Maui.Animations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
+using Microsoft.Maui.Animations;
 
 namespace Material.Components.Maui;
 
@@ -70,7 +70,9 @@ public class Switch
             var view = bo as Switch;
             view.ChangeVisualState();
             view.SelectedChanged?.Invoke(view, new((bool)nv));
-            view.Command?.Execute(view.CommandParameter ?? nv);
+
+            if (view.Command?.CanExecute(view.CommandParameter ?? nv) is true)
+                view.Command?.Execute(view.CommandParameter ?? nv);
         }
     );
 
@@ -80,7 +82,7 @@ public class Switch
         typeof(Switch),
         propertyChanged: (bo, ov, nv) => ((Switch)bo).OnPropertyChanged()
     );
-    public static readonly new BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
+    public static new readonly BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
     public static new readonly BindableProperty BackgroundColorProperty =
         IBackgroundElement.BackgroundColorProperty;
     public static readonly BindableProperty OutlineWidthProperty =

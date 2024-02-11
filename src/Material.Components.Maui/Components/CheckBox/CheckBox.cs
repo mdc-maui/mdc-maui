@@ -45,7 +45,9 @@ public class CheckBox
         {
             var cb = (CheckBox)bo;
             cb.CheckedChanged?.Invoke(cb, new CheckedChangedEventArgs(cb.IsChecked));
-            cb.Command?.Execute(cb.CommandParameter ?? cb.IsChecked);
+
+            if (cb.Command?.CanExecute(cb.CommandParameter ?? cb.IsChecked) is true)
+                cb.Command?.Execute(cb.CommandParameter ?? cb.IsChecked);
         }
     );
 

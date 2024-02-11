@@ -52,7 +52,9 @@ public class NavigationDrawer
                 }
 
                 navDrawer.SelectedItemChanged?.Invoke(navDrawer, new(ndi));
-                navDrawer.Command?.Execute(navDrawer.CommandParameter ?? ndi);
+
+                if (navDrawer.Command?.CanExecute(navDrawer.CommandParameter ?? ndi) is true)
+                    navDrawer.Command?.Execute(navDrawer.CommandParameter ?? ndi);
             }
         }
     );

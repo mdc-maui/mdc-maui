@@ -27,7 +27,9 @@ public class NavigationBar
                 navItem.IsActived = item.Equals(navItem);
 
             navBar.SelectedItemChanged?.Invoke(navBar, new(item));
-            navBar.Command?.Execute(navBar.CommandParameter ?? item);
+
+            if (navBar.Command?.CanExecute(navBar.CommandParameter ?? item) is true)
+                navBar.Command?.Execute(navBar.CommandParameter ?? item);
         }
     );
 

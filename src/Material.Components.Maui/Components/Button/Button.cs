@@ -122,7 +122,8 @@ public class Button
 
     void OnClicked(object sender, TouchEventArgs e)
     {
-        this.Command?.Execute(this.CommandParameter);
+        if (this.Command?.CanExecute(this.CommandParameter) is true)
+            this.Command?.Execute(this.CommandParameter);
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)

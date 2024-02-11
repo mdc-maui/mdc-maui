@@ -45,7 +45,9 @@ public class Chip
             var view = bo as Chip;
             view.ChangeVisualState();
             view.SelectedChanged?.Invoke(view, new((bool)nv));
-            view.Command?.Execute(view.CommandParameter ?? nv);
+
+            if (view.Command?.CanExecute(view.CommandParameter ?? nv) is true)
+                view.Command?.Execute(view.CommandParameter ?? nv);
         }
     );
 

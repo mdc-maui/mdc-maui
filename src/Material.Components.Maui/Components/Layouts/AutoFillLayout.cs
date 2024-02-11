@@ -22,13 +22,18 @@ file class UniformStackLayoutManager(AutoFillLayout layout) : LayoutManager(layo
         this.childrenSizes.Clear();
 
         var childrenWidth = Math.Ceiling(widthConstraint / layout.Children.Count);
+
+        var maxHeight = 0d;
         for (var i = 0; i < layout.Children.Count; i++)
         {
-            this.childrenSizes.Add(new Size(childrenWidth, heightConstraint));
-            layout.Children[i].Measure(childrenWidth, heightConstraint);
+            var size = layout.Children[i].Measure(childrenWidth, heightConstraint);
+            maxHeight = Math.Max(maxHeight, size.Height);
         }
 
-        return new Size(widthConstraint, heightConstraint);
+        for (var i = 0; i < layout.Children.Count; i++)
+            this.childrenSizes.Add(new Size(childrenWidth, maxHeight));
+
+        return new Size(widthConstraint, maxHeight);
     }
 
     public override Size ArrangeChildren(Rect bounds)

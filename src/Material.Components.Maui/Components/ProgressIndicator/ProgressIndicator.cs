@@ -1,6 +1,6 @@
-﻿using Microsoft.Maui.Animations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
+using Microsoft.Maui.Animations;
 
 namespace Material.Components.Maui;
 
@@ -37,7 +37,9 @@ public class ProgressIndicator
                 ((IElement)bo).OnPropertyChanged();
 
             view.PercentChanged?.Invoke(view, new ValueChangedEventArgs((double)ov, view.Percent));
-            view.Command?.Execute(view.CommandParameter ?? view.Percent);
+
+            if (view.Command?.CanExecute(view.CommandParameter ?? view.Percent) is true)
+                view.Command?.Execute(view.CommandParameter ?? view.Percent);
         }
     );
 
@@ -57,7 +59,7 @@ public class ProgressIndicator
         propertyChanged: (bo, ov, nv) => ((IElement)bo).OnPropertyChanged()
     );
 
-    public static readonly new BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
+    public static new readonly BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
 
     public static readonly BindableProperty ActiveIndicatorHeightProperty =
         IActiveIndicatorElement.ActiveIndicatorHeightProperty;
@@ -154,8 +156,10 @@ public class ProgressIndicator
             return;
         }
 
-        this.animationManager ??=
-            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??= this.Handler
+            .MauiContext
+            ?.Services
+            .GetRequiredService<IAnimationManager>();
 
         var animation = new Microsoft.Maui.Animations.Animation(
             callback: (progress) =>

@@ -32,7 +32,9 @@ public class RadioButton
             for (var i = 0; i < view.Items.Count; i++)
                 view.Items[i].IsSelected = i == index;
 
-            view.Command?.Execute(view.CommandParameter ?? index);
+            if (view.Command?.CanExecute(view.CommandParameter ?? index) is true)
+                view.Command?.Execute(view.CommandParameter ?? index);
+
             view.SelectedChanged?.Invoke(view, new(view.Items[index], index));
         }
     );

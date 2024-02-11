@@ -62,9 +62,16 @@ public class TextField
             }
 
             view.TextChanged?.Invoke(view, new(ov as string, nv as string));
-            view.Command?.Execute(
-                view.CommandParameter ?? new TextChangedEventArgs(ov as string, nv as string)
-            );
+
+            if (
+                view.Command?.CanExecute(
+                    view.CommandParameter ?? new TextChangedEventArgs(ov as string, nv as string)
+                )
+                is true
+            )
+                view.Command?.Execute(
+                    view.CommandParameter ?? new TextChangedEventArgs(ov as string, nv as string)
+                );
         }
     );
 
@@ -313,10 +320,10 @@ public class TextField
         var y = this.LastTouchPoint.Y;
 
         if (
-            x >= this.Bounds.Right - 48f
-            && x <= this.Bounds.Right - 8f
-            && y >= this.Bounds.Center.Y - 20f
-            && y <= this.Bounds.Center.Y + 20f
+            x >= this.Bounds.Width - 48f
+            && x <= this.Bounds.Width - 8f
+            && y >= this.Bounds.Height / 2 - 20f
+            && y <= this.Bounds.Height / 2 + 20f
         )
             TrailingIconClicked?.Invoke(this, e);
     }

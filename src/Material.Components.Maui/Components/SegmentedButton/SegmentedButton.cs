@@ -238,7 +238,9 @@ public class SegmentedButton
         }
 
         this.SelectedItemsChanged?.Invoke(this, new(this.SelectedItems));
-        this.Command?.Execute(this.CommandParameter ?? this.SelectedItems);
+
+        if (this.Command?.CanExecute(this.CommandParameter ?? this.SelectedItems) is true)
+            this.Command?.Execute(this.CommandParameter ?? this.SelectedItems);
     }
 
     protected override Size MeasureOverride(double widthConstraint, double heightConstraint)

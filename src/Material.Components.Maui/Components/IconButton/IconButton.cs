@@ -124,9 +124,16 @@ public class IconButton
         {
             this.IsSelected = !this.IsSelected;
         }
-        this.Command?.Execute(
-            this.CommandParameter ?? (this.IsToggleEnabled ? this.IsSelected : null)
-        );
+
+        if (
+            this.Command?.CanExecute(
+                this.CommandParameter ?? (this.IsToggleEnabled ? this.IsSelected : null)
+            )
+            is true
+        )
+            this.Command?.Execute(
+                this.CommandParameter ?? (this.IsToggleEnabled ? this.IsSelected : null)
+            );
     }
 
     protected override void Dispose(bool disposing)

@@ -49,7 +49,9 @@ public class ComboBox
             if (index >= 0 && index < comboBox.Items.Count)
                 comboBox.SelectedItem = comboBox.Items[index];
 
-            comboBox.Command?.Execute(comboBox.CommandParameter ?? index);
+            if (comboBox.Command?.CanExecute(comboBox.CommandParameter ?? index) is true)
+                comboBox.Command?.Execute(comboBox.CommandParameter ?? index);
+
             comboBox.SelectedChanged?.Invoke(comboBox, new(comboBox.Items[index], index));
             ((IElement)comboBox).OnPropertyChanged();
         }
