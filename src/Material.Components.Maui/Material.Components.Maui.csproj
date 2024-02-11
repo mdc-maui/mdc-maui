@@ -197,7 +197,7 @@
 		<AssemblyVersion></AssemblyVersion>
 		<FileVersion></FileVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>0.2.1-preview</Version>
+		<Version>0.2.2-preview</Version>
 	</PropertyGroup>
 
 </Project>
