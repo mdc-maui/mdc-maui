@@ -7,6 +7,7 @@ internal class TabItemDrawable(TabItem view) : IDrawable
         canvas.SaveState();
         canvas.Antialias = true;
 
+        canvas.ClipPath(view.GetClipPath(rect));
         canvas.DrawBackground(view, rect);
 
         if (view.RipplePercent is 0f or 1f)
@@ -14,9 +15,9 @@ internal class TabItemDrawable(TabItem view) : IDrawable
         else
             canvas.DrawRipple(view, view.LastTouchPoint, view.RippleSize, view.RipplePercent);
 
-#if ANDROID
-        canvas.Scale(canvas.DisplayScale, canvas.DisplayScale);
-#endif
+        //#if ANDROID
+        //        canvas.Scale(canvas.DisplayScale, canvas.DisplayScale);
+        //#endif
 
         var tabs = view.GetParentElement<Tabs>();
         switch (tabs.ItemStyle)
