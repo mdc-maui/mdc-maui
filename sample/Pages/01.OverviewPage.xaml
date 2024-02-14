@@ -4,42 +4,72 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
-    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+    xmlns:md="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+    xmlns:mds="clr-namespace:Material.Components.Maui.Styles;assembly=Material.Components.Maui"
+    xmlns:pages="clr-namespace:SampleApp.Pages">
 
     <ScrollView Orientation="Vertical">
         <VerticalStackLayout Spacing="20">
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
-                <md:Button Style="{DynamicResource ElevatedButtonStyle}" Text="Elevated" />
-                <md:Button Style="{DynamicResource FilledButtonStyle}" Text="Filled" />
-                <md:Button Style="{DynamicResource FilledTonalButtonStyle}" Text="FilledTonal" />
-                <md:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Outlined" />
-                <md:Button Style="{StaticResource TextButtonStyle}" Text="Text" />
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
+                <md:Button
+                    DynamicStyle="{Static mds:ButtonStyles.Elevated}"
+                    Text="Elevated" />
+                <md:Button
+                    DynamicStyle="{Static mds:ButtonStyles.Filled}"
+                    Text="Filled" />
+                <md:Button
+                    DynamicStyle="{Static mds:ButtonStyles.FilledTonal}"
+                    Text="FilledTonal" />
+                <md:Button
+                    DynamicStyle="{Static mds:ButtonStyles.Outlined}"
+                    Text="Outlined" />
+                <md:Button
+                    DynamicStyle="{Static mds:ButtonStyles.Text}"
+                    Text="Text" />
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
                 <md:CheckBox />
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
-                <md:Chip Style="{DynamicResource AssistChipStyle}" Text="chip" />
-                <md:Chip Style="{DynamicResource FilterChipStyle}" Text="chip" />
-                <md:Chip Style="{DynamicResource InputChipStyle}" Text="chip" />
-                <md:Chip Style="{DynamicResource SuggestionChipStyle}" Text="chip" />
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
+                <md:Chip
+                    DynamicStyle="{Static mds:ChipStyles.Assist}"
+                    Text="chip" />
+                <md:Chip
+                    DynamicStyle="{Static mds:ChipStyles.Filter}"
+                    Text="chip" />
+                <md:Chip
+                    DynamicStyle="{Static mds:ChipStyles.Input}"
+                    Text="chip" />
+                <md:Chip
+                    DynamicStyle="{Static mds:ChipStyles.Suggestion}"
+                    Text="chip" />
             </md:WrapLayout>
 
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
-                <md:ComboBox>
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
+                <md:ComboBox DynamicStyle="{Static mds:ComboBoxStyles.Field}">
                     <md:MenuItem Text="item 1" />
                     <md:MenuItem Text="item 2" />
                 </md:ComboBox>
-                <md:ComboBox Style="{DynamicResource OutlinedComboBoxStyle}">
+                <md:ComboBox DynamicStyle="{Static mds:ComboBoxStyles.Outlined}">
                     <md:MenuItem Text="item 1" />
                     <md:MenuItem Text="item 2" />
                 </md:ComboBox>
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
                 <md:FAB IconData="{Static icon:Material.Settings}">
                     <md:FAB.ContextMenu>
                         <md:ContextMenu>
@@ -51,40 +81,68 @@
                 </md:FAB>
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
                 <md:ExtendedFAB
+                    DynamicStyle="{Static mds:ExtendedFABStyles.Secondary}"
                     IconData="{Static icon:Material.Add}"
-                    Style="{DynamicResource SecondaryExtendedFABStyle}"
                     Text="Extended" />
                 <md:ExtendedFAB
+                    DynamicStyle="{Static mds:ExtendedFABStyles.Surface}"
                     IconData="{Static icon:Material.Add}"
-                    Style="{DynamicResource SurfaceExtendedFABStyle}"
                     Text="Extended" />
                 <md:ExtendedFAB
+                    DynamicStyle="{Static mds:ExtendedFABStyles.Tertiary}"
                     IconData="{Static icon:Material.Add}"
-                    Style="{DynamicResource TertiaryExtendedFABStyle}"
                     Text="Extended" />
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
-                <md:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource SecondaryFABStyle}" />
-                <md:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource SurfaceFABStyle}" />
-                <md:FAB IconData="{Static icon:Material.Add}" Style="{DynamicResource TertiaryFABStyle}" />
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
+                <md:FAB
+                    DynamicStyle="{Static mds:FABStyles.Secondary}"
+                    IconData="{Static icon:Material.Add}" />
+                <md:FAB
+                    DynamicStyle="{Static mds:FABStyles.Surface}"
+                    IconData="{Static icon:Material.Add}" />
+                <md:FAB
+                    DynamicStyle="{Static mds:FABStyles.Tertiary}"
+                    IconData="{Static icon:Material.Add}" />
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
-                <md:IconButton IconData="{Static icon:Material.Star}" Style="{DynamicResource FilledIconButtonStyle}" />
-                <md:IconButton IconData="{Static icon:Material.Star}" Style="{DynamicResource FilledTonalIconButtonStyle}" />
-                <md:IconButton IconData="{Static icon:Material.Star}" Style="{DynamicResource OutlinedIconButtonStyle}" />
-                <md:IconButton IconData="{Static icon:Material.Star}" Style="{DynamicResource StandardIconButtonStyle}" />
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
+                <md:IconButton
+                    DynamicStyle="{Static mds:IconButtonStyles.Filled}"
+                    IconData="{Static icon:Material.Star}"
+                    IsToggleEnabled="True" />
+                <md:IconButton
+                    DynamicStyle="{Static mds:IconButtonStyles.FilledTonal}"
+                    IconData="{Static icon:Material.Star}"
+                    IsToggleEnabled="True" />
+                <md:IconButton
+                    DynamicStyle="{Static mds:IconButtonStyles.Outlined}"
+                    IconData="{Static icon:Material.Star}"
+                    IsToggleEnabled="True" />
+                <md:IconButton
+                    DynamicStyle="{Static mds:IconButtonStyles.Standard}"
+                    IconData="{Static icon:Material.Star}"
+                    IsToggleEnabled="True" />
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
-                <md:ProgressIndicator Style="{DynamicResource CircularProgressIndicatorStyle}" />
-                <md:ProgressIndicator Style="{DynamicResource LinearProgressIndicatorStyle}" />
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
+                <md:ProgressIndicator DynamicStyle="{Static mds:ProgressIndicatorStyles.Circular}" />
+                <md:ProgressIndicator DynamicStyle="{Static mds:ProgressIndicatorStyles.Linear}" />
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
                 <md:RadioButton Orientation="Horizontal">
                     <md:RadioItem Text="item 1" />
                     <md:RadioItem Text="item 2" />
@@ -97,22 +155,26 @@
                 </md:RadioButton>
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
                 <md:Switch />
                 <md:Switch IsSelected="True" />
-                <md:Switch IsSelected="True" Style="{DynamicResource MarkSwitchStyle}" />
+                <md:Switch
+                    DynamicStyle="{Static mds:SwitchStyles.Mark}"
+                    IsSelected="True" />
             </md:WrapLayout>
 
-            <md:WrapLayout Padding="20" HorizontalSpacing="20">
+            <md:WrapLayout
+                Padding="20"
+                HorizontalSpacing="20">
                 <md:TextField
                     IconData="{Static icon:Material.Search}"
-                    Style="{DynamicResource FilledTextFieldStyle}"
                     WidthRequest="250" />
 
                 <md:TextField
                     IconData="{Static icon:Material.Password}"
                     IsError="True"
-                    Style="{DynamicResource OutlinedTextFieldStyle}"
                     SupportingText="Incorrect password"
                     TextChanged="TextField_TextChanged"
                     TrailingIconClicked="TextField_TrailingIconClicked"
@@ -120,14 +182,14 @@
                     WidthRequest="300" />
             </md:WrapLayout>
 
-
-
-            <md:Tabs >
+            <md:Tabs
+                DynamicStyle="{Static mds:TabsStyles.Primary}"
+                HeightRequest="350">
                 <md:TabItem
                     IconData="{Static icon:Material.Pages}"
                     IsActived="True"
                     Text="Test 1">
-                    <Grid HeightRequest="350">
+                    <Grid>
                         <Label
                             HorizontalOptions="Center"
                             Text="Test 1"
@@ -138,7 +200,7 @@
                     IconData="{Static icon:Material.Pages}"
                     IsActived="True"
                     Text="Test 2">
-                    <Grid HeightRequest="350">
+                    <Grid>
                         <Label
                             HorizontalOptions="Center"
                             Text="Test 2"
@@ -149,7 +211,7 @@
                     IconData="{Static icon:Material.Pages}"
                     IsActived="True"
                     Text="Test 3">
-                    <Grid HeightRequest="350">
+                    <Grid>
                         <Label
                             HorizontalOptions="Center"
                             Text="Test 3"
@@ -158,6 +220,25 @@
                 </md:TabItem>
             </md:Tabs>
 
+            <md:Tabs
+                DynamicStyle="{Static mds:TabsStyles.Secondary}"
+                HeightRequest="350">
+                <md:TabItem
+                    ContentType="{Type pages:SettingsPage}"
+                    IconData="{Static icon:Material.Pages}"
+                    IsActived="True"
+                    Text="Test 1" />
+                <md:TabItem
+                    ContentType="{Type pages:SettingsPage}"
+                    IconData="{Static icon:Material.Pages}"
+                    IsActived="True"
+                    Text="Test 2" />
+                <md:TabItem
+                    ContentType="{Type pages:SettingsPage}"
+                    IconData="{Static icon:Material.Pages}"
+                    IsActived="True"
+                    Text="Test 3" />
+            </md:Tabs>
 
         </VerticalStackLayout>
     </ScrollView>
