@@ -65,12 +65,6 @@
                         x:Name="PART_Content"
                         Grid.Column="1"
                         Content="{TemplateBinding SelectedItem.Content}" />
-
-                    <Grid.GestureRecognizers>
-                        <PointerGestureRecognizer
-                            PointerPressed="OnPointPressed"
-                            PointerReleased="OnPointReleased" />
-                    </Grid.GestureRecognizers>
                 </Grid>
 
             </ControlTemplate>

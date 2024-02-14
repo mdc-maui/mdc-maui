@@ -9,7 +9,8 @@ public class NavigationDrawer
     : TemplatedView,
         IItemsElement<View>,
         IICommandElement,
-        IVisualTreeElement
+        IVisualTreeElement,
+        IStyleElement
 {
     public static readonly BindableProperty ItemsProperty = IItemsElement<View>.ItemsProperty;
 
@@ -63,6 +64,15 @@ public class NavigationDrawer
     public static readonly BindableProperty CommandParameterProperty =
         IICommandElement.CommandParameterProperty;
 
+    public static readonly BindableProperty DynamicStyleProperty =
+        IStyleElement.DynamicStyleProperty;
+
+    public string DynamicStyle
+    {
+        get => (string)this.GetValue(DynamicStyleProperty);
+        set => this.SetValue(DynamicStyleProperty, value);
+    }
+
     public ObservableCollection<View> Items
     {
         get => (ObservableCollection<View>)this.GetValue(ItemsProperty);
@@ -114,6 +124,8 @@ public class NavigationDrawer
 
     private Grid PART_Root;
 
+    private Popup drawer;
+
     public NavigationDrawer()
     {
         this.SetDynamicResource(StyleProperty, "StandardNavigationDrawerStyle");
@@ -135,79 +147,83 @@ public class NavigationDrawer
         SetInheritedBindingContext(this.PART_Root, this.BindingContext);
     }
 
-    internal static Popup CreateDrawer(Grid grid)
+    public Popup GetDrawer()
     {
-        var navDrawer = grid.GetParentElement<NavigationDrawer>();
-
-        var itemsLayout = new WrapLayout { Orientation = StackOrientation.Vertical };
-
-        foreach (var item in navDrawer.Items)
-            itemsLayout.Add(item);
-
-        var footerItemsLayout = new WrapLayout
+        if (this.drawer == null)
         {
-            Orientation = StackOrientation.Vertical,
-            Padding = new(0, 12, 0, 0),
-            VerticalOptions = LayoutOptions.End,
-        };
+            var itemsLayout = new WrapLayout { Orientation = StackOrientation.Vertical };
 
-        foreach (var item in navDrawer.FooterItems)
-            footerItemsLayout.Add(item);
+            foreach (var item in this.Items)
+                itemsLayout.Add(item);
 
-        var scrollView = new ScrollView
-        {
-            HorizontalScrollBarVisibility = Microsoft.Maui.ScrollBarVisibility.Never,
-            Orientation = ScrollOrientation.Vertical,
-            VerticalScrollBarVisibility = Microsoft.Maui.ScrollBarVisibility.Never,
-            Content = itemsLayout
-        };
+            var footerItemsLayout = new WrapLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                Padding = new(0, 12, 0, 0),
+                VerticalOptions = LayoutOptions.End,
+            };
 
-        scrollView.SetValue(Grid.RowProperty, 0);
-        footerItemsLayout.SetValue(Grid.RowProperty, 1);
+            foreach (var item in this.FooterItems)
+                footerItemsLayout.Add(item);
 
-        var content = new Card
-        {
-            HorizontalOptions = LayoutOptions.Start,
-            VerticalOptions = LayoutOptions.Start,
-            Elevation = Elevation.Level0,
-            Shape = new(0, 16, 0, 16),
-            Padding = new(12),
-            WidthRequest = 360,
-            Content = new Grid
+            var scrollView = new ScrollView
+            {
+                HorizontalScrollBarVisibility = Microsoft.Maui.ScrollBarVisibility.Never,
+                Orientation = ScrollOrientation.Vertical,
+                VerticalScrollBarVisibility = Microsoft.Maui.ScrollBarVisibility.Never,
+                Content = itemsLayout
+            };
+
+            scrollView.SetValue(Grid.RowProperty, 0);
+            footerItemsLayout.SetValue(Grid.RowProperty, 1);
+
+            var content = new Card
             {
                 HorizontalOptions = LayoutOptions.Start,
-                VerticalOptions = LayoutOptions.Fill,
-                RowDefinitions =
+                VerticalOptions = LayoutOptions.Start,
+                Elevation = Elevation.Level0,
+                Shape = new(0, 16, 0, 16),
+                Padding = new(12),
+                WidthRequest = 320,
+                Content = new Grid
                 {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Auto }
-                },
-                Children = { scrollView, footerItemsLayout }
-            },
-        };
+                    HorizontalOptions = LayoutOptions.Start,
+                    VerticalOptions = LayoutOptions.Fill,
+                    RowDefinitions =
+                    {
+                        new RowDefinition { Height = GridLength.Star },
+                        new RowDefinition { Height = GridLength.Auto }
+                    },
+                    Children = { scrollView, footerItemsLayout }
+                }
+            };
 
-        content.SetDynamicResource(Card.BackgroundColorProperty, "SurfaceColor");
-        content.SetBinding(
-            HeightRequestProperty,
-            new Binding(
-                "Height",
-                source: new RelativeBindingSource(
-                    RelativeBindingSourceMode.FindAncestor,
-                    typeof(NavigationDrawer)
+            content.SetDynamicResource(Card.BackgroundColorProperty, "SurfaceColor");
+            content.SetBinding(
+                HeightRequestProperty,
+                new Binding(
+                    "Height",
+                    source: new RelativeBindingSource(
+                        RelativeBindingSourceMode.FindAncestor,
+                        typeof(NavigationDrawer)
+                    )
                 )
-            )
-        );
+            );
 
-        var popup = new Popup
-        {
-            DismissOnOutside = true,
-            HorizontalOptions = LayoutAlignment.Start,
-            VerticalOptions = LayoutAlignment.Start,
-            Content = content,
-            Parent = navDrawer
-        };
+            this.drawer = new Popup
+            {
+                DismissOnOutside = true,
+                HorizontalOptions = LayoutAlignment.Start,
+                VerticalOptions = LayoutAlignment.Start,
+                Content = content,
+                Parent = this
+            };
 
-        return popup;
+            footerItemsLayout.Parent = content;
+            content.Parent = this.drawer;
+        }
+
+        return this.drawer;
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
