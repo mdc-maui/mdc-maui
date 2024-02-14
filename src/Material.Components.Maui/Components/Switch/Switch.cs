@@ -14,6 +14,7 @@ public class Switch
         IStateLayerElement,
         IICommandElement,
         IVisualTreeElement,
+        IStyleElement,
         IDisposable
 {
     protected bool IsVisualStateChanging { get; set; }
@@ -98,6 +99,15 @@ public class Switch
     public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
     public static readonly BindableProperty CommandParameterProperty =
         IICommandElement.CommandParameterProperty;
+
+    public static readonly BindableProperty DynamicStyleProperty =
+        IStyleElement.DynamicStyleProperty;
+
+    public string DynamicStyle
+    {
+        get => (string)this.GetValue(DynamicStyleProperty);
+        set => this.SetValue(DynamicStyleProperty, value);
+    }
 
     public Color ThumbColor
     {

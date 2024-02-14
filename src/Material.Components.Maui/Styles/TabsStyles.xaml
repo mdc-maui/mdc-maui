@@ -69,7 +69,9 @@
                     <ContentPresenter
                         x:Name="PART_Content"
                         Grid.Row="1"
-                        Content="{TemplateBinding SelectedItem.Content}" />
+                        Content="{TemplateBinding SelectedItem.Content}"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill" />
                 </Grid>
             </ControlTemplate>
         </Setter>

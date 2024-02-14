@@ -9,7 +9,8 @@ public class ProgressIndicator
         IActiveIndicatorElement,
         IBackgroundElement,
         IICommandElement,
-        IElement
+        IElement,
+        IStyleElement
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ViewState ViewState => ViewState.Normal;
@@ -74,6 +75,15 @@ public class ProgressIndicator
     public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
     public static readonly BindableProperty CommandParameterProperty =
         IICommandElement.CommandParameterProperty;
+
+    public static readonly BindableProperty DynamicStyleProperty =
+        IStyleElement.DynamicStyleProperty;
+
+    public string DynamicStyle
+    {
+        get => (string)this.GetValue(DynamicStyleProperty);
+        set => this.SetValue(DynamicStyleProperty, value);
+    }
 
     public float Percent
     {

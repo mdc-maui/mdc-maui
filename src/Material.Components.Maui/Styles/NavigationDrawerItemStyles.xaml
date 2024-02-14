@@ -9,7 +9,7 @@
     <Style TargetType="views:NavigationDrawerItem">
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="WidthRequest" Value="336" />
+        <Setter Property="WidthRequest" Value="296" />
         <Setter Property="HeightRequest" Value="56" />
         <Setter Property="Shape" Value="Full" />
         <Setter Property="FontSize" Value="14" />

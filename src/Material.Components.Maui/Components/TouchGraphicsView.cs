@@ -1,7 +1,7 @@
-﻿using Microsoft.Maui.Animations;
-using Microsoft.Maui.Platform;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
+using Microsoft.Maui.Animations;
+using Microsoft.Maui.Platform;
 
 namespace Material.Components.Maui;
 
@@ -15,6 +15,7 @@ public class TouchGraphicsView
         IContextMenuElement,
         IICommandElement,
         IVisualTreeElement,
+        IStyleElement,
         IDisposable
 {
     public event EventHandler<TouchEventArgs> Clicked;
@@ -48,7 +49,7 @@ public class TouchGraphicsView
         }
     }
 
-    public static readonly new BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
+    public static new readonly BindableProperty IsEnabledProperty = IElement.IsEnabledProperty;
     public static new readonly BindableProperty BackgroundColorProperty =
         IBackgroundElement.BackgroundColorProperty;
     public static readonly BindableProperty ShapeProperty = IShapeElement.ShapeProperty;
@@ -64,6 +65,15 @@ public class TouchGraphicsView
     public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
     public static readonly BindableProperty CommandParameterProperty =
         IICommandElement.CommandParameterProperty;
+
+    public static readonly BindableProperty DynamicStyleProperty =
+        IStyleElement.DynamicStyleProperty;
+
+    public string DynamicStyle
+    {
+        get => (string)this.GetValue(DynamicStyleProperty);
+        set => this.SetValue(DynamicStyleProperty, value);
+    }
 
     public new bool IsEnabled
     {
@@ -169,10 +179,7 @@ public class TouchGraphicsView
             if (this.LongPressed != null)
             {
                 this.isTouching = false;
-                this.LongPressed.Invoke(
-                    this,
-                    new TouchEventArgs([this.LastTouchPoint], true)
-                );
+                this.LongPressed.Invoke(this, new TouchEventArgs([this.LastTouchPoint], true));
             }
 
             if (this.ContextMenu != null)
@@ -211,7 +218,11 @@ public class TouchGraphicsView
 #endif
 
         this.Released?.Invoke(this, e);
-        if (this.isTouching && MathF.Abs(e.Touches[0].X - this.LastTouchPoint.X) < 50 && MathF.Abs(e.Touches[0].Y - this.LastTouchPoint.Y) < 50)
+        if (
+            this.isTouching
+            && MathF.Abs(e.Touches[0].X - this.LastTouchPoint.X) < 50
+            && MathF.Abs(e.Touches[0].Y - this.LastTouchPoint.Y) < 50
+        )
             this.Clicked?.Invoke(this, e);
 
         this.isTouching = false;
@@ -248,13 +259,16 @@ public class TouchGraphicsView
     {
         if (!this.IsEnabled)
             return;
-        if (!e.IsInsideBounds) this.ViewState = ViewState.Normal;
+        if (!e.IsInsideBounds)
+            this.ViewState = ViewState.Normal;
     }
 
     protected virtual void StartRippleEffect()
     {
-        this.animationManager ??=
-            this.Handler.MauiContext?.Services.GetRequiredService<IAnimationManager>();
+        this.animationManager ??= this.Handler
+            .MauiContext
+            ?.Services
+            .GetRequiredService<IAnimationManager>();
 
         this.animationManager?.Add(
             new Microsoft.Maui.Animations.Animation(

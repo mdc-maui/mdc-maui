@@ -115,7 +115,6 @@ public class Button
     public Button()
     {
         this.SetDynamicResource(StyleProperty, "FilledButtonStyle");
-
         this.Drawable = new ButtonDrawable(this);
         this.Clicked += this.OnClicked;
     }

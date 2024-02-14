@@ -6,7 +6,12 @@ using System.Windows.Input;
 namespace Material.Components.Maui;
 
 [ContentProperty(nameof(Items))]
-public class Tabs : TemplatedView, IItemsElement<TabItem>, IICommandElement, IVisualTreeElement
+public class Tabs
+    : TemplatedView,
+        IItemsElement<TabItem>,
+        IICommandElement,
+        IVisualTreeElement,
+        IStyleElement
 {
     public static readonly BindableProperty ItemsProperty = IItemsElement<TabItem>.ItemsProperty;
 
@@ -41,6 +46,15 @@ public class Tabs : TemplatedView, IItemsElement<TabItem>, IICommandElement, IVi
         typeof(ItemStyle),
         typeof(Tabs)
     );
+
+    public static readonly BindableProperty DynamicStyleProperty =
+        IStyleElement.DynamicStyleProperty;
+
+    public string DynamicStyle
+    {
+        get => (string)this.GetValue(DynamicStyleProperty);
+        set => this.SetValue(DynamicStyleProperty, value);
+    }
 
     public ObservableCollection<TabItem> Items
     {

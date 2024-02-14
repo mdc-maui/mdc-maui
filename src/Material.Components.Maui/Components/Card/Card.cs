@@ -13,7 +13,8 @@ public class Card
         IShapeElement,
         IOutlineElement,
         IElevationElement,
-        IVisualTreeElement
+        IVisualTreeElement,
+        IStyleElement
 {
     ViewState IElement.ViewState => ViewState.Normal;
 
@@ -34,6 +35,15 @@ public class Card
     public static readonly BindableProperty OutlineColorProperty =
         IOutlineElement.OutlineColorProperty;
     public static readonly BindableProperty ElevationProperty = IElevationElement.ElevationProperty;
+
+    public static readonly BindableProperty DynamicStyleProperty =
+        IStyleElement.DynamicStyleProperty;
+
+    public string DynamicStyle
+    {
+        get => (string)this.GetValue(DynamicStyleProperty);
+        set => this.SetValue(DynamicStyleProperty, value);
+    }
 
     public View Content
     {
