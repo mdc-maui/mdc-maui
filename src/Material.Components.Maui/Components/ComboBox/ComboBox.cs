@@ -262,34 +262,20 @@ public class ComboBox
 
         this.Drawable = new ComboBoxDrawable(this);
 
-        this.StartInteraction += this.OnStartInteraction;
-        this.EndInteraction += this.OnEndInteraction;
-        this.CancelInteraction += this.OnCancelInteraction;
+        this.Clicked += this.OnClicked;
 
         this.menu.Closed += this.OnMenuClosed;
     }
 
-    protected override void OnEndInteraction(object sender, TouchEventArgs e)
+    protected void OnClicked(object sender, TouchEventArgs e)
     {
-        if (this.isTouching)
-        {
-            this.IsDropDown = !this.IsDropDown;
-        }
+        this.IsDropDown = true;
 
-        if (this.IsDropDown)
-        {
-            if (this.menu.DesiredSize == Size.Zero)
-                this.menu.WidthRequest = this.DesiredSize.Width;
+        if (this.menu.DesiredSize == Size.Zero)
+            this.menu.WidthRequest = this.DesiredSize.Width;
 
-            this.StartLabelTextAnimation();
-            this.menu.Show(this);
-        }
-        else
-        {
-            this.menu.Close();
-        }
-
-        base.OnEndInteraction(sender, e);
+        this.StartLabelTextAnimation();
+        this.menu.Show(this);
     }
 
     private void OnMenuClosed(object sender, object e)
