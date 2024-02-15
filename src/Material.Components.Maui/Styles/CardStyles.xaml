@@ -18,7 +18,7 @@
                         OutlineWidth="{TemplateBinding OutlineWidth}"
                         Shape="{TemplateBinding Shape}" />
 
-                    <ContentPresenter Padding="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                    <views:ContentPresenter Padding="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
                 </Grid>
             </ControlTemplate>
         </Setter>

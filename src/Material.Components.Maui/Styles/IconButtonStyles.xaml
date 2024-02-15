@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style Class="FilledIconButtonStyle" TargetType="views:IconButton">
+    <Style x:Key="FilledIconButtonStyle" TargetType="views:IconButton">
         <Setter Property="WidthRequest" Value="40" />
         <Setter Property="HeightRequest" Value="40" />
         <Setter Property="HorizontalOptions" Value="Center" />
