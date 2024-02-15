@@ -1,8 +1,9 @@
 ﻿namespace Material.Components.Maui.Extensions;
 
-internal static class ElementExtension
+public static class ElementExtension
 {
-    internal static T GetParentElement<T>(this Element view) where T : Element
+    public static T GetParentElement<T>(this Element view)
+        where T : Element
     {
         return view.Parent is null
             ? null

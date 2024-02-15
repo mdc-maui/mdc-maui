@@ -65,6 +65,13 @@ public class NavigationDrawerItem
         }
     );
 
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(
+        nameof(Title),
+        typeof(string),
+        typeof(NavigationDrawerItem),
+        default
+    );
+
     public static readonly BindableProperty TextProperty = ITextElement.TextProperty;
     public static readonly BindableProperty FontColorProperty = IFontElement.FontColorProperty;
     public static readonly BindableProperty FontSizeProperty = IFontElement.FontSizeProperty;
@@ -100,6 +107,12 @@ public class NavigationDrawerItem
     {
         get => (bool)this.GetValue(IsActivedProperty);
         set => this.SetValue(IsActivedProperty, value);
+    }
+
+    public string Title
+    {
+        get => (string)this.GetValue(TitleProperty);
+        set => this.SetValue(TitleProperty, value);
     }
 
     public string Text
@@ -163,9 +176,7 @@ public class NavigationDrawerItem
     }
 
     public IReadOnlyList<IVisualTreeElement> GetVisualChildren() =>
-        this.Content != null
-            ? [this.Content]
-            : Array.Empty<IVisualTreeElement>().ToList();
+        this.Content != null ? [this.Content] : Array.Empty<IVisualTreeElement>().ToList();
 
     protected override void Dispose(bool disposing)
     {

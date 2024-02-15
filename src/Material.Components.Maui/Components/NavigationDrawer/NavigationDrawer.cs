@@ -60,6 +60,13 @@ public class NavigationDrawer
         }
     );
 
+    public static readonly BindableProperty TitleBarProperty = BindableProperty.Create(
+        nameof(TitleBar),
+        typeof(View),
+        typeof(NavigationDrawer),
+        default
+    );
+
     public static readonly BindableProperty CommandProperty = IICommandElement.CommandProperty;
     public static readonly BindableProperty CommandParameterProperty =
         IICommandElement.CommandParameterProperty;
@@ -71,6 +78,12 @@ public class NavigationDrawer
     {
         get => (string)this.GetValue(DynamicStyleProperty);
         set => this.SetValue(DynamicStyleProperty, value);
+    }
+
+    public View TitleBar
+    {
+        get => (View)this.GetValue(TitleBarProperty);
+        set => this.SetValue(TitleBarProperty, value);
     }
 
     public ObservableCollection<View> Items
@@ -221,6 +234,8 @@ public class NavigationDrawer
 
             footerItemsLayout.Parent = content;
             content.Parent = this.drawer;
+
+            SetInheritedBindingContext(this.drawer, this.BindingContext);
         }
 
         return this.drawer;

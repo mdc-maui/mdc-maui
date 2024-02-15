@@ -6,10 +6,14 @@
     xmlns:converters="clr-namespace:Material.Components.Maui.Converters"
     xmlns:views="clr-namespace:Material.Components.Maui">
 
-    <Style x:Key="StandardNavigationDrawerStyle" TargetType="views:NavigationDrawer">
+    <Style
+        x:Key="StandardNavigationDrawerStyle"
+        TargetType="views:NavigationDrawer">
         <Setter Property="ControlTemplate">
             <ControlTemplate>
-                <Grid x:Name="PART_Root" ColumnDefinitions="360,*">
+                <Grid
+                    x:Name="PART_Root"
+                    ColumnDefinitions="360,*">
                     <views:CardContainer
                         Grid.Column="0"
                         BackgroundColor="{DynamicResource SurfaceColor}"
@@ -24,10 +28,12 @@
                             HorizontalScrollBarVisibility="Never"
                             Orientation="Vertical"
                             VerticalScrollBarVisibility="Never">
-                            <views:WrapLayout BindableLayout.ItemsSource="{TemplateBinding Items}" Orientation="Vertical">
+                            <views:WrapLayout
+                                BindableLayout.ItemsSource="{TemplateBinding Items}"
+                                Orientation="Vertical">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
-                                        <ContentPresenter Content="{Binding}" />
+                                        <views:ContentPresenter Content="{Binding}" />
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </views:WrapLayout>
@@ -40,13 +46,13 @@
                             Orientation="Vertical">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <ContentPresenter Content="{Binding}" />
+                                    <views:ContentPresenter Content="{Binding}" />
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </views:WrapLayout>
                     </Grid>
 
-                    <ContentPresenter
+                    <views:ContentPresenter
                         x:Name="PART_Content"
                         Grid.Column="1"
                         Content="{TemplateBinding SelectedItem.Content}" />
@@ -57,13 +63,20 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ModalNavigationDrawerStyle" TargetType="views:NavigationDrawer">
+    <Style
+        x:Key="ModalNavigationDrawerStyle"
+        TargetType="views:NavigationDrawer">
         <Setter Property="ControlTemplate">
             <ControlTemplate>
-                <Grid x:Name="PART_Root">
-                    <ContentPresenter
+                <Grid
+                    x:Name="PART_Root"
+                    RowDefinitions="auto,*">
+                    <views:ContentPresenter
+                        Grid.Row="0"
+                        Content="{TemplateBinding TitleBar}" />
+                    <views:ContentPresenter
                         x:Name="PART_Content"
-                        Grid.Column="1"
+                        Grid.Row="1"
                         Content="{TemplateBinding SelectedItem.Content}" />
                 </Grid>
 
